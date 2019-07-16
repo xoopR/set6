@@ -12,7 +12,6 @@ SetInterval$set("public","initialize",function(symbol, lower, upper, type, class
   invisible(self)
 })
 
-
 SetInterval$set("public","type",function(){
   return(private$.type)
 })
@@ -36,9 +35,6 @@ SetInterval$set("public","sup",function(){
 })
 SetInterval$set("public","inf",function(){
   return(private$.lower)
-})
-SetInterval$set("public","getSymbol",function(){
-  return(private$.setSymbol)
 })
 SetInterval$set("public","print",function(){
   print(self$strprint())

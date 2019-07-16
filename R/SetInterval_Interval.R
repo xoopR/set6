@@ -8,7 +8,7 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   private$.type = type
   if(lower == -Inf) lower = "-\u221E"
   if(upper == Inf) upper = "+\u221E"
-  private$.setSymbol <- paste0(substr(type,1,1),lower,",", upper,substr(type,2,2))
+
   private$.class <- class
   if(dim != 1)
     private$.setSymbol <- paste0(private$.setSymbol,"^",dim)
@@ -28,4 +28,12 @@ Interval$set("public","length",function(){
 
   return(length(self$as.numeric()))
 })
+Interval$set("public","range",function(){
+  return(self$sup() - self$inf())
+})
 Interval$set("private",".class",NULL)
+
+Interval$set("public","strprint",function(){
+  type <- private$.type
+  return(paste0(substr(type,1,1),self$inf(),", ",self$sup(),substr(type,2,2)))
+})
