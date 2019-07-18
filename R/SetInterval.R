@@ -1,7 +1,7 @@
 SetInterval <- R6::R6Class("SetInterval")
 SetInterval$set("public","initialize",function(symbol, lower, upper, type, class = "numeric", dimension){
-  if(getR6Class(self) == "SetInterval")
-    stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Try Set, Interval or Tuple instead."))
+  # if(getR6Class(self) == "SetInterval")
+  #   stop(paste0(getR6Class(self), " is an abstract class that can't be initialized. Try Set, Interval or Tuple instead."))
 
   private$.lower = lower
   private$.upper = upper
@@ -38,6 +38,9 @@ SetInterval$set("public","inf",function(){
 })
 SetInterval$set("public","print",function(){
   print(self$strprint())
+})
+SetInterval$set("public","strprint",function(){
+  return(private$.setSymbol)
 })
 SetInterval$set("public","class",function(){
   return(private$.class)

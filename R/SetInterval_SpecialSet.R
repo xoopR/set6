@@ -35,6 +35,9 @@ SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
   invisible(self)
 })
 SpecialSet$set("private",".class","integer")
+SpecialSet$set("public","strprint",function(){
+  return(private$.setSymbol)
+})
 
 #' @name Empty
 #' @title Empty Set

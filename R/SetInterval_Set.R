@@ -6,9 +6,11 @@ Set$set("public","initialize",function(..., dim = 1){
     if(length(dots) == 1 & is.list(dots))
       dots <- dots[[1]]
     private$.elements <- unlist(dots)
-    private$.lower <- dots[[1]]
-    private$.upper <- dots[[length(dots)]]
-    private$.dimension <- dim
+
+    if(inherits(unlist(dots),"numeric") | inherits(unlist(dots),"integer")){
+      private$.lower <- min(unlist(dots))
+      private$.upper <- max(unlist(dots))
+    }
   }
 
   invisible(self)
@@ -81,6 +83,10 @@ Set$set("public","isSubset",function(x, proper = FALSE){
       return(FALSE)
   }
 
+})
+Set$set("public","intersection",function(x){
+  assertSet(x)
+  return(intersect(self$elements(), x$elements()))
 })
 
 as.Set <- function(object){
