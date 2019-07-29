@@ -13,6 +13,11 @@ makeChecks(assertionName = "Tuple",
            errormsg = paste(object, "is not an R6 Tuple object"),
            pos = environment())
 
+makeChecks(assertionName = "FuzzySet",
+           cond = inherits(object, "FuzzySet"),
+           errormsg = paste(object, "is not an R6 FuzzySet object"),
+           pos = environment())
+
 makeChecks(assertionName = "Interval",
            cond = inherits(object, "Interval"),
            errormsg = paste(object, "is not an R6 Interval object"),

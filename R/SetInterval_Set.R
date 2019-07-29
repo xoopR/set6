@@ -22,6 +22,12 @@ Set$set("public","length",function(){
 Set$set("public","elements",function(){
   return(private$.elements)
 })
+Set$set("public","isEmpty",function(){
+  if(length(self$elements())==0)
+    return(TRUE)
+  else
+    return(FALSE)
+})
 
 
 Set$set("private",".class","integer")
@@ -37,7 +43,9 @@ Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
     return(ret)
 })
 Set$set("public","equals",function(x){
-  assertSet(x)
+  if(!testSet(x))
+    return(FALSE)
+
   if(all(x$elements() %in% self$elements()) & all(self$elements() %in% x$elements()))
     return(TRUE)
   else

@@ -63,6 +63,12 @@ SetInterval$set("public","liesInSetInterval",function(x, all = FALSE, bound = FA
   else
     return(ret)
 })
+SetInterval$set("public","isEmpty",function(){
+  return(NULL)
+})
+SetInterval$set("public","equals",function(x){
+  return(NULL)
+})
 
 SetInterval$set("private",".lower",NULL)
 SetInterval$set("private",".upper",NULL)

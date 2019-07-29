@@ -31,6 +31,15 @@ Interval$set("public","length",function(){
 Interval$set("public","range",function(){
   return(self$sup() - self$inf())
 })
+Interval$set("public","equals",function(x){
+  if(!testInterval(x))
+    return(FALSE)
+
+  if(x$type() == self$type() & x$inf() == self$inf() & x$sup() == self$sup() & x$class() == self$class())
+    return(TRUE)
+  else
+    return(FALSE)
+})
 Interval$set("private",".class",NULL)
 
 Interval$set("public","strprint",function(){
