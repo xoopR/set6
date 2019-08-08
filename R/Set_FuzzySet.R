@@ -27,6 +27,9 @@ FuzzySet$set("public","initialize",function(..., dim = 1){
 FuzzySet$set("public","strprint",function(){
   return(paste0("{",paste0(self$elements(),"(",self$members(),")", collapse = ", "),"}"))
 })
+FuzzySet$set("public","members",function(){
+  return(private$.members)
+})
 FuzzySet$set("public","isEmpty",function(){
   if(all(self$members() == 0))
     return(TRUE)
@@ -57,7 +60,6 @@ FuzzySet$set("public","inclusion",function(x){
   else
     return("Partially Included")
 })
-
 FuzzySet$set("public","equals",function(x){
   if(!testFuzzySet(x))
     return(FALSE)
@@ -78,10 +80,9 @@ FuzzySet$set("public","complement",function(){
   return(self)
 })
 
+
 FuzzySet$set("private",".type","{}")
 FuzzySet$set("private",".members", 0)
-FuzzySet$set("public","members",function(){
-  return(private$.members)
-})
+
 
 

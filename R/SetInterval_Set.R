@@ -17,22 +17,17 @@ Set$set("public","initialize",function(..., dim = 1){
 })
 
 Set$set("public","length",function(){
-  return(length(private$.elements))
+  return(length(self$elements()))
 })
 Set$set("public","elements",function(){
   return(private$.elements)
 })
 Set$set("public","isEmpty",function(){
-  if(length(self$elements())==0)
+  if(self$length()==0)
     return(TRUE)
   else
     return(FALSE)
 })
-
-
-Set$set("private",".class","integer")
-Set$set("private",".type","{}")
-Set$set("private",".elements",NULL)
 Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
   ret = rep(FALSE, length(x))
   ret[x %in% self$elements()] = TRUE
@@ -96,6 +91,10 @@ Set$set("public","intersection",function(x){
   assertSet(x)
   return(intersect(self$elements(), x$elements()))
 })
+
+Set$set("private",".class","integer")
+Set$set("private",".type","{}")
+Set$set("private",".elements",NULL)
 
 as.Set <- function(object){
   UseMethod("as.Set",object)

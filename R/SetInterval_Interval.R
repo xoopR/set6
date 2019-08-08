@@ -40,8 +40,6 @@ Interval$set("public","equals",function(x){
   else
     return(FALSE)
 })
-Interval$set("private",".class",NULL)
-
 Interval$set("public","strprint",function(){
   type <- private$.type
   return(paste0(substr(type,1,1),self$inf(),", ",self$sup(),substr(type,2,2)))
