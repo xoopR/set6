@@ -22,7 +22,7 @@
 #'
 #' @export
 power.SetInterval <- function(x, power){
-  symbol = paste0(x$getSymbol(),"^",power)
+  symbol = paste0(x$strprint(),"^",power)
   lower = rep(x$inf(),power)
   upper = rep(x$sup(),power)
 

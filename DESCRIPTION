@@ -12,9 +12,27 @@ Authors@R:
              role = "aut",
              email = "f.kiraly@ucl.ac.uk"))
 Description: Placeholder description.
+Imports: checkmate
 License: MIT + file LICENSE
 LazyData: true
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 RoxygenNote: 6.1.1
+Collate: 
+    'RSmisc_helpers.R'
+    'SetInterval.R'
+    'SetInterval_Interval.R'
+    'SetInterval_Set.R'
+    'setSymbol.R'
+    'SetInterval_SpecialSet.R'
+    'Set_FuzzySet.R'
+    'Set_Tuple.R'
+    'assertions.R'
+    'complement.R'
+    'intersection.R'
+    'listSpecialSets.R'
+    'power.R'
+    'product.R'
+    'setOperation.R'
+    'union.R'

@@ -3,24 +3,22 @@ Set <- R6::R6Class("Set", inherit = SetInterval)
 Set$set("public","initialize",function(..., dim = 1){
   if(length(list(...)) != 0){
     dots <- list(...)
-    if(length(dots) == 1 & is.list(dots))
-      dots <- dots[[1]]
-    private$.elements <- unlist(dots)
+    private$.elements <- unlist(unique(dots), recursive = FALSE)
 
-    if(inherits(unlist(dots),"numeric") | inherits(unlist(dots),"integer")){
-      private$.lower <- min(unlist(dots))
-      private$.upper <- max(unlist(dots))
+    if(inherits(unlist(dots, recursive = FALSE),"numeric") | inherits(unlist(dots, recursive = FALSE),"integer")){
+      private$.lower <- min(unlist(dots, recursive = FALSE))
+      private$.upper <- max(unlist(dots, recursive = FALSE))
     }
   }
 
   invisible(self)
 })
 
-Set$set("public","length",function(){
-  return(length(self$elements()))
-})
 Set$set("public","elements",function(){
   return(private$.elements)
+})
+Set$set("public","length",function(){
+  return(length(self$elements()))
 })
 Set$set("public","isEmpty",function(){
   if(self$length()==0)
@@ -63,10 +61,10 @@ Set$set("public","strprint",function(n = 2){
                   substr(type,2,2), collapse = ", "))
 })
 Set$set("public","powerSet",function(){
-  if(testSet(self))
+  # if(testSet(self))
     elements <- self$elements()
-  else
-    elements <- self$as.numeric()
+  # else
+  #   elements <- self$as.numeric()
 
   y = Vectorize(function(m) combn(elements, m),vectorize.args = c("m"))(1:(self$length()-1))
   return(Set$new(Set$new(), unlist(lapply(y, as.Set)), self))
@@ -87,10 +85,6 @@ Set$set("public","isSubset",function(x, proper = FALSE){
   }
 
 })
-Set$set("public","intersection",function(x){
-  assertSet(x)
-  return(intersect(self$elements(), x$elements()))
-})
 
 Set$set("private",".class","integer")
 Set$set("private",".type","{}")
@@ -98,6 +92,9 @@ Set$set("private",".elements",NULL)
 
 as.Set <- function(object){
   UseMethod("as.Set",object)
+}
+as.Set.numeric <- function(object){
+  Set$new(object)
 }
 as.Set.list <- function(object){
   return(Set$new(unlist(object)))
@@ -107,13 +104,20 @@ as.Set.matrix <- function(object){
 }
 
 '<.Set' <- function(x, y){
-  y$isSubset(x, proper = TRUE)
+  return(y$isSubset(x, proper = TRUE))
 }
 '<=.Set' <- function(x, y){
-  y$isSubset(x, proper = FALSE)
+  return(y$isSubset(x, proper = FALSE))
+}
+'>.Set' <- function(x, y){
+  return(x$isSubset(y, proper = TRUE))
+}
+'>=.Set' <- function(x, y){
+  return(x$isSubset(y, proper = FALSE))
 }
 '==.Set' <- function(x, y){
-  y$equals(x)
+  return(y$equals(x))
 }
-
-
+'!=.Set' <- function(x, y){
+  return(!y$equals(x))
+}
