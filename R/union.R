@@ -30,7 +30,7 @@ union.SetInterval <- function(..., dim = 1){
   parClass = lapply(class, function(x) get(x)$inherit)
   dots = dots[!(parClass %in% class)]
 
-  if(length(unique(unlist(lapply(dots,function(y) y$getSymbol())))) != 1){
+  if(length(unique(unlist(lapply(dots,function(y) y$strprint())))) != 1){
     lower = min(sapply(dots, function(y) y$inf()))
     upper = max(sapply(dots, function(y) y$sup()))
     setOperation("\u222A", sets = dots, dim = dim, lower = lower, upper = upper)

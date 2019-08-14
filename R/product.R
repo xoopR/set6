@@ -19,7 +19,7 @@
 #' @export
 product.SetInterval <- function(...){
   dots = list(...)
-  if(length(unique(sapply(dots,function(x) x$getSymbol()))) == 1 & length(dots)>1)
+  if(length(unique(sapply(dots,function(x) x$strprint()))) == 1 & length(dots)>1)
     return(power.SetInterval(dots[[1]], length(dots)))
   else
     return(setOperation("\u00D7", sets = dots))

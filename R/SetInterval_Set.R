@@ -90,15 +90,25 @@ Set$set("private",".class","integer")
 Set$set("private",".type","{}")
 Set$set("private",".elements",NULL)
 
+#' @title Coercion to R6 Set
+#' @description Coerces objects to R6 Sets
+#' @param object object to coerce
+#' @export
 as.Set <- function(object){
   UseMethod("as.Set",object)
 }
+#' @rdname as.Set
+#' @export
 as.Set.numeric <- function(object){
   Set$new(object)
 }
+#' @rdname as.Set
+#' @export
 as.Set.list <- function(object){
   return(Set$new(unlist(object)))
 }
+#' @rdname as.Set
+#' @export
 as.Set.matrix <- function(object){
   return(apply(object,2,function(x) Set$new(x)))
 }

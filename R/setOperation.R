@@ -23,7 +23,7 @@
 #' @export
 setOperation <- function(unicode,sets,lower=NULL,upper=NULL,type=NULL,dim=NULL){
   symbols = lapply(sets,function(x){
-    x <- x[["getSymbol"]]()
+    x <- x[["strprint"]]()
     if(!grepl("\\{.",x))
       x <- paste0("{", x)
     if(!grepl(".\\}",x))

@@ -12,7 +12,8 @@ Authors@R:
              role = "aut",
              email = "f.kiraly@ucl.ac.uk"))
 Description: Placeholder description.
-Imports: checkmate
+Imports: checkmate, R6, data.table
+Suggests: knitr, testthat, devtools, rmarkdown
 License: MIT + file LICENSE
 LazyData: true
 VignetteBuilder: 

@@ -1,3 +1,7 @@
+#' @title Complement for SetInterval
+#' @param x SetInterval
+#' @param y SetInterval
+#' @export
 complement.SetInterval <- function(x, y = NULL){
 
   # if(is.null(y)){
@@ -33,6 +37,10 @@ complement.SetInterval <- function(x, y = NULL){
   complement.SetInterval(x, y)
 }
 
+#' @title Complement for Set
+#' @param x Set
+#' @param y Set
+#' @export
 complement.Set <- function(x, y = NULL){
 
   assertSet(x)

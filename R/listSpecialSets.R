@@ -19,7 +19,7 @@ listSpecialSets <- function(simplify = FALSE){
       zero = "zero" %in% names(formals(PosReals$public_methods$initialize))
       ClassName = x$classname
       x = x$new()
-      Symbol = x$getSymbol()
+      Symbol = x$strprint()
       if(zero & grepl("Pos",ClassName))
         Infimum = "0/1"
       else
