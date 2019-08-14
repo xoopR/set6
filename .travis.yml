@@ -1,0 +1,48 @@
+language: r
+
+#branches:
+#  only:
+#  - master
+#  - dev1.1
+  
+matrix:
+    include:
+   #     - os: linux
+   #       r: oldrel
+        - os: linux
+          r: release
+   #     - os: linux
+   #       r: devel
+   #     - os: osx
+   #       r: oldrel
+   #     - os: osx
+   #       r: release
+   #     - os: osx
+   #       r: devel
+    
+sudo: false
+
+dist: trusty
+
+cache: packages
+
+latex: true
+
+r_github_packages:
+  - r-lib/pkgdown
+  
+r_packages:
+  - covr
+     
+after_success:
+  - Rscript -e 'pkgdown::build_site()'
+  - Rscript -e 'library(covr); codecov()'
+      
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  local-dir: docs
+  on:
+    branch: master
