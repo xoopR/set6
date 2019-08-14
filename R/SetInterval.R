@@ -52,6 +52,10 @@ SetInterval$set("public","inf",function(){
 SetInterval$set("public","class",function(){
   return(private$.class)
 })
+SetInterval$set("public","elements",function(){
+  return(NULL)
+})
+
 SetInterval$set("active","universe",function(x){
   if(missing(x))
     return(private$.universe)
@@ -60,6 +64,7 @@ SetInterval$set("active","universe",function(x){
     private$.universe <- x
   }
 })
+
 
 # Representation
 SetInterval$set("public","print",function(){
