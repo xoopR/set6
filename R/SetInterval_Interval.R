@@ -1,5 +1,6 @@
 #' @name Interval
 #' @title Interval
+#' @description Interval Object
 NULL
 #' @export
 Interval <- R6::R6Class("Interval", inherit = SetInterval)

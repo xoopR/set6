@@ -1,3 +1,8 @@
+#' @name SetInterval
+#' @title SetInterval
+#' @description SetInterval Object
+NULL
+#' @export
 SetInterval <- R6::R6Class("SetInterval")
 SetInterval$set("public","initialize",function(lower, upper, type, class = "numeric", dimension,
                                                universe = Reals$new(), symbol = NULL){

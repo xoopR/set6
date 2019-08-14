@@ -1,3 +1,8 @@
+#' @name Tuple
+#' @title Tuple
+#' @description Tuple Object
+NULL
+#' @export
 Tuple <- R6::R6Class("Tuple", inherit = Set)
 Tuple$set("public","initialize",function(..., dim = 1){
   if(length(list(...)) != 0){

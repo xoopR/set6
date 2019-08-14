@@ -1,3 +1,8 @@
+#' @name Set
+#' @title Set
+#' @description Set Object
+NULL
+#' @export
 Set <- R6::R6Class("Set", inherit = SetInterval)
 
 Set$set("public","initialize",function(..., dim = 1, universe = NULL){

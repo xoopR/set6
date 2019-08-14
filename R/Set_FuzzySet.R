@@ -1,3 +1,8 @@
+#' @name FuzzySet
+#' @title FuzzySet
+#' @description FuzzySet Object
+NULL
+#' @export
 FuzzySet <- R6::R6Class("FuzzySet", inherit = Set)
 FuzzySet$set("public","initialize",function(..., dim = 1){
   if(length(list(...)) != 0){

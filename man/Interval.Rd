@@ -4,5 +4,5 @@
 \alias{Interval}
 \title{Interval}
 \description{
-Interval
+Interval Object
 }
