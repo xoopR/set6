@@ -1,22 +1,39 @@
 Set <- R6::R6Class("Set", inherit = SetInterval)
 
-Set$set("public","initialize",function(..., dim = 1){
+Set$set("public","initialize",function(..., dim = 1, universe = NULL){
   if(length(list(...)) != 0){
     dots <- list(...)
-    private$.elements <- unlist(unique(dots), recursive = FALSE)
+    private$.elements <- unlist(unique(dots))
+    class <- unique(sapply(dots,function(x) class(x)[[1]]))
+    if(length(class)==1)
+      private$.class <- class
+    else if(length(class)==2 & "list" %in% class)
+      private$.class <- class[!(class %in% "list")]
+    else
+      private$.class <- "multiple"
 
-    if(inherits(unlist(dots, recursive = FALSE),"numeric") | inherits(unlist(dots, recursive = FALSE),"integer")){
-      private$.lower <- min(unlist(dots, recursive = FALSE))
-      private$.upper <- max(unlist(dots, recursive = FALSE))
+    if(private$.class %in% c("numeric", "integer")){
+      private$.lower <- min(unlist(dots))
+      private$.upper <- max(unlist(dots))
+    }
+
+    private$.dimension <- dim
+
+    if(!is.null(universe)){
+      assertSetInterval(universe)
+      private$.universe <- universe
     }
   }
 
   invisible(self)
 })
 
+# New Methods
 Set$set("public","elements",function(){
   return(private$.elements)
 })
+
+# Overloaded methods
 Set$set("public","length",function(){
   return(length(self$elements()))
 })
@@ -86,8 +103,11 @@ Set$set("public","isSubset",function(x, proper = FALSE){
 
 })
 
-Set$set("private",".class","integer")
+# Overloaded private variables
+Set$set("private",".class","ANY")
 Set$set("private",".type","{}")
+
+# New private variables
 Set$set("private",".elements",NULL)
 
 #' @title Coercion to R6 Set
@@ -111,23 +131,4 @@ as.Set.list <- function(object){
 #' @export
 as.Set.matrix <- function(object){
   return(apply(object,2,function(x) Set$new(x)))
-}
-
-'<.Set' <- function(x, y){
-  return(y$isSubset(x, proper = TRUE))
-}
-'<=.Set' <- function(x, y){
-  return(y$isSubset(x, proper = FALSE))
-}
-'>.Set' <- function(x, y){
-  return(x$isSubset(y, proper = TRUE))
-}
-'>=.Set' <- function(x, y){
-  return(x$isSubset(y, proper = FALSE))
-}
-'==.Set' <- function(x, y){
-  return(y$equals(x))
-}
-'!=.Set' <- function(x, y){
-  return(!y$equals(x))
 }

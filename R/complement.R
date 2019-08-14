@@ -2,7 +2,13 @@
 #' @param x SetInterval
 #' @param y SetInterval
 #' @export
-complement.SetInterval <- function(x, y = NULL){
+complement <- function(x, y){
+  UseMethod("complement", x)
+}
+
+#' @rdname complement
+#' @export
+complement.SetInterval <- function(x, y){
 
   # if(is.null(y)){
   #   y <- x$
@@ -33,6 +39,8 @@ complement.SetInterval <- function(x, y = NULL){
   # setOperation("/",lower = lower, upper = upper, type = type, dim = x$dimension(),x,y)
 }
 
+#' @rdname complement
+#' @export
 `-.SetInterval` <- function(x, y){
   complement.SetInterval(x, y)
 }
@@ -40,18 +48,11 @@ complement.SetInterval <- function(x, y = NULL){
 #' @title Complement for Set
 #' @param x Set
 #' @param y Set
+#' @rdname complement
 #' @export
-complement.Set <- function(x, y = NULL){
-
-  assertSet(x)
-
-  if(is.null(y)){
-    y <- x$clone()
-    x <- y$universe()
-  }
-
-  if(testSet(x)){
-    if(sum(!(x$elements() %in% y$elements())) == 0)
+complement.Set <- function(x, y){
+  if(testSet(y)){
+    if(y >= x)
       return(Empty$new())
     else
       return(Set$new(x$elements()[!(x$elements() %in% y$elements())]))
@@ -59,6 +60,8 @@ complement.Set <- function(x, y = NULL){
     return(complement.SetInterval(x, y))
 }
 
+#' @rdname complement
+#' @export
 `-.Set` <- function(x, y){
   complement.Set(x, y)
 }

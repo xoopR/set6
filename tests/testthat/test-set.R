@@ -10,6 +10,28 @@ test_that("construction",{
   expect_silent(Set$new(1:10))
   expect_silent(Set$new(list(a=1)))
   expect_silent(Set$new(Set$new(2), Interval$new(1,5)))
+  expect_error(Set$new(1,2,universe = c(1,2,3)))
+  expect_silent(Set$new(1,2,universe = Set$new(1,2,3)))
+})
+
+test_that("inherited_methods",{
+  expect_equal(Set$new(1,2)$type(),"{}")
+  expect_equal(Set$new(1,2)$dimension(),1)
+  expect_equal(Set$new(1,2)$max(),2)
+  expect_equal(Set$new(1,2)$min(),1)
+  expect_equal(Set$new(1,2)$sup(),2)
+  expect_equal(Set$new(1,2)$inf(),1)
+  expect_equal(Set$new("a",2)$max(),NaN)
+  expect_equal(Set$new("a",2)$min(),NaN)
+  expect_equal(Set$new("a",2)$sup(),NaN)
+  expect_equal(Set$new("a",2)$inf(),NaN)
+  expect_equal(Set$new(1,2)$class(), "numeric")
+  expect_equal(Set$new(Set$new(1),Set$new())$class(), "Set")
+  expect_equal(Set$new(1, "a")$class(), "multiple")
+  expect_equal(Set$new(1,2,3)$range(),2)
+  expect_equal(Set$new(1,"a")$range(),NaN)
+  expect_silent(Set$new(1,"a")$complement())
+  expect_equal(Set$new(1,2,universe = Set$new(1,2,3))$complement(),Set$new(3))
 })
 
 test_that("elements",{
@@ -18,7 +40,7 @@ test_that("elements",{
   expect_equal(Set$new("A",TRUE,function(x) x^2, as.factor("a"))$elements(), c("A",TRUE,function(x) x^2, as.factor("a")))
   expect_equal(Set$new(1+0i,2,2L,5.67)$elements(),c(1+0i,2,2L,5.67))
   expect_equal(Set$new(1:10)$elements(), 1:10)
-  expect_equal(Set$new(list(a=1))$elements(), list(a=1))
+  expect_equal(Set$new(list(1))$elements(), 1)
   expect_equal(Set$new(Set$new(2), Interval$new(1,5))$elements(), c(Set$new(2),Interval$new(1,5)))
 })
 

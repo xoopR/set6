@@ -38,6 +38,7 @@ SpecialSet$set("private",".class","integer")
 SpecialSet$set("public","strprint",function(){
   return(private$.setSymbol)
 })
+SpecialSet$set("private",".setSymbol",NULL)
 
 #' @name Empty
 #' @title Empty Set

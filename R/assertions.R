@@ -32,3 +32,13 @@ makeChecks(assertionName = "BoundedBelow",
            cond = testSet(object) |  substr(object$type(),1,1) == "[",
            errormsg = "This is not bounded below",
            pos = environment())
+
+makeChecks(assertionName = "Bounded",
+           cond = testBoundedBelow(object) &  testBoundedAbove(object),
+           errormsg = "This is not bounded",
+           pos = environment())
+
+makeChecks(assertionName = "Finite",
+           cond = object$inf()!=-Inf &  object$sup()!=Inf,
+           errormsg = "This is not finite",
+           pos = environment())
