@@ -83,9 +83,24 @@ SetInterval$set("public","range",function(){
   else
     return(NaN)
 })
+
+#' @title Test Equality of SetInterval
+#' @name equals
+#' @rdname equals
+#' @param x SetInterval
+#' @param y SetInterval
+NULL
+#' @export
 SetInterval$set("public","equals",function(x){
   return(NULL)
 })
+#' @title Tests SetInterval Subsets
+#' @name isSubset
+#' @rdname isSubset
+#' @param x SetInterval
+#' @param y SetInterval
+NULL
+#' @export
 SetInterval$set("public","isSubset",function(x, proper = FALSE){
   return(NULL)
 })
@@ -104,21 +119,33 @@ SetInterval$set("public","complement",function(){
 #'   return(NaN)
 #' }
 
+#' @rdname isSubset
+#' @export
 '<.SetInterval' <- function(x, y){
   return(y$isSubset(x, proper = TRUE))
 }
+#' @rdname isSubset
+#' @export
 '<=.SetInterval' <- function(x, y){
   return(y$isSubset(x, proper = FALSE))
 }
+#' @rdname isSubset
+#' @export
 '>.SetInterval' <- function(x, y){
   return(x$isSubset(y, proper = TRUE))
 }
+#' @rdname isSubset
+#' @export
 '>=.SetInterval' <- function(x, y){
   return(x$isSubset(y, proper = FALSE))
 }
+#' @rdname equals
+#' @export
 '==.SetInterval' <- function(x, y){
   return(y$equals(x))
 }
+#' @rdname equals
+#' @export
 '!=.SetInterval' <- function(x, y){
   return(!y$equals(x))
 }

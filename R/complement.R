@@ -45,9 +45,6 @@ complement.SetInterval <- function(x, y){
   complement.SetInterval(x, y)
 }
 
-#' @title Complement for Set
-#' @param x Set
-#' @param y Set
 #' @rdname complement
 #' @export
 complement.Set <- function(x, y){

@@ -22,13 +22,7 @@ complement(x, y)
 \item{x}{SetInterval}
 
 \item{y}{SetInterval}
-
-\item{x}{Set}
-
-\item{y}{Set}
 }
 \description{
 Complement for SetInterval
-
-Complement for Set
 }
