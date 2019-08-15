@@ -81,3 +81,8 @@ modal = function(data){
   modal = as.numeric(names(tab)[tab==max(tab)])
   return(modal)
 }
+
+#' @export
+strprint <- function(x){
+  x$strprint()
+}
