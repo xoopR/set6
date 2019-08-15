@@ -7,7 +7,10 @@ Set <- R6::R6Class("Set", inherit = SetInterval)
 
 Set$set("public","initialize",function(..., dim = 1, universe = NULL){
   if(length(list(...)) != 0){
-    dots <- list(...)
+    if(!checkmate::testList(...))
+      dots <- list(...)
+    else
+      dots <- unlist(list(...), recursive = FALSE)
     private$.elements <- unlist(unique(dots))
     class <- unique(sapply(dots,function(x) class(x)[[1]]))
     if(length(class)==1)

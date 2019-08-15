@@ -29,6 +29,6 @@ product.SetInterval(PosNaturals$new(), Reals$new())
 
 }
 \seealso{
-\code{\link{union.SetInterval}}, \code{\link{complement.SetInterval}},
+\code{\link{union.SetInterval}}, \code{\link{setdiff}},
 \code{\link{power.SetInterval}}
 }

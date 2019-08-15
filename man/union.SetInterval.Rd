@@ -31,6 +31,6 @@ product.SetInterval(PosNaturals$new(), Reals$new())
 
 }
 \seealso{
-\code{\link{product.SetInterval}}, \code{\link{complement.SetInterval}},
+\code{\link{product.SetInterval}}, \code{\link{setdiff}},
 \code{\link{power.SetInterval}}
 }

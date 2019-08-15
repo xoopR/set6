@@ -31,6 +31,6 @@ Generally not recommended to use this function directly but instead
   via one of the implemented operations.
 }
 \seealso{
-\code{\link{product.SetInterval}}, \code{\link{union.SetInterval}}, \code{\link{complement.SetInterval}},
+\code{\link{product.SetInterval}}, \code{\link{union.SetInterval}}, \code{\link{setdiff}},
 \code{\link{power.SetInterval}}
 }

@@ -28,5 +28,5 @@ power.SetInterval(Reals$new(), 3)
 }
 \seealso{
 \code{\link{product.SetInterval}}, \code{\link{union.SetInterval}},
-\code{\link{complement.SetInterval}}
+\code{\link{setdiff}}
 }

@@ -1,14 +1,14 @@
-#' @title Complement for SetInterval
+#' @title setdiff for SetInterval
 #' @param x SetInterval
 #' @param y SetInterval
 #' @export
-complement <- function(x, y){
-  UseMethod("complement", x)
+setdiff <- function(x, y){
+  UseMethod("setdiff", x)
 }
 
-#' @rdname complement
+#' @rdname setdiff
 #' @export
-complement.SetInterval <- function(x, y){
+setdiff.SetInterval <- function(x, y){
 
   # if(is.null(y)){
   #   y <- x$
@@ -39,26 +39,26 @@ complement.SetInterval <- function(x, y){
   # setOperation("/",lower = lower, upper = upper, type = type, dim = x$dimension(),x,y)
 }
 
-#' @rdname complement
+#' @rdname setdiff
 #' @export
 `-.SetInterval` <- function(x, y){
-  complement.SetInterval(x, y)
+  setdiff.SetInterval(x, y)
 }
 
-#' @rdname complement
+#' @rdname setdiff
 #' @export
-complement.Set <- function(x, y){
+setdiff.Set <- function(x, y){
   if(testSet(y)){
     if(y >= x)
       return(Empty$new())
     else
       return(Set$new(x$elements()[!(x$elements() %in% y$elements())]))
   }else
-    return(complement.SetInterval(x, y))
+    return(setdiff.SetInterval(x, y))
 }
 
-#' @rdname complement
+#' @rdname setdiff
 #' @export
 `-.Set` <- function(x, y){
-  complement.Set(x, y)
+  setdiff.Set(x, y)
 }

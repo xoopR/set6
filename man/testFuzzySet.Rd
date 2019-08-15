@@ -25,6 +25,6 @@ Validation checks to test if a given object is an R6 FuzzySet.
 }
 \examples{
 testFuzzySet(Set$new(2,3)) # FALSE
-testFuzzySet(FuzzySet$new(c(2,0.1),c(3,0.6))) # TRUE
+testFuzzySet(FuzzySet$new(2,0.1,3,0.6)) # TRUE
 
 }

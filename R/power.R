@@ -14,7 +14,7 @@
 #'   is just a symbolic representation using unicode.
 #'
 #' @seealso \code{\link{product.SetInterval}}, \code{\link{union.SetInterval}},
-#' \code{\link{complement.SetInterval}}
+#' \code{\link{setdiff}}
 #'
 #' @examples
 #' PosNaturals$new() ^ 2

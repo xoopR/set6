@@ -82,6 +82,9 @@ modal = function(data){
   return(modal)
 }
 
+#' @title String Representation of R6 Object
+#' @description Workhorse function for print
+#' @param x R6 Object
 #' @export
 strprint <- function(x){
   x$strprint()

@@ -9,7 +9,7 @@
 #' @details This does not calculate the cartesian product of the arguments but
 #'   is just a symbolic representation using unicode.
 #'
-#' @seealso \code{\link{union.SetInterval}}, \code{\link{complement.SetInterval}},
+#' @seealso \code{\link{union.SetInterval}}, \code{\link{setdiff}},
 #' \code{\link{power.SetInterval}}
 #'
 #' @examples

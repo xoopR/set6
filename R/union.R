@@ -12,7 +12,7 @@
 #' @details This does not calculate the union of the arguments but
 #'   is just a symbolic representation using unicode.
 #'
-#' @seealso \code{\link{product.SetInterval}}, \code{\link{complement.SetInterval}},
+#' @seealso \code{\link{product.SetInterval}}, \code{\link{setdiff}},
 #' \code{\link{power.SetInterval}}
 #'
 #' @examples

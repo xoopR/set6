@@ -119,7 +119,7 @@ SetInterval$set("public","powerSet",function(){
 })
 SetInterval$set("public","complement",function(){
   if(!is.null(self$universe))
-    return(complement(self$universe, self))
+    return(setdiff(self$universe, self))
 })
 
 #' # S3 Dispatch

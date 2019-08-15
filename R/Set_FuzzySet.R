@@ -4,57 +4,68 @@
 NULL
 #' @export
 FuzzySet <- R6::R6Class("FuzzySet", inherit = Set)
-FuzzySet$set("public","initialize",function(..., dim = 1){
-  if(length(list(...)) != 0){
+FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements)), dim = 1, universe = NULL){
+  if(!is.null(elements) & !is.null(membership)){
+    membership <- as.numeric(membership)
+    checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
+    private$.membership <- membership
+  } else if(length(list(...)) != 0){
     dots <- list(...)
     if(length(dots) == 1 & is.list(dots))
       dots <- dots[[1]]
-    x <- unlist(dots)
-    elements <- x[seq.int(1,length(x),2)]
-    private$.elements <- elements
-    members <- x[seq.int(2,length(x),2)]
-    checkmate::assertNumeric(members, lower = 0, upper = 1)
-    private$.members <- members
-
-    if(inherits(elements,"numeric") | inherits(elements,"integer")){
-      private$.lower <- min(elements)
-      private$.upper <- max(elements)
-    } else{
-      private$.lower <- elements[[1]]
-      private$.upper <- elements[[length(elements)]]
-    }
-    private$.dimension <- dim
+    if(length(dots)%%2)
+      stop("Every element needs a corresponding membership.")
+    elements <- dots[seq.int(1,length(dots),2)]
+    membership <- as.numeric(dots[seq.int(2,length(dots),2)])
+    checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
+    private$.membership <- membership
   }
 
+  super$initialize(elements, dim = dim, universe = universe)
   invisible(self)
 })
 
 FuzzySet$set("public","strprint",function(){
-  return(paste0("{",paste0(self$elements(),"(",self$members(),")", collapse = ", "),"}"))
+  return(paste0("{",paste0(self$elements(),"(",self$membership(),")", collapse = ", "),"}"))
 })
-FuzzySet$set("public","members",function(){
-  return(private$.members)
+FuzzySet$set("public","membership",function(element = NULL){
+  if(is.null(element))
+    return(private$.membership)
+  else{
+    x <- match(element, self$elements())
+    if(is.na(x)){
+      message(sprintf("%s is not in this fuzzy set.", element))
+      return(NA)
+    }else
+      return(private$.membership[match(element, self$elements())])
+  }
 })
 FuzzySet$set("public","isEmpty",function(){
-  if(all(self$members() == 0))
+  if(all(self$membership() == 0))
     return(TRUE)
   else
     return(FALSE)
 })
 FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE){
   if(strong)
-    return(self$elements()[self$members() > alpha])
+    return(self$elements()[self$membership() > alpha])
   else
-    return(self$elements()[self$members() >= alpha])
+    return(self$elements()[self$membership() >= alpha])
 })
 FuzzySet$set("public","support",function(){
-  return(self$elements()[self$members() > 0])
+  if(length(self$elements()[self$membership() > 0]) == 0)
+    return(NULL)
+  else
+    return(self$elements()[self$membership() > 0])
 })
 FuzzySet$set("public","core",function(){
-  return(self$elements()[self$members() == 1])
+  if(length(self$elements()[self$membership() == 1])==0)
+    return(NULL)
+  else
+    return(self$elements()[self$membership() == 1])
 })
-FuzzySet$set("public","inclusion",function(x){
-  member <- self$members()[self$elements() %in% x]
+FuzzySet$set("public","inclusion",function(element){
+  member <- self$membership()[self$elements() %in% element]
   if(length(member) == 0)
     return("Not Included")
 
@@ -69,8 +80,8 @@ FuzzySet$set("public","equals",function(x){
   if(!testFuzzySet(x))
     return(FALSE)
 
-  x_mat = matrix(c(x$elements(),x$members()),ncol=2)[order(x$elements()),]
-  self_mat = matrix(c(self$elements(),self$members()),ncol=2)[order(self$elements()),]
+  x_mat = matrix(c(x$elements(),x$membership()),ncol=2)[order(x$elements()),]
+  self_mat = matrix(c(self$elements(),self$membership()),ncol=2)[order(self$elements()),]
 
   if(any(dim(x_mat) != dim(self_mat)))
     return(FALSE)
@@ -81,13 +92,61 @@ FuzzySet$set("public","equals",function(x){
     return(FALSE)
 })
 FuzzySet$set("public","complement",function(){
-  private$.members <- 1 - self$members()
-  return(self)
+  private$.membership <- 1 - self$membership()
+  slf <- self$clone()
+  private$.membership <- 1 - self$membership()
+  return(slf)
+})
+FuzzySet$set("public","powerSet",function(){
+  y = Vectorize(function(m) combn(self$elements(), m),vectorize.args = c("m"))(1:(self$length()-1))
+  if(checkmate::testList(y))
+    y = lapply(y, function(z) apply(z, 2, function(x){
+      FuzzySet$new(elements = x, membership = self$membership(x))
+    }))
+  else
+    y = apply(y, 1, function(x){
+      FuzzySet$new(elements = x, membership = self$membership(x))
+    })
+  return(Set$new(Set$new(), y, self))
+})
+FuzzySet$set("public","isSubset",function(x, proper){
+  message("isSubset is currently undefined for fuzzy sets.")
+  return(NULL)
 })
 
-
 FuzzySet$set("private",".type","{}")
-FuzzySet$set("private",".members", 0)
+FuzzySet$set("private",".membership", 0)
 
 
-
+#' @title Coercion to R6 FuzzySet
+#' @description Coerces objects to R6 FuzzySet
+#' @param object object to coerce
+#' @export
+as.FuzzySet <- function(object){
+  UseMethod("as.FuzzySet",object)
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.numeric <- function(object){
+  return(FuzzySet$new(elements = as.numeric(object), membership = names(object)))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.list <- function(object){
+  return(FuzzySet$new(elements = unlist(object, use.names = FALSE), membership = names(object)))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.matrix <- function(object){
+  return(FuzzySet$new(elements = object[,1], membership = object[,2]))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.data.table <- function(object){
+  return(as.FuzzySet(as.matrix(object)))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.data.frame <- function(object){
+  return(as.FuzzySet(as.matrix(object)))
+}
