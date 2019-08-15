@@ -1,0 +1,67 @@
+library(testthat)
+
+context("tuple")
+
+test_that("construction",{
+  expect_silent(Tuple$new(1,2,3))
+  expect_silent(Tuple$new(1,2,3,1))
+  expect_silent(Tuple$new("A",TRUE,function(x) x^2, as.factor("a")))
+  expect_silent(Tuple$new(1+0i,2,2L,5.67))
+  expect_silent(Tuple$new(1:10))
+  expect_silent(Tuple$new(list(a=1)))
+  expect_silent(Tuple$new(Set$new(2), Interval$new(1,5)))
+  expect_error(Tuple$new(1,2,universe = c(1,2,3)))
+  expect_silent(Tuple$new(1,2,universe = Set$new(1,2,3)))
+})
+
+test_that("inherited_methods",{
+  expect_equal(Tuple$new(1,2)$type(),"()")
+  expect_equal(Tuple$new(1,2)$dimension(),1)
+  expect_equal(Tuple$new(1,2)$max(),2)
+  expect_equal(Tuple$new(1,2)$min(),1)
+  expect_equal(Tuple$new(1,2)$sup(),2)
+  expect_equal(Tuple$new(1,2)$inf(),1)
+  expect_equal(Tuple$new("a",2)$max(),NaN)
+  expect_equal(Tuple$new("a",1)$min(),NaN)
+  expect_equal(Tuple$new("a",1)$sup(),NaN)
+  expect_equal(Tuple$new("a",1)$inf(),NaN)
+  expect_equal(Tuple$new(1,0.3)$class(), "numeric")
+  expect_equal(Tuple$new(Set$new(1),Set$new())$class(), "Set")
+  expect_equal(Tuple$new(1,"a")$class(), "multiple")
+  expect_equal(Tuple$new(1,2,3)$range(),2)
+  expect_equal(Tuple$new(1,"a",0.3)$range(),NaN)
+  expect_equal(Tuple$new(1,2,3)$elements(),1:3)
+  expect_equal(Tuple$new(1,2,3)$length(),3)
+  expect_true(Tuple$new(1,3,0.9)$liesInSetInterval(1))
+  expect_false(Tuple$new(1,0.1,2,0.3,3,0.9)$liesInSetInterval(5))
+  expect_true(Tuple$new()$isEmpty())
+  expect_false(Tuple$new(1)$isEmpty())
+  expect_equal(Tuple$new(1,2)$strprint(),"(1, 2)")
+})
+
+test_that("equals",{
+  expect_true(Tuple$new(1,2,3)$equals(Tuple$new(1,2,3)))
+  expect_true(Tuple$new(1,2,3)$equals(Tuple$new(1,2,3,2,3,3)))
+  expect_false(Tuple$new(1,2,3)$equals(Tuple$new(2,1,3)))
+})
+
+test_that("powerSet",{
+  expect_equal(Tuple$new(1,2)$powerSet(),Set$new(Tuple$new(),Tuple$new(1),Tuple$new(2),
+                                                 Tuple$new(1,2)))
+})
+
+test_that("isSubset",{
+  expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2,3)))
+  expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2,3), proper = TRUE))
+  expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(3,1,2)))
+  expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(3,1)))
+  expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2)))
+  expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2), proper = TRUE))
+  expect_error(Tuple$new(1,2,3)$isSubset(Set$new(1,2,3)))
+})
+
+test_that("as.Tuple",{
+  expect_equal(as.Tuple(c(1,2)), Tuple$new(1,2))
+  expect_equal(as.Tuple(list(1,2)), Tuple$new(1,2))
+  expect_equal(as.Tuple(matrix(c(1,2,3,4),nrow = 2)), list(Tuple$new(1,2),Tuple$new(3,4)))
+})

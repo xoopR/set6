@@ -7,8 +7,6 @@ FuzzySet <- R6::R6Class("FuzzySet", inherit = Set)
 FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements)), dim = 1, universe = NULL){
   if(!is.null(elements) & !is.null(membership)){
     membership <- as.numeric(membership)
-    checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
-    private$.membership <- membership
   } else if(length(list(...)) != 0){
     dots <- list(...)
     if(length(dots) == 1 & is.list(dots))
@@ -17,9 +15,16 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
       stop("Every element needs a corresponding membership.")
     elements <- dots[seq.int(1,length(dots),2)]
     membership <- as.numeric(dots[seq.int(2,length(dots),2)])
-    checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
-    private$.membership <- membership
   }
+
+  if(any(duplicated(elements))){
+    message("Duplicated elements dedicated, only the first element-membership pair is included.")
+    membership <- membership[!duplicated(elements)]
+    elements <- elements[!duplicated(elements)]
+  }
+
+  checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
+  private$.membership <- membership
 
   super$initialize(elements, dim = dim, universe = universe)
   invisible(self)
@@ -109,9 +114,23 @@ FuzzySet$set("public","powerSet",function(){
     })
   return(Set$new(Set$new(), y, self))
 })
-FuzzySet$set("public","isSubset",function(x, proper){
-  message("isSubset is currently undefined for fuzzy sets.")
-  return(NULL)
+FuzzySet$set("public","isSubset",function(x, proper = FALSE){
+  assertFuzzySet(x)
+
+  self_comp <- paste(self$elements(), self$membership(), sep=";")
+  x_comp <- paste(x$elements(), x$membership(), sep=";")
+
+  if(proper){
+    if(all(x_comp %in% self_comp) & !all(self_comp %in% x_comp))
+      return(TRUE)
+    else
+      return(FALSE)
+  }else{
+    if(all(x_comp %in% self_comp))
+      return(TRUE)
+    else
+      return(FALSE)
+  }
 })
 
 FuzzySet$set("private",".type","{}")

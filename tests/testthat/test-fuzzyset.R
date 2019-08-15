@@ -11,6 +11,7 @@ test_that("construction",{
   expect_equal(FuzzySet$new(1,0.1,2,0.8),FuzzySet$new(elements = c(1,2),
                                                       membership = c(0.1,0.8)))
   expect_error(FuzzySet$new(1,0.1,2))
+  expect_message(expect_equal(FuzzySet$new(1,0.1,1,0.9),FuzzySet$new(1,0.1)))
 })
 
 test_that("inherited_methods",{
@@ -82,7 +83,11 @@ test_that("powerSet",{
 })
 
 test_that("isSubset",{
-  expect_message(expect_null(f$isSubset(Set$new())))
+  expect_true(f$isSubset(f, proper = FALSE))
+  expect_false(f$isSubset(f, proper = TRUE))
+  expect_true(f$isSubset(FuzzySet$new(2,0.2), proper = FALSE))
+  expect_true(f$isSubset(FuzzySet$new(2,0.2), proper = TRUE))
+  expect_false(f$isSubset(FuzzySet$new(2,0.1), proper = TRUE))
 })
 
 test_that("as.FuzzySet",{
