@@ -21,18 +21,22 @@ Tuple$set("public","powerSet",function(){
 })
 
 Tuple$set("public","isSubset",function(x, proper = FALSE){
-  assertTuple(x)
+  if(!testTuple(x))
+    return(FALSE)
 
-  self_comp <- paste(self$elements(), 1:self$length(), sep = ";")
-  x_comp <- paste(x$elements(), 1:x$length(), sep = ";")
-
-  if(proper){
-    if(all(x_comp %in% self_comp) & !all(self_comp %in% x_comp))
+  if(x$length() > self$length())
+    return(FALSE)
+  else if(x$length() == self$length()){
+    if(!proper & x$equals(self))
       return(TRUE)
     else
       return(FALSE)
-  }else{
-    if(all(x_comp %in% self_comp))
+  } else{
+    mtc <- match(x_comp, self_comp)
+    if(all(is.na(mtc)))
+      return(FALSE)
+
+    if(all(order(mtc) == (1:length(x$elements()))))
       return(TRUE)
     else
       return(FALSE)

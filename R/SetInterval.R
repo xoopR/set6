@@ -25,6 +25,9 @@ SetInterval$set("public","initialize",function(lower, upper, type, class = "nume
 })
 
 # Accessors
+SetInterval$set("public","properties",function(){
+  return(private$.properties)
+})
 SetInterval$set("public","type",function(){
   return(private$.type)
 })
@@ -152,12 +155,12 @@ SetInterval$set("public","complement",function(){
 #' @rdname equals
 #' @export
 '==.SetInterval' <- function(x, y){
-  return(y$equals(x))
+  return(x$equals(y))
 }
 #' @rdname equals
 #' @export
 '!=.SetInterval' <- function(x, y){
-  return(!y$equals(x))
+  return(!x$equals(y))
 }
 
 # Private Variables

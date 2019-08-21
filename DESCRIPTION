@@ -21,6 +21,7 @@ VignetteBuilder:
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate: 
+    'FuzzySet_FuzzyTuple.R'
     'RSmisc_helpers.R'
     'SetInterval.R'
     'SetInterval_Interval.R'

@@ -59,6 +59,9 @@ Empty <- R6::R6Class("Empty",inherit = SpecialSet)
 Empty$set("public", "initialize", function(){
   super$initialize(dim = 1, lower = NULL, upper = NULL, type = "{}")
 })
+Empty$set("public", "length", function(){
+  return(0)
+})
 
 #' @title Set of Natural Numbers
 #' @description The mathematical set of natural numbers.

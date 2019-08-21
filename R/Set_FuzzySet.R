@@ -4,7 +4,7 @@
 NULL
 #' @export
 FuzzySet <- R6::R6Class("FuzzySet", inherit = Set)
-FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements)), dim = 1, universe = NULL){
+FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements)), dimension = 1, universe = NULL){
   if(!is.null(elements) & !is.null(membership)){
     membership <- as.numeric(membership)
   } else if(length(list(...)) != 0){
@@ -26,7 +26,7 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
   checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
   private$.membership <- membership
 
-  super$initialize(elements, dim = dim, universe = universe)
+  super$initialize(elements, dimension = dimension, universe = universe)
   invisible(self)
 })
 
@@ -51,23 +51,25 @@ FuzzySet$set("public","isEmpty",function(){
   else
     return(FALSE)
 })
-FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE){
-  if(strong)
-    return(self$elements()[self$membership() > alpha])
-  else
-    return(self$elements()[self$membership() >= alpha])
+FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
+  if(strong){
+    if(create)
+      return(Set$new(self$elements()[self$membership() > alpha]))
+    else
+      return(self$elements()[self$membership() > alpha])
+  } else {
+    if(create)
+      return(Set$new(self$elements()[self$membership() >= alpha]))
+    else
+      return(self$elements()[self$membership() >= alpha])
+  }
+
 })
-FuzzySet$set("public","support",function(){
-  if(length(self$elements()[self$membership() > 0]) == 0)
-    return(NULL)
-  else
-    return(self$elements()[self$membership() > 0])
+FuzzySet$set("public","support",function(create = FALSE){
+  self$alphaCut(0, TRUE, create)
 })
-FuzzySet$set("public","core",function(){
-  if(length(self$elements()[self$membership() == 1])==0)
-    return(NULL)
-  else
-    return(self$elements()[self$membership() == 1])
+FuzzySet$set("public","core",function(create = FALSE){
+  self$alphaCut(1, FALSE, create)
 })
 FuzzySet$set("public","inclusion",function(element){
   member <- self$membership()[self$elements() %in% element]
@@ -115,7 +117,8 @@ FuzzySet$set("public","powerSet",function(){
   return(Set$new(Set$new(), y, self))
 })
 FuzzySet$set("public","isSubset",function(x, proper = FALSE){
-  assertFuzzySet(x)
+  if(!testFuzzySet(x))
+    return(FALSE)
 
   self_comp <- paste(self$elements(), self$membership(), sep=";")
   x_comp <- paste(x$elements(), x$membership(), sep=";")

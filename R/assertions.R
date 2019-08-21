@@ -94,6 +94,30 @@ makeChecks(assertionName = "FuzzySet",
            errormsg = "This is not an R6 FuzzySet object",
            pos = environment())
 
+#' @title assert/check/test/FuzzyTuple
+#' @description Validation checks to test if a given object is an R6 FuzzyTuple.
+#' @param object object to test
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testFuzzyTuple(Set$new(2,3)) # FALSE
+#' testFuzzyTuple(FuzzyTuple$new(2,0.1,3,0.6)) # TRUE
+#'
+#' @export
+testFuzzyTuple <- function(){}
+#' @rdname testFuzzyTuple
+#' @export
+checkFuzzyTuple <- function(){}
+#' @rdname testFuzzyTuple
+#' @export
+assertFuzzyTuple <- function(){}
+makeChecks(assertionName = "FuzzyTuple",
+           cond = inherits(object, "FuzzyTuple"),
+           errormsg = "This is not an R6 FuzzyTuple object",
+           pos = environment())
+
 #' @title assert/check/test/Interval
 #' @description Validation checks to test if a given object is an R6 Interval.
 #' @param object object to test
