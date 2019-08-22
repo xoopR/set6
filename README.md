@@ -17,6 +17,7 @@
 ## Installation
 
 We aim to release set6 v1.0 on CRAN by 01/09/19, until then the latest stable build can be installed via
+
 ```R
 remotes::install_github("RaphaelS1/set6")
 ```
