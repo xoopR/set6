@@ -52,16 +52,21 @@ FuzzySet$set("public","isEmpty",function(){
     return(FALSE)
 })
 FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
-  if(strong){
-    if(create)
-      return(Set$new(self$elements()[self$membership() > alpha]))
+  if(strong)
+    els <- self$elements()[self$membership() > alpha]
+  else
+    els <- self$elements()[self$membership() >= alpha]
+
+  if(create){
+    if(length(els) == 0)
+      return(Empty$new())
     else
-      return(self$elements()[self$membership() > alpha])
-  } else {
-    if(create)
-      return(Set$new(self$elements()[self$membership() >= alpha]))
+      return(Set$new(els))
+  } else{
+    if(length(els) == 0)
+      return(NULL)
     else
-      return(self$elements()[self$membership() >= alpha])
+      return(els)
   }
 
 })

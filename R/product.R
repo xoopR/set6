@@ -2,8 +2,10 @@
 #'
 #' @description Makes a symbolic representation for the cartesian product of sets/intervals.
 #'
-#' @usage product.SetInterval(...)
-#'
+#' @param x SetInterval
+#' @param y SetInterval
+#' @param alpha If \code{FuzzySet}, where to \code{alphaCut}
+#' @param tuple If TRUE returns \code{Tuple}, otherwise \code{Set}
 #' @param ... SetIntervals to take the cartesian product of.
 #'
 #' @details This does not calculate the cartesian product of the arguments but
@@ -53,15 +55,13 @@ product.FuzzySet <- function(x, y){
   stop("Product of fuzzy sets is currently unsupported.")
 }
 
-#' @usage \method{*}{SetInterval}(x, y)
 #' @rdname product
-#' @param x SetInterval
-#' @param y SetInterval
 #' @export
 `*.SetInterval` <- function(x, y){
   print("C")
   product.SetInterval(x, y)
 }
+
 #' @rdname product
 #' @export
 `*.Set` <- function(x, y){

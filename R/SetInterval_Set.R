@@ -52,21 +52,31 @@ Set$set("public","isEmpty",function(){
     return(FALSE)
 })
 Set$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
+  }
+
   ret = rep(FALSE, length(x))
 
   r6.fil <- sapply(x, function(y) ifelse(inherits(y, "R6"), TRUE, FALSE))
   r6.match <- x[r6.fil]
   atom.match <- x[!r6.fil]
 
-  ret[!r6.fil][atom.match %in% self$elements()] = TRUE
+  if(length(atom.match) > 0)
+    ret[!r6.fil][atom.match %in% self$elements()] = TRUE
 
-  r6.tr <- sapply(r6.match, function(y){
-    cl <- getR6Class(y)
-    fil <- sapply(self$elements(), function(z) ifelse(inherits(z, cl), TRUE, FALSE))
-    els <- self$elements()[fil]
-    any(sapply(els, function(z) y$equals(z)))
-  })
-  ret[r6.fil][r6.tr] = TRUE
+  if(length(r6.match) > 0){
+    r6.tr <- sapply(r6.match, function(y){
+      cl <- getR6Class(y)
+      fil <- sapply(self$elements(), function(z) ifelse(inherits(z, cl), TRUE, FALSE))
+      els <- self$elements()[fil]
+      any(sapply(els, function(z) y$equals(z)))
+    })
+    ret[r6.fil][r6.tr] = TRUE
+  }
 
   if(all)
     return(all(ret))

@@ -58,9 +58,11 @@ test_that("support",{
   expect_equal(f$support(), 1:3)
   expect_equal(FuzzySet$new(1,0.2,3,0.1,2,0)$support(), c(1,3))
   expect_null(FuzzySet$new()$support())
+  expect_equal(FuzzySet$new()$support(T),Empty$new())
 })
 test_that("core",{
   expect_null(f$core())
+  expect_equal(f$core(T), Empty$new())
   expect_equal(FuzzySet$new(1,1,2,0.3,3,1,4.2,0.1)$core(), c(1,3))
 })
 test_that("inclusion",{

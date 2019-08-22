@@ -62,6 +62,7 @@ test_that("liesInSetInterval",{
   expect_equal(x$liesInSetInterval(y, all = F), c(TRUE, TRUE, FALSE))
   expect_false(x$liesInSetInterval(y, all = T))
   expect_true(x$liesInSetInterval(c(2,3), all = T))
+  expect_true(Set$new(1,2,Set$new())$liesInSetInterval(c(2,Set$new()), all = TRUE))
 })
 
 test_that("equals",{

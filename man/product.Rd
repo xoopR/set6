@@ -10,7 +10,7 @@
 \alias{*.FuzzySet}
 \title{Symbolic Cartesian Product for SetInterval}
 \usage{
-product.SetInterval(...)
+product(x, y, ...)
 
 \method{product}{SetInterval}(x, y)
 
@@ -30,6 +30,10 @@ product.SetInterval(...)
 \item{y}{SetInterval}
 
 \item{...}{SetIntervals to take the cartesian product of.}
+
+\item{alpha}{If \code{FuzzySet}, where to \code{alphaCut}}
+
+\item{tuple}{If TRUE returns \code{Tuple}, otherwise \code{Set}}
 }
 \description{
 Makes a symbolic representation for the cartesian product of sets/intervals.

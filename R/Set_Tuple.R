@@ -32,7 +32,7 @@ Tuple$set("public","isSubset",function(x, proper = FALSE){
     else
       return(FALSE)
   } else{
-    mtc <- match(x_comp, self_comp)
+    mtc <- match(x$elements(), self$elements())
     if(all(is.na(mtc)))
       return(FALSE)
 
