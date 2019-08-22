@@ -12,11 +12,11 @@
 \usage{
 product(x, y, ...)
 
-\method{product}{SetInterval}(x, y)
+\method{product}{SetInterval}(x, y, ...)
 
-\method{product}{Set}(x, y, alpha = 1, tuple = FALSE)
+\method{product}{Set}(x, y, alpha = 1, tuple = FALSE, ...)
 
-\method{product}{FuzzySet}(x, y)
+\method{product}{FuzzySet}(x, y, ...)
 
 \method{*}{SetInterval}(x, y)
 
@@ -44,7 +44,7 @@ This does not calculate the cartesian product of the arguments but
 }
 \examples{
 PosNaturals$new() * Reals$new()
-product.SetInterval(PosNaturals$new(), Reals$new())
+product(PosNaturals$new(), Reals$new())
 
 }
 \seealso{

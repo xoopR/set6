@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' PosNaturals$new() * Reals$new()
-#' product.SetInterval(PosNaturals$new(), Reals$new())
+#' product(PosNaturals$new(), Reals$new())
 #'
 #' @export
 product <- function(x, y, ...){
@@ -25,17 +25,16 @@ product <- function(x, y, ...){
 
 #' @rdname product
 #' @export
-product.SetInterval <- function(x, y){
+product.SetInterval <- function(x, y,...){
   if(x$equals(y))
-  if(length(unique(sapply(dots,function(x) x$strprint()))) == 1 & length(dots)>1)
-    return(power.SetInterval(dots[[1]], length(dots)))
+    return(power.SetInterval(x, y))
   else
-    return(setOperation("\u00D7", sets = dots))
+    return(setOperation("\u00D7", sets = c(x,y)))
 }
 
 #' @rdname product
 #' @export
-product.Set <- function(x, y, alpha = 1, tuple = FALSE){
+product.Set <- function(x, y, alpha = 1, tuple = FALSE,...){
   if(testFuzzySet(y))
     y <- y$alphaCut(alpha, FALSE, TRUE)
 
@@ -51,7 +50,7 @@ product.Set <- function(x, y, alpha = 1, tuple = FALSE){
 
 #' @rdname product
 #' @export
-product.FuzzySet <- function(x, y){
+product.FuzzySet <- function(x, y,...){
   stop("Product of fuzzy sets is currently unsupported.")
 }
 

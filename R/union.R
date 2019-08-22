@@ -16,8 +16,8 @@
 #' \code{\link{power.SetInterval}}
 #'
 #' @examples
-#' PosNaturals$new() * Reals$new()
-#' product.SetInterval(PosNaturals$new(), Reals$new())
+#' PosNaturals$new() + Reals$new()
+#' union.SetInterval(PosNaturals$new(), Reals$new())
 #'
 #' @export
 union.SetInterval <- function(..., dim = 1){

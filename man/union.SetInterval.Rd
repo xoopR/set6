@@ -26,8 +26,8 @@ This does not calculate the union of the arguments but
   is just a symbolic representation using unicode.
 }
 \examples{
-PosNaturals$new() * Reals$new()
-product.SetInterval(PosNaturals$new(), Reals$new())
+PosNaturals$new() + Reals$new()
+union.SetInterval(PosNaturals$new(), Reals$new())
 
 }
 \seealso{
