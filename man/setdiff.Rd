@@ -11,10 +11,6 @@ setdiff(x, y)
 \method{setdiff}{Set}(x, y)
 
 \method{-}{Set}(x, y)
-
-\method{setdiff}{Set}(x, y)
-
-\method{-}{Set}(x, y)
 }
 \arguments{
 \item{x}{Set}

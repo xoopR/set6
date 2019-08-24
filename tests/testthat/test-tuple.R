@@ -41,7 +41,7 @@ test_that("inherited_methods",{
 
 test_that("equals",{
   expect_true(Tuple$new(1,2,3)$equals(Tuple$new(1,2,3)))
-  expect_true(Tuple$new(1,2,3)$equals(Tuple$new(1,2,3,2,3,3)))
+  expect_false(Tuple$new(1,2,3)$equals(Tuple$new(1,2,3,2,3,3)))
   expect_false(Tuple$new(1,2,3)$equals(Tuple$new(2,1,3)))
 })
 
