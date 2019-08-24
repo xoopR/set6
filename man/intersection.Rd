@@ -2,15 +2,18 @@
 % Please edit documentation in R/intersection.R
 \name{intersection}
 \alias{intersection}
+\alias{&.Set}
 \title{Intersection}
 \usage{
 intersection(x, y)
+
+\method{&}{Set}(x, y)
 }
 \arguments{
-\item{x}{SetInterval}
+\item{x}{Set}
 
-\item{y}{SetInterval}
+\item{y}{Set}
 }
 \description{
-Intersection of two SetInterval objects
+Intersection of two objects
 }

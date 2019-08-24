@@ -1,38 +1,38 @@
 
-#' @title Symbolic Exponentiation for SetInterval
+#' @title Symbolic Exponentiation for Set
 #'
 #' @description Makes a symbolic representation for the exponentiation of a given set/interval.
 #'
-#' @name power.SetInterval
+#' @name power.Set
 #'
-#' @usage power.SetInterval(x, power)
+#' @usage power.Set(x, power)
 #'
-#' @param x SetInterval
-#' @param power power to raise SetInterval to
+#' @param x Set
+#' @param power power to raise Set to
 #'
 #' @details This does not calculate the exponentiation but
 #'   is just a symbolic representation using unicode.
 #'
-#' @seealso \code{\link{product.SetInterval}}, \code{\link{union.SetInterval}},
+#' @seealso \code{\link{product.Set}}, \code{\link{union.Set}},
 #' \code{\link{setdiff}}
 #'
 #' @examples
 #' PosNaturals$new() ^ 2
-#' power.SetInterval(Reals$new(), 3)
+#' power.Set(Reals$new(), 3)
 #'
 #' @export
-power.SetInterval <- function(x, power){
+power.Set <- function(x, power){
   symbol = paste0(x$strprint(),"^",power)
-  lower = rep(x$inf(),power)
-  upper = rep(x$sup(),power)
+  lower = rep(x$lower(),power)
+  upper = rep(x$upper(),power)
 
-  SetInterval$new(symbol = symbol, type = x$type(), lower = lower,
+  Set$new(symbol = symbol, type = x$type(), lower = lower,
                   upper = upper, dimension = power)
 }
 
-#' @usage \method{^}{SetInterval}(x, power)
-#' @rdname power.SetInterval
+#' @usage \method{^}{Set}(x, power)
+#' @rdname power.Set
 #' @export
-`^.SetInterval` <- function(x, power){
-  power.SetInterval(x, power)
+`^.Set` <- function(x, power){
+  power.Set(x, power)
 }

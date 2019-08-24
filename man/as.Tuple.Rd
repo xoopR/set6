@@ -5,6 +5,8 @@
 \alias{as.Tuple.numeric}
 \alias{as.Tuple.list}
 \alias{as.Tuple.matrix}
+\alias{as.Tuple.FuzzySet}
+\alias{as.Tuple.Set}
 \title{Coercion to R6 Tuple}
 \usage{
 as.Tuple(object)
@@ -14,6 +16,10 @@ as.Tuple(object)
 \method{as.Tuple}{list}(object)
 
 \method{as.Tuple}{matrix}(object)
+
+\method{as.Tuple}{FuzzySet}(object)
+
+\method{as.Tuple}{Set}(object)
 }
 \arguments{
 \item{object}{object to coerce}

@@ -1,4 +1,4 @@
-#' @include SetInterval_Interval.R setSymbol.R
+#' @include Set.R setSymbol.R
 #'
 #' @title Special Mathematical Sets
 #'
@@ -59,7 +59,7 @@ Empty <- R6::R6Class("Empty",inherit = SpecialSet)
 Empty$set("public", "initialize", function(){
   super$initialize(dim = 1, lower = NULL, upper = NULL, type = "{}")
 })
-Empty$set("public", "length", function(){
+Empty$set("active", "length", function(){
   return(0)
 })
 

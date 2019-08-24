@@ -1,7 +1,7 @@
 #' @title Intersection
-#' @description Intersection of two SetInterval objects
-#' @param x SetInterval
-#' @param y SetInterval
+#' @description Intersection of two objects
+#' @param x Set
+#' @param y Set
 #' @export
 intersection <- function(x, y){
   if(testSet(x) & testSet(y)){
@@ -14,7 +14,7 @@ intersection <- function(x, y){
 
 }
 
-#' @rdname intersection.Set
+#' @rdname intersection
 #' @export
 '&.Set' <- function(x, y){
   intersection(x, y)

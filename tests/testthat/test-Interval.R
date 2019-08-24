@@ -14,18 +14,19 @@ test_that("construction",{
 })
 
 test_that("inherited_methods",{
-  expect_equal(Interval$new(1,2)$type(),"[]")
-  expect_equal(Interval$new(1,2)$dimension(),1)
-  expect_equal(Interval$new(1,2)$max(),2)
-  expect_equal(Interval$new(1,2)$min(),1)
-  expect_equal(Interval$new(1,2, type = "()")$max(),2-1.1e-15)
-  expect_equal(Interval$new(1,2, type = "()")$min(),1+1.1e-15)
-  expect_equal(Interval$new(1,2)$sup(),2)
-  expect_equal(Interval$new(1,2)$inf(),1)
-  expect_equal(Interval$new(1,2)$class(), "numeric")
-  expect_equal(Interval$new(1,3)$range(),2)
+  expect_equal(Interval$new(1,2)$type,"[]")
+  expect_equal(Interval$new(1,2)$dimension,1)
+  expect_equal(Interval$new(1,2)$max,2)
+  expect_equal(Interval$new(1,2)$min,1)
+  expect_equal(Interval$new(1,2, type = "()")$max,2-1.1e-15)
+  expect_equal(Interval$new(1,2, type = "()")$min,1+1.1e-15)
+  expect_equal(Interval$new(1,2)$upper,2)
+  expect_equal(Interval$new(1,2)$lower,1)
+  expect_equal(Interval$new(1,2)$class, "numeric")
+  expect_equal(Interval$new(1,3)$range,2)
   expect_silent(Interval$new(1,10)$complement())
-  expect_equal(Interval$new(1,10,universe = Interval$new(1,15))$complement(),Interval$new(10,15, type = "(]"))
+  expect_equal(Interval$new(1,10,universe = Interval$new(1,15))$complement(),
+               Interval$new(10,15, type = "(]"))
 })
 
 test_that("as.numeric",{
@@ -35,9 +36,9 @@ test_that("as.numeric",{
 })
 
 test_that("length",{
-  expect_equal(Interval$new(1,10,class="numeric")$length(), Inf)
-  expect_equal(Interval$new(1,Inf,class="integer")$length(), Inf)
-  expect_equal(Interval$new(1,10,class="integer")$length(), 10)
+  expect_equal(Interval$new(1,10,class="numeric")$length, Inf)
+  expect_equal(Interval$new(1,Inf,class="integer")$length, Inf)
+  expect_equal(Interval$new(1,10,class="integer")$length, 10)
 })
 
 test_that("equals",{
@@ -57,10 +58,10 @@ test_that("strprint",{
 test_that("liesInSetInterval",{
   x <- Interval$new(1,10,type="[]")
   y <- Interval$new(1,10,type="()")
-  expect_equal(x$liesInSetInterval(c(1,2.5,10,11)), c(TRUE, TRUE, TRUE, FALSE))
-  expect_equal(y$liesInSetInterval(c(1,2.5,10,11)), c(FALSE, TRUE, FALSE, FALSE))
-  expect_equal(y$liesInSetInterval(c(1,2.5,10,11), bound = TRUE), c(TRUE, TRUE, TRUE, FALSE))
-  expect_false(x$liesInSetInterval(c(1,2.5,10,11), all = T))
-  expect_true(x$liesInSetInterval(c(1.1,9.99), all = T))
+  expect_equal(x$liesInSet(c(1,2.5,10,11)), c(TRUE, TRUE, TRUE, FALSE))
+  expect_equal(y$liesInSet(c(1,2.5,10,11)), c(FALSE, TRUE, FALSE, FALSE))
+  expect_equal(y$liesInSet(c(1,2.5,10,11), bound = TRUE), c(TRUE, TRUE, TRUE, FALSE))
+  expect_false(x$liesInSet(c(1,2.5,10,11), all = T))
+  expect_true(x$liesInSet(c(1.1,9.99), all = T))
 })
 

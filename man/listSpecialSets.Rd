@@ -13,7 +13,7 @@ listSpecialSets(simplify = FALSE)
 Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SpecialSet}s and their traits.
 }
 \description{
-Lists special sets that can be used in SetInterval.
+Lists special sets that can be used in Set.
 }
 \examples{
 listSpecialSets()

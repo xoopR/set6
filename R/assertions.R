@@ -1,27 +1,3 @@
-#' @title assert/check/test/SetInterval
-#' @description Validation checks to test if a given object is an R6 SetInterval.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testSetInterval(5) # FALSE
-#' testSetInterval(Set$new(2)) # TRUE
-#'
-#' @export
-testSetInterval <- function(){}
-#' @rdname testSetInterval
-#' @export
-checkSetInterval <- function(){}
-#' @rdname testSetInterval
-#' @export
-assertSetInterval <- function(){}
-makeChecks(assertionName = "SetInterval",
-           cond = inherits(object, "SetInterval"),
-           errormsg = "This is not an R6 SetInterval object",
-           pos = environment())
-
 #' @title assert/check/test/Set
 #' @description Validation checks to test if a given object is an R6 Set.
 #' @param object object to test
@@ -44,6 +20,31 @@ assertSet <- function(){}
 makeChecks(assertionName = "Set",
            cond = inherits(object, "Set"),
            errormsg = "This is not an R6 Set object",
+           pos = environment())
+
+#' @title assert/check/test/SetList
+#' @description Validation checks to test if a given object is a list of R6 Sets.
+#' @param object object to test
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testSetList(list(Set$new(5),5)) # FALSE
+#' testSetList(list(Set$new(),Interal$new())) # TRUE
+#'
+#' @export
+testSetList <- function(){}
+#' @rdname testSetList
+#' @export
+checkSetList <- function(){}
+#' @rdname testSetList
+#' @export
+assertSetList <- function(){}
+
+makeChecks(assertionName =  "SetList",
+           cond = all(unlist(lapply(object, inherits,"Set"))),
+           errormsg = "One or more items in the list are not Sets",
            pos = environment())
 
 #' @title assert/check/test/Tuple
@@ -162,7 +163,7 @@ checkBoundedAbove <- function(){}
 #' @export
 assertBoundedAbove <- function(){}
 makeChecks(assertionName = "BoundedAbove",
-           cond = testSet(object) |  substr(object$type(),2,2) == "]",
+           cond = testSet(object) |  substr(object$type,2,2) == "]",
            errormsg = "This is not bounded above",
            pos = environment())
 
@@ -186,7 +187,7 @@ checkBoundedBelow <- function(){}
 #' @export
 assertBoundedBelow <- function(){}
 makeChecks(assertionName = "BoundedBelow",
-           cond = testSet(object) |  substr(object$type(),1,1) == "[",
+           cond = testSet(object) |  substr(object$type,1,1) == "[",
            errormsg = "This is not bounded below",
            pos = environment())
 
@@ -234,6 +235,78 @@ checkFinite <- function(){}
 #' @export
 assertFinite <- function(){}
 makeChecks(assertionName = "Finite",
-           cond = object$inf()!=-Inf &  object$sup()!=Inf,
+           cond = object$lower!=-Inf &  object$upper!=Inf,
            errormsg = "This is not finite",
+           pos = environment())
+
+#' @title assert/check/test/Fuzzy
+#' @description Validation checks to test if a given set/tuple is fuzzy.
+#' @param object object to test
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testFuzzy(FuzzySet$new(1, 0.2)) # TRUE
+#' testFuzzy(Set$new(1, 0.2)) # FALSE
+#'
+#' @export
+testFuzzy <- function(){}
+#' @rdname testFuzzy
+#' @export
+checkFuzzy <- function(){}
+#' @rdname testFuzzy
+#' @export
+assertFuzzy <- function(){}
+makeChecks(assertionName = "Fuzzy",
+           cond = grepl("Fuzzy", getR6Class(object)),
+           errormsg = "This is not fuzzy.",
+           pos = environment())
+
+#' @title assert/check/test/Crisp
+#' @description Validation checks to test if a given set/tuple is crisp.
+#' @param object object to test
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testCrisp(Set$new(1, 0.2)) # TRUE
+#' testCrisp(FuzzySet$new(1, 0.2)) # FALSE
+#'
+#' @export
+testCrisp <- function(){}
+#' @rdname testCrisp
+#' @export
+checkCrisp <- function(){}
+#' @rdname testCrisp
+#' @export
+assertCrisp <- function(){}
+makeChecks(assertionName = "Crisp",
+           cond = !grepl("Fuzzy", getR6Class(object)),
+           errormsg = "This is not crisp.",
+           pos = environment())
+
+#' @title assert/check/test/ConditionalSet
+#' @description Validation checks to test if a given object is an R6 ConditionalSet.
+#' @param object object to test
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testConditionalSet(Set$new(2)) # FALSE
+#' testConditionalSet(ConditionalSet$new(function(x,y) x + y < 2)) # TRUE
+#'
+#' @export
+testConditionalSet <- function(){}
+#' @rdname testConditionalSet
+#' @export
+checkConditionalSet <- function(){}
+#' @rdname testConditionalSet
+#' @export
+assertConditionalSet <- function(){}
+makeChecks(assertionName = "ConditionalSet",
+           cond = inherits(object, "ConditionalSet"),
+           errormsg = "This is not an R6 ConditionalSet object",
            pos = environment())

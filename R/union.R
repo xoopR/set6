@@ -1,26 +1,26 @@
-#' @title Symbolic Unions for SetInterval
+#' @title Symbolic Unions for Set
 #'
 #' @description Makes a symbolic representation for the union of sets/intervals.
 #'
-#' @name union.SetInterval
+#' @name union.Set
 #'
-#' @usage union.SetInterval(..., dim = 1)
+#' @usage union.Set(..., dim = 1)
 #'
-#' @param ... SetIntervals to take the union of.
-#' @param dim dimension of new SetInterval.
+#' @param ... Sets to take the union of.
+#' @param dim dimension of new Set.
 #'
 #' @details This does not calculate the union of the arguments but
 #'   is just a symbolic representation using unicode.
 #'
-#' @seealso \code{\link{product.SetInterval}}, \code{\link{setdiff}},
-#' \code{\link{power.SetInterval}}
+#' @seealso \code{\link{product.Set}}, \code{\link{setdiff}},
+#' \code{\link{power.Set}}
 #'
 #' @examples
 #' PosNaturals$new() + Reals$new()
-#' union.SetInterval(PosNaturals$new(), Reals$new())
+#' union.Set(PosNaturals$new(), Reals$new())
 #'
 #' @export
-union.SetInterval <- function(..., dim = 1){
+union.Set <- function(..., dim = 1){
   dots = list(...)
 
   if(length(dots) == 1)
@@ -31,18 +31,18 @@ union.SetInterval <- function(..., dim = 1){
   dots = dots[!(parClass %in% class)]
 
   if(length(unique(unlist(lapply(dots,function(y) y$strprint())))) != 1){
-    lower = min(sapply(dots, function(y) y$inf()))
-    upper = max(sapply(dots, function(y) y$sup()))
+    lower = min(sapply(dots, function(y) y$lower))
+    upper = max(sapply(dots, function(y) y$upper))
     setOperation("\u222A", sets = dots, dim = dim, lower = lower, upper = upper)
   }else
     return(dots[[1]])
 }
 
-#' @usage \method{+}{SetInterval}(x, y)
-#' @rdname union.SetInterval
-#' @param x SetInterval
-#' @param y SetInterval
+#' @usage \method{+}{Set}(x, y)
+#' @rdname union.Set
+#' @param x Set
+#' @param y Set
 #' @export
-`+.SetInterval` <- function(x, y){
-  union.SetInterval(x, y)
+`+.Set` <- function(x, y){
+  union.Set(x, y)
 }

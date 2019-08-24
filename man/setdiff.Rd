@@ -2,27 +2,25 @@
 % Please edit documentation in R/setdiff.R
 \name{setdiff}
 \alias{setdiff}
-\alias{setdiff.SetInterval}
-\alias{-.SetInterval}
 \alias{setdiff.Set}
 \alias{-.Set}
-\title{setdiff for SetInterval}
+\title{setdiff for Set}
 \usage{
 setdiff(x, y)
 
-\method{setdiff}{SetInterval}(x, y)
+\method{setdiff}{Set}(x, y)
 
-\method{-}{SetInterval}(x, y)
+\method{-}{Set}(x, y)
 
 \method{setdiff}{Set}(x, y)
 
 \method{-}{Set}(x, y)
 }
 \arguments{
-\item{x}{SetInterval}
+\item{x}{Set}
 
-\item{y}{SetInterval}
+\item{y}{Set}
 }
 \description{
-setdiff for SetInterval
+setdiff for Set
 }

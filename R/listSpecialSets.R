@@ -1,5 +1,5 @@
 #' @title Lists Implemented R6 Special Sets
-#' @description Lists special sets that can be used in SetInterval.
+#' @description Lists special sets that can be used in Set.
 #' @param simplify logical. If FALSE (default) returns data.table of set name and symbol, otherwise set names as characters.
 #' @seealso \code{\link{SpecialSet}}
 #' @return Either a list of characters (if \code{simplify} is TRUE) or a data.table of \code{SpecialSet}s and their traits.
@@ -21,16 +21,16 @@ listSpecialSets <- function(simplify = FALSE){
       x = x$new()
       Symbol = x$strprint()
       if(zero & grepl("Pos",ClassName))
-        Infimum = "0/1"
+        Lower = "0/1"
       else
-        Infimum = x$inf()
-      if(is.null(Infimum)) Infimum = "NULL"
+        Lower = x$lower
+      if(is.null(Lower)) Lower = "NULL"
       if(zero & grepl("Neg",ClassName))
-        Supremum = "-1/0"
+        Upper = "-1/0"
       else
-        Supremum = x$sup()
-      if(is.null(Supremum)) Supremum = "NULL"
-      return(cbind(ClassName, Symbol, Infimum, Supremum))
+        Upper = x$upper
+      if(is.null(Upper)) Upper = "NULL"
+      return(cbind(ClassName, Symbol, Lower, Upper))
     }))
     row.names(symbols) = NULL
 

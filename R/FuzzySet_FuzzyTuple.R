@@ -55,6 +55,24 @@ FuzzyTuple$set("public","isSubset",function(x, proper = FALSE){
       return(FALSE)
   }
 })
+FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
+  if(strong)
+    els <- self$elements()[self$membership() > alpha]
+  else
+    els <- self$elements()[self$membership() >= alpha]
+
+  if(create){
+    if(length(els) == 0)
+      return(Empty$new())
+    else
+      return(Tuple$new(els))
+  } else{
+    if(length(els) == 0)
+      return(NULL)
+    else
+      return(els)
+  }
+})
 
 FuzzyTuple$set("private",".type","()")
 FuzzyTuple$set("private",".membership", 0)

@@ -3,23 +3,23 @@ library(testthat)
 context("RSmisc")
 
 test_that("assertThat",{
-  expect_silent(assertThat(Set$new()$length(),Set$new()$length()=="0","Not True"))
-  expect_error(assertThat(Set$new()$length(),Set$new()$length()=="2","Not True"))
+  expect_silent(assertThat(Set$new()$length,Set$new()$length=="0","Not True"))
+  expect_error(assertThat(Set$new()$length,Set$new()$length=="2","Not True"))
 })
 
 test_that("checkThat",{
-  expect_true(checkThat(Set$new()$length()=="0","Not True"))
-  expect_equal(checkThat(Set$new()$length()=="2","Not True"),"Not True")
+  expect_true(checkThat(Set$new()$length=="0","Not True"))
+  expect_equal(checkThat(Set$new()$length=="2","Not True"),"Not True")
 })
 
 test_that("testThat",{
-  expect_true(testThat(Set$new()$length()=="0"))
-  expect_false(testThat(Set$new()$length()=="2"))
+  expect_true(testThat(Set$new()$length=="0"))
+  expect_false(testThat(Set$new()$length=="2"))
 })
 
 test_that("isThat",{
-  expect_true(isThat(Set$new()$length()=="0"))
-  expect_false(isThat(Set$new()$length()=="2"))
+  expect_true(isThat(Set$new()$length=="0"))
+  expect_false(isThat(Set$new()$length=="2"))
 })
 
 test_that("makeChecks",{

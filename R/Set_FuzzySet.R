@@ -31,18 +31,18 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
 })
 
 FuzzySet$set("public","strprint",function(){
-  return(paste0("{",paste0(self$elements(),"(",self$membership(),")", collapse = ", "),"}"))
+  return(paste0("{",paste0(self$elements,"(",self$membership(),")", collapse = ", "),"}"))
 })
 FuzzySet$set("public","membership",function(element = NULL){
   if(is.null(element))
     return(private$.membership)
   else{
-    x <- match(element, self$elements())
+    x <- match(element, self$elements)
     if(is.na(x)){
       message(sprintf("%s is not in this fuzzy set.", element))
       return(NA)
     }else
-      return(private$.membership[match(element, self$elements())])
+      return(private$.membership[match(element, self$elements)])
   }
 })
 FuzzySet$set("public","isEmpty",function(){
@@ -53,9 +53,9 @@ FuzzySet$set("public","isEmpty",function(){
 })
 FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
   if(strong)
-    els <- self$elements()[self$membership() > alpha]
+    els <- self$elements[self$membership() > alpha]
   else
-    els <- self$elements()[self$membership() >= alpha]
+    els <- self$elements[self$membership() >= alpha]
 
   if(create){
     if(length(els) == 0)
@@ -68,7 +68,6 @@ FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE)
     else
       return(els)
   }
-
 })
 FuzzySet$set("public","support",function(create = FALSE){
   self$alphaCut(0, TRUE, create)
@@ -77,7 +76,7 @@ FuzzySet$set("public","core",function(create = FALSE){
   self$alphaCut(1, FALSE, create)
 })
 FuzzySet$set("public","inclusion",function(element){
-  member <- self$membership()[self$elements() %in% element]
+  member <- self$membership()[self$elements %in% element]
   if(length(member) == 0)
     return("Not Included")
 
@@ -92,8 +91,8 @@ FuzzySet$set("public","equals",function(x){
   if(!testFuzzySet(x))
     return(FALSE)
 
-  x_mat = matrix(c(x$elements(),x$membership()),ncol=2)[order(x$elements()),]
-  self_mat = matrix(c(self$elements(),self$membership()),ncol=2)[order(self$elements()),]
+  x_mat = matrix(c(x$elements,x$membership()),ncol=2)[order(x$elements),]
+  self_mat = matrix(c(self$elements,self$membership()),ncol=2)[order(self$elements),]
 
   if(any(dim(x_mat) != dim(self_mat)))
     return(FALSE)
@@ -105,12 +104,12 @@ FuzzySet$set("public","equals",function(x){
 })
 FuzzySet$set("public","complement",function(){
   private$.membership <- 1 - self$membership()
-  slf <- self$clone()
+  slf <- self$clone(deep = TRUE)
   private$.membership <- 1 - self$membership()
   return(slf)
 })
 FuzzySet$set("public","powerSet",function(){
-  y = Vectorize(function(m) combn(self$elements(), m),vectorize.args = c("m"))(1:(self$length()-1))
+  y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
   if(checkmate::testList(y))
     y = lapply(y, function(z) apply(z, 2, function(x){
       FuzzySet$new(elements = x, membership = self$membership(x))
@@ -125,8 +124,8 @@ FuzzySet$set("public","isSubset",function(x, proper = FALSE){
   if(!testFuzzySet(x))
     return(FALSE)
 
-  self_comp <- paste(self$elements(), self$membership(), sep=";")
-  x_comp <- paste(x$elements(), x$membership(), sep=";")
+  self_comp <- paste(self$elements, self$membership(), sep=";")
+  x_comp <- paste(x$elements, x$membership(), sep=";")
 
   if(proper){
     if(all(x_comp %in% self_comp) & !all(self_comp %in% x_comp))
