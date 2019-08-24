@@ -12,6 +12,7 @@ NULL
 #---------------------------------------------
 Set <- R6::R6Class("Set")
 Set$set("public","initialize",function(..., dimension = 1, universe = NULL){
+
   if(length(list(...)) != 0){
     if(!checkmate::testList(...))
       dots <- list(...)
@@ -30,7 +31,6 @@ Set$set("public","initialize",function(..., dimension = 1, universe = NULL){
       private$.lower <- min(unlist(dots))
       private$.upper <- max(unlist(dots))
     }
-
     private$.dimension <- dimension
 
     if(!is.null(universe)){

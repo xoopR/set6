@@ -54,6 +54,9 @@ Interval$set("public","strprint",function(){
   return(str)
 })
 Interval$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+  if(testSet(x))
+    x <- x$elements
+
   ret = rep(FALSE, length(x))
 
   if(self$class == "integer")

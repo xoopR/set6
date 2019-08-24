@@ -8,18 +8,54 @@ SetWrapper$set("public","initialize",function(..., setlist, lower = NULL, upper 
 
   private$.wrappedSets <- setlist
 
+  super$initialize(...)
+
   if(!is.null(lower)) private$.lower <- lower
   if(!is.null(upper)) private$.upper <- upper
   if(!is.null(type)) private$.type <- type
-  if(!is.null(dimension)) private$.dimension <- dimension
   if(!is.null(symbol)) private$.symbol <- symbol
+  if(!is.null(dimension)) private$.dimension <- dimension
 
-  invisible(self)
+
 })
 
-SetWrapper$set("public", "wrappedSets", function(model=NULL){
+SetWrapper$set("active", "wrappedSets", function(){
   return(private$.wrappedSets)
 })
 SetWrapper$set("private", ".wrappedSets", list())
 SetWrapper$set("private", ".symbol", character(0))
+SetWrapper$set("public", "equals", function(x){
+  if(getR6Class(x) != getR6Class(self))
+    return(FALSE)
+  else{
+    if(all(sapply(self$active, getR6Class) == sapply(x$active, getR6Class)))
+      return(TRUE)
+    else
+      return(FALSE)
+  }
+})
+SetWrapper$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+  if(testSet(x))
+    x <- list(x)
+  else if(!testSetList(x))
+    stop(sprintf("%s is not a Set or a list of Sets", substitute(x)))
 
+  ret <- unlist(lapply(x, function(y){
+    if(y$length != self$dimension)
+      stop(paste("Set should be of dimension",self$dimension))
+    ret <- numeric(self$dimension)
+    for(i in 1:self$dimension){
+      ret[[i]] <- self$wrappedSets[[i]]$liesInSet(y$elements[[i]], bound = bound)
+    }
+
+    if(all(as.logical(ret)))
+      return(TRUE)
+    else
+      return(FALSE)
+  }))
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
+})
