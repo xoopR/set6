@@ -10,6 +10,11 @@
 
 \method{!=}{Set}(x, y)
 }
+\arguments{
+\item{x}{Set}
+
+\item{y}{Set}
+}
 \value{
 TRUE if both objects are equal, FALSE otherwise
 }

@@ -16,6 +16,11 @@
 
 \method{>=}{Set}(x, y)
 }
+\arguments{
+\item{x}{Set}
+
+\item{y}{Set}
+}
 \value{
 TRUE if object x is a subset of self, FALSE otherwise
 }
