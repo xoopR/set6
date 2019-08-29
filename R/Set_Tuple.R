@@ -1,39 +1,9 @@
 #' @name Tuple
 #' @title Tuple
 #' @description Tuple Object
-NULL
 #' @export
+NULL
 Tuple <- R6::R6Class("Tuple", inherit = Set)
-Tuple$set("public","initialize",function(..., dimension = 1, universe = NULL){
-  if(length(list(...)) != 0){
-    if(!checkmate::testList(...))
-      dots <- list(...)
-    else
-      dots <- unlist(list(...), recursive = FALSE)
-    private$.elements <- unlist(dots)
-    class <- unique(sapply(dots,function(x) class(x)[[1]]))
-    if(length(class)==1)
-      private$.class <- class
-    else if(length(class)==2 & "list" %in% class)
-      private$.class <- class[!(class %in% "list")]
-    else
-      private$.class <- "multiple"
-
-    if(private$.class %in% c("numeric", "integer")){
-      private$.lower <- min(unlist(dots))
-      private$.upper <- max(unlist(dots))
-    }
-
-    private$.dimension <- dimension
-
-    if(!is.null(universe)){
-      assertSet(universe)
-      private$.universe <- universe
-    }
-  }
-
-  invisible(self)
-})
 
 Tuple$set("public","equals",function(x){
   assertSet(x)
@@ -74,6 +44,7 @@ Tuple$set("public","isSubset",function(x, proper = FALSE){
 })
 
 Tuple$set("private",".type","()")
+Tuple$set("private",".properties",list(crisp = TRUE))
 
 #' @title Coercion to R6 Tuple
 #' @description Coerces objects to R6 Tuples

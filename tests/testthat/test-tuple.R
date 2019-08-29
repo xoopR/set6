@@ -34,8 +34,6 @@ test_that("inherited_methods",{
   expect_equal(Tuple$new(1,2,3)$length,3)
   expect_true(Tuple$new(1,3,0.9)$liesInSet(1))
   expect_false(Tuple$new(1,0.1,2,0.3,3,0.9)$liesInSet(5))
-  expect_true(Tuple$new()$isEmpty())
-  expect_false(Tuple$new(1)$isEmpty())
   expect_equal(Tuple$new(1,2)$strprint(),"(1, 2)")
 })
 

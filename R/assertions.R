@@ -31,7 +31,7 @@ makeChecks(assertionName = "Set",
 #'
 #' @examples
 #' testSetList(list(Set$new(5),5)) # FALSE
-#' testSetList(list(Set$new(),Interal$new())) # TRUE
+#' testSetList(list(Set$new(),Interval$new())) # TRUE
 #'
 #' @export
 testSetList <- function(){}
@@ -143,76 +143,76 @@ makeChecks(assertionName = "Interval",
            errormsg = "This is not an R6 Interval object",
            pos = environment())
 
-#' @title assert/check/test/BoundedAbove
-#' @description Validation checks to test if a given object is BoundedAbove.
+#' @title assert/check/test/ClosedAbove
+#' @description Validation checks to test if a given object is ClosedAbove.
 #' @param object object to test
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
-#' testBoundedAbove(Interval$new(2,3,type='()')) # FALSE
-#' testBoundedAbove(Interval$new(2,3,type='[]')) # TRUE
+#' testClosedAbove(Interval$new(2,3,type='()')) # FALSE
+#' testClosedAbove(Interval$new(2,3,type='[]')) # TRUE
 #'
 #' @export
-testBoundedAbove <- function(){}
-#' @rdname testBoundedAbove
+testClosedAbove <- function(){}
+#' @rdname testClosedAbove
 #' @export
-checkBoundedAbove <- function(){}
-#' @rdname testBoundedAbove
+checkClosedAbove <- function(){}
+#' @rdname testClosedAbove
 #' @export
-assertBoundedAbove <- function(){}
-makeChecks(assertionName = "BoundedAbove",
-           cond = testSet(object) |  substr(object$type,2,2) == "]",
-           errormsg = "This is not bounded above",
+assertClosedAbove <- function(){}
+makeChecks(assertionName = "ClosedAbove",
+           cond = testSet(object) &  substr(object$type,2,2) == "]",
+           errormsg = "This is not a set closed above",
            pos = environment())
 
-#' @title assert/check/test/BoundedBelow
-#' @description Validation checks to test if a given object is BoundedBelow.
+#' @title assert/check/test/ClosedBelow
+#' @description Validation checks to test if a given object is ClosedBelow.
 #' @param object object to test
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
-#' testBoundedBelow(Interval$new(2,3,type='()')) # FALSE
-#' testBoundedBelow(Interval$new(2,3,type='[]')) # TRUE
+#' testClosedBelow(Interval$new(2,3,type='()')) # FALSE
+#' testClosedBelow(Interval$new(2,3,type='[]')) # TRUE
 #'
 #' @export
-testBoundedBelow <- function(){}
-#' @rdname testBoundedBelow
+testClosedBelow <- function(){}
+#' @rdname testClosedBelow
 #' @export
-checkBoundedBelow <- function(){}
-#' @rdname testBoundedBelow
+checkClosedBelow <- function(){}
+#' @rdname testClosedBelow
 #' @export
-assertBoundedBelow <- function(){}
-makeChecks(assertionName = "BoundedBelow",
-           cond = testSet(object) |  substr(object$type,1,1) == "[",
-           errormsg = "This is not bounded below",
+assertClosedBelow <- function(){}
+makeChecks(assertionName = "ClosedBelow",
+           cond = testSet(object) &  substr(object$type,1,1) == "[",
+           errormsg = "This is not a set closed below",
            pos = environment())
 
-#' @title assert/check/test/Bounded
-#' @description Validation checks to test if a given object is Bounded.
+#' @title assert/check/test/Closed
+#' @description Validation checks to test if a given object is Closed.
 #' @param object object to test
 #' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
 #'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
 #'   an error message as string, \code{test} returns \code{FALSE}.
 #'
 #' @examples
-#' testBounded(Interval$new(2,3,type='()')) # FALSE
-#' testBounded(Interval$new(2,3,type='[]')) # TRUE
+#' testClosed(Interval$new(2,3,type='()')) # FALSE
+#' testClosed(Interval$new(2,3,type='[]')) # TRUE
 #'
 #' @export
-testBounded <- function(){}
-#' @rdname testBounded
+testClosed <- function(){}
+#' @rdname testClosed
 #' @export
-checkBounded <- function(){}
-#' @rdname testBounded
+checkClosed <- function(){}
+#' @rdname testClosed
 #' @export
-assertBounded <- function(){}
-makeChecks(assertionName = "Bounded",
-           cond = testBoundedBelow(object) &  testBoundedAbove(object),
-           errormsg = "This is not bounded",
+assertClosed <- function(){}
+makeChecks(assertionName = "Closed",
+           cond = testClosedBelow(object) & testClosedAbove(object),
+           errormsg = "This is not a closed set",
            pos = environment())
 
 #' @title assert/check/test/Finite
@@ -309,4 +309,28 @@ assertConditionalSet <- function(){}
 makeChecks(assertionName = "ConditionalSet",
            cond = inherits(object, "ConditionalSet"),
            errormsg = "This is not an R6 ConditionalSet object",
+           pos = environment())
+
+#' @title assert/check/test/Empty
+#' @description Validation checks to test if a given set is empty.
+#' @param object object to test
+#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
+#'   an error message as string, \code{test} returns \code{FALSE}.
+#'
+#' @examples
+#' testEmpty(Set$new(2)) # FALSE
+#' testEmpty(Set$new()) # TRUE
+#'
+#' @export
+testEmpty <- function(){}
+#' @rdname testEmpty
+#' @export
+checkEmpty <- function(){}
+#' @rdname testEmpty
+#' @export
+assertEmpty <- function(){}
+makeChecks(assertionName = "Empty",
+           cond = object$properties$empty,
+           errormsg = "This is not an R6 Empty object",
            pos = environment())

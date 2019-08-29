@@ -76,7 +76,7 @@ FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALS
 
 FuzzyTuple$set("private",".type","()")
 FuzzyTuple$set("private",".membership", 0)
-
+FuzzyTuple$set("private",".properties",list(crisp = FALSE))
 
 #' @title Coercion to R6 FuzzyTuple
 #' @description Coerces objects to R6 FuzzyTuple

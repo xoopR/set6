@@ -52,21 +52,21 @@ ConditionalSet$set("public","equals",function(x){
   if(!ConditionalSet(x))
     return(FALSE)
 
-  if(self$condition() == x$condition() & self$class() == x$class())
+  if(self$condition() == x$condition() & self$class == x$class)
     return(TRUE)
   else
     return(FALSE)
 })
 ConditionalSet$set("public","strprint",function(){
   return(paste0("{",paste0(deparse(body(self$condition()))," | ",
-                           paste(names(self$class()), sapply(self$class(), strprint),
+                           paste(names(self$class), sapply(self$class, strprint),
                                  sep = " \u03B5 ", collapse = ", "),"}")))
 })
 ConditionalSet$set("public","condition", function(){
   return(private$.condition)
 })
 ConditionalSet$set("private",".condition", NULL)
-ConditionalSet$set("public","class", function(){
+ConditionalSet$set("active","class", function(){
   return(private$.argclass)
 })
 ConditionalSet$set("private",".argclass", NULL)

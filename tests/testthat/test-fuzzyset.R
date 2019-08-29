@@ -44,11 +44,6 @@ test_that("membership",{
 test_that("strprint",{
   expect_equal(f$strprint(),"{1(0.1), 2(0.2), 3(0.3)}")
 })
-test_that("isEmpty",{
-  expect_false(FuzzySet$new(1,0.1)$isEmpty())
-  expect_true(FuzzySet$new(1,0)$isEmpty())
-  expect_true(FuzzySet$new()$isEmpty())
-})
 test_that("alphaCut",{
   expect_equal(f$alphaCut(0.15), 2:3)
   expect_equal(f$alphaCut(0.2, strong = FALSE), 2:3)

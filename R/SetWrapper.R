@@ -1,6 +1,6 @@
 SetWrapper <- R6::R6Class("SetWrapper", inherit = Set, lock_objects = FALSE)
 SetWrapper$set("public","initialize",function(..., setlist, lower = NULL, upper = NULL, type = NULL,
-                                              dimension = NULL, symbol = NULL){
+                                              dimension = NULL, symbol = NULL, class = NULL){
   if(getR6Class(self) == "SetWrapper")
     stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
@@ -13,6 +13,7 @@ SetWrapper$set("public","initialize",function(..., setlist, lower = NULL, upper 
   if(!is.null(lower)) private$.lower <- lower
   if(!is.null(upper)) private$.upper <- upper
   if(!is.null(type)) private$.type <- type
+  if(!is.null(class)) private$.class <- class
   if(!is.null(symbol)) private$.symbol <- symbol
   if(!is.null(dimension)) private$.dimension <- dimension
 

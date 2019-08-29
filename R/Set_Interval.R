@@ -11,26 +11,50 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   checkmate::assert(lower <= upper)
   checkmate::assert(class %in% c("numeric","integer"))
   checkmate::assertIntegerish(dimension)
-  assertSet(universe)
+  if(getR6Class(self) != "SpecialSet"){
+    assertSet(universe)
+    private$.universe <- universe
+  }
 
-  private$.class <- class
-  private$.type <- type
+  if(lower == upper){
+    private$.class <- "integer"
+    private$.type <- "[]"
+  } else {
+    private$.class <- class
+    private$.type <- type
+  }
+
   private$.lower <- lower
   private$.upper <- upper
   private$.dimension <- dimension
-  private$.universe <- universe
+
+  private$.properties$bounded = ifelse(lower == -Inf | upper == Inf, FALSE, TRUE)
+  if(private$.class == "numeric"){
+    private$.properties$countability = "uncountable"
+    private$.properties$cardinality = "\u2136\u2081"
+  } else {
+    if(private$.properties$bounded){
+      private$.properties$countability = "countably finite"
+      private$.properties$cardinality = suppressMessages(self$length)
+    } else {
+      private$.properties$countability = "countably infinite"
+      private$.properties$cardinality = "\u2135\u2080"
+    }
+  }
+
+  private$.properties$singleton = ifelse(suppressMessages(self$length) == 1, TRUE, FALSE)
+  private$.properties$empty = ifelse(suppressMessages(self$length) == 0, TRUE, FALSE)
 
   invisible(self)
 })
 
 Interval$set("public","as.numeric", function(){
-  if(self$class == "integer"){
-    if(testBounded(self) & testFinite(self))
-      return(seq.int(self$min, self$max, 1))
+  if(self$properties$countability == "countably finite")
+    return(seq.int(self$min, self$max, 1))
+  else{
+    message("Interval is unbounded.")
+    return(NaN)
   }
-
-  message("Interval is unbounded.")
-  return(NaN)
 })
 Interval$set("public","equals",function(x){
   if(!testInterval(x))
@@ -74,7 +98,22 @@ Interval$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
   else
     return(ret)
 })
+Interval$set("public", "isSubset", function(x, proper = FALSE){
+  if(self$equals(x)){
+    if(proper)
+      return(FALSE)
+    else
+      return(TRUE)
+  } else{
+    if(self == "numeric" & x == "integer")
+      return(FALSE)
 
+    if(x$lower >= self$lower & x$upper <= self$upper)
+      return(TRUE)
+    else
+      return(FALSE)
+  }
+})
 Interval$set("active","length",function(){
   if(self$lower == -Inf | self$upper == Inf)
     return(Inf)
@@ -85,3 +124,5 @@ Interval$set("active","length",function(){
 
   return(length(self$as.numeric()))
 })
+
+Interval$set("private",".properties",list(crisp = TRUE))

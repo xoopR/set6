@@ -32,9 +32,8 @@ setdiff.Set <- function(x, y){
       return(Interval$new(lower = y$upper, upper = x$upper, type = paste0("(",substr(x$type,2,2)),
                           class = x$class))
     else if(y$upper <= x$upper & y$lower >= x$lower)
-      return(union.Set(Interval$new(x$lower,y$lower,type=paste0(substr(x$type,1,1),")"),class = x$class),
-                               Interval$new(y$upper,x$upper,type=paste0("(",substr(x$type,2,2)),class = x$class),
-                               dim = x$dimension))
+      return(Union$new(Interval$new(x$lower,y$lower,type=paste0(substr(x$type,1,1),")"),class = x$class),
+                       Interval$new(y$upper,x$upper,type=paste0("(",substr(x$type,2,2)),class = x$class)))
   }
 
   # setOperation("/",lower = lower, upper = upper, type = type, dim = x$dimension,x,y)

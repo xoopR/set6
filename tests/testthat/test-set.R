@@ -51,11 +51,6 @@ test_that("length",{
   expect_equal(Set$new(Set$new(2), Interval$new(1,5))$length, 2)
 })
 
-test_that("isEmpty",{
-  expect_false(Set$new(1)$isEmpty())
-  expect_true(Set$new()$isEmpty())
-})
-
 test_that("liesInSet",{
   x <- Set$new(1,2,3)
   y <- c(2,3,4)

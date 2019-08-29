@@ -18,7 +18,11 @@ Set$set("public","initialize",function(..., dimension = 1, universe = NULL){
       dots <- list(...)
     else
       dots <- unlist(list(...), recursive = FALSE)
-    private$.elements <- unlist(unique(dots))
+
+    if(testTuple(self))
+      private$.elements <- unlist(dots)
+    else
+      private$.elements <- unlist(unique(dots))
     class <- unique(sapply(dots,function(x) class(x)[[1]]))
     if(length(class)==1)
       private$.class <- class
@@ -39,6 +43,12 @@ Set$set("public","initialize",function(..., dimension = 1, universe = NULL){
     }
   }
 
+  private$.properties$singleton = ifelse(self$length == 1, TRUE, FALSE)
+  private$.properties$empty = ifelse(self$length == 0, TRUE, FALSE)
+  private$.properties$cardinality = self$length
+  private$.properties$countability = "countably finite"
+  private$.properties$bounded = TRUE
+
   invisible(self)
 })
 
@@ -46,7 +56,8 @@ Set$set("public","initialize",function(..., dimension = 1, universe = NULL){
 # Public methods - Representation
 #---------------------------------------------
 Set$set("public","print",function(){
-print(self$strprint())
+  cat(self$strprint(),"\n")
+  invisible(self)
 })
 Set$set("public","strprint",function(n = 2){
   type <- private$.type
@@ -103,6 +114,13 @@ Set$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
   else
     return(ret)
 })
+#' @name equals
+#' @rdname equals
+#' @param x Set
+#' @param y Set
+#' @title Are Two Sets Equal?
+#' @return TRUE if both objects are equal, FALSE otherwise
+NULL
 Set$set("public","equals",function(x){
   if(!testSet(x))
     return(FALSE)
@@ -112,8 +130,17 @@ Set$set("public","equals",function(x){
   else
     return(FALSE)
 })
+#' @name isSubset
+#' @rdname isSubset
+#' @param x Set
+#' @param y Set
+#' @title Test If Two Sets Are Subsets
+#' @return TRUE if object x is a subset of self, FALSE otherwise
+NULL
 Set$set("public","isSubset",function(x, proper = FALSE){
   assertSet(x)
+  if(testInterval(x) | testFuzzy(x))
+    return(FALSE)
 
   if(proper){
     if(all(x$elements %in% self$elements) & !all(self$elements %in% x$elements))
@@ -130,14 +157,8 @@ Set$set("public","isSubset",function(x, proper = FALSE){
 })
 
 #---------------------------------------------
-# Public methods - isEmpty/complement/powerSet
+# Public methods - complement/powerSet
 #---------------------------------------------
-Set$set("public","isEmpty",function(){
-if(self$length==0)
-  return(TRUE)
-else
-  return(FALSE)
-})
 Set$set("public","complement",function(){
   if(!is.null(self$universe))
     return(setdiff(self$universe, self))
@@ -217,7 +238,7 @@ Set$set("private",".upper",numeric(0))
 Set$set("private",".dimension",numeric(0))
 Set$set("private",".universe",NULL)
 Set$set("private",".elements",list())
-Set$set("private",".properties",list())
+Set$set("private",".properties",list(crisp = TRUE))
 
 #---------------------------------------------
 # as.Set

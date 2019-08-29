@@ -18,27 +18,36 @@
 #' @export
 NULL
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
-SpecialSet$set("public","initialize",function(dim = 1, lower = -Inf,
-                                              upper = Inf, type = "()", ...){
+SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()",
+                                              class = "numeric", dimension = 1, bounded = FALSE,
+                                              countability = "uncountable",
+                                              cardinality = "\u2136\u2081",
+                                              empty = empty){
   if(getR6Class(self, pos = environment()) == "SpecialSet")
     stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
-
-  if(dim!=1)
-      private$.setSymbol <- paste0(setSymbol(paste0(getR6Class(self, pos = environment()))),"^",dim)
-  else
-      private$.setSymbol <- setSymbol(paste0(getR6Class(self, pos = environment())))
 
   private$.lower <- lower
   private$.upper <- upper
   private$.type <- type
-  private$.dimension <- dim
+  private$.class <- class
+  private$.dimension <- dimension
+  private$.symbol <- setSymbol(getR6Class(self))
+
+  private$.properties$bounded <- bounded
+  private$.properties$countability = countability
+  private$.properties$cardinality = cardinality
+  private$.properties$singleton = FALSE
+  private$.properties$empty = empty
+
   invisible(self)
 })
-SpecialSet$set("private",".class","integer")
 SpecialSet$set("public","strprint",function(){
-  return(private$.setSymbol)
+  str <- private$.symbol
+  if(self$dimension!=1)
+    str <- paste(str,self$dimension,sep="^")
+  return(str)
 })
-SpecialSet$set("private",".setSymbol",NULL)
+SpecialSet$set("private",".symbol",NULL)
 
 #' @name Empty
 #' @title Empty Set
@@ -57,10 +66,9 @@ SpecialSet$set("private",".setSymbol",NULL)
 NULL
 Empty <- R6::R6Class("Empty",inherit = SpecialSet)
 Empty$set("public", "initialize", function(){
-  super$initialize(dim = 1, lower = NULL, upper = NULL, type = "{}")
-})
-Empty$set("active", "length", function(){
-  return(0)
+  super$initialize(lower = NULL, upper = NULL, type = "{}", class = "integer",
+                   dimension = 1, bounded = TRUE, countability = "countably finite",
+                   cardinality = 0, empty = TRUE)
 })
 
 #' @title Set of Natural Numbers
@@ -91,10 +99,11 @@ Empty$set("active", "length", function(){
 #' @export
 NULL
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
-Naturals$set("public", "initialize", function(dim = 1, lower = 0){
-  super$initialize(dim, lower = lower, type = "[)")
+Naturals$set("public", "initialize", function(lower = 0, dimension = 1){
+  super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer",
+                   dimension = dimension, bounded = FALSE, countability = "countably infinite",
+                   cardinality = "\u2135\u2080", empty = FALSE)
 })
-Naturals$set("private",".class","integer")
 
 #' @title Set of Positive Natural Numbers
 #' @description The mathematical set of positive natural numbers.
@@ -119,8 +128,8 @@ Naturals$set("private",".class","integer")
 #' @export
 NULL
 PosNaturals <- R6::R6Class("PosNaturals",inherit = Naturals)
-PosNaturals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, lower = 1)
+PosNaturals$set("public", "initialize", function(dimension = 1){
+  super$initialize(dimension = dimension, lower = 1)
 })
 
 #' @title Set of Integers
@@ -151,10 +160,11 @@ PosNaturals$set("public", "initialize", function(dim = 1){
 #' @export
 NULL
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
-Integers$set("public", "initialize", function(dim = 1,...){
-  super$initialize(dim,...)
+Integers$set("public", "initialize", function(dimension = 1, lower = -Inf, upper = Inf, type = "()"){
+  super$initialize(lower = lower, upper = upper, type = type, class = "integer",
+                   dimension = dimension, bounded = FALSE, countability = "countably infinite",
+                   cardinality = "\u2135\u2080", empty = FALSE)
 })
-Integers$set("private",".class","integer")
 
 #' @title Set of Positive Integers
 #' @description The mathematical set of positive integers.
@@ -183,11 +193,8 @@ Integers$set("private",".class","integer")
 #' @export
 NULL
 PosIntegers <- R6::R6Class("PosIntegers",inherit = Integers)
-PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
-  if(zero)
-    super$initialize(dim, lower = 0, type = "[)")
-  else
-    super$initialize(dim, lower = 1, type = "[)")
+PosIntegers$set("public", "initialize", function(zero = FALSE, dimension = 1){
+  super$initialize(dimension = dimension, lower = ifelse(zero, 0, 1), type = "[)")
 })
 
 #' @title Set of Negative Integers
@@ -217,11 +224,8 @@ PosIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @export
 NULL
 NegIntegers <- R6::R6Class("NegIntegers",inherit = Integers)
-NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
-  if(zero)
-    super$initialize(dim, upper = 0, type = "(]")
-  else
-    super$initialize(dim, upper = -1, type = "(]")
+NegIntegers$set("public", "initialize", function(zero = FALSE, dimension = 1){
+  super$initialize(dimension = dimension, upper = ifelse(zero, 0, -1), type = "(]")
 })
 
 #' @title Set of Rationals
@@ -253,10 +257,11 @@ NegIntegers$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @export
 NULL
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
-Rationals$set("public", "initialize", function(dim = 1, ...){
-  super$initialize(dim,...)
+Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()", dimension = 1){
+  super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
+                   dimension = dimension, bounded = FALSE, countability = "countably infinite",
+                   cardinality = "\u2135\u2080", empty = FALSE)
 })
-Rationals$set("private",".class","numeric")
 
 #' @title Set of Positive Rationals
 #' @description The mathematical set of positive rational numbers.
@@ -287,11 +292,8 @@ Rationals$set("private",".class","numeric")
 #' @export
 NULL
 PosRationals <- R6::R6Class("PosRationals",inherit = Rationals)
-PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
-  if(zero)
-    super$initialize(dim, lower = 0, type = "[)")
-  else
-    super$initialize(dim, lower = 0, type = "()")
+PosRationals$set("public", "initialize", function(zero = FALSE, dimension = 1){
+  super$initialize(dimension = dimension, lower = 0, type = ifelse(zero, "[)", "()"))
 })
 
 #' @title Set of Negative Rationals
@@ -323,11 +325,8 @@ PosRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @export
 NULL
 NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
-NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
-  if(zero)
-    super$initialize(dim, upper = 0, type = "(]")
-  else
-    super$initialize(dim, upper = 0, type = "()")
+NegRationals$set("public", "initialize", function(zero = FALSE, dimension = 1){
+  super$initialize(dimension = dimension, upper = 0, type = ifelse(zero, "(]", "()"))
 })
 
 #' @title Set of Reals
@@ -358,10 +357,11 @@ NegRationals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @export
 NULL
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
-Reals$set("public", "initialize", function(dim = 1, ...){
-  super$initialize(dim, ...)
+Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()", dimension = 1){
+  super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
+                   dimension = dimension, bounded = FALSE, countability = "uncountable",
+                   cardinality = "\u2136\u2081", empty = FALSE)
 })
-Reals$set("private",".class","numeric")
 
 #' @title Set of Positive Reals
 #' @description The mathematical set of positive real numbers.
@@ -392,11 +392,8 @@ Reals$set("private",".class","numeric")
 #' @export
 NULL
 PosReals <- R6::R6Class("PosReals",inherit = Reals)
-PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
-  if(zero)
-    super$initialize(dim, lower = 0, type = "[)")
-  else
-    super$initialize(dim, lower = 0, type = "()")
+PosReals$set("public", "initialize", function(zero = FALSE, dimension = 1){
+  super$initialize(dimension = dimension, lower = 0, type = ifelse(zero, "[)", "()"))
 })
 
 #' @title Set of Negative Reals
@@ -428,11 +425,8 @@ PosReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @export
 NULL
 NegReals <- R6::R6Class("NegReals",inherit = Reals)
-NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
-  if(zero)
-    super$initialize(dim, upper = 0, type = "(]")
-  else
-    super$initialize(dim, upper = 0, type = "()")
+NegReals$set("public", "initialize", function(zero = FALSE, dimension = 1){
+  super$initialize(dimension = dimension, upper = 0, type = ifelse(zero, "(]", "()"))
 })
 
 #' @title Set of Extended Reals
@@ -459,8 +453,8 @@ NegReals$set("public", "initialize", function(dim = 1, zero = FALSE){
 #' @export
 NULL
 ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
-ExtendedReals$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, type = "[]")
+ExtendedReals$set("public", "initialize", function(dimension = 1){
+  super$initialize(dimension = dimension, type = "[]")
 })
 
 #' @title Set of Complex Numbers
@@ -487,7 +481,15 @@ ExtendedReals$set("public", "initialize", function(dim = 1){
 #' @export
 NULL
 Complex <- R6::R6Class("Complex",inherit = SpecialSet)
-Complex$set("public", "initialize", function(dim = 1){
-  super$initialize(dim, type = "[]")
+Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i, dimension = 1){
+  super$initialize(lower = lower, upper = upper, type = "()", class = "complex",
+                   dimension = dimension, bounded = FALSE, countability = "uncountable",
+                   cardinality = "\u2136\u2081", empty = FALSE)
 })
-Complex$set("private",".class","complex")
+Complex$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
+  ret <- sapply(x, function(y) inherits(y, "complex"))
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
+})

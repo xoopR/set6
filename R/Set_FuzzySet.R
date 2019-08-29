@@ -45,12 +45,6 @@ FuzzySet$set("public","membership",function(element = NULL){
       return(private$.membership[match(element, self$elements)])
   }
 })
-FuzzySet$set("public","isEmpty",function(){
-  if(all(self$membership() == 0))
-    return(TRUE)
-  else
-    return(FALSE)
-})
 FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
   if(strong)
     els <- self$elements[self$membership() > alpha]
@@ -142,6 +136,7 @@ FuzzySet$set("public","isSubset",function(x, proper = FALSE){
 
 FuzzySet$set("private",".type","{}")
 FuzzySet$set("private",".membership", 0)
+FuzzySet$set("private",".properties",list(crisp = FALSE))
 
 
 #' @title Coercion to R6 FuzzySet
