@@ -28,7 +28,9 @@ ConditionalSet$set("public","initialize",function(condition, argclass = NULL){
   invisible(self)
 })
 
-ConditionalSet$set("public","liesInSetInterval",function(x, all = FALSE, bound = NULL){
+ConditionalSet$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
+  # x <- list(...)
+  # assertSetList(x)
   if(inherits(x, "Set"))
     x <- list(x)
   else if(inherits(x, "list")){
@@ -37,10 +39,11 @@ ConditionalSet$set("public","liesInSetInterval",function(x, all = FALSE, bound =
   } else
     stop("x should be a Set, Tuple or list of Sets/Tuples")
 
+  condition <- self$condition
   ret <- sapply(1:length(x), function(i){
-    els <- as.list(x[[i]]$elements())
-    names(els) <- names(formals(condition))
-    do.call(condition, els)
+    els <- as.list(x[[i]]$elements)
+    names(els) <- names(private$.argclass)
+    do.call(self$condition, els)
   })
 
   if(all)
@@ -62,9 +65,11 @@ ConditionalSet$set("public","strprint",function(){
                            paste(names(self$class), sapply(self$class, strprint),
                                  sep = " \u03B5 ", collapse = ", "),"}")))
 })
-ConditionalSet$set("public","condition", function(){
-  return(private$.condition)
+
+ConditionalSet$set("public","condition", function(...){
+  return(private$.condition(...))
 })
+
 ConditionalSet$set("private",".condition", NULL)
 ConditionalSet$set("active","class", function(){
   return(private$.argclass)
