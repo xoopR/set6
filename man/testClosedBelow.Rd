@@ -6,11 +6,11 @@
 \alias{assertClosedBelow}
 \title{assert/check/test/ClosedBelow}
 \usage{
-testClosedBelow(object)
+testClosedBelow(object, errormsg = errormsg)
 
-checkClosedBelow(object)
+checkClosedBelow(object, errormsg = errormsg)
 
-assertClosedBelow(object)
+assertClosedBelow(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

@@ -39,7 +39,6 @@ ConditionalSet$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
   } else
     stop("x should be a Set, Tuple or list of Sets/Tuples")
 
-  condition <- self$condition
   ret <- sapply(1:length(x), function(i){
     els <- as.list(x[[i]]$elements)
     names(els) <- names(private$.argclass)
@@ -52,26 +51,34 @@ ConditionalSet$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
     return(ret)
 })
 ConditionalSet$set("public","equals",function(x){
-  if(!ConditionalSet(x))
+  if(!testConditionalSet(x))
     return(FALSE)
 
-  if(self$condition() == x$condition() & self$class == x$class)
+  if(all(names(formals(x$condition)) == names(formals(self$condition))) &
+     all(body(x$condition) == body(self$condition)) &
+     all(unlist(lapply(x$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
     return(TRUE)
   else
     return(FALSE)
 })
-ConditionalSet$set("public","strprint",function(){
-  return(paste0("{",paste0(deparse(body(self$condition()))," | ",
+ConditionalSet$set("public","strprint",function(n = NULL){
+  return(paste0("{",paste0(deparse(body(self$condition))," : ",
                            paste(names(self$class), sapply(self$class, strprint),
                                  sep = " \u03B5 ", collapse = ", "),"}")))
 })
-
-ConditionalSet$set("public","condition", function(...){
-  return(private$.condition(...))
+ConditionalSet$set("public","summary",function(n = NULL){
+  self$print()
 })
 
-ConditionalSet$set("private",".condition", NULL)
+
+ConditionalSet$set("active","condition", function(){
+  return(private$.condition)
+})
 ConditionalSet$set("active","class", function(){
   return(private$.argclass)
 })
+
+ConditionalSet$set("private",".condition", NULL)
 ConditionalSet$set("private",".argclass", NULL)
+ConditionalSet$set("private",".traits", list())
+ConditionalSet$set("private",".properties", list())

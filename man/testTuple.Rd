@@ -6,11 +6,11 @@
 \alias{assertTuple}
 \title{assert/check/test/Tuple}
 \usage{
-testTuple(object)
+testTuple(object, errormsg = errormsg)
 
-checkTuple(object)
+checkTuple(object, errormsg = errormsg)
 
-assertTuple(object)
+assertTuple(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

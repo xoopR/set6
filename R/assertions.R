@@ -211,7 +211,7 @@ checkClosed <- function(){}
 #' @export
 assertClosed <- function(){}
 makeChecks(assertionName = "Closed",
-           cond = testClosedBelow(object) & testClosedAbove(object),
+           cond = object$properties$closure == "closed",
            errormsg = "This is not a closed set",
            pos = environment())
 
@@ -283,7 +283,7 @@ checkCrisp <- function(){}
 #' @export
 assertCrisp <- function(){}
 makeChecks(assertionName = "Crisp",
-           cond = !grepl("Fuzzy", getR6Class(object)),
+           cond = object$traits$crisp,
            errormsg = "This is not crisp.",
            pos = environment())
 

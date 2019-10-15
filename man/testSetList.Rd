@@ -6,11 +6,11 @@
 \alias{assertSetList}
 \title{assert/check/test/SetList}
 \usage{
-testSetList(object)
+testSetList(object, errormsg = errormsg)
 
-checkSetList(object)
+checkSetList(object, errormsg = errormsg)
 
-assertSetList(object)
+assertSetList(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

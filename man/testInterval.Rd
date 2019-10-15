@@ -6,11 +6,11 @@
 \alias{assertInterval}
 \title{assert/check/test/Interval}
 \usage{
-testInterval(object)
+testInterval(object, errormsg = errormsg)
 
-checkInterval(object)
+checkInterval(object, errormsg = errormsg)
 
-assertInterval(object)
+assertInterval(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

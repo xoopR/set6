@@ -6,11 +6,11 @@
 \alias{assertFuzzyTuple}
 \title{assert/check/test/FuzzyTuple}
 \usage{
-testFuzzyTuple(object)
+testFuzzyTuple(object, errormsg = errormsg)
 
-checkFuzzyTuple(object)
+checkFuzzyTuple(object, errormsg = errormsg)
 
-assertFuzzyTuple(object)
+assertFuzzyTuple(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

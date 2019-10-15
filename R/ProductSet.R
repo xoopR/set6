@@ -1,53 +1,112 @@
 ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
-ProductSet$set("public", "initialize", function(x, y, tuple = FALSE){
-  if(testConditionalSet(x) | testConditionalSet(y))
-    stop("Product with conditional sets is currently unsupported.")
+ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
+  if(is.null(lower)) lower = sapply(setlist, function(x) x$lower)
+  if(is.null(upper)) upper = sapply(setlist, function(x) x$upper)
+  if(is.null(type)) type = "{}"
+  super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
+})
+ProductSet$set("active", "length", function(){
+  return(sapply(self$wrappedSets, function(x) x$length))
+})
 
-  if(x$length == 0 & y$length == 0) return(Empty$new())
+ProductSet$set("public","strprint",function(n = 2){
+  str = lapply(self$wrappedSets, function(x) x$strprint(n))
+  if(length(unique(str)) == 1)
+    return(paste(unique(str), length(str), sep = "^"))
+  else
+    return(paste0("{",paste(str, collapse = " \u00D7 "),"}"))
+})
+
+#' @name product
+#' @rdname product
+#' @export
+product <- function(x, y){
+  UseMethod("product", x)
+}
+#' @export
+product.Set <- function(x, y){
+  if(inherits(y, "SetWrapper"))
+    return(ProductSet$new(c(list(x), y$wrappedSets)))
+
+  if(x$length == 0 & y$length == 0) return(Set$new())
   if(x$length == 0) return(y)
   if(y$length == 0) return(x)
 
-  if(testFuzzy(x)){
-    message("Only the support of the FuzzySet is kept, use alphaCut() to change this.")
-    x <- x$support(create = TRUE)
+  if(testSet(y) & !testInterval(y) & !testConditionalSet(y))
+    return(Set$new(apply(expand.grid(x$elements, y$elements), 1, function(z) Tuple$new(z))))
+  else if(!testConditionalSet(y))
+    return(ProductSet$new(list(x, y)))
+  else {
+    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
+    return(Set$new())
   }
-  if(testFuzzy(y)){
-    message("Only the support of the FuzzySet is kept, use alphaCut() to change this.")
-    y <- y$support(create = TRUE)
+}
+#' @export
+product.Interval <- function(x, y){
+  if(inherits(y, "SetWrapper"))
+    return(ProductSet$new(c(list(x), y$wrappedSets)))
+
+  if(all(x$length == 0) & all(y$length == 0)) return(Set$new())
+  if(all(x$length == 0)) return(y)
+  if(all(y$length == 0)) return(x)
+
+  if (testConditionalSet(y)) {
+    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
+    return(Set$new())
+  } else
+    return(ProductSet$new(list(x, y)))
+}
+#' @export
+product.FuzzySet <- function(x, y){
+  if(inherits(y, "SetWrapper"))
+    return(ProductSet$new(c(list(x), y$wrappedSets)))
+
+  if(x$length == 0 & y$length == 0) return(Set$new())
+  if(x$length == 0) return(y)
+  if(y$length == 0) return(x)
+
+  if (testConditionalSet(y) | testInterval(y)) {
+    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
+    return(Set$new())
+  } else if (testFuzzyTuple(x)){
+    return(ProductSet$new(list(x, as.FuzzyTuple(y))))
+  } else {
+    return(ProductSet$new(list(x, as.FuzzySet(y))))
   }
-
-  if(testInterval(x) | testInterval(y)){
-
-    lower <- Tuple$new(x$lower, y$lower)
-    upper <- Tuple$new(x$upper, y$upper)
-    super$initialize(setlist = list(x,y),
-                     lower = lower,
-                     upper = upper,
-                     type = '{}',
-                     dimension = 2,
-                     symbol = paste(x$strprint(), y$strprint(),sep=" \u00D7 ")
-    )
-  } else if(getR6Class(x) %in% c("Set", "Tuple")){
-
-    # Set/Tuple X Set/Tuple
-    if(getR6Class(y) %in% c("Set", "Tuple")){
-      super$initialize(apply(expand.grid(x$elements, y$elements), 1,
-                             function(z) Tuple$new(z)), setlist = list(x,y), dimension = 2)
+}
+#' @export
+product.ConditionalSet <- function(x, y){
+  if(!testConditionalSet(y)){
+    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
+    return(Set$new())
+  }else{
+    if(x$equals(y))
+      return(x)
+    else{
+      if(all(names(formals(x$condition)) == names(formals(y$condition)))){
+        condition = function(){}
+        formals(condition) = formals(x$condition)
+        body(condition) = substitute(bx & by,
+                                     list(bx = body(x$condition),
+                                          by = body(y$condition)))
+        argclass = unique(c(x$class, y$class))
+        names(argclass) = names(formals(condition))
+        return(ConditionalSet$new(condition = condition, argclass = argclass))
+      } else
+        stop("Conditional set conditions must have the same formal arguments.")
     }
   }
+}
+#' @export
+product.SetWrapper <- function(x, y){
+  return(ProductSet$new(c(x$wrappedSets, list(y))))
+}
 
-  invisible(self)
-})
-
-ProductSet$set("public", "strprint", function(){
-  if(length(private$.symbol) != 0)
-    return(paste0(substr(self$type,1,1), private$.symbol, substr(self$type,2,2)))
-  else
-    super$strprint()
-})
-ProductSet$set("private", "symbol", character(0))
-
+#' @rdname product
+#' @usage \method{*}{Set}(x, y)
+#' @param x Set
+#' @param y Set
 #' @export
 `*.Set` <- function(x, y){
-  ProductSet$new(x, y)
+  product(x, y)
 }

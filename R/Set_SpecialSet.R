@@ -19,7 +19,7 @@
 NULL
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
 SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()",
-                                              class = "numeric", dimension = 1, bounded = FALSE,
+                                              class = "numeric", dimension = 1,
                                               countability = "uncountable",
                                               cardinality = "\u2136\u2081",
                                               empty = empty){
@@ -33,7 +33,11 @@ SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = 
   private$.dimension <- dimension
   private$.symbol <- setSymbol(getR6Class(self))
 
-  private$.properties$bounded <- bounded
+  private$.properties$closure = switch(type,
+                                       "[]" = "closed",
+                                       "()" = "open",
+                                       "half-open"
+  )
   private$.properties$countability = countability
   private$.properties$cardinality = cardinality
   private$.properties$singleton = FALSE
@@ -41,35 +45,13 @@ SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = 
 
   invisible(self)
 })
-SpecialSet$set("public","strprint",function(){
+SpecialSet$set("public","strprint",function(...){
   str <- private$.symbol
   if(self$dimension!=1)
     str <- paste(str,self$dimension,sep="^")
   return(str)
 })
 SpecialSet$set("private",".symbol",NULL)
-
-#' @name Empty
-#' @title Empty Set
-#' @description The mathematical Empty, or Null, set.
-#' @details The Empty set is the set defined by having no elements,
-#' \deqn{Empty = \{ \}}{Empty = { }}
-#'
-#' @section Constructor: Empty$new()
-#'
-#' @seealso \code{\link{listSpecialSets}}
-#'
-#' @examples
-#' Empty$new()
-#'
-#' @export
-NULL
-Empty <- R6::R6Class("Empty",inherit = SpecialSet)
-Empty$set("public", "initialize", function(){
-  super$initialize(lower = NULL, upper = NULL, type = "{}", class = "integer",
-                   dimension = 1, bounded = TRUE, countability = "countably finite",
-                   cardinality = 0, empty = TRUE)
-})
 
 #' @title Set of Natural Numbers
 #' @description The mathematical set of natural numbers.
@@ -101,7 +83,7 @@ NULL
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
 Naturals$set("public", "initialize", function(lower = 0, dimension = 1){
   super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer",
-                   dimension = dimension, bounded = FALSE, countability = "countably infinite",
+                   dimension = dimension, countability = "countably infinite",
                    cardinality = "\u2135\u2080", empty = FALSE)
 })
 
@@ -162,7 +144,7 @@ NULL
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
 Integers$set("public", "initialize", function(dimension = 1, lower = -Inf, upper = Inf, type = "()"){
   super$initialize(lower = lower, upper = upper, type = type, class = "integer",
-                   dimension = dimension, bounded = FALSE, countability = "countably infinite",
+                   dimension = dimension, countability = "countably infinite",
                    cardinality = "\u2135\u2080", empty = FALSE)
 })
 
@@ -259,7 +241,7 @@ NULL
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
 Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()", dimension = 1){
   super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
-                   dimension = dimension, bounded = FALSE, countability = "countably infinite",
+                   dimension = dimension, countability = "countably infinite",
                    cardinality = "\u2135\u2080", empty = FALSE)
 })
 
@@ -359,7 +341,7 @@ NULL
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
 Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()", dimension = 1){
   super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
-                   dimension = dimension, bounded = FALSE, countability = "uncountable",
+                   dimension = dimension, countability = "uncountable",
                    cardinality = "\u2136\u2081", empty = FALSE)
 })
 
@@ -483,7 +465,7 @@ NULL
 Complex <- R6::R6Class("Complex",inherit = SpecialSet)
 Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i, dimension = 1){
   super$initialize(lower = lower, upper = upper, type = "()", class = "complex",
-                   dimension = dimension, bounded = FALSE, countability = "uncountable",
+                   dimension = dimension, countability = "uncountable",
                    cardinality = "\u2136\u2081", empty = FALSE)
 })
 Complex$set("public","liesInSet",function(x, all = FALSE, bound = NULL){

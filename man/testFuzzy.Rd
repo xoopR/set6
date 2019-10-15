@@ -6,11 +6,11 @@
 \alias{assertFuzzy}
 \title{assert/check/test/Fuzzy}
 \usage{
-testFuzzy(object)
+testFuzzy(object, errormsg = errormsg)
 
-checkFuzzy(object)
+checkFuzzy(object, errormsg = errormsg)
 
-assertFuzzy(object)
+assertFuzzy(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

@@ -30,8 +30,28 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
   invisible(self)
 })
 
-FuzzySet$set("public","strprint",function(){
-  return(paste0("{",paste0(self$elements,"(",self$membership(),")", collapse = ", "),"}"))
+FuzzySet$set("public","strprint",function(n = 2){
+  if(self$properties$empty)
+    return("\u2205")
+  else{
+    elements <- sapply(self$elements, function(x){
+      y = try(x$strprint(), silent = T)
+      if(inherits(y,"try-error"))
+        return(x)
+      else
+        return(y)
+    })
+    members <- self$membership()
+
+    if(self$length <= n * 2)
+      return(paste0(substr(self$type,1,1),paste0(elements,"(",members,")", collapse = ", "),
+                    substr(self$type,2,2)))
+    else
+      return(paste0(substr(self$type,1,1),paste0(elements[1:n],"(",members[1:n],")",collapse = ", "), ",...,",
+                    paste0(elements[(self$length-n+1):self$length],"(",
+                           members[(self$length-n+1):self$length],")",collapse=", "),
+                    substr(self$type,2,2), collapse = ", "))
+  }
 })
 FuzzySet$set("public","membership",function(element = NULL){
   if(is.null(element))
@@ -136,7 +156,8 @@ FuzzySet$set("public","isSubset",function(x, proper = FALSE){
 
 FuzzySet$set("private",".type","{}")
 FuzzySet$set("private",".membership", 0)
-FuzzySet$set("private",".properties",list(crisp = FALSE))
+FuzzySet$set("private",".properties",list())
+FuzzySet$set("private",".traits",list(crisp = FALSE))
 
 
 #' @title Coercion to R6 FuzzySet
@@ -170,4 +191,19 @@ as.FuzzySet.data.table <- function(object){
 #' @export
 as.FuzzySet.data.frame <- function(object){
   return(as.FuzzySet(as.matrix(object)))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.Set <- function(object){
+  return(FuzzySet$new(elements = object$elements))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.FuzzySet <- function(object){
+  return(object)
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.FuzzySet <- function(object){
+  return(FuzzySet$new(elements = object$elements, membership = object$membership()))
 }

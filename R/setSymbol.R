@@ -32,7 +32,6 @@ setSymbol <- function(set){
     set = paste0(substitute(set))
   set = tolower(set)
   return(switch(set,
-                empty = "\u2205",
                 naturals = "\u21150",
                 posnaturals = "\u2115+",
                 integers = "\u2124",

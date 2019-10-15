@@ -14,15 +14,22 @@ Set <- R6::R6Class("Set")
 Set$set("public","initialize",function(..., dimension = 1, universe = NULL){
 
   if(length(list(...)) != 0){
-    if(!checkmate::testList(...))
-      dots <- list(...)
-    else
+    # if(!checkmate::testList(...))
+    #   dots <- list(...)
+    # else
       dots <- unlist(list(...), recursive = FALSE)
 
     if(testTuple(self))
       private$.elements <- unlist(dots)
     else
-      private$.elements <- unlist(unique(dots))
+      private$.elements = unlist(dots[!duplicated(lapply(dots, function(x){
+        y = try(x$strprint(), silent = TRUE)
+        if(inherits(y, "try-error"))
+          return(x)
+        else
+          return(y)
+      }))])
+
     class <- unique(sapply(dots,function(x) class(x)[[1]]))
     if(length(class)==1)
       private$.class <- class
@@ -47,7 +54,10 @@ Set$set("public","initialize",function(..., dimension = 1, universe = NULL){
   private$.properties$empty = ifelse(self$length == 0, TRUE, FALSE)
   private$.properties$cardinality = self$length
   private$.properties$countability = "countably finite"
-  private$.properties$bounded = TRUE
+  private$.properties$closure = "closed"
+  private$.properties = private$.properties[match(c("empty","singleton","cardinality",
+                                                          "countability","closure"),
+                                            names(private$.properties))]
 
   invisible(self)
 })
@@ -60,23 +70,35 @@ Set$set("public","print",function(){
   invisible(self)
 })
 Set$set("public","strprint",function(n = 2){
-  type <- private$.type
-  elements <- sapply(self$elements, function(x){
-    y = try(x$strprint(), silent = T)
-    if(inherits(y,"try-error"))
-      return(x)
+  if(self$properties$empty)
+    return("\u2205")
+  else{
+    type <- private$.type
+    elements <- sapply(self$elements, function(x){
+      y = try(x$strprint(), silent = T)
+      if(inherits(y,"try-error"))
+        return(x)
+      else
+        return(y)
+    })
+    if(self$length <= n * 2)
+      return(paste0(substr(type,1,1),paste0(elements, collapse = ", "), substr(type,2,2)))
     else
-      return(y)
-  })
-  if(self$length <= n * 2)
-    return(paste0(substr(type,1,1),paste0(elements, collapse = ", "), substr(type,2,2)))
-  else
-    return(paste0(substr(type,1,1),paste0(elements[1:n], collapse = ", "), ",...,",
-                  paste0(elements[(self$length-n+1):self$length],collapse=", "),
-                  substr(type,2,2), collapse = ", "))
+      return(paste0(substr(type,1,1),paste0(elements[1:n], collapse = ", "), ",...,",
+                    paste0(elements[(self$length-n+1):self$length],collapse=", "),
+                    substr(type,2,2), collapse = ", "))
+  }
 })
-Set$set("public","summary",function(){
-  self$print()
+Set$set("public","summary",function(n = 2){
+  prop = self$properties
+  cat(getR6Class(self),"\n\t",self$strprint(n),"\n",sep="")
+  cat("Traits:\n\t")
+  cat(ifelse(testCrisp(self), "Crisp", "Fuzzy"),"\n")
+  cat("Properties:\n")
+  if(prop$empty) cat("\tEmpty\n")
+  if(prop$singleton) cat("\tSingleton\n")
+  cat("\tCardinality =",prop$cardinality," - ",prop$countability,"\n")
+  cat("\t",toproper(prop$closure),"\n",sep="")
 })
 
 #---------------------------------------------
@@ -101,6 +123,8 @@ Set$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
 
   if(length(r6.match) > 0){
     r6.tr <- sapply(r6.match, function(y){
+      if(Empty$new()$equals(y))
+        y <- Set$new()
       cl <- getR6Class(y)
       fil <- sapply(self$elements, function(z) ifelse(inherits(z, cl), TRUE, FALSE))
       els <- self$elements[fil]
@@ -164,13 +188,13 @@ Set$set("public","complement",function(){
     return(setdiff(self$universe, self))
 })
 Set$set("public","powerSet",function(){
-  # if(testSet(self))
+  if(self$properties$empty)
+    return(Set$new(Set$new()))
+  else{
     elements <- self$elements
-  # else
-  #   elements <- self$as.numeric()
-
-  y = Vectorize(function(m) combn(elements, m),vectorize.args = c("m"))(1:(self$length-1))
-  return(Set$new(Set$new(), unlist(lapply(y, as.Set)), self))
+    y = Vectorize(function(m) combn(elements, m),vectorize.args = c("m"))(1:(self$length-1))
+    return(Set$new(Set$new(), unlist(lapply(y, as.Set)), self))
+  }
 })
 
 
@@ -179,6 +203,9 @@ Set$set("public","powerSet",function(){
 #---------------------------------------------
 Set$set("active","properties",function(){
   return(private$.properties)
+})
+Set$set("active","traits",function(){
+  return(private$.traits)
 })
 Set$set("active","type",function(){
   return(private$.type)
@@ -238,7 +265,8 @@ Set$set("private",".upper",numeric(0))
 Set$set("private",".dimension",numeric(0))
 Set$set("private",".universe",NULL)
 Set$set("private",".elements",list())
-Set$set("private",".properties",list(crisp = TRUE))
+Set$set("private",".properties",list())
+Set$set("private",".traits",list(crisp = TRUE))
 
 #---------------------------------------------
 # as.Set
@@ -274,6 +302,16 @@ as.Set.FuzzySet <- function(object){
 #' @export
 as.Set.Set <- function(object){
   return(Set$new(object$elements()))
+}
+#' @rdname as.Set
+#' @export
+as.Set.Interval <- function(object){
+  if(any(is.nan(object$elements))){
+    message("Interval cannot be coerced to Set.")
+    return(object)
+  } else {
+    return(Set$new(object$elements))
+  }
 }
 
 #---------------------------------------------

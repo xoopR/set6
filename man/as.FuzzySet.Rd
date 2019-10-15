@@ -7,6 +7,8 @@
 \alias{as.FuzzySet.matrix}
 \alias{as.FuzzySet.data.table}
 \alias{as.FuzzySet.data.frame}
+\alias{as.FuzzySet.Set}
+\alias{as.FuzzySet.FuzzySet}
 \title{Coercion to R6 FuzzySet}
 \usage{
 as.FuzzySet(object)
@@ -20,6 +22,12 @@ as.FuzzySet(object)
 \method{as.FuzzySet}{data.table}(object)
 
 \method{as.FuzzySet}{data.frame}(object)
+
+\method{as.FuzzySet}{Set}(object)
+
+\method{as.FuzzySet}{FuzzySet}(object)
+
+\method{as.FuzzySet}{FuzzySet}(object)
 }
 \arguments{
 \item{object}{object to coerce}

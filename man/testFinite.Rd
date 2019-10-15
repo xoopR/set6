@@ -6,11 +6,11 @@
 \alias{assertFinite}
 \title{assert/check/test/Finite}
 \usage{
-testFinite(object)
+testFinite(object, errormsg = errormsg)
 
-checkFinite(object)
+checkFinite(object, errormsg = errormsg)
 
-assertFinite(object)
+assertFinite(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

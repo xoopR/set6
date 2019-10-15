@@ -7,6 +7,7 @@
 \alias{as.Set.matrix}
 \alias{as.Set.FuzzySet}
 \alias{as.Set.Set}
+\alias{as.Set.Interval}
 \title{Coercion to R6 Set}
 \usage{
 as.Set(object)
@@ -20,6 +21,8 @@ as.Set(object)
 \method{as.Set}{FuzzySet}(object)
 
 \method{as.Set}{Set}(object)
+
+\method{as.Set}{Interval}(object)
 }
 \arguments{
 \item{object}{object to coerce}

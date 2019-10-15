@@ -6,11 +6,11 @@
 \alias{assertEmpty}
 \title{assert/check/test/Empty}
 \usage{
-testEmpty(object)
+testEmpty(object, errormsg = errormsg)
 
-checkEmpty(object)
+checkEmpty(object, errormsg = errormsg)
 
-assertEmpty(object)
+assertEmpty(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

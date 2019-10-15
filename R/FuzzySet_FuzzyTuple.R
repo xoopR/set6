@@ -5,9 +5,6 @@ NULL
 #' @export
 FuzzyTuple <- R6::R6Class("FuzzyTuple", inherit = FuzzySet)
 
-FuzzyTuple$set("public","strprint",function(){
-  return(paste0("(",paste0(self$elements,"(",self$membership(),")", collapse = ", "),")"))
-})
 FuzzyTuple$set("public","powerSet",function(){
   y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
   if(checkmate::testList(y))
@@ -110,3 +107,19 @@ as.FuzzyTuple.data.table <- function(object){
 as.FuzzyTuple.data.frame <- function(object){
   return(as.FuzzyTuple(as.matrix(object)))
 }
+#' @rdname as.FuzzyTuple
+#' @export
+as.FuzzyTuple.Set <- function(object){
+  return(FuzzyTuple$new(elements = object$elements))
+}
+#' @rdname as.FuzzyTuple
+#' @export
+as.FuzzyTuple.FuzzyTuple <- function(object){
+  return(object)
+}
+#' @rdname as.FuzzyTuple
+#' @export
+as.FuzzyTuple.FuzzySet <- function(object){
+  return(FuzzyTuple$new(elements = object$elements, membership = object$membership()))
+}
+

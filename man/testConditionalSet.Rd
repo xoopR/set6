@@ -6,11 +6,11 @@
 \alias{assertConditionalSet}
 \title{assert/check/test/ConditionalSet}
 \usage{
-testConditionalSet(object)
+testConditionalSet(object, errormsg = errormsg)
 
-checkConditionalSet(object)
+checkConditionalSet(object, errormsg = errormsg)
 
-assertConditionalSet(object)
+assertConditionalSet(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}

@@ -7,6 +7,9 @@
 \alias{as.FuzzyTuple.matrix}
 \alias{as.FuzzyTuple.data.table}
 \alias{as.FuzzyTuple.data.frame}
+\alias{as.FuzzyTuple.Set}
+\alias{as.FuzzyTuple.FuzzyTuple}
+\alias{as.FuzzyTuple.FuzzySet}
 \title{Coercion to R6 FuzzyTuple}
 \usage{
 as.FuzzyTuple(object)
@@ -20,6 +23,12 @@ as.FuzzyTuple(object)
 \method{as.FuzzyTuple}{data.table}(object)
 
 \method{as.FuzzyTuple}{data.frame}(object)
+
+\method{as.FuzzyTuple}{Set}(object)
+
+\method{as.FuzzyTuple}{FuzzyTuple}(object)
+
+\method{as.FuzzyTuple}{FuzzySet}(object)
 }
 \arguments{
 \item{object}{object to coerce}

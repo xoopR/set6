@@ -35,37 +35,42 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   } else {
     if(private$.properties$bounded){
       private$.properties$countability = "countably finite"
-      private$.properties$cardinality = suppressMessages(self$length)
+      private$.properties$cardinality = self$length
     } else {
       private$.properties$countability = "countably infinite"
       private$.properties$cardinality = "\u2135\u2080"
     }
   }
 
-  private$.properties$singleton = ifelse(suppressMessages(self$length) == 1, TRUE, FALSE)
-  private$.properties$empty = ifelse(suppressMessages(self$length) == 0, TRUE, FALSE)
+  private$.properties$singleton = ifelse(self$length == 1, TRUE, FALSE)
+  private$.properties$empty = ifelse(self$length == 0, TRUE, FALSE)
+  private$.properties$closure = switch(type,
+                                       "[]" = "closed",
+                                       "()" = "open",
+                                       "half-open"
+                                       )
+
+  private$.properties = private$.properties[match(c("empty","singleton","cardinality",
+                                                    "countability","closure"),
+                                                  names(private$.properties))]
 
   invisible(self)
 })
 
-Interval$set("public","as.numeric", function(){
-  if(self$properties$countability == "countably finite")
-    return(seq.int(self$min, self$max, 1))
-  else{
-    message("Interval is unbounded.")
-    return(NaN)
-  }
-})
 Interval$set("public","equals",function(x){
-  if(!testInterval(x))
+  if (!testInterval(x))
     return(FALSE)
-  if(x$type == self$type & x$lower == self$lower & x$upper == self$upper & x$class == self$class &
-     self$dimension == x$dimension)
-    return(TRUE)
-  else
+  if (x$type == self$type & x$class == self$class & x$dimension == self$dimension){
+    if (is.null(x$lower) & is.null(self$lower) & is.null(x$upper) & is.null(self$upper))
+      return(TRUE)
+    else if (x$lower == self$lower & x$upper == self$upper)
+      return(TRUE)
+    else
+      return(FALSE)
+  } else
     return(FALSE)
 })
-Interval$set("public","strprint",function(){
+Interval$set("public","strprint",function(...){
 
   inf <- ifelse(self$lower==-Inf, "-\u221E", self$lower)
   sup <- ifelse(self$upper==Inf, "+\u221E", self$upper)
@@ -90,8 +95,20 @@ Interval$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
 
   if(bound)
     ret[(x >= self$lower & x <= self$upper & class_test)] = TRUE
-  else(!bound)
-  ret[(x >= self$min & x <= self$max & class_test)] = TRUE
+  else if (!bound){
+    if(testClosedAbove(self))
+      index = x <= self$max & class_test
+    else
+      index = x < self$max & class_test
+
+    if(testClosedBelow(self))
+      index = index & (x >= self$min & class_test)
+    else
+      index = index & (x > self$min & class_test)
+
+    ret[index] = TRUE
+  }
+
 
   if(all)
     return(all(ret))
@@ -99,6 +116,22 @@ Interval$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
     return(ret)
 })
 Interval$set("public", "isSubset", function(x, proper = FALSE){
+  if(x$properties$empty)
+    return(TRUE)
+
+  if(testSet(x) & !testInterval(x) & !testConditionalSet(x)){
+    if(testFuzzy(x))
+      return(FALSE)
+    else{
+      if(testMessage(as.Set(self))){
+        if(self$liesInSet(x, all = TRUE, bound = FALSE))
+          return(TRUE)
+        else
+          return(FALSE)
+      } else
+        return(as.Set(self)$isSubset(x, proper = proper))
+    }
+  }
   if(self$equals(x)){
     if(proper)
       return(FALSE)
@@ -122,7 +155,16 @@ Interval$set("active","length",function(){
   else if(self$class == "numeric" & self$lower == self$upper)
     return(1)
 
-  return(length(self$as.numeric()))
+  return(length(self$elements))
+})
+Interval$set("active", "elements", function(){
+  if(self$properties$countability == "countably finite")
+    return(seq.int(self$min, self$max, 1))
+  else
+    return(NaN)
 })
 
-Interval$set("private",".properties",list(crisp = TRUE))
+#' @export
+as.double.Interval <- function(x,...){
+  x$elements
+}
