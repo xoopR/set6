@@ -2,7 +2,107 @@
 % Please edit documentation in R/Set_FuzzySet.R
 \name{FuzzySet}
 \alias{FuzzySet}
-\title{FuzzySet}
+\title{Mathematical Fuzzy Set}
+\value{
+R6 object of class FuzzySet inheriting from \link{Set}.
+}
 \description{
-FuzzySet Object
+A general FuzzySet object for mathematical fuzzy sets, inheriting from \code{Set}.
+}
+\details{
+Fuzzy sets generalise standard mathematical sets to allow for fuzzy relationships. Whereas a
+standard, or crisp, set assumes that an element is either in a set or not, a fuzzy set allows
+an element to be in a set to a particular degree, known as the membership function, which
+quantifies the inclusion of an element by a number in [0, 1]. Thus a (crisp) set is a
+fuzzy set where all elements have a membership equal to \eqn{1}. Similarly to \link{Set}s, elements
+must be unique and the ordering does not matter, to establish order and non-unique elements,
+\link{FuzzyTuple}s can be used.
+}
+\section{Constructor}{
+ \code{FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)), universe = NULL)}
+}
+
+\section{Constructor Arguments}{
+
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{...} \tab ANY \tab Alternating elements and membership, see constructor details. \cr
+\code{elements} \tab ANY \tab Elements in the set, see constructor details. \cr
+\code{membership} \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
+\code{universe} \tab Set \tab Optional universe that the interval lives in.
+
+}
+}
+
+\section{Constructor Details}{
+ \code{FuzzySet}s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to \code{elements} and a list of respective memberships to \code{membership}, see examples. The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+}
+
+\section{Public Fields}{
+
+\tabular{ll}{
+\strong{Field} \tab \strong{Link} \cr
+
+\code{class} \tab \link{class} \cr
+\code{elements} \tab \link{elements} \cr
+\code{length} \tab \link{length} \cr
+\code{lower} \tab \link{lower} \cr
+\code{upper} \tab \link{upper} \cr
+\code{max} \tab \link{max} \cr
+\code{min} \tab \link{min} \cr
+\code{range} \tab \link{range} \cr
+\code{properties} \tab \link{properties} \cr
+\code{traits} \tab \link{traits} \cr
+\code{type} \tab \link{type} \cr
+\code{universe} \tab \link{universe}
+}
+}
+
+\section{Public Methods}{
+
+\tabular{ll}{
+\strong{Fuzzy Methods} \tab \strong{Link} \cr
+\code{membership(element = NULL)} \tab \link{membership} \cr
+\code{alphaCut(alpha, strong = FALSE, create = FALSE)} \tab \link{alphaCut} \cr
+\code{support(create = FALSE)} \tab \link{support} \cr
+\code{core(create = FALSE)} \tab \link{core} \cr
+\code{inclusion(element)} \tab \link{inclusion} \cr
+\tab \cr \tab \cr \tab \cr
+
+\strong{Comparison Methods} \tab \strong{Link} \cr
+\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{equals(x)} \tab \link{equals} \cr
+\code{isSubset(x)} \tab \link{isSubset} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Mathematical Methods} \tab \strong{Link} \cr
+\code{complement()} \tab \link{complement} \cr
+\code{powerSet()} \tab \link{powerSet} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{strprint(n = 2)} \tab \link{strprint} \cr
+\code{print(n = 2)} \tab \link{print} \cr
+\code{summary(n = 2)} \tab \link{summary} \cr
+}
+}
+
+\examples{
+# Different constructors
+FuzzySet$new(1, 0.5, 2, 1, 3, 0)
+FuzzySet$new(elements = 1:3, membership = c(0.5, 1, 0))
+
+# Crisp sets are a special case FuzzySet
+# Note membership defaults to full membership
+FuzzySet$new(elements = 1:5) == Set$new(1:5)
+
+f = FuzzySet$new(1, 0.2, 2, 1, 3, 0)
+f$membership
+f$alphaCut(0.3)
+f$core()
+f$inclusion(0)
+f$membership(0)
+
+
+}
+\seealso{
+\link{Set}, \link{FuzzyTuple}
 }

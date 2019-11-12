@@ -3,6 +3,9 @@
 \name{NegRationals}
 \alias{NegRationals}
 \title{Set of Negative Rationals}
+\value{
+An R6 object of class NegRationals.
+}
 \description{
 The mathematical set of negative rational numbers.
 }
@@ -15,22 +18,20 @@ where \eqn{Z} is the set of integers.
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{
- NegRationals$new(dim = 1, zero = FALSE)
+ NegRationals$new(zero = FALSE)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
 \examples{
 NegRationals$new()
 NegRationals$new(zero = TRUE)
-NegRationals$new(dim = 2)
 
 }
 \seealso{

@@ -3,6 +3,9 @@
 \name{PosIntegers}
 \alias{PosIntegers}
 \title{Set of Positive Integers}
+\value{
+An R6 object of class PosIntegers.
+}
 \description{
 The mathematical set of positive integers.
 }
@@ -13,22 +16,20 @@ be written without a fractional component, i.e.
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{
- PosIntegers$new(dim = 1, zero = FALSE)
+ PosIntegers$new(zero = FALSE)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
 \examples{
 PosIntegers$new()
 PosIntegers$new(zero = TRUE)
-PosIntegers$new(dim = 2)
 
 }
 \seealso{

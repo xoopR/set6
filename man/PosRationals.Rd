@@ -3,6 +3,9 @@
 \name{PosRationals}
 \alias{PosRationals}
 \title{Set of Positive Rationals}
+\value{
+An R6 object of class PosRationals.
+}
 \description{
 The mathematical set of positive rational numbers.
 }
@@ -15,22 +18,20 @@ where \eqn{Z} is the set of integers.
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{
- PosRationals$new(dim = 1, zero = FALSE)
+ PosRationals$new(zero = FALSE)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
 \examples{
 PosRationals$new()
 PosRationals$new(zero = TRUE)
-PosRationals$new(dim = 2)
 
 }
 \seealso{

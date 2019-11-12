@@ -1,29 +1,3 @@
-#' @title Unicode Symbol of Special Sets
-#'
-#' @description Gets the unicode symbol for standard mathematical special sets.
-#' @name setSymbol
-#'
-#' @usage setSymbol(set)
-#'
-#' @param set special set
-#'
-#' @details Special set can be supplied as a character string or class, case-insensitive.
-#'   See \code{\link{listSpecialSets}} for full list of currently supported sets.
-#'
-#' @seealso \code{\link{SpecialSet}}, \code{\link{listSpecialSets}}
-#'
-#' @examples
-#' # Supplied as class
-#' setSymbol(empty)
-#'
-#' # Supplied as string
-#' setSymbol("empty")
-#'
-#' # Case-insensitive
-#' setSymbol(EmPtY)
-#'
-#'
-#' @export
 setSymbol <- function(set){
   x = try(class(set),silent = T)
   if(inherits(x, "try-error"))

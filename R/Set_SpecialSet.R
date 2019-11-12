@@ -19,7 +19,7 @@
 NULL
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
 SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()",
-                                              class = "numeric", dimension = 1,
+                                              class = "numeric",
                                               countability = "uncountable",
                                               cardinality = "\u2136\u2081",
                                               empty = empty){
@@ -30,7 +30,6 @@ SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = 
   private$.upper <- upper
   private$.type <- type
   private$.class <- class
-  private$.dimension <- dimension
   private$.symbol <- setSymbol(getR6Class(self))
 
   private$.properties$closure = switch(type,
@@ -46,10 +45,7 @@ SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = 
   invisible(self)
 })
 SpecialSet$set("public","strprint",function(...){
-  str <- private$.symbol
-  if(self$dimension!=1)
-    str <- paste(str,self$dimension,sep="^")
-  return(str)
+  private$.symbol
 })
 SpecialSet$set("private",".symbol",NULL)
 
@@ -60,11 +56,10 @@ SpecialSet$set("private",".symbol",NULL)
 #' @details The set of Naturals is defined as the counting numbers, i.e.
 #' \deqn{Naturals = \{0, 1, 2,...\}}{Naturals = {0, 1, 2,...}}
 #'
-#' @section Constructor: Naturals$new(dim = 1, lower = 0)
+#' @section Constructor: Naturals$new(lower = 0)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{lower} \tab integer \tab Where to start the set. \cr
 #' }
 #'
@@ -74,16 +69,17 @@ SpecialSet$set("private",".symbol",NULL)
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class Naturals.
+#'
 #' @examples
 #' Naturals$new()
-#' Naturals$new(dim = 2)
 #'
 #' @export
 NULL
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
-Naturals$set("public", "initialize", function(lower = 0, dimension = 1){
+Naturals$set("public", "initialize", function(lower = 0){
   super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer",
-                   dimension = dimension, countability = "countably infinite",
+                   countability = "countably infinite",
                    cardinality = "\u2135\u2080", empty = FALSE)
 })
 
@@ -94,24 +90,20 @@ Naturals$set("public", "initialize", function(lower = 0, dimension = 1){
 #' @details The set of Positive Naturals is defined as the positive counting numbers, i.e.
 #' \deqn{PosNaturals = \{1, 2, 3,...\}}{PosNaturals = {1, 2, 3,...}}
 #'
-#' @section Constructor: PosNaturals$new(dim = 1)
-#' @section Constructor Arguments:
-#'  \tabular{lll}{
-#'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
-#' }
+#' @section Constructor: PosNaturals$new()
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class PosNaturals.
+#'
 #' @examples
 #' PosNaturals$new()
-#' PosNaturals$new(dim = 2)
 #'
 #' @export
 NULL
 PosNaturals <- R6::R6Class("PosNaturals",inherit = Naturals)
-PosNaturals$set("public", "initialize", function(dimension = 1){
-  super$initialize(dimension = dimension, lower = 1)
+PosNaturals$set("public", "initialize", function(){
+  super$initialize(lower = 1)
 })
 
 #' @title Set of Integers
@@ -122,11 +114,10 @@ PosNaturals$set("public", "initialize", function(dimension = 1){
 #' component, i.e.
 #' \deqn{Integers = \{...,-3, -2, -1, 0, 1, 2, 3,...\}}{Integers = {...,-3, -2, -1, 0, 1, 2, 3,...}}
 #'
-#' @section Constructor: Integers$new(dim = 1,...)
+#' @section Constructor: Integers$new(...)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{...} \tab ANY \tab Additional arguments.
 #' }
 #'
@@ -135,16 +126,17 @@ PosNaturals$set("public", "initialize", function(dimension = 1){
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class Integers.
+#'
 #' @examples
 #' Integers$new()
-#' Integers$new(dim = 2)
 #'
 #' @export
 NULL
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
-Integers$set("public", "initialize", function(dimension = 1, lower = -Inf, upper = Inf, type = "()"){
+Integers$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
   super$initialize(lower = lower, upper = upper, type = type, class = "integer",
-                   dimension = dimension, countability = "countably infinite",
+                   countability = "countably infinite",
                    cardinality = "\u2135\u2080", empty = FALSE)
 })
 
@@ -157,26 +149,26 @@ Integers$set("public", "initialize", function(dimension = 1, lower = -Inf, upper
 #' \deqn{PosIntegers = \{0, 1, 2, 3,...\}}{PosIntegers = {0, 1, 2, 3,...}}
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
-#' @section Constructor: PosIntegers$new(dim = 1, zero = FALSE)
+#' @section Constructor: PosIntegers$new(zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class PosIntegers.
+#'
 #' @examples
 #' PosIntegers$new()
 #' PosIntegers$new(zero = TRUE)
-#' PosIntegers$new(dim = 2)
 #'
 #' @export
 NULL
 PosIntegers <- R6::R6Class("PosIntegers",inherit = Integers)
-PosIntegers$set("public", "initialize", function(zero = FALSE, dimension = 1){
-  super$initialize(dimension = dimension, lower = ifelse(zero, 0, 1), type = "[)")
+PosIntegers$set("public", "initialize", function(zero = FALSE){
+  super$initialize(lower = ifelse(zero, 0, 1), type = "[)")
 })
 
 #' @title Set of Negative Integers
@@ -188,26 +180,26 @@ PosIntegers$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #' \deqn{NegIntegers = \{...,-3, -2, -1, 0\}}{NegIntegers = {...,-3, -2, -1, 0}}
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
-#' @section Constructor: NegIntegers$new(dim = 1, zero = FALSE)
+#' @section Constructor: NegIntegers$new(zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class NegIntegers.
+#'
 #' @examples
 #' NegIntegers$new()
 #' NegIntegers$new(zero = TRUE)
-#' NegIntegers$new(dim = 2)
 #'
 #' @export
 NULL
 NegIntegers <- R6::R6Class("NegIntegers",inherit = Integers)
-NegIntegers$set("public", "initialize", function(zero = FALSE, dimension = 1){
-  super$initialize(dimension = dimension, upper = ifelse(zero, 0, -1), type = "(]")
+NegIntegers$set("public", "initialize", function(zero = FALSE){
+  super$initialize(upper = ifelse(zero, 0, -1), type = "(]")
 })
 
 #' @title Set of Rationals
@@ -219,11 +211,10 @@ NegIntegers$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #' \deqn{Rationals = \{\frac{p}{q} | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
 #' where \eqn{Z} is the set of integers.
 #'
-#' @section Constructor: Rationals$new(dim = 1,...)
+#' @section Constructor: Rationals$new(...)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{...} \tab ANY \tab Additional arguments.
 #' }
 #'
@@ -232,16 +223,17 @@ NegIntegers$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class Rationals.
+#'
 #' @examples
 #' Rationals$new()
-#' Rationals$new(dim = 2)
 #'
 #' @export
 NULL
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
-Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()", dimension = 1){
+Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
   super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
-                   dimension = dimension, countability = "countably infinite",
+                   countability = "countably infinite",
                    cardinality = "\u2135\u2080", empty = FALSE)
 })
 
@@ -256,26 +248,26 @@ Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type =
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
-#' @section Constructor: PosRationals$new(dim = 1, zero = FALSE)
+#' @section Constructor: PosRationals$new(zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class PosRationals.
+#'
 #' @examples
 #' PosRationals$new()
 #' PosRationals$new(zero = TRUE)
-#' PosRationals$new(dim = 2)
 #'
 #' @export
 NULL
 PosRationals <- R6::R6Class("PosRationals",inherit = Rationals)
-PosRationals$set("public", "initialize", function(zero = FALSE, dimension = 1){
-  super$initialize(dimension = dimension, lower = 0, type = ifelse(zero, "[)", "()"))
+PosRationals$set("public", "initialize", function(zero = FALSE){
+  super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
 })
 
 #' @title Set of Negative Rationals
@@ -289,26 +281,26 @@ PosRationals$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
-#' @section Constructor: NegRationals$new(dim = 1, zero = FALSE)
+#' @section Constructor: NegRationals$new(zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class NegRationals.
+#'
 #' @examples
 #' NegRationals$new()
 #' NegRationals$new(zero = TRUE)
-#' NegRationals$new(dim = 2)
 #'
 #' @export
 NULL
 NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
-NegRationals$set("public", "initialize", function(zero = FALSE, dimension = 1){
-  super$initialize(dimension = dimension, upper = 0, type = ifelse(zero, "(]", "()"))
+NegRationals$set("public", "initialize", function(zero = FALSE){
+  super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
 })
 
 #' @title Set of Reals
@@ -319,11 +311,10 @@ NegRationals$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #' \deqn{Reals = I \cup Q}{Reals = I \cup Q}
 #' where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 #'
-#' @section Constructor: Reals$new(dim = 1,...)
+#' @section Constructor: Reals$new(...)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{...} \tab ANY \tab Additional arguments.
 #' }
 #'
@@ -332,16 +323,17 @@ NegRationals$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class Reals.
+#'
 #' @examples
 #' Reals$new()
-#' Reals$new(dim = 2)
 #'
 #' @export
 NULL
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
-Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()", dimension = 1){
+Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
   super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
-                   dimension = dimension, countability = "uncountable",
+                   countability = "uncountable",
                    cardinality = "\u2136\u2081", empty = FALSE)
 })
 
@@ -356,26 +348,26 @@ Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
-#' @section Constructor: PosReals$new(dim = 1, zero = FALSE)
+#' @section Constructor: PosReals$new(zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class PosReals.
+#'
 #' @examples
 #' PosReals$new()
 #' PosReals$new(zero = TRUE)
-#' PosReals$new(dim = 2)
 #'
 #' @export
 NULL
 PosReals <- R6::R6Class("PosReals",inherit = Reals)
-PosReals$set("public", "initialize", function(zero = FALSE, dimension = 1){
-  super$initialize(dimension = dimension, lower = 0, type = ifelse(zero, "[)", "()"))
+PosReals$set("public", "initialize", function(zero = FALSE){
+  super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
 })
 
 #' @title Set of Negative Reals
@@ -389,26 +381,26 @@ PosReals$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #'
 #' \eqn{0} may or may not be included (depending on the \code{zero} argument).
 #'
-#' @section Constructor: NegReals$new(dim = 1, zero = FALSE)
+#' @section Constructor: NegReals$new(zero = FALSE)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{
 #'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
 #'    \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' }
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class NegReals.
+#'
 #' @examples
 #' NegReals$new()
 #' NegReals$new(zero = TRUE)
-#' NegReals$new(dim = 2)
 #'
 #' @export
 NULL
 NegReals <- R6::R6Class("NegReals",inherit = Reals)
-NegReals$set("public", "initialize", function(zero = FALSE, dimension = 1){
-  super$initialize(dimension = dimension, upper = 0, type = ifelse(zero, "(]", "()"))
+NegReals$set("public", "initialize", function(zero = FALSE){
+  super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
 })
 
 #' @title Set of Extended Reals
@@ -419,24 +411,20 @@ NegReals$set("public", "initialize", function(zero = FALSE, dimension = 1){
 #' \deqn{ExtendedReals = R \cup \{-\infty, \infty\}}
 #' where \eqn{R} is the set of reals.
 #'
-#' @section Constructor: ExtendedReals$new(dim = 1)
-#' @section Constructor Arguments:
-#'  \tabular{lll}{
-#'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
-#' }
+#' @section Constructor: ExtendedReals$new()
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class ExtendedReals.
+#'
 #' @examples
 #' ExtendedReals$new()
-#' ExtendedReals$new(dim = 2)
 #'
 #' @export
 NULL
 ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
-ExtendedReals$set("public", "initialize", function(dimension = 1){
-  super$initialize(dimension = dimension, type = "[]")
+ExtendedReals$set("public", "initialize", function(){
+  super$initialize(type = "[]")
 })
 
 #' @title Set of Complex Numbers
@@ -447,25 +435,21 @@ ExtendedReals$set("public", "initialize", function(dimension = 1){
 #' \deqn{Complex = \{a + bi \ | \ a,b \in R\}}{Complex = {a + bi | a,b \epsilon R}}
 #' where \eqn{R} is the set of reals.
 #'
-#' @section Constructor: Complex$new(dim = 1)
-#' @section Constructor Arguments:
-#'  \tabular{lll}{
-#'    \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-#'    \code{dim} \tab numeric \tab Dimension of the set. \cr
-#' }
+#' @section Constructor: Complex$new()
 #'
 #' @seealso \code{\link{listSpecialSets}}
 #'
+#' @return An R6 object of class Complex.
+#'
 #' @examples
 #' Complex$new()
-#' Complex$new(dim = 2)
 #'
 #' @export
 NULL
 Complex <- R6::R6Class("Complex",inherit = SpecialSet)
-Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i, dimension = 1){
+Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i){
   super$initialize(lower = lower, upper = upper, type = "()", class = "complex",
-                   dimension = dimension, countability = "uncountable",
+                   countability = "uncountable",
                    cardinality = "\u2136\u2081", empty = FALSE)
 })
 Complex$set("public","liesInSet",function(x, all = FALSE, bound = NULL){

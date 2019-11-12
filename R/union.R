@@ -1,3 +1,5 @@
+#' @include Set.R Set_SpecialSet.R Set_Interval.R Set_ConditionalSet.R
+#'
 #' @name Union
 #' @title Union
 #' @export
@@ -13,57 +15,90 @@ Union$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, 
                    dimension = dimension)
 })
 Union$set("public","strprint",function(n = 2){
-  paste0("{",paste(lapply(self$wrappedSets, function(x) x$strprint(n)), collapse = " \u222A "),"}")
+  paste0("{",paste(lapply(c(self$wrappedSets, self$wrappedIntervals), function(x) x$strprint(n)), collapse = " \u222A "),"}")
 })
 Union$set("active","elements",function(){
-  els = unlist(sapply(self$wrappedSets, function(x) x$elements))
+  els = unique(unlist(sapply(self$wrappedSets, function(x) x$elements)))
   if(any(is.nan(els)))
     return(NaN)
   else
     return(els)
 })
 
-union <- function(object, x, y){
-  UseMethod("union", object)
-}
-# Union of Set/Tuple with y
-union.Set <- function(x, y){
-  if(inherits(y, "SpecialSet"))
-    return(union.SpecialSet(y, x))
-
+union <- function(x, y){
   if (x$isSubset(y))
     return(x)
   else if (y$isSubset(x))
     return(y)
 
-  if (testInterval(y)){
-    if(testMessage(as.Set(y)))
+  UseMethod("union", x)
+}
+
+union.PosReals <- function(x, y){
+  if(class(y) == "NegReals")
+    return(Reals$new())
+  else
+    return(union.interval(x, y))
+}
+union.NegReals <- function(x, y){
+  if(class(y) == "PosReals")
+    return(Reals$new())
+  else
+    return(union.interval(x, y))
+}
+union.PosRationals <- function(x, y){
+  if(class(y) == "NegRationals")
+    return(Rationals$new())
+  else
+    return(union.interval(x, y))
+}
+union.NegRationals <- function(x, y){
+  if(class(y) == "PosRationals")
+    return(Rationals$new())
+  else
+    return(union.interval(x, y))
+}
+union.PosIntegers <- function(x, y){
+  if(class(y) == "NegIntegers")
+    return(Integers$new())
+  else
+    return(union.interval(x, y))
+}
+union.NegIntegers <- function(x, y){
+  if(class(y) == "PosIntegers")
+    return(Integers$new())
+  else
+    return(union.interval(x, y))
+}
+union.Reals <- function(x, y){
+  if(y$equals(Set$new(-Inf, Inf)))
+    return(ExtendedReals$new())
+  else
+    return(union.Interval(x, y))
+}
+
+union.Set <- function(x, y){
+  if (inherits(y, "Interval")){
+    if (x$equals(Set$new(-Inf, Inf)) & class(y) == "Reals")
+      return(ExtendedReals$new())
+
+    if (testMessage(as.Set(y)))
       return(Union$new(list(x, y)))
     else
       return(union(x, as.Set(y)))
-  } else if (!testConditionalSet(y)) {
-    if(testTuple(x))
-      return(Tuple$new(x$elements, y$elements))
-    else
-      return(Set$new(x$elements, y$elements))
-  } else{
-    message(sprintf("Union of %s and %s not compatible.", x$strprint(), y$strprint()))
+  } else if (inherits(y, "ConditionalSet")) {
+    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
     return(Set$new())
-  }
+  } else if (inherits(y, "Tuple"))
+    return(Tuple$new(x$elements, y$elements))
+  else
+    return(Set$new(x$elements, y$elements))
 }
-# Union of Interval with y
 union.Interval <- function(x, y){
-  if(testSet(y) & testFuzzy(y) & !testInterval(y))
-    return(union.FuzzySet(y, x))
-  else if(testSet(y) & !testFuzzy(y) & !testInterval(y))
-    return(union.Set(y, x))
-
-  if (x$isSubset(y))
-    return(x)
-  else if (y$isSubset(x))
-    return(y)
-
-  if(testInterval(y)){
+  if (inherits(y, "ConditionalSet")) {
+    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
+    return(Set$new())
+  } else if(inherits(y, "Interval")){
     if (x$upper > y$lower & x$lower < y$lower)
       return(Interval$new(x$lower, y$upper,
                           type = paste0(substr(x$type,1,1),substr(y$type,2,2)),
@@ -76,97 +111,71 @@ union.Interval <- function(x, y){
       return(Union$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
                        type = paste0(substr(x$type,1,1),substr(y$type,2,2)),
                        dimension = x$dimension))
-   else if(y$upper < x$lower)
+    else if(y$upper < x$lower)
       return(Union$new(setlist = list(y,x), lower = y$lower, upper = x$upper,
                        type = paste0(substr(y$type,1,1),substr(x$type,2,2)),
                        dimension = x$dimension))
-   else if(y$upper == x$lower){
-     if(!testClosedAbove(y) & !testClosedBelow(x))
-       return(Union$new(setlist = list(x,y), lower = y$lower, upper = x$upper,
-                        type = paste0(substr(y$type,1,1),substr(x$type,2,2)),
-                        dimension = y$dimension))
-     else
-       return(Interval$new(y$lower, x$upper,
-                           type = paste0(substr(y$type,1,1),substr(x$type,2,2)),
-                           dimension = x$dimension))
-   } else if (x$upper == y$lower){
-     if(!testClosedAbove(x) & !testClosedBelow(y))
-       return(Union$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
-                        type = paste0(substr(x$type,1,1),substr(y$type,2,2)),
-                        dimension = x$dimension))
-     else
-       return(Interval$new(x$lower, y$upper,
-                           type = paste0(substr(x$type,1,1),substr(y$type,2,2)),
-                           dimension = x$dimension))
-     }
-  } else{
-    message(sprintf("Union of %s and %s not compatible.", x$strprint(), y$strprint()))
-    return(Set$new())
-  }
+    else if(y$upper == x$lower){
+      if(!testClosedAbove(y) & !testClosedBelow(x))
+        return(Union$new(setlist = list(x,y), lower = y$lower, upper = x$upper,
+                         type = paste0(substr(y$type,1,1),substr(x$type,2,2)),
+                         dimension = y$dimension))
+      else
+        return(Interval$new(y$lower, x$upper,
+                            type = paste0(substr(y$type,1,1),substr(x$type,2,2)),
+                            dimension = x$dimension))
+    } else if (x$upper == y$lower){
+      if(!testClosedAbove(x) & !testClosedBelow(y))
+        return(Union$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
+                         type = paste0(substr(x$type,1,1),substr(y$type,2,2)),
+                         dimension = x$dimension))
+      else
+        return(Interval$new(x$lower, y$upper,
+                            type = paste0(substr(x$type,1,1),substr(y$type,2,2)),
+                            dimension = x$dimension))
+    }
+  } else
+    return(union(y, x))
 }
-# Union of SpecialSet with y
-union.SpecialSet <- function(x, y){
-  if (getR6Class(x) == "PosReals" & getR6Class(y) == "NegReals" |
-     getR6Class(y) == "PosReals" & getR6Class(x) == "NegReals")
-    return(Reals$new())
-  else if (getR6Class(x) == "PosRationals" & getR6Class(y) == "NegRationals" |
-     getR6Class(y) == "PosRationals" & getR6Class(x) == "NegRationals")
-    return(Rationals$new())
-  else if (getR6Class(x) == "PosIntegers" & getR6Class(y) == "NegIntegers" |
-     getR6Class(y) == "PosIntegers" & getR6Class(x) == "NegIntegers")
-    return(Integers$new())
-  else if(getR6Class(x) == "Reals" & y$equals(Set$new(-Inf, Inf)))
-    return(ExtendedReals$new())
-  else
-    return(union.Interval(x, y))
-}
-# Union of FuzzySet/FuzzyTuple with y
 union.FuzzySet <- function(x, y){
-  if(testInterval(y) | testConditionalSet(y)){
-    message(sprintf("Union of %s and %s not compatible.", x$strprint(), y$strprint()))
+  if(inherits(y, "ConditionalSet")){
+    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
     return(Set$new())
-  }
-
-  if (x$isSubset(y))
-    return(x)
-  else if (y$isSubset(x))
-    return(y)
-
-  if (testFuzzyTuple(x)){
-    y = as.FuzzyTuple(y)
-    return(FuzzyTuple$new(elements = c(x$elements, y$elements),
-                          membership = c(x$membership(), y$membership())))
-  } else {
+  } else{
     y = as.FuzzySet(y)
     return(FuzzySet$new(elements = c(x$elements, y$elements),
-                          membership = c(x$membership(), y$membership())))
+                        membership = c(x$membership(), y$membership())))
   }
 }
-# Union of two ConditionalSets
-union.ConditionalSet <- function(x, y){
-  if(!testConditionalSet(y)){
-    message(sprintf("Union of %s and %s not compatible.", x$strprint(), y$strprint()))
+union.FuzzyTuple <- function(x, y){
+  if(inherits(y, "ConditionalSet")){
+    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
     return(Set$new())
   } else{
-    if(x$equals(y))
-      return(x)
-    else{
+    y = as.FuzzyTuple(y)
+    return(FuzzyTuple$new(elements = c(x$elements, y$elements),
+                        membership = c(x$membership(), y$membership())))
+  }
+}
+
+union.ConditionalSet <- function(x, y){
+  if(!inherits(y, "ConditionalSet")){
+    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
+    return(Set$new())
+  } else {
       if(all(names(formals(x$condition)) == names(formals(y$condition)))){
         condition = function(){}
         formals(condition) = formals(x$condition)
         body(condition) = substitute(bx | by,
                                      list(bx = body(x$condition),
                                           by = body(y$condition)))
-        argclass = unique(c(x$class, y$class))
-        names(argclass) = names(formals(condition))
-        return(ConditionalSet$new(condition = condition, argclass = argclass))
+        # in future updates we can change this so the union of the argument classes is kept
+        # not just the argclass of x
+        return(ConditionalSet$new(condition = condition, argclass = x$class))
       } else
         stop("Conditional set conditions must have the same formal arguments.")
-
-    }
   }
 }
-# Union with Union
 union.Union <- function(x, y){
   Union$new(c(x$wrappedSets, list(y)))
 }
@@ -177,5 +186,13 @@ union.Union <- function(x, y){
 #' @param y Set
 #' @export
 `+.Set` <- function(x, y){
+  union(x, y)
+}
+
+#' @rdname Union
+#' @usage \method{|}{Set}(x, y)
+#' @param x Set
+#' @param y Set
+'|.Set' <- function(x, y){
   union(x, y)
 }

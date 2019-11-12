@@ -2,7 +2,94 @@
 % Please edit documentation in R/Set_ConditionalSet.R
 \name{ConditionalSet}
 \alias{ConditionalSet}
-\title{ConditionalSet}
+\title{Mathematical Set of Conditions}
+\value{
+R6 object of class ConditionalSet inheriting from \link{Set}.
+}
 \description{
-ConditionalSet Object
+A mathematical set defined by one or more logical conditions.
+}
+\details{
+Conditional sets are a useful tool for symbolically defining infinite sets. They can be combined
+using standard 'and', \code{&}, and 'or', \code{|}, operators.
+}
+\section{Constructor}{
+ \code{ConditionalSet$new(condition, argclass = NULL)}
+}
+
+\section{Constructor Arguments}{
+
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{condition} \tab function \tab Function for defining the set. See constructor details. \cr
+\code{argclass} \tab list \tab Optional list of sets that the function arguments live in. See constructor details.
+
+}
+}
+
+\section{Constructor Details}{
+ The \code{condition} should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the \link{Set} that the arguments in the function live in, if these are not given then the \link{Reals} is assumed. See examples.
+}
+
+\section{Public Fields}{
+
+\tabular{ll}{
+\strong{Field} \tab \strong{Link} \cr
+\code{condition} \tab \link{condition} \cr
+
+\code{class} \tab \link{class} \cr
+\code{elements} \tab \link{elements} \cr
+\code{length} \tab \link{length} \cr
+\code{lower} \tab \link{lower} \cr
+\code{upper} \tab \link{upper} \cr
+\code{max} \tab \link{max} \cr
+\code{min} \tab \link{min} \cr
+\code{range} \tab \link{range} \cr
+\code{properties} \tab \link{properties} \cr
+\code{traits} \tab \link{traits} \cr
+\code{type} \tab \link{type} \cr
+\code{universe} \tab \link{universe}
+}
+}
+
+\section{Public Methods}{
+
+\tabular{ll}{
+
+\strong{Comparison Methods} \tab \strong{Link} \cr
+\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{equals(x)} \tab \link{equals} \cr
+\code{isSubset(x)} \tab \link{isSubset} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Mathematical Methods} \tab \strong{Link} \cr
+\code{complement()} \tab \link{complement} \cr
+\code{powerSet()} \tab \link{powerSet} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{strprint(n = 2)} \tab \link{strprint} \cr
+\code{print(n = 2)} \tab \link{print} \cr
+\code{summary(n = 2)} \tab \link{summary} \cr
+}
+}
+
+\examples{
+# Set of positives
+s = ConditionalSet$new(function(x) x > 0)
+s$liesInSet(list(1,-1))
+
+# Set via equality
+s = ConditionalSet$new(function(x, y) x + y == 2)
+s$liesInSet(list(Set$new(2, 0), Set$new(0, 2)))
+
+# Tuples are recommended when using liesInSet as they allow non-unique elements
+s = ConditionalSet$new(function(x, y) x + y == 4)
+\dontrun{
+s$liesInSet(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
+}
+s$liesInSet(Tuple$new(2, 2))
+
+# Set of Positive Naturals
+s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
+s$liesInSet(list(-2, 2))
+
 }

@@ -3,6 +3,9 @@
 \name{Integers}
 \alias{Integers}
 \title{Set of Integers}
+\value{
+An R6 object of class Integers.
+}
 \description{
 The mathematical set of integers.
 }
@@ -12,15 +15,14 @@ component, i.e.
 \deqn{Integers = \{...,-3, -2, -1, 0, 1, 2, 3,...\}}{Integers = {...,-3, -2, -1, 0, 1, 2, 3,...}}
 }
 \section{Constructor}{
- Integers$new(dim = 1,...)
+ Integers$new(...)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{...} \tab ANY \tab Additional arguments.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{...} \tab ANY \tab Additional arguments.
 }
 }
 
@@ -31,7 +33,6 @@ is for the child-classes.
 
 \examples{
 Integers$new()
-Integers$new(dim = 2)
 
 }
 \seealso{

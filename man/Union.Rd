@@ -3,11 +3,18 @@
 \name{Union}
 \alias{Union}
 \alias{+.Set}
+\alias{|.Set}
 \title{Union}
 \usage{
 \method{+}{Set}(x, y)
+
+\method{|}{Set}(x, y)
 }
 \arguments{
+\item{x}{Set}
+
+\item{y}{Set}
+
 \item{x}{Set}
 
 \item{y}{Set}

@@ -3,6 +3,9 @@
 \name{Rationals}
 \alias{Rationals}
 \title{Set of Rationals}
+\value{
+An R6 object of class Rationals.
+}
 \description{
 The mathematical set of rational numbers.
 }
@@ -13,15 +16,14 @@ of two integers, i.e.
 where \eqn{Z} is the set of integers.
 }
 \section{Constructor}{
- Rationals$new(dim = 1,...)
+ Rationals$new(...)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{...} \tab ANY \tab Additional arguments.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{...} \tab ANY \tab Additional arguments.
 }
 }
 
@@ -32,7 +34,6 @@ is for the child-classes.
 
 \examples{
 Rationals$new()
-Rationals$new(dim = 2)
 
 }
 \seealso{

@@ -2,7 +2,99 @@
 % Please edit documentation in R/Set_Interval.R
 \name{Interval}
 \alias{Interval}
-\title{Interval}
+\title{Mathematical Finite or Infinite Interval}
+\value{
+R6 object of class Interval inheriting from \link{Set}.
+}
 \description{
-Interval Object
+A general Interval object for mathematical intervals, inheriting from \code{Set}. Intervals
+may be open, closed, or half-open; as well as bounded above, below, or not at all.
+}
+\details{
+The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
+integer intervals over a continuous range.
+}
+\section{Constructor}{
+ \code{Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())}
+}
+
+\section{Constructor Arguments}{
+
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{lower} \tab numeric \tab Lower limit of the interval. \cr
+\code{upper} \tab numeric \tab Upper limit of the interval. \cr
+\code{type} \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if inteval is open, left-open, right-open, or closed. \cr
+\code{class} \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
+\code{universe} \tab Set \tab Optional universe that the interval lives in.
+
+}
+}
+
+\section{Constructor Details}{
+ If defaults are used then the Real number line is constructed. The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+}
+
+\section{Public Fields}{
+
+\tabular{ll}{
+\strong{Field} \tab \strong{Link} \cr
+
+\code{class} \tab \link{class} \cr
+\code{elements} \tab \link{elements} \cr
+\code{length} \tab \link{length} \cr
+\code{lower} \tab \link{lower} \cr
+\code{upper} \tab \link{upper} \cr
+\code{max} \tab \link{max} \cr
+\code{min} \tab \link{min} \cr
+\code{range} \tab \link{range} \cr
+\code{properties} \tab \link{properties} \cr
+\code{traits} \tab \link{traits} \cr
+\code{type} \tab \link{type} \cr
+\code{universe} \tab \link{universe}
+}
+}
+
+\section{Public Methods}{
+
+\tabular{ll}{
+
+\strong{Comparison Methods} \tab \strong{Link} \cr
+\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{equals(x)} \tab \link{equals} \cr
+\code{isSubset(x)} \tab \link{isSubset} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Mathematical Methods} \tab \strong{Link} \cr
+\code{complement()} \tab \link{complement} \cr
+\code{powerSet()} \tab \link{powerSet} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{strprint(n = 2)} \tab \link{strprint} \cr
+\code{print(n = 2)} \tab \link{print} \cr
+\code{summary(n = 2)} \tab \link{summary} \cr
+}
+}
+
+\examples{
+# Set of Reals
+Interval$new()
+
+# Set of Integers
+Interval$new(class = "integer")
+
+# Half-open interval
+i = Interval$new(1, 10, "(]")
+i$liesInSet(c(1, 10))
+i$liesInSet(c(1, 10), bound = TRUE)
+
+# Equivalent Set and Interval
+Set$new(1:5) == Interval$new(1,5,class="integer")
+
+# SpecialSets can provide more efficient implementation
+Interval$new() == ExtendedReals$new()
+Interval$new(class = "integer", type = "()") == Integers$new()
+
+}
+\seealso{
+\link{Set}
 }

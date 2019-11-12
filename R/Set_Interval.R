@@ -1,16 +1,59 @@
+#---------------------------------------------
+# Documentation
+#---------------------------------------------
 #' @name Interval
-#' @title Interval
-#' @description Interval Object
-NULL
+#' @title Mathematical Finite or Infinite Interval
+#'
+#' @description A general Interval object for mathematical intervals, inheriting from `Set`. Intervals
+#' may be open, closed, or half-open; as well as bounded above, below, or not at all.
+#' @return R6 object of class Interval inheriting from [Set].
+#' @template Set
+#' @templateVar constructor Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())
+#' @templateVar arg1 `lower` \tab numeric \tab Lower limit of the interval. \cr
+#' @templateVar arg2 `upper` \tab numeric \tab Upper limit of the interval. \cr
+#' @templateVar arg3 `type` \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if inteval is open, left-open, right-open, or closed. \cr
+#' @templateVar arg4 `class` \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
+#' @templateVar arg5 `universe` \tab Set \tab Optional universe that the interval lives in.
+#' @templateVar constructorDets If defaults are used then the Real number line is constructed. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#'
+#' @details
+#' The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
+#' integer intervals over a continuous range.
+#'
+#' @seealso
+#' [Set]
+#'
+#' @examples
+#' # Set of Reals
+#' Interval$new()
+#'
+#' # Set of Integers
+#' Interval$new(class = "integer")
+#'
+#' # Half-open interval
+#' i = Interval$new(1, 10, "(]")
+#' i$liesInSet(c(1, 10))
+#' i$liesInSet(c(1, 10), bound = TRUE)
+#'
+#' # Equivalent Set and Interval
+#' Set$new(1:5) == Interval$new(1,5,class="integer")
+#'
+#' # SpecialSets can provide more efficient implementation
+#' Interval$new() == ExtendedReals$new()
+#' Interval$new(class = "integer", type = "()") == Integers$new()
+#'
 #' @export
+NULL
+#---------------------------------------------
+# Definition and Construction
+#---------------------------------------------
 Interval <- R6::R6Class("Interval", inherit = Set)
 Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]", class = "numeric",
-                                            dimension = 1, universe = Reals$new()){
+                                            universe = Reals$new()){
 
   checkmate::assert(type %in% c("()","(]","[]","[)"))
   checkmate::assert(lower <= upper)
   checkmate::assert(class %in% c("numeric","integer"))
-  checkmate::assertIntegerish(dimension)
   if(getR6Class(self) != "SpecialSet"){
     assertSet(universe)
     private$.universe <- universe
@@ -26,7 +69,6 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
 
   private$.lower <- lower
   private$.upper <- upper
-  private$.dimension <- dimension
 
   private$.properties$bounded = ifelse(lower == -Inf | upper == Inf, FALSE, TRUE)
   if(private$.class == "numeric"){
@@ -60,7 +102,7 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
 Interval$set("public","equals",function(x){
   if (!testInterval(x))
     return(FALSE)
-  if (x$type == self$type & x$class == self$class & x$dimension == self$dimension){
+  if (x$type == self$type & x$class == self$class){
     if (is.null(x$lower) & is.null(self$lower) & is.null(x$upper) & is.null(self$upper))
       return(TRUE)
     else if (x$lower == self$lower & x$upper == self$upper)
@@ -76,9 +118,6 @@ Interval$set("public","strprint",function(...){
   sup <- ifelse(self$upper==Inf, "+\u221E", self$upper)
 
   str <- paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2))
-
-  if(self$dimension!=1)
-    str <- paste(str,self$dimension,sep="^")
 
   return(str)
 })
@@ -167,4 +206,30 @@ Interval$set("active", "elements", function(){
 #' @export
 as.double.Interval <- function(x,...){
   x$elements
+}
+
+#' @title Coercion to R6 Interval
+#' @description Coerces objects to R6 Intervals
+#' @param object object to coerce
+#' @export
+as.Interval <- function(object){
+  UseMethod("as.Interval",object)
+}
+#' @rdname as.Interval
+#' @export
+as.Interval.Set <- function(object){
+  if (object$length == 1)
+    return(Interval$new(object$elements, object$elements))
+  else if (all(diff(object$elements) == 1))
+    return(Interval$new(min(object$elements), max(object$elements), class = "integer"))
+  else {
+    message("Set cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
+    return(object)
+  }
+
+}
+#' @rdname as.Interval
+#' @export
+as.Interval.Interval <- function(object){
+  return(Interval$new(object$lower, object$upper, type = object$type, class = object$class))
 }

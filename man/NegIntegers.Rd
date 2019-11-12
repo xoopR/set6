@@ -3,6 +3,9 @@
 \name{NegIntegers}
 \alias{NegIntegers}
 \title{Set of Negative Integers}
+\value{
+An R6 object of class NegIntegers.
+}
 \description{
 The mathematical set of negative integers.
 }
@@ -13,22 +16,20 @@ be written without a fractional component, i.e.
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{
- NegIntegers$new(dim = 1, zero = FALSE)
+ NegIntegers$new(zero = FALSE)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
 \examples{
 NegIntegers$new()
 NegIntegers$new(zero = TRUE)
-NegIntegers$new(dim = 2)
 
 }
 \seealso{

@@ -2,7 +2,95 @@
 % Please edit documentation in R/Set_Tuple.R
 \name{Tuple}
 \alias{Tuple}
-\title{Tuple}
+\title{Mathematical Tuple}
+\value{
+R6 object of class Tuple inheriting from \link{Set}.
+}
 \description{
-Tuple Object
+A general Tuple object for mathematical tuples, inheriting from \code{Set}.
+}
+\details{
+Tuples are similar to sets, except that they drop the constraint for elements to be unique, and
+ordering in a tuple does matter. Tuples are useful for methods including \link{liesInSet} that may
+require non-unique elements. They are also the return type of the product of sets. See examples.
+}
+\section{Constructor}{
+ \code{Tuple$new(..., universe = NULL)}
+}
+
+\section{Constructor Arguments}{
+
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{...} \tab ANY \tab Elements in the tuple. \cr
+\code{universe} \tab Set \tab Optional universe that the Tuple lives in.
+
+}
+}
+
+\section{Constructor Details}{
+ Tuples are constructed by elements of any types (including R6 classes). The optional \code{universe} argument is useful for taking the complement of the \code{Tuple}. If a universe isn't given then \link{Reals} is assumed.
+}
+
+\section{Public Fields}{
+
+\tabular{ll}{
+\strong{Field} \tab \strong{Link} \cr
+
+\code{class} \tab \link{class} \cr
+\code{elements} \tab \link{elements} \cr
+\code{length} \tab \link{length} \cr
+\code{lower} \tab \link{lower} \cr
+\code{upper} \tab \link{upper} \cr
+\code{max} \tab \link{max} \cr
+\code{min} \tab \link{min} \cr
+\code{range} \tab \link{range} \cr
+\code{properties} \tab \link{properties} \cr
+\code{traits} \tab \link{traits} \cr
+\code{type} \tab \link{type} \cr
+\code{universe} \tab \link{universe}
+}
+}
+
+\section{Public Methods}{
+
+\tabular{ll}{
+
+\strong{Comparison Methods} \tab \strong{Link} \cr
+\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{equals(x)} \tab \link{equals} \cr
+\code{isSubset(x)} \tab \link{isSubset} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Mathematical Methods} \tab \strong{Link} \cr
+\code{complement()} \tab \link{complement} \cr
+\code{powerSet()} \tab \link{powerSet} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{strprint(n = 2)} \tab \link{strprint} \cr
+\code{print(n = 2)} \tab \link{print} \cr
+\code{summary(n = 2)} \tab \link{summary} \cr
+}
+}
+
+\examples{
+# Tuple of integers
+Tuple$new(1:5)
+
+# Tuple of multiple types
+Tuple$new("a", 5, Set$new(1), Tuple$new(2))
+
+# Each Tuple has properties and traits
+t = Tuple$new(1,2,3)
+t$traits
+t$properties
+
+# Elements can be duplicated
+Tuple$new(2, 2) != Tuple$new(2)
+
+# Ordering does matter
+Tuple$new(1, 2) != Tuple$new(2, 1)
+
+}
+\seealso{
+\link{Set}
 }

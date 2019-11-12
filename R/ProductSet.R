@@ -6,7 +6,7 @@ ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = N
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
 ProductSet$set("active", "length", function(){
-  return(sapply(self$wrappedSets, function(x) x$length))
+  return(Tuple$new(sapply(self$wrappedSets, function(x) x$length)))
 })
 
 ProductSet$set("public","strprint",function(n = 2){
@@ -16,21 +16,52 @@ ProductSet$set("public","strprint",function(n = 2){
   else
     return(paste0("{",paste(str, collapse = " \u00D7 "),"}"))
 })
+ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+  if(x$length != self$length$length)
+    return(FALSE)
+
+  x = ifelse(class(x) != "list", list(x), x)
+  rets = sapply(x, function(el){
+    ret = TRUE
+    for (i in 1:el$length){
+      if (!self$wrappedSets[[i]]$liesInSet(el$elements[i], bound = bound)){
+        ret = FALSE
+        break()
+      }
+    }
+    return(ret)
+  })
+
+  if (all)
+    return(all(rets))
+  else
+    return(rets)
+})
 
 #' @name product
 #' @rdname product
 #' @export
 product <- function(x, y){
-  UseMethod("product", x)
+  xl = x$length
+  yl = y$length
+
+  if(inherits(xl, "R6") | inherits(yl, "R6"))
+    UseMethod("product", x)
+  else{
+    if(xl == 0 & yl == 0)
+      return(Set$new())
+    else if(xl == 0)
+      return(y)
+    else if(yl == 0)
+      return(x)
+    else
+      UseMethod("product", x)
+  }
 }
 #' @export
 product.Set <- function(x, y){
   if(inherits(y, "SetWrapper"))
     return(ProductSet$new(c(list(x), y$wrappedSets)))
-
-  if(x$length == 0 & y$length == 0) return(Set$new())
-  if(x$length == 0) return(y)
-  if(y$length == 0) return(x)
 
   if(testSet(y) & !testInterval(y) & !testConditionalSet(y))
     return(Set$new(apply(expand.grid(x$elements, y$elements), 1, function(z) Tuple$new(z))))
@@ -98,8 +129,8 @@ product.ConditionalSet <- function(x, y){
   }
 }
 #' @export
-product.SetWrapper <- function(x, y){
-  return(ProductSet$new(c(x$wrappedSets, list(y))))
+product.ProductSet <- function(x, y){
+  ProductSet$new(c(x$wrappedSets, y))
 }
 
 #' @rdname product

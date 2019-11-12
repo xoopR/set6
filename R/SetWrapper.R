@@ -14,8 +14,6 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
   if(!is.null(class)) private$.class <- class
   if(!is.null(symbol)) private$.symbol <- symbol
   if(!is.null(dimension)) private$.dimension <- dimension
-
-
 })
 
 SetWrapper$set("active", "wrappedSets", function(){
@@ -44,7 +42,8 @@ SetWrapper$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
       stop(paste("Set should be of dimension",self$dimension))
     ret <- numeric(self$dimension)
     for(i in 1:self$dimension){
-      ret[[i]] <- self$wrappedSets[[i]]$liesInSet(y$elements[[i]], bound = bound)
+      ret[[i]] <- self$wrappedSets[[i]]$liesInSet(y$elements[[i]], bound = bound) |
+        self$wrappedSets[[i]]$liesInSet(y$elements[[i]], bound = bound)
     }
 
     if(all(as.logical(ret)))

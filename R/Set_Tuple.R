@@ -1,12 +1,55 @@
+#---------------------------------------------
+# Documentation
+#---------------------------------------------
 #' @name Tuple
-#' @title Tuple
-#' @description Tuple Object
+#' @title Mathematical Tuple
+#'
+#' @description A general Tuple object for mathematical tuples, inheriting from `Set`.
+#' @return R6 object of class Tuple inheriting from [Set].
+#' @template Set
+#' @templateVar constructor Tuple$new(..., universe = NULL)
+#' @templateVar arg1 `...` \tab ANY \tab Elements in the tuple. \cr
+#' @templateVar arg2 `universe` \tab Set \tab Optional universe that the Tuple lives in.
+#' @templateVar constructorDets Tuples are constructed by elements of any types (including R6 classes). The optional `universe` argument is useful for taking the complement of the `Tuple`. If a universe isn't given then [Reals] is assumed.
+#'
+#' @details
+#' Tuples are similar to sets, except that they drop the constraint for elements to be unique, and
+#' ordering in a tuple does matter. Tuples are useful for methods including [liesInSet] that may
+#' require non-unique elements. They are also the return type of the product of sets. See examples.
+#'
+#' @seealso
+#' [Set]
+#'
+#' @examples
+#' # Tuple of integers
+#' Tuple$new(1:5)
+#'
+#' # Tuple of multiple types
+#' Tuple$new("a", 5, Set$new(1), Tuple$new(2))
+#'
+#' # Each Tuple has properties and traits
+#' t = Tuple$new(1,2,3)
+#' t$traits
+#' t$properties
+#'
+#' # Elements can be duplicated
+#' Tuple$new(2, 2) != Tuple$new(2)
+#'
+#' # Ordering does matter
+#' Tuple$new(1, 2) != Tuple$new(2, 1)
+#'
 #' @export
 NULL
+#---------------------------------------------
+# Definition and Construction
+#---------------------------------------------
 Tuple <- R6::R6Class("Tuple", inherit = Set)
 
 Tuple$set("public","equals",function(x){
   assertSet(x)
+
+  if(x$length != self$length)
+    return(FALSE)
 
   if(suppressWarnings(all(x$elements == self$elements)))
     return(TRUE)

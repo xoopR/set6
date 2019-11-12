@@ -3,6 +3,9 @@
 \name{ExtendedReals}
 \alias{ExtendedReals}
 \title{Set of Extended Reals}
+\value{
+An R6 object of class ExtendedReals.
+}
 \description{
 The mathematical set of extended real numbers.
 }
@@ -12,20 +15,11 @@ The set of Extended Reals is defined as the union of the set of reals with +-Inf
 where \eqn{R} is the set of reals.
 }
 \section{Constructor}{
- ExtendedReals$new(dim = 1)
-}
-
-\section{Constructor Arguments}{
-
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-}
+ ExtendedReals$new()
 }
 
 \examples{
 ExtendedReals$new()
-ExtendedReals$new(dim = 2)
 
 }
 \seealso{

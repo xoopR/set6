@@ -2,7 +2,97 @@
 % Please edit documentation in R/Set.R
 \name{Set}
 \alias{Set}
-\title{Set}
+\title{Mathematical Set}
+\value{
+R6 object of class Set.
+}
 \description{
-Set Object
+A general Set object for mathematical sets. This also serves as the parent class to
+intervals, tuples, and fuzzy variants.
+}
+\details{
+Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
+is used for sets of finite elements, for infinite sets use \link{Interval}. These can be
+expanded for fuzzy logic by using \link{FuzzySets}. Elements in a set cannot be duplicated
+but \link{Tuple}s can be used if this is required.
+}
+\section{Constructor}{
+ \code{Set$new(..., universe = NULL)}
+}
+
+\section{Constructor Arguments}{
+
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{...} \tab ANY \tab Elements in the set. \cr
+\code{universe} \tab Set \tab Optional universe that the Set lives in.
+
+}
+}
+
+\section{Constructor Details}{
+ Sets are constructed by elements of any types (including R6 classes). The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+}
+
+\section{Public Fields}{
+
+\tabular{ll}{
+\strong{Field} \tab \strong{Link} \cr
+
+\code{class} \tab \link{class} \cr
+\code{elements} \tab \link{elements} \cr
+\code{length} \tab \link{length} \cr
+\code{lower} \tab \link{lower} \cr
+\code{upper} \tab \link{upper} \cr
+\code{max} \tab \link{max} \cr
+\code{min} \tab \link{min} \cr
+\code{range} \tab \link{range} \cr
+\code{properties} \tab \link{properties} \cr
+\code{traits} \tab \link{traits} \cr
+\code{type} \tab \link{type} \cr
+\code{universe} \tab \link{universe}
+}
+}
+
+\section{Public Methods}{
+
+\tabular{ll}{
+
+\strong{Comparison Methods} \tab \strong{Link} \cr
+\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{equals(x)} \tab \link{equals} \cr
+\code{isSubset(x)} \tab \link{isSubset} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Mathematical Methods} \tab \strong{Link} \cr
+\code{complement()} \tab \link{complement} \cr
+\code{powerSet()} \tab \link{powerSet} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{strprint(n = 2)} \tab \link{strprint} \cr
+\code{print(n = 2)} \tab \link{print} \cr
+\code{summary(n = 2)} \tab \link{summary} \cr
+}
+}
+
+\examples{
+# Set of integers
+Set$new(1:5)
+
+# Set of multiple types
+Set$new("a", 5, Set$new(1))
+
+# Each Set has properties and traits
+s = Set$new(1,2,3)
+s$traits
+s$properties
+
+# Elements cannot be duplicated
+Set$new(2, 2) == Set$new(2)
+
+# Ordering does not matter
+Set$new(1, 2) == Set$new(2, 1)
+
+}
+\seealso{
+\link{Interval}, \link{Tuple}, \link{FuzzySet}
 }

@@ -3,6 +3,9 @@
 \name{PosReals}
 \alias{PosReals}
 \title{Set of Positive Reals}
+\value{
+An R6 object of class PosReals.
+}
 \description{
 The mathematical set of positive real numbers.
 }
@@ -15,22 +18,20 @@ where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the 
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{
- PosReals$new(dim = 1, zero = FALSE)
+ PosReals$new(zero = FALSE)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
 \examples{
 PosReals$new()
 PosReals$new(zero = TRUE)
-PosReals$new(dim = 2)
 
 }
 \seealso{

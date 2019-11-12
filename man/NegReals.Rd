@@ -3,6 +3,9 @@
 \name{NegReals}
 \alias{NegReals}
 \title{Set of Negative Reals}
+\value{
+An R6 object of class NegReals.
+}
 \description{
 The mathematical set of negative real numbers.
 }
@@ -15,22 +18,20 @@ where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the 
 \eqn{0} may or may not be included (depending on the \code{zero} argument).
 }
 \section{Constructor}{
- NegReals$new(dim = 1, zero = FALSE)
+ NegReals$new(zero = FALSE)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 }
 }
 
 \examples{
 NegReals$new()
 NegReals$new(zero = TRUE)
-NegReals$new(dim = 2)
 
 }
 \seealso{

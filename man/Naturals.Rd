@@ -3,6 +3,9 @@
 \name{Naturals}
 \alias{Naturals}
 \title{Set of Natural Numbers}
+\value{
+An R6 object of class Naturals.
+}
 \description{
 The mathematical set of natural numbers.
 }
@@ -11,15 +14,14 @@ The set of Naturals is defined as the counting numbers, i.e.
 \deqn{Naturals = \{0, 1, 2,...\}}{Naturals = {0, 1, 2,...}}
 }
 \section{Constructor}{
- Naturals$new(dim = 1, lower = 0)
+ Naturals$new(lower = 0)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{lower} \tab integer \tab Where to start the set. \cr
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{lower} \tab integer \tab Where to start the set. \cr
 }
 }
 
@@ -30,7 +32,6 @@ is for the \code{PosNaturals} child-class.
 
 \examples{
 Naturals$new()
-Naturals$new(dim = 2)
 
 }
 \seealso{

@@ -21,3 +21,17 @@ TRUE if both objects are equal, FALSE otherwise
 \description{
 Are Two Sets Equal?
 }
+\section{R6 Usage}{
+ $equals(x)
+}
+
+\examples{
+# Equals
+Set$new(1,2)$equals(Set$new(5,6))
+Set$new(1,2)$equals(Interval$new(1,2))
+Set$new(1,2) == Interval$new(1,2, class = "integer")
+
+# Not equal
+!Set$new(1,2)$equals(Set$new(1,2))
+Set$new(1,2) != equals(Set$new(1,5))
+}

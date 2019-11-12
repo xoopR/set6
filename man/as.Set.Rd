@@ -5,9 +5,9 @@
 \alias{as.Set.numeric}
 \alias{as.Set.list}
 \alias{as.Set.matrix}
-\alias{as.Set.FuzzySet}
 \alias{as.Set.Set}
 \alias{as.Set.Interval}
+\alias{as.Set.ConditionalSet}
 \title{Coercion to R6 Set}
 \usage{
 as.Set(object)
@@ -18,11 +18,11 @@ as.Set(object)
 
 \method{as.Set}{matrix}(object)
 
-\method{as.Set}{FuzzySet}(object)
-
 \method{as.Set}{Set}(object)
 
 \method{as.Set}{Interval}(object)
+
+\method{as.Set}{ConditionalSet}(object)
 }
 \arguments{
 \item{object}{object to coerce}

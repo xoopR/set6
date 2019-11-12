@@ -3,6 +3,9 @@
 \name{Reals}
 \alias{Reals}
 \title{Set of Reals}
+\value{
+An R6 object of class Reals.
+}
 \description{
 The mathematical set of real numbers.
 }
@@ -12,15 +15,14 @@ The set of Reals is defined as the union of the set of rationals and irrationals
 where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 }
 \section{Constructor}{
- Reals$new(dim = 1,...)
+ Reals$new(...)
 }
 
 \section{Constructor Arguments}{
 
- \tabular{lll}{
-   \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-   \code{dim} \tab numeric \tab Dimension of the set. \cr
-   \code{...} \tab ANY \tab Additional arguments.
+\tabular{lll}{
+\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{...} \tab ANY \tab Additional arguments.
 }
 }
 
@@ -31,7 +33,6 @@ is for the child-classes.
 
 \examples{
 Reals$new()
-Reals$new(dim = 2)
 
 }
 \seealso{

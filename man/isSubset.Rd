@@ -20,10 +20,28 @@
 \item{x}{Set}
 
 \item{y}{Set}
+
+\item{proper}{logical, if TRUE (default) then tests if one set is a proper subset of the other}
 }
 \value{
 TRUE if object x is a subset of self, FALSE otherwise
 }
 \description{
 Test If Two Sets Are Subsets
+}
+\details{
+A Set is a proper subset of another if it is fully contained by the other Set (i.e. not
+equal to) whereas a Set is a (non-proper) subset if it is fully contained by, or equal to, the
+other Set.
+}
+\section{R6 Usage}{
+ $isSubset(x, proper = FALSE)
+}
+
+\examples{
+Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
+Set$new(1,2) < Set$new(1,2,3) # proper subset
+
+Set$new(1,2,3) < Set$new(1,2,3) # not proper
+Set$new(1,2,3) <= Set$new(1,2,3) # proper
 }
