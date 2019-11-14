@@ -14,17 +14,23 @@ assertConditionalSet(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is an R6 ConditionalSet.
+Validation checks to test if a given object is an R6 \code{ConditionalSet}.
 }
 \examples{
-testConditionalSet(Set$new(2)) # FALSE
-testConditionalSet(ConditionalSet$new(function(x,y) x + y < 2)) # TRUE
-
+testConditionalSet(Set$new(2, 3))
+testConditionalSet(list(Set$new(2), Set$new(3)))
+testConditionalSet(Tuple$new(2, 3))
+testConditionalSet(Interval$new())
+testConditionalSet(FuzzySet$new(2, 0.1))
+testConditionalSet(FuzzyTuple$new(2, 0.1))
+testConditionalSet(ConditionalSet$new(function(x) x == 0))
 }

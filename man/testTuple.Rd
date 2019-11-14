@@ -14,17 +14,23 @@ assertTuple(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is an R6 Tuple.
+Validation checks to test if a given object is an R6 \code{Tuple}.
 }
 \examples{
-testTuple(Set$new(2,3)) # FALSE
-testTuple(Tuple$new(2,3)) # TRUE
-
+testTuple(Set$new(2, 3))
+testTuple(list(Set$new(2), Set$new(3)))
+testTuple(Tuple$new(2, 3))
+testTuple(Interval$new())
+testTuple(FuzzySet$new(2, 0.1))
+testTuple(FuzzyTuple$new(2, 0.1))
+testTuple(ConditionalSet$new(function(x) x == 0))
 }

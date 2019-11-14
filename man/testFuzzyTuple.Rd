@@ -14,17 +14,23 @@ assertFuzzyTuple(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is an R6 FuzzyTuple.
+Validation checks to test if a given object is an R6 \code{FuzzyTuple}.
 }
 \examples{
-testFuzzyTuple(Set$new(2,3)) # FALSE
-testFuzzyTuple(FuzzyTuple$new(2,0.1,3,0.6)) # TRUE
-
+testFuzzyTuple(Set$new(2, 3))
+testFuzzyTuple(list(Set$new(2), Set$new(3)))
+testFuzzyTuple(Tuple$new(2, 3))
+testFuzzyTuple(Interval$new())
+testFuzzyTuple(FuzzySet$new(2, 0.1))
+testFuzzyTuple(FuzzyTuple$new(2, 0.1))
+testFuzzyTuple(ConditionalSet$new(function(x) x == 0))
 }

@@ -16,6 +16,11 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
   if(!is.null(dimension)) private$.dimension <- dimension
 })
 
+#' @name wrappedSets
+#' @rdname wrappedSets
+#' @title Get Sets in Wrapper
+#' @description Gets the list of sets that are wrapped in the given wrapper.
+#' @return List of `Set`s.
 SetWrapper$set("active", "wrappedSets", function(){
   return(private$.wrappedSets)
 })

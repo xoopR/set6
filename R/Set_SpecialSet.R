@@ -211,6 +211,10 @@ NegIntegers$set("public", "initialize", function(zero = FALSE){
 #' \deqn{Rationals = \{\frac{p}{q} | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
 #' where \eqn{Z} is the set of integers.
 #'
+#' The [liesInSet] method does not work for the set of Rationals as it is notoriously
+#' difficult/impossible to find an algorithm for determining if any given number is rational or not.
+#' Furthermore, computers must truncate all irrational numbers to rational numbers.
+#'
 #' @section Constructor: Rationals$new(...)
 #' @section Constructor Arguments:
 #'  \tabular{lll}{

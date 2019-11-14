@@ -14,17 +14,18 @@ assertEmpty(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given set is empty.
+Validation checks to test if a given object is empty.
 }
 \examples{
-testEmpty(Set$new(2)) # FALSE
-testEmpty(Set$new()) # TRUE
-
+testEmpty(Set$new())
+testEmpty(Set$new(1))
 }

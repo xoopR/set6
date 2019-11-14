@@ -1,14 +1,5 @@
-#' @title assert/check/test/Set
-#' @description Validation checks to test if a given object is an R6 Set.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testSet(Interval$new()) # FALSE
-#' testSet(Set$new(2)) # TRUE
-#'
+#' @template assertions_class
+#' @templateVar class Set
 #' @export
 testSet <- function(){}
 #' @rdname testSet
@@ -22,17 +13,8 @@ makeChecks(assertionName = "Set",
            errormsg = "This is not an R6 Set object",
            pos = environment())
 
-#' @title assert/check/test/SetList
-#' @description Validation checks to test if a given object is a list of R6 Sets.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testSetList(list(Set$new(5),5)) # FALSE
-#' testSetList(list(Set$new(),Interval$new())) # TRUE
-#'
+#' @template assertions_class
+#' @templateVar class SetList
 #' @export
 testSetList <- function(){}
 #' @rdname testSetList
@@ -47,17 +29,8 @@ makeChecks(assertionName =  "SetList",
            errormsg = "One or more items in the list are not Sets",
            pos = environment())
 
-#' @title assert/check/test/Tuple
-#' @description Validation checks to test if a given object is an R6 Tuple.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testTuple(Set$new(2,3)) # FALSE
-#' testTuple(Tuple$new(2,3)) # TRUE
-#'
+#' @template assertions_class
+#' @templateVar class Tuple
 #' @export
 testTuple <- function(){}
 #' @rdname testTuple
@@ -71,17 +44,8 @@ makeChecks(assertionName = "Tuple",
            errormsg = "This is not an R6 Tuple object",
            pos = environment())
 
-#' @title assert/check/test/FuzzySet
-#' @description Validation checks to test if a given object is an R6 FuzzySet.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testFuzzySet(Set$new(2,3)) # FALSE
-#' testFuzzySet(FuzzySet$new(2,0.1,3,0.6)) # TRUE
-#'
+#' @template assertions_class
+#' @templateVar class FuzzySet
 #' @export
 testFuzzySet <- function(){}
 #' @rdname testFuzzySet
@@ -95,17 +59,8 @@ makeChecks(assertionName = "FuzzySet",
            errormsg = "This is not an R6 FuzzySet object",
            pos = environment())
 
-#' @title assert/check/test/FuzzyTuple
-#' @description Validation checks to test if a given object is an R6 FuzzyTuple.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testFuzzyTuple(Set$new(2,3)) # FALSE
-#' testFuzzyTuple(FuzzyTuple$new(2,0.1,3,0.6)) # TRUE
-#'
+#' @template assertions_class
+#' @templateVar class FuzzyTuple
 #' @export
 testFuzzyTuple <- function(){}
 #' @rdname testFuzzyTuple
@@ -119,17 +74,8 @@ makeChecks(assertionName = "FuzzyTuple",
            errormsg = "This is not an R6 FuzzyTuple object",
            pos = environment())
 
-#' @title assert/check/test/Interval
-#' @description Validation checks to test if a given object is an R6 Interval.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testInterval(Set$new(2,3)) # FALSE
-#' testInterval(Interval$new(1, 4)) # TRUE
-#'
+#' @template assertions_class
+#' @templateVar class Interval
 #' @export
 testInterval <- function(){}
 #' @rdname testInterval
@@ -143,161 +89,8 @@ makeChecks(assertionName = "Interval",
            errormsg = "This is not an R6 Interval object",
            pos = environment())
 
-#' @title assert/check/test/ClosedAbove
-#' @description Validation checks to test if a given object is ClosedAbove.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testClosedAbove(Interval$new(2,3,type='()')) # FALSE
-#' testClosedAbove(Interval$new(2,3,type='[]')) # TRUE
-#'
-#' @export
-testClosedAbove <- function(){}
-#' @rdname testClosedAbove
-#' @export
-checkClosedAbove <- function(){}
-#' @rdname testClosedAbove
-#' @export
-assertClosedAbove <- function(){}
-makeChecks(assertionName = "ClosedAbove",
-           cond = testSet(object) &  substr(object$type,2,2) == "]",
-           errormsg = "This is not a set closed above",
-           pos = environment())
-
-#' @title assert/check/test/ClosedBelow
-#' @description Validation checks to test if a given object is ClosedBelow.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testClosedBelow(Interval$new(2,3,type='()')) # FALSE
-#' testClosedBelow(Interval$new(2,3,type='[]')) # TRUE
-#'
-#' @export
-testClosedBelow <- function(){}
-#' @rdname testClosedBelow
-#' @export
-checkClosedBelow <- function(){}
-#' @rdname testClosedBelow
-#' @export
-assertClosedBelow <- function(){}
-makeChecks(assertionName = "ClosedBelow",
-           cond = testSet(object) &  substr(object$type,1,1) == "[",
-           errormsg = "This is not a set closed below",
-           pos = environment())
-
-#' @title assert/check/test/Closed
-#' @description Validation checks to test if a given object is Closed.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testClosed(Interval$new(2,3,type='()')) # FALSE
-#' testClosed(Interval$new(2,3,type='[]')) # TRUE
-#'
-#' @export
-testClosed <- function(){}
-#' @rdname testClosed
-#' @export
-checkClosed <- function(){}
-#' @rdname testClosed
-#' @export
-assertClosed <- function(){}
-makeChecks(assertionName = "Closed",
-           cond = object$properties$closure == "closed",
-           errormsg = "This is not a closed set",
-           pos = environment())
-
-#' @title assert/check/test/Finite
-#' @description Validation checks to test if a given object is Finite.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testFinite(Interval$new(2,3,class="integer")) # TRUE
-#' testFinite(Interval$new()) # FALSE
-#'
-#' @export
-testFinite <- function(){}
-#' @rdname testFinite
-#' @export
-checkFinite <- function(){}
-#' @rdname testFinite
-#' @export
-assertFinite <- function(){}
-makeChecks(assertionName = "Finite",
-           cond = object$lower!=-Inf &  object$upper!=Inf,
-           errormsg = "This is not finite",
-           pos = environment())
-
-#' @title assert/check/test/Fuzzy
-#' @description Validation checks to test if a given set/tuple is fuzzy.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testFuzzy(FuzzySet$new(1, 0.2)) # TRUE
-#' testFuzzy(Set$new(1, 0.2)) # FALSE
-#'
-#' @export
-testFuzzy <- function(){}
-#' @rdname testFuzzy
-#' @export
-checkFuzzy <- function(){}
-#' @rdname testFuzzy
-#' @export
-assertFuzzy <- function(){}
-makeChecks(assertionName = "Fuzzy",
-           cond = grepl("Fuzzy", getR6Class(object)),
-           errormsg = "This is not fuzzy.",
-           pos = environment())
-
-#' @title assert/check/test/Crisp
-#' @description Validation checks to test if a given set/tuple is crisp.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testCrisp(Set$new(1, 0.2)) # TRUE
-#' testCrisp(FuzzySet$new(1, 0.2)) # FALSE
-#'
-#' @export
-testCrisp <- function(){}
-#' @rdname testCrisp
-#' @export
-checkCrisp <- function(){}
-#' @rdname testCrisp
-#' @export
-assertCrisp <- function(){}
-makeChecks(assertionName = "Crisp",
-           cond = object$traits$crisp,
-           errormsg = "This is not crisp.",
-           pos = environment())
-
-#' @title assert/check/test/ConditionalSet
-#' @description Validation checks to test if a given object is an R6 ConditionalSet.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testConditionalSet(Set$new(2)) # FALSE
-#' testConditionalSet(ConditionalSet$new(function(x,y) x + y < 2)) # TRUE
-#'
+#' @template assertions_class
+#' @templateVar class ConditionalSet
 #' @export
 testConditionalSet <- function(){}
 #' @rdname testConditionalSet
@@ -311,17 +104,112 @@ makeChecks(assertionName = "ConditionalSet",
            errormsg = "This is not an R6 ConditionalSet object",
            pos = environment())
 
-#' @title assert/check/test/Empty
-#' @description Validation checks to test if a given set is empty.
-#' @param object object to test
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testEmpty(Set$new(2)) # FALSE
-#' testEmpty(Set$new()) # TRUE
-#'
+#' @template assertions_properties
+#' @templateVar property ClosedAbove
+#' @templateVar test1 Interval$new(1, 10, type = "[]")
+#' @templateVar test2 Interval$new(1, 10, type = "[)")
+#' @export
+testClosedAbove <- function(){}
+#' @rdname testClosedAbove
+#' @export
+checkClosedAbove <- function(){}
+#' @rdname testClosedAbove
+#' @export
+assertClosedAbove <- function(){}
+makeChecks(assertionName = "ClosedAbove",
+           cond = testSet(object) &  substr(object$type,2,2) == "]",
+           errormsg = "This is not a set closed above",
+           pos = environment())
+
+#' @template assertions_properties
+#' @templateVar property ClosedBelow
+#' @templateVar test1 Interval$new(1, 10, type = "[]")
+#' @templateVar test2 Interval$new(1, 10, type = "(]")
+#' @export
+testClosedBelow <- function(){}
+#' @rdname testClosedBelow
+#' @export
+checkClosedBelow <- function(){}
+#' @rdname testClosedBelow
+#' @export
+assertClosedBelow <- function(){}
+makeChecks(assertionName = "ClosedBelow",
+           cond = testSet(object) &  substr(object$type,1,1) == "[",
+           errormsg = "This is not a set closed below",
+           pos = environment())
+
+#' @template assertions_properties
+#' @templateVar property Closed
+#' @templateVar test1 Interval$new(1, 10, type = "[]")
+#' @templateVar test2 Interval$new(1, 10, type = "(]")
+#' @export
+testClosed <- function(){}
+#' @rdname testClosed
+#' @export
+checkClosed <- function(){}
+#' @rdname testClosed
+#' @export
+assertClosed <- function(){}
+makeChecks(assertionName = "Closed",
+           cond = object$properties$closure == "closed",
+           errormsg = "This is not a closed set",
+           pos = environment())
+
+#' @template assertions_properties
+#' @templateVar property Finite
+#' @templateVar test1 Interval$new(1, 10, class = "integer")
+#' @templateVar test2 Interval$new(1, 10, class = "numeric")
+#' @export
+testFinite <- function(){}
+#' @rdname testFinite
+#' @export
+checkFinite <- function(){}
+#' @rdname testFinite
+#' @export
+assertFinite <- function(){}
+makeChecks(assertionName = "Finite",
+           cond = object$lower!=-Inf &  object$upper!=Inf,
+           errormsg = "This is not finite",
+           pos = environment())
+
+#' @template assertions_properties
+#' @templateVar property Fuzzy
+#' @templateVar test1 FuzzySet$new(1, 0.5)
+#' @templateVar test2 Set$new(1)
+#' @export
+testFuzzy <- function(){}
+#' @rdname testFuzzy
+#' @export
+checkFuzzy <- function(){}
+#' @rdname testFuzzy
+#' @export
+assertFuzzy <- function(){}
+makeChecks(assertionName = "Fuzzy",
+           cond = grepl("Fuzzy", getR6Class(object)),
+           errormsg = "This is not fuzzy.",
+           pos = environment())
+
+#' @template assertions_properties
+#' @templateVar property Crisp
+#' @templateVar test1 Set$new(1)
+#' @templateVar test2 FuzzySet$new(1, 0.5)
+#' @export
+testCrisp <- function(){}
+#' @rdname testCrisp
+#' @export
+checkCrisp <- function(){}
+#' @rdname testCrisp
+#' @export
+assertCrisp <- function(){}
+makeChecks(assertionName = "Crisp",
+           cond = object$traits$crisp,
+           errormsg = "This is not crisp.",
+           pos = environment())
+
+#' @template assertions_properties
+#' @templateVar property Empty
+#' @templateVar test1 Set$new()
+#' @templateVar test2 Set$new(1)
 #' @export
 testEmpty <- function(){}
 #' @rdname testEmpty
@@ -332,5 +220,5 @@ checkEmpty <- function(){}
 assertEmpty <- function(){}
 makeChecks(assertionName = "Empty",
            cond = object$properties$empty,
-           errormsg = "This is not an R6 Empty object",
+           errormsg = "This is not an empty set",
            pos = environment())

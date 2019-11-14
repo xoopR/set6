@@ -1,3 +1,6 @@
+#' @name <%=(class)%>
+#' @title Set of <%= toproper(operation)%>s
+#' @description UnionSet class for symbolic union of mathematical sets.
 #' @section Constructor: `<%=constructor%>`
 #' @section Constructor Arguments:
 #' \tabular{lll}{
@@ -12,9 +15,12 @@
 #'   <%= if(exists("arg8")) arg8%>
 #'   <%= if(exists("arg9")) arg9%>
 #'   <%= if(exists("arg10")) arg10%>
+#'   `lower` \tab Set \tab Lower limit of set. \cr
+#'   `upper` \tab Set \tab Upper limit of set. \cr
+#'   `type` \tab character \tab Type of set braces. \cr
 #'   }
 #'
-#' @section Constructor Details: <%=constructorDets%>
+#' @section Constructor Details: It is not recommended to construct this class directly.
 #'
 #' @section Public Fields:
 #' \tabular{ll}{
@@ -29,6 +35,7 @@
 #'   <%= if(exists("field8")) field8%>
 #'   <%= if(exists("field9")) field9%>
 #'   <%= if(exists("field10")) field10%>
+#'  `wrappedSets` \tab [wrappedSets] \cr
 #'  `class` \tab [class] \cr
 #'  `elements` \tab [elements] \cr
 #'  `length` \tab [length] \cr
@@ -70,3 +77,12 @@
 #' `summary(n = 2)` \tab [summary] \cr
 #' }
 #'
+#' @details
+#' The purpose of this class is to provide a symbolic representation for the <%=operation%> of sets that
+#' cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct this class directly but via
+#' the set operation methods: [union], [product], [power], [setdiff].
+#'
+#' @seealso
+#' [UnionSet], [ExponentSet], [ProductSet], [DifferenceSet]
+#'
+#' @return R6 object of class <%=(class)%>, inheriting from SetWrapper.

@@ -76,7 +76,7 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 \tab \cr \tab \cr \tab \cr
 \strong{Mathematical Methods} \tab \strong{Link} \cr
 \code{complement()} \tab \link{complement} \cr
-\code{powerSet()} \tab \link{powerSet} \cr
+\code{powerset()} \tab \link{powerset} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Representation Methods} \tab \strong{Link} \cr
 \code{strprint(n = 2)} \tab \link{strprint} \cr
@@ -95,12 +95,12 @@ FuzzySet$new(elements = 1:3, membership = c(0.5, 1, 0))
 FuzzySet$new(elements = 1:5) == Set$new(1:5)
 
 f = FuzzySet$new(1, 0.2, 2, 1, 3, 0)
-f$membership
+f$membership()
 f$alphaCut(0.3)
 f$core()
 f$inclusion(0)
 f$membership(0)
-
+f$membership(1)
 
 }
 \seealso{

@@ -63,7 +63,7 @@ using standard 'and', \code{&}, and 'or', \code{|}, operators.
 \tab \cr \tab \cr \tab \cr
 \strong{Mathematical Methods} \tab \strong{Link} \cr
 \code{complement()} \tab \link{complement} \cr
-\code{powerSet()} \tab \link{powerSet} \cr
+\code{powerset()} \tab \link{powerset} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Representation Methods} \tab \strong{Link} \cr
 \code{strprint(n = 2)} \tab \link{strprint} \cr

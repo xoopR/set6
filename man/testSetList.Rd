@@ -14,17 +14,23 @@ assertSetList(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is a list of R6 Sets.
+Validation checks to test if a given object is an R6 \code{SetList}.
 }
 \examples{
-testSetList(list(Set$new(5),5)) # FALSE
-testSetList(list(Set$new(),Interval$new())) # TRUE
-
+testSetList(Set$new(2, 3))
+testSetList(list(Set$new(2), Set$new(3)))
+testSetList(Tuple$new(2, 3))
+testSetList(Interval$new())
+testSetList(FuzzySet$new(2, 0.1))
+testSetList(FuzzyTuple$new(2, 0.1))
+testSetList(ConditionalSet$new(function(x) x == 0))
 }

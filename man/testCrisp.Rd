@@ -14,17 +14,18 @@ assertCrisp(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given set/tuple is crisp.
+Validation checks to test if a given object is crisp.
 }
 \examples{
-testCrisp(Set$new(1, 0.2)) # TRUE
-testCrisp(FuzzySet$new(1, 0.2)) # FALSE
-
+testCrisp(Set$new(1))
+testCrisp(FuzzySet$new(1, 0.5))
 }

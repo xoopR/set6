@@ -14,17 +14,23 @@ assertInterval(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is an R6 Interval.
+Validation checks to test if a given object is an R6 \code{Interval}.
 }
 \examples{
-testInterval(Set$new(2,3)) # FALSE
-testInterval(Interval$new(1, 4)) # TRUE
-
+testInterval(Set$new(2, 3))
+testInterval(list(Set$new(2), Set$new(3)))
+testInterval(Tuple$new(2, 3))
+testInterval(Interval$new())
+testInterval(FuzzySet$new(2, 0.1))
+testInterval(FuzzyTuple$new(2, 0.1))
+testInterval(ConditionalSet$new(function(x) x == 0))
 }

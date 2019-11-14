@@ -1,3 +1,11 @@
+#' @template SetWrapper
+#' @templateVar operation product
+#' @templateVar class ProductSet
+#' @templateVar constructor ProductSet$new(setlist, lower = NULL, upper = NULL, type = NULL)
+#' @templateVar arg1 `setlist` \tab list \tab List of sets to wrap. \cr
+#'
+#' @export
+NULL
 ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
 ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
   if(is.null(lower)) lower = sapply(setlist, function(x) x$lower)
@@ -8,7 +16,6 @@ ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = N
 ProductSet$set("active", "length", function(){
   return(Tuple$new(sapply(self$wrappedSets, function(x) x$length)))
 })
-
 ProductSet$set("public","strprint",function(n = 2){
   str = lapply(self$wrappedSets, function(x) x$strprint(n))
   if(length(unique(str)) == 1)
@@ -17,11 +24,13 @@ ProductSet$set("public","strprint",function(n = 2){
     return(paste0("{",paste(str, collapse = " \u00D7 "),"}"))
 })
 ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
-  if(x$length != self$length$length)
-    return(FALSE)
 
-  x = ifelse(class(x) != "list", list(x), x)
-  rets = sapply(x, function(el){
+  if(!testSetList(x))
+    x = list(x)
+
+  rets = sapply(x, function(y) ifelse(y$length == self$length$length, return(TRUE), return(FALSE)))
+
+  rets[rets] = sapply(x[rets], function(el){
     ret = TRUE
     for (i in 1:el$length){
       if (!self$wrappedSets[[i]]$liesInSet(el$elements[i], bound = bound)){
@@ -35,11 +44,55 @@ ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
   if (all)
     return(all(rets))
   else
-    return(rets)
+    return(unlist(rets))
 })
 
 #' @name product
-#' @rdname product
+#' @param x Set
+#' @param y Set
+#' @title Cartesian Product of Two Sets
+#' @return An object inheriting from `Set` containing the cartesian product of elements in both `x` and `y`.
+#' @description Returns the cartesian product of two objects inheriting from class `Set`.
+#' @details The cartesian product of two sets, \eqn{X, Y}, is defined as the set of elements that exist
+#' in one or both sets,
+#' \deqn{P = \{(x, y) : x \epsilon X and y \epsilon Y\}}{U = {(x, y) : x \epsilon X and y \epsilon Y}}
+#' where \eqn{(x, y)} is a tuple.
+#'
+#' The product of two [ConditionalSet]s is currently defined as the same as the intersection of two
+#' [ConditionalSet]s, this may change in the future. See examples.
+#'
+#' @examples
+#' # product of two sets
+#'
+#' Set$new(-2:4) * Set$new(2:5)
+#' product(Set$new(1,4,"a"), Set$new("a", 6))
+#'
+#' # product of two intervals
+#'
+#' Interval$new(1, 10) * Interval$new(5, 15)
+#' Interval$new(1, 2, type = "()") * Interval$new(2, 3, type = "(]")
+#' Interval$new(1, 5, class = "integer") *
+#'     Interval$new(2, 7, class = "integer")
+#'
+#' # product of mixed set types
+#'
+#' Set$new(1:10) * Interval$new(5, 15)
+#' Set$new(5,7) * Tuple$new(6, 8, 7)
+#' FuzzySet$new(1,0.1) * Set$new(2)
+#'
+#' # product of FuzzySet
+#' FuzzySet$new(1, 0.1, 2, 0.5) * Set$new(2:5)
+#' # not the same when the order is reversed
+#' Set$new(2:5) * FuzzySet$new(1, 0.1, 2, 0.5)
+#'
+#' # product of conditional sets
+#'
+#' ConditionalSet$new(function(x, y) x >= y) *
+#'     ConditionalSet$new(function(x, y) x == y)
+#'
+#' # product of special sets
+#' PosReals$new() * NegReals$new()
+#'
 #' @export
 product <- function(x, y){
   xl = x$length
@@ -107,24 +160,24 @@ product.FuzzySet <- function(x, y){
 }
 #' @export
 product.ConditionalSet <- function(x, y){
-  if(!testConditionalSet(y)){
-    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
+  if(!inherits(y, "ConditionalSet"))
     return(Set$new())
-  }else{
+  else {
     if(x$equals(y))
       return(x)
     else{
-      if(all(names(formals(x$condition)) == names(formals(y$condition)))){
-        condition = function(){}
-        formals(condition) = formals(x$condition)
-        body(condition) = substitute(bx & by,
-                                     list(bx = body(x$condition),
-                                          by = body(y$condition)))
-        argclass = unique(c(x$class, y$class))
-        names(argclass) = names(formals(condition))
-        return(ConditionalSet$new(condition = condition, argclass = argclass))
-      } else
-        stop("Conditional set conditions must have the same formal arguments.")
+      condition = function(){}
+      names = unique(names(c(formals(x$condition), formals(y$condition))))
+      formals <- rep(list(bquote()), length(names))
+      names(formals) = names
+      formals(condition) = formals
+      body(condition) = substitute(bx & by,
+                                   list(bx = body(x$condition),
+                                        by = body(y$condition)))
+      # in future updates we can change this so the product of the argument classes is kept
+      # not just the argclass of x
+      class = c(x$class, y$class)[!duplicated(names(c(x$class, y$class)))]
+      return(ConditionalSet$new(condition = condition, argclass = class))
     }
   }
 }
@@ -134,9 +187,6 @@ product.ProductSet <- function(x, y){
 }
 
 #' @rdname product
-#' @usage \method{*}{Set}(x, y)
-#' @param x Set
-#' @param y Set
 #' @export
 `*.Set` <- function(x, y){
   product(x, y)

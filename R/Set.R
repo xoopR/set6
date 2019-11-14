@@ -16,7 +16,7 @@
 #' @details
 #' Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
 #' is used for sets of finite elements, for infinite sets use [Interval]. These can be
-#' expanded for fuzzy logic by using [FuzzySets]. Elements in a set cannot be duplicated
+#' expanded for fuzzy logic by using [FuzzySet]s. Elements in a set cannot be duplicated
 #' but [Tuple]s can be used if this is required.
 #'
 #' @seealso
@@ -103,6 +103,24 @@ Set$set("public","print",function(n = 2){
   cat(self$strprint(n),"\n")
   invisible(self)
 })
+#' @title String Representation For Print
+#' @name strprint
+#' @description Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
+#' @details `strprint` is a suggested method that should be included in all R6 classes to be passed to
+#' methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
+#' parse R6 objects into data-frames, see examples.
+#'
+#' It is often not required to call this directly and the print method is recommended for printing
+#' strings to the console.
+#'
+#' @param object R6 object
+#' @param n Number of elements to display before & after ellipsis
+#' @section R6 Usage: $strprint(object, n = 2)
+#' @return String representation of the set.
+#'
+#' @examples
+#' Set$new(1:10)$strprint(n = 2)
+#' Set$new(1:10)$strprint()
 Set$set("public","strprint",function(n = 2){
   if(self$properties$empty)
     return("\u2205")
@@ -219,7 +237,7 @@ Set$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
 #'
 #' # Not equal
 #' !Set$new(1,2)$equals(Set$new(1,2))
-#' Set$new(1,2) != equals(Set$new(1,5))
+#' Set$new(1,2) != Set$new(1,5)
 Set$set("public","equals",function(x){
   if(!testSet(x))
     return(FALSE)
@@ -231,13 +249,13 @@ Set$set("public","equals",function(x){
 })
 #' @name isSubset
 #' @rdname isSubset
+#' @title Test If Two Sets Are Subsets
 #' @param x Set
 #' @param y Set
-#' @param proper logical, if TRUE (default) then tests if one set is a proper subset of the other
-#' @details A Set is a proper subset of another if it is fully contained by the other Set (i.e. not
-#' equal to) whereas a Set is a (non-proper) subset if it is fully contained by, or equal to, the
-#' other Set.
-#' @title Test If Two Sets Are Subsets
+#' @details If using the method directly, and not via one of the operators then the additional boolean
+#' argument `proper` can be used to specify testing of subsets or proper subsets. A Set is a proper
+#' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+#' (non-proper) subset if it is fully contained by, or equal to, the other Set.
 #' @return TRUE if object x is a subset of self, FALSE otherwise
 #' @section R6 Usage: $isSubset(x, proper = FALSE)
 #' @examples
@@ -265,7 +283,7 @@ Set$set("public","isSubset",function(x, proper = FALSE){
 
 })
 #---------------------------------------------
-# Public methods - complement/powerSet
+# Public methods - complement/powerset
 #---------------------------------------------
 #' @name complement
 #' @rdname complement
@@ -281,15 +299,15 @@ Set$set("public","complement",function(){
   if(!is.null(self$universe))
     return(setdiff(self$universe, self))
 })
-#' @name powerSet
-#' @rdname powerSet
+#' @name powerset
+#' @rdname powerset
 #' @title Calculate a Set's Power Set
 #' @description Calculates and returns the power set of a Set.
 #' @details A power set of a set, S, is defined as the set of all subsets of S, including S itself and
 #' the empty set.
-#' @section R6 Usage: $powerSet()
+#' @section R6 Usage: $powerset()
 #' @return Set
-Set$set("public","powerSet",function(){
+Set$set("public","powerset",function(){
   if(self$properties$empty)
     return(Set$new(Set$new()))
   else{

@@ -14,17 +14,23 @@ assertFuzzySet(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is an R6 FuzzySet.
+Validation checks to test if a given object is an R6 \code{FuzzySet}.
 }
 \examples{
-testFuzzySet(Set$new(2,3)) # FALSE
-testFuzzySet(FuzzySet$new(2,0.1,3,0.6)) # TRUE
-
+testFuzzySet(Set$new(2, 3))
+testFuzzySet(list(Set$new(2), Set$new(3)))
+testFuzzySet(Tuple$new(2, 3))
+testFuzzySet(Interval$new())
+testFuzzySet(FuzzySet$new(2, 0.1))
+testFuzzySet(FuzzyTuple$new(2, 0.1))
+testFuzzySet(ConditionalSet$new(function(x) x == 0))
 }

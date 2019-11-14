@@ -50,10 +50,10 @@
 #' f$membership(1)
 #'
 #' # Elements can be duplicated, and with different memberships,
-#' although this is not necessarily sensible.
+#' #  although this is not necessarily sensible.
 #' FuzzyTuple$new(1, 0.1, 1, 1)
 #'
-#' More important is ordering.
+#' # More important is ordering.
 #' FuzzyTuple$new(1, 0.1, 2, 0.2) != FuzzyTuple$new(2, 0.2, 1, 0.1)
 #' FuzzySet$new(1, 0.1, 2, 0.2) == FuzzySet$new(2, 0.2, 1, 0.1)
 #'

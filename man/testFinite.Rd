@@ -14,17 +14,18 @@ assertFinite(object, errormsg = errormsg)
 }
 \arguments{
 \item{object}{object to test}
+
+\item{errormsg}{error message to overwrite default if check fails}
 }
 \value{
-If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
+If check passes then \code{assert} returns \code{object} invisibly and \code{test}/\code{check}
 return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-an error message as string, \code{test} returns \code{FALSE}.
+an error message as string, and \code{test} returns \code{FALSE}.
 }
 \description{
-Validation checks to test if a given object is Finite.
+Validation checks to test if a given object is finite.
 }
 \examples{
-testFinite(Interval$new(2,3,class="integer")) # TRUE
-testFinite(Interval$new()) # FALSE
-
+testFinite(Interval$new(1, 10, class = "integer"))
+testFinite(Interval$new(1, 10, class = "numeric"))
 }

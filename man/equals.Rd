@@ -33,5 +33,5 @@ Set$new(1,2) == Interval$new(1,2, class = "integer")
 
 # Not equal
 !Set$new(1,2)$equals(Set$new(1,2))
-Set$new(1,2) != equals(Set$new(1,5))
+Set$new(1,2) != Set$new(1,5)
 }
