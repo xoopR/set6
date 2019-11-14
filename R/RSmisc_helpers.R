@@ -87,3 +87,12 @@ toproper = function(str){
                                                      tolower(substr(x,2,10000)),
                                                      sep = "", collapse = " ")))
 }
+
+rlapply = function(X, FUN, ...){
+  FUN = as.character(substitute(FUN))
+  lapply(X, function(x) x[[FUN]](...))
+}
+rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE){
+  FUN = as.character(substitute(FUN))
+  sapply(X, function(x) x[[FUN]](..., simplify = TRUE, USE.NAMES = TRUE))
+}

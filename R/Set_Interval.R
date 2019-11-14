@@ -131,23 +131,24 @@ Interval$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
     class_test = sapply(x, checkmate::testIntegerish)
   else if(self$class == "numeric")
     class_test = sapply(x, checkmate::testNumeric)
+  else if(self$class == "complex")
+    class_test = sapply(x, checkmate::testComplex)
 
   if(bound)
-    ret[(x >= self$lower & x <= self$upper & class_test)] = TRUE
+    ret[class_test][(x >= self$lower & x <= self$upper)] = TRUE
   else if (!bound){
+    index = rep(FALSE, length(ret))
     if(testClosedAbove(self))
-      index = x <= self$max & class_test
+      index[class_test] = x[class_test] <= self$max
     else
-      index = x < self$max & class_test
-
+      index[class_test] = x[class_test] < self$max
     if(testClosedBelow(self))
-      index = index & (x >= self$min & class_test)
+      index[class_test] = index[class_test] & x[class_test] >= self$min
     else
-      index = index & (x > self$min & class_test)
+      index[class_test] = index[class_test] & x[class_test] > self$min
 
     ret[index] = TRUE
   }
-
 
   if(all)
     return(all(ret))

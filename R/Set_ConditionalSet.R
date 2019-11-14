@@ -56,7 +56,9 @@ ConditionalSet$set("public","initialize",function(condition, argclass = NULL){
   private$.condition <- condition
   private$.dimension <- length(formals(condition))
 
-  if(is.null(argclass)){
+  if (!is.null(argclass))
+    assertSetList(argclass)
+  else {
     argclass <- rep(list(Reals$new()), private$.dimension)
     names(argclass) <- names(formals(condition))
   }
@@ -90,15 +92,26 @@ ConditionalSet$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
     return(ret)
 })
 ConditionalSet$set("public","equals",function(x){
-  if(!testConditionalSet(x))
-    return(FALSE)
-
   if(all(names(formals(x$condition)) == names(formals(self$condition))) &
      all(body(x$condition) == body(self$condition)) &
      all(unlist(lapply(x$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
     return(TRUE)
-  else
+
+  if(!testConditionalSet(x))
     return(FALSE)
+  else if(!all(rsapply(self$class, strprint) == rsapply(x$class, strprint)))
+    return(FALSE)
+  else{
+    xcond = body(x$condition)
+    if(!all(names(self$class) == names(x$class))){
+      for(i in 1:length(names(x$class)))
+        xcond = gsub(names(x$class)[[i]], names(self$class)[[i]], xcond, fixed = TRUE)
+    }
+    if(all(xcond == as.character(body(self$condition))))
+      return(TRUE)
+    else
+      return(FALSE)
+  }
 })
 ConditionalSet$set("public","strprint",function(n = NULL){
   return(paste0("{",paste0(deparse(body(self$condition))," : ",

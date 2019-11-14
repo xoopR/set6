@@ -91,9 +91,11 @@ intersection.Interval <- function(x, y){
     if (x$lower > y$upper | y$lower > x$upper)
       return(Set$new())
     else if(y$lower <= x$upper & y$lower >= x$lower)
-      return(Interval$new(y$lower, x$upper))
+      return(Interval$new(y$lower, x$upper,
+                          type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
     else
-      return(Interval$new(x$lower, y$upper))
+      return(Interval$new(x$lower, y$upper,
+                          type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
   } else
     return(Set$new(y$elements[x$liesInSet(y$elements)]))
 }

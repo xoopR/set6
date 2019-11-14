@@ -63,7 +63,7 @@ NULL
 #---------------------------------------------
 FuzzyTuple <- R6::R6Class("FuzzyTuple", inherit = FuzzySet)
 
-FuzzyTuple$set("public","powerSet",function(){
+FuzzyTuple$set("public","powerset",function(){
   y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
   if(checkmate::testList(y))
     y = lapply(y, function(z) apply(z, 2, function(x){
@@ -73,13 +73,16 @@ FuzzyTuple$set("public","powerSet",function(){
     y = apply(y, 1, function(x){
       FuzzyTuple$new(elements = x, membership = self$membership(x))
     })
-  return(Set$new(Tuple$new(), y, self))
+  return(Set$new(Set$new(), y, self))
 })
 FuzzyTuple$set("public","equals",function(x){
   if(all(self$membership() == 1))
     return(self$core(create = T)$equals(x))
 
   if(!testFuzzyTuple(x))
+    return(FALSE)
+
+  if(x$length != self$length)
     return(FALSE)
 
   if(suppressWarnings(all(x$elements == self$elements) &
@@ -124,7 +127,7 @@ FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALS
 
   if(create){
     if(length(els) == 0)
-      return(Empty$new())
+      return(Set$new())
     else
       return(Tuple$new(els))
   } else{
@@ -133,6 +136,9 @@ FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALS
     else
       return(els)
   }
+})
+FuzzyTuple$set("public","complement",function(){
+  FuzzyTuple$new(elements = self$elements, membership = 1 - self$membership())
 })
 
 FuzzyTuple$set("private",".type","()")

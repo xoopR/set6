@@ -4,7 +4,7 @@ template:
 
 reference:
 - title: Sets
-  desc: R6 classes inheriting from Set
+  desc: R6 classes and methods inheriting from class Set
   contents:
     - Set
     - Tuple
@@ -12,6 +12,32 @@ reference:
     - FuzzySet
     - FuzzyTuple
     - ConditionalSet
+    - alphaCut
+    - class
+    - complement
+    - condition
+    - core
+    - elements
+    - equals
+    - inclusion
+    - isSubset
+    - length
+    - liesInSet
+    - lower
+    - max
+    - membership
+    - min
+    - powerset
+    - properties
+    - range
+    - strprint
+    - subtractedSets
+    - support
+    - traits
+    - type
+    - universe
+    - upper
+    - wrappedSets
 - title: Special Sets
   desc: R6 classes inheriting from SpecialSet
   contents:
@@ -42,7 +68,12 @@ reference:
     - DifferenceSet
     - setdiff
     - intersection
+    - addedSets
 - title: Assertions
   desc: Validation checks for Sets
   contents:
     - starts_with("test")
+- title: Coercions
+  desc: S3 methods for coercing objects to Sets
+  contents:
+    - starts_with("as.")

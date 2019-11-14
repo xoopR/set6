@@ -53,7 +53,7 @@ test_that("strprint",{
   expect_equal(Interval$new(1,3)$strprint(),"[1, 3]")
 })
 
-test_that("liesInSetInterval",{
+test_that("liesInSet",{
   x <- Interval$new(1,10,type="[]")
   y <- Interval$new(1,10,type="()")
   expect_equal(x$liesInSet(c(1,2.5,10,11)), c(TRUE, TRUE, TRUE, FALSE))
@@ -61,5 +61,6 @@ test_that("liesInSetInterval",{
   expect_equal(y$liesInSet(c(1,2.5,10,11), bound = TRUE), c(TRUE, TRUE, TRUE, FALSE))
   expect_false(x$liesInSet(c(1,2.5,10,11), all = T))
   expect_true(x$liesInSet(c(1.1,9.99), all = T))
+  expect_equal(Interval$new(1,10)$liesInSet(list(1,"a")), c(TRUE, FALSE))
 })
 
