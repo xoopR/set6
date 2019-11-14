@@ -71,7 +71,7 @@ intersection <- function(x, y){
   else
     y = as.Set(y)
 
-  if(any(is.nan(x$elements)) | any(is.nan(y$elements)))
+  if(any(grepl("NaN", x$elements)) | any(grepl("NaN", y$elements)))
     UseMethod("intersection")
   else
     Set$new(intersect(x$elements, y$elements))
@@ -82,7 +82,7 @@ intersection.Set <- function(x, y){
   if (inherits(y, "ConditionalSet"))
     return(Set$new())
   else
-    return(Set$new(x$elements[y$liesInSet(x)]))
+    return(Set$new(x$elements[y$liesInSet(x$elements)]))
 }
 #' @rdname intersection
 #' @export
@@ -95,7 +95,7 @@ intersection.Interval <- function(x, y){
     else
       return(Interval$new(x$lower, y$upper))
   } else
-    return(Set$new(y$elements[x$liesInSet(y)]))
+    return(Set$new(y$elements[x$liesInSet(y$elements)]))
 }
 #' @rdname intersection
 #' @export

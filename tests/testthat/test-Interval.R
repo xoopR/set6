@@ -15,7 +15,6 @@ test_that("construction",{
 
 test_that("inherited_methods",{
   expect_equal(Interval$new(1,2)$type,"[]")
-  expect_equal(Interval$new(1,2)$dimension,1)
   expect_equal(Interval$new(1,2)$max,2)
   expect_equal(Interval$new(1,2)$min,1)
   expect_equal(Interval$new(1,2, type = "()")$max,2-1.1e-15)
@@ -29,10 +28,10 @@ test_that("inherited_methods",{
                Interval$new(10,15, type = "(]"))
 })
 
-test_that("as.numeric",{
-  expect_message(expect_equal(Interval$new(1,10,class="numeric")$as.numeric(), NaN))
-  expect_message(expect_equal(Interval$new(1, class = "integer")$as.numeric(), NaN))
-  expect_equal(Interval$new(1,10,class="integer")$as.numeric(), 1:10)
+test_that("elements",{
+  expect_equal(Interval$new(1,10,class="numeric")$elements, NaN)
+  expect_equal(Interval$new(1, class = "integer")$elements, NaN)
+  expect_equal(Interval$new(1,10,class="integer")$elements, 1:10)
 })
 
 test_that("length",{
@@ -45,14 +44,13 @@ test_that("equals",{
   expect_true(Interval$new(1,4)$equals(Interval$new(1,4)))
   expect_false(Interval$new(1,4, class = "numeric")$equals(Interval$new(1,4, class = "integer")))
   expect_false(Interval$new(1,4)$equals(Interval$new(1,4, type = "(]")))
-  expect_false(Interval$new(1,4) == Interval$new(1,4, dim = 2))
-  expect_true(Interval$new(1,4) != Interval$new(1,4, dim = 2))
+  expect_false(Interval$new(1,4) != Interval$new(1,4))
 })
 
 test_that("strprint",{
   expect_equal(Interval$new()$strprint(),"[-\u221E, +\u221E]")
   expect_equal(Interval$new(1,10,type="(]")$strprint(),"(1, 10]")
-  expect_equal(Interval$new(1,3,dimension = 2)$strprint(),"[1, 3]^2")
+  expect_equal(Interval$new(1,3)$strprint(),"[1, 3]")
 })
 
 test_that("liesInSetInterval",{

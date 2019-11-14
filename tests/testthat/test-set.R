@@ -16,7 +16,6 @@ test_that("construction",{
 
 test_that("inherited_methods",{
   expect_equal(Set$new(1,2)$type,"{}")
-  expect_equal(Set$new(1,2)$dimension,1)
   expect_equal(Set$new(1,2)$max,2)
   expect_equal(Set$new(1,2)$min,1)
   expect_equal(Set$new(1,2)$upper,2)
@@ -37,8 +36,8 @@ test_that("inherited_methods",{
 test_that("elements",{
   expect_equal(Set$new(1,2,3)$elements, 1:3)
   expect_equal(Set$new(1,2,3,1,2)$elements, 1:3)
-  expect_equal(Set$new("A",TRUE,function(x) x^2, as.factor("a"))$elements, c("A",TRUE,function(x) x^2, as.factor("a")))
-  expect_equal(Set$new(1+0i,2,2L,5.67)$elements,c(1+0i,2,2L,5.67))
+  expect_equal(Set$new("A",TRUE,function(x) x^2, as.factor("a"))$elements, list("A",TRUE,function(x) x^2, as.factor("a")))
+  expect_equal(Set$new(1+0i,2,2L,5.67)$elements,list(1+0i,2,2L,5.67))
   expect_equal(Set$new(1:10)$elements, 1:10)
   expect_equal(Set$new(list(1))$elements, 1)
   expect_equal(Set$new(Set$new(2), Interval$new(1,5))$elements, c(Set$new(2),Interval$new(1,5)))
@@ -79,8 +78,8 @@ test_that("strprint",{
   expect_equal(Set$new(1,2,3)$strprint(n = 1),"{1,...,3}")
 })
 
-test_that("powerSet",{
-  expect_equal(Set$new(1,2)$powerSet(),Set$new(Set$new(), Set$new(1),Set$new(2),Set$new(1,2)))
+test_that("powerset",{
+  expect_equal(Set$new(1,2)$powerset(),Set$new(Set$new(), Set$new(1),Set$new(2),Set$new(1,2)))
 })
 
 test_that("isSubset",{

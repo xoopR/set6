@@ -61,8 +61,6 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
     membership <- as.numeric(membership)
   } else if(length(list(...)) != 0){
     dots <- list(...)
-    if(length(dots) == 1 & is.list(dots))
-      dots <- dots[[1]]
     if(length(dots)%%2)
       stop("Every element needs a corresponding membership.")
     elements <- dots[seq.int(1,length(dots),2)]
@@ -163,7 +161,7 @@ FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE)
 
   if(create){
     if(length(els) == 0)
-      return(Empty$new())
+      return(Set$new())
     else
       return(Set$new(els))
   } else{
@@ -286,7 +284,7 @@ FuzzySet$set("public","complement",function(){
   private$.membership <- 1 - self$membership()
   return(slf)
 })
-FuzzySet$set("public","powerSet",function(){
+FuzzySet$set("public","powerset",function(){
   y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
   if(checkmate::testList(y))
     y = lapply(y, function(z) apply(z, 2, function(x){

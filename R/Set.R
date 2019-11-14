@@ -11,7 +11,7 @@
 #' @templateVar constructor Set$new(..., universe = NULL)
 #' @templateVar arg1 `...` \tab ANY \tab Elements in the set. \cr
 #' @templateVar arg2 `universe` \tab Set \tab Optional universe that the Set lives in.
-#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes). The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
 #'
 #' @details
 #' Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
@@ -48,23 +48,11 @@ NULL
 Set <- R6::R6Class("Set")
 Set$set("public","initialize",function(..., universe = NULL){
 
-  if(length(list(...)) != 0){
-    # if(!checkmate::testList(...))
-    #   dots <- list(...)
-    # else
-      dots <- unlist(list(...), recursive = FALSE)
+  dots = list(...)
+  if(any(grepl("list", lapply(dots, class))))
+    dots <- unlist(dots, recursive = FALSE)
 
-    if(testTuple(self) | testFuzzyTuple(self))
-      private$.elements <- unlist(dots)
-    else
-      private$.elements = unlist(dots[!duplicated(lapply(dots, function(x){
-        y = try(x$strprint(), silent = TRUE)
-        if(inherits(y, "try-error"))
-          return(x)
-        else
-          return(y)
-      }))])
-
+  if(length(dots) != 0 & length(unlist(dots))!=0){
     class <- unique(sapply(dots,function(x) class(x)[[1]]))
     if(length(class)==1)
       private$.class <- class
@@ -72,6 +60,22 @@ Set$set("public","initialize",function(..., universe = NULL){
       private$.class <- class[!(class %in% "list")]
     else
       private$.class <- "multiple"
+
+    if(private$.class == "multiple")
+      elements = dots
+    else
+      elements = unlist(dots)
+
+    if(testTuple(self) | testFuzzyTuple(self))
+      private$.elements <- elements
+    else
+      private$.elements <- elements[!duplicated(lapply(elements, function(x){
+        y = try(x$strprint(), silent = TRUE)
+        if(inherits(y, "try-error"))
+          return(x)
+        else
+          return(y)
+      }))]
 
     if(private$.class %in% c("numeric", "integer")){
       private$.lower <- min(unlist(dots))

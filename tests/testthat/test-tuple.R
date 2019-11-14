@@ -16,7 +16,6 @@ test_that("construction",{
 
 test_that("inherited_methods",{
   expect_equal(Tuple$new(1,2)$type,"()")
-  expect_equal(Tuple$new(1,2)$dimension,1)
   expect_equal(Tuple$new(1,2)$max,2)
   expect_equal(Tuple$new(1,2)$min,1)
   expect_equal(Tuple$new(1,2)$upper,2)
@@ -43,8 +42,8 @@ test_that("equals",{
   expect_false(Tuple$new(1,2,3)$equals(Tuple$new(2,1,3)))
 })
 
-test_that("powerSet",{
-  expect_equal(Tuple$new(1,2)$powerSet(),Set$new(Tuple$new(),Tuple$new(1),Tuple$new(2),
+test_that("powerset",{
+  expect_equal(Tuple$new(1,2)$powerset(),Set$new(Tuple$new(),Tuple$new(1),Tuple$new(2),
                                                  Tuple$new(1,2)))
 })
 

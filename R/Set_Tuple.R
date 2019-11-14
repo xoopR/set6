@@ -57,7 +57,7 @@ Tuple$set("public","equals",function(x){
     return(FALSE)
 })
 
-Tuple$set("public","powerSet",function(){
+Tuple$set("public","powerset",function(){
   elements <- self$elements
   y = Vectorize(function(m) combn(elements, m),vectorize.args = c("m"))(1:(self$length-1))
   return(Set$new(Tuple$new(), unlist(lapply(y, as.Tuple)), self))

@@ -27,8 +27,8 @@ test_that("makeChecks",{
 })
 
 test_that("getR6Class",{
-  expect_equal(getR6Class(Empty$new()),"Empty")
-  expect_equal(getR6Class(Empty$new(), classname = F),Empty)
+  expect_equal(getR6Class(Set$new()),"Set")
+  expect_equal(getR6Class(Set$new(), classname = F),Set)
 })
 
 test_that("stopwarn",{

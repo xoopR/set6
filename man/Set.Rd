@@ -31,7 +31,7 @@ but \link{Tuple}s can be used if this is required.
 }
 
 \section{Constructor Details}{
- Sets are constructed by elements of any types (including R6 classes). The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+ Sets are constructed by elements of any types (including R6 classes), excluding lists. \code{Set}s should be used within \code{Set}s instead of lists. The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
 }
 
 \section{Public Fields}{

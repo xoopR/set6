@@ -16,7 +16,6 @@ test_that("construction",{
 
 test_that("inherited_methods",{
   expect_equal(FuzzySet$new(1,0.3)$type,"{}")
-  expect_equal(FuzzySet$new(1,0.3)$dimension,1)
   expect_equal(FuzzySet$new(1,0.4,2,0.9)$max,2)
   expect_equal(FuzzySet$new(1,0.2,2,0.8)$min,1)
   expect_equal(FuzzySet$new(1,0.2,2,0.1)$upper,2)
@@ -49,15 +48,15 @@ test_that("alphaCut",{
   expect_equal(f$alphaCut(0.2, strong = FALSE), 2:3)
   expect_equal(f$alphaCut(0.2, strong = TRUE), 3)
 })
-test_that("upperport",{
+test_that("support",{
   expect_equal(f$support(), 1:3)
   expect_equal(FuzzySet$new(1,0.2,3,0.1,2,0)$support(), c(1,3))
   expect_null(FuzzySet$new()$support())
-  expect_equal(FuzzySet$new()$support(T),Empty$new())
+  expect_equal(FuzzySet$new()$support(T),Set$new())
 })
 test_that("core",{
   expect_null(f$core())
-  expect_equal(f$core(T), Empty$new())
+  expect_equal(f$core(T), Set$new())
   expect_equal(FuzzySet$new(1,1,2,0.3,3,1,4.2,0.1)$core(), c(1,3))
 })
 test_that("inclusion",{
@@ -74,8 +73,8 @@ test_that("equals",{
 test_that("complement",{
   expect_equal(FuzzySet$new(1,0.1,2,0.8)$complement(),FuzzySet$new(1,0.9,2,0.2))
 })
-test_that("powerSet",{
-  expect_equal(FuzzySet$new(1,0.1,2,0.2)$powerSet(), Set$new(Set$new(), FuzzySet$new(1,0.1),FuzzySet$new(2,0.2),
+test_that("powerset",{
+  expect_equal(FuzzySet$new(1,0.1,2,0.2)$powerset(), Set$new(Set$new(), FuzzySet$new(1,0.1),FuzzySet$new(2,0.2),
                                                   FuzzySet$new(1,0.1,2,0.2)))
 })
 
