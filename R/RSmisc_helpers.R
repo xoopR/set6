@@ -39,14 +39,6 @@ makeChecks <- function(assertionName, cond, errormsg, args = alist(object=,error
          pos = pos)
 }
 
-#' @title Gets Class of an R6 Object
-#' @description Returns the classname for a given R6 object with options to get the classname
-#' of parent classes.
-#' @param object R6 Object
-#' @param classname logical; if TRUE (default) returns classname otherwise the class
-#' @param n.par numeric; if greater than 0 returns the n.parth parent class/classname
-#' @param pos position
-#' @export
 getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1){
   if(classname)
     return(get(class(object)[[n.par+1]], pos = pos)$classname)

@@ -1,3 +1,49 @@
+url: https://raphaels1.github.io/set6
+
 template:
   params:
     bootswatch: spacelab
+
+reference:
+  - title: "Sets"
+    desc: "R6 classes inheriting from Set"
+    contents:
+      - Set
+      - Tuple
+      - Interval
+      - FuzzySet
+      - FuzzyTuple
+      - ConditionalSet
+  - title: "Special Sets"
+    desc: "R6 classes inheriting from SpecialSet"
+    contents:
+      - SpecialSet
+      - Naturals
+      - PosNaturals
+      - Integers
+      - PosIntegers
+      - NegIntegers
+      - Rationals
+      - PosRationals
+      - NegRationals
+      - Reals
+      - PosReals
+      - NegReals
+      - ExtendedReals
+      - Complex
+      - listSpecialSets
+   - title: "Set Operations"
+     desc: "Classes and operators for combining sets"
+      - UnionSet
+      - union
+      - ProductSet
+      - product
+      - ExponentSet
+      - power
+      - DifferenceSet
+      - setdiff
+      - intersection
+  - title: "Assertions"
+    desc: "Validation checks for Sets"
+    contents:
+      - starts_with("test")

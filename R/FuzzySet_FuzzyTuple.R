@@ -6,12 +6,11 @@
 #' @description A general FuzzyTuple object for mathematical fuzzy tuples, inheriting from `FuzzySet`.
 #' @return R6 object of class FuzzyTuple inheriting from [FuzzySet].
 #' @template Set
-#' @templateVar constructor FuzzyTuple$new(..., elements = NULL, membership = rep(1, length(elements)), universe = NULL)
+#' @templateVar constructor FuzzyTuple$new(..., elements = NULL, membership = rep(1, length(elements)))
 #' @templateVar arg1 `...` \tab ANY \tab Alternating elements and membership, see constructor details. \cr
 #' @templateVar arg2 `elements` \tab ANY \tab Elements in the set, see constructor details. \cr
 #' @templateVar arg3 `membership` \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
-#' @templateVar arg4 `universe` \tab Set \tab Optional universe that the interval lives in.
-#' @templateVar constructorDets `FuzzyTuple`s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to `elements` and a list of respective memberships to `membership`, see examples. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar constructorDets `FuzzyTuple`s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to `elements` and a list of respective memberships to `membership`, see examples.
 #' @templateVar meth1 **Fuzzy Methods** \tab **Link** \cr
 #' @templateVar meth2 `membership(element = NULL)` \tab [membership] \cr
 #' @templateVar meth3 `alphaCut(alpha, strong = FALSE, create = FALSE)` \tab [alphaCut] \cr
