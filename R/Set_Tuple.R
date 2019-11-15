@@ -51,10 +51,18 @@ Tuple$set("public","equals",function(x){
   if(x$length != self$length)
     return(FALSE)
 
-  if(suppressWarnings(all(x$elements == self$elements)))
-    return(TRUE)
-  else
-    return(FALSE)
+  if(class(x$elements) == "list" | class(self$elements) == "list"){
+    ret = TRUE
+    for(i in 1:length(x)){
+      if(x$elements[[i]] != self$elements[[i]]){
+        ret = FALSE
+        break()
+      }
+    }
+  } else
+    ret = suppressWarnings(all(x$elements == self$elements))
+
+  return(ret)
 })
 
 Tuple$set("public","powerset",function(){

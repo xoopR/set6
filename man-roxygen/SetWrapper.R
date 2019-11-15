@@ -1,6 +1,6 @@
 #' @name <%=(class)%>
 #' @title Set of <%= toproper(operation)%>s
-#' @description UnionSet class for symbolic union of mathematical sets.
+#' @description <%=(class)%> class for symbolic <%=(operation)%> of mathematical sets.
 #' @section Constructor: `<%=constructor%>`
 #' @section Constructor Arguments:
 #' \tabular{lll}{

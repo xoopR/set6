@@ -8,8 +8,8 @@
 NULL
 UnionSet <- R6::R6Class("UnionSet", inherit = SetWrapper)
 UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
-  if(is.null(lower)) lower = min(sapply(setlist, function(x) x$lower))
-  if(is.null(upper)) upper = max(sapply(setlist, function(x) x$upper))
+  if(is.null(lower)) lower = min(unlist(sapply(setlist, function(x) x$lower)))
+  if(is.null(upper)) upper = max(unlist(sapply(setlist, function(x) x$upper)))
   if(is.null(type)) type = "{}"
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
@@ -23,6 +23,12 @@ UnionSet$set("active","elements",function(){
   else
     return(els)
 })
+UnionSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+  apply(do.call(rbind,
+                lapply(self$wrappedSets, function(y) y$liesInSet(x, all = all, bound = bound))),
+        2, any)
+})
+
 
 #' @name union
 #' @param x,y Set
@@ -84,7 +90,7 @@ union <- function(x, y){
 #' @rdname union
 #' @export
 union.PosReals <- function(x, y){
-  if(class(y) == "NegReals")
+  if(getR6Class(y) == "NegReals")
     return(Reals$new())
   else
     return(union.Interval(x, y))
@@ -92,7 +98,7 @@ union.PosReals <- function(x, y){
 #' @rdname union
 #' @export
 union.NegReals <- function(x, y){
-  if(class(y) == "PosReals")
+  if(getR6Class(y) == "PosReals")
     return(Reals$new())
   else
     return(union.Interval(x, y))
@@ -100,7 +106,7 @@ union.NegReals <- function(x, y){
 #' @rdname union
 #' @export
 union.PosRationals <- function(x, y){
-  if(class(y) == "NegRationals")
+  if(getR6Class(y) == "NegRationals")
     return(Rationals$new())
   else
     return(union.Interval(x, y))
@@ -108,7 +114,7 @@ union.PosRationals <- function(x, y){
 #' @rdname union
 #' @export
 union.NegRationals <- function(x, y){
-  if(class(y) == "PosRationals")
+  if(getR6Class(y) == "PosRationals")
     return(Rationals$new())
   else
     return(union.Interval(x, y))
@@ -116,7 +122,7 @@ union.NegRationals <- function(x, y){
 #' @rdname union
 #' @export
 union.PosIntegers <- function(x, y){
-  if(class(y) == "NegIntegers")
+  if(getR6Class(y) == "NegIntegers")
     return(Integers$new())
   else
     return(union.Interval(x, y))
@@ -124,7 +130,7 @@ union.PosIntegers <- function(x, y){
 #' @rdname union
 #' @export
 union.NegIntegers <- function(x, y){
-  if(class(y) == "PosIntegers")
+  if(getR6Class(y) == "PosIntegers")
     return(Integers$new())
   else
     return(union.Interval(x, y))
@@ -151,7 +157,7 @@ union.Set <- function(x, y){
   } else if (inherits(y, "ConditionalSet")) {
     message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
     return(Set$new())
-  } else if (inherits(y, "Tuple"))
+  } else if (inherits(x, "Tuple"))
     return(Tuple$new(x$elements, y$elements))
   else
     return(Set$new(x$elements, y$elements))

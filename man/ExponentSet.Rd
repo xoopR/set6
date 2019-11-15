@@ -2,15 +2,15 @@
 % Please edit documentation in R/SetWrapper_ExponentSet.R
 \name{ExponentSet}
 \alias{ExponentSet}
-\title{Set of Exponents}
+\title{Set of Exponentiations}
 \value{
 R6 object of class ExponentSet, inheriting from SetWrapper.
 }
 \description{
-UnionSet class for symbolic union of mathematical sets.
+ExponentSet class for symbolic exponentiation of mathematical sets.
 }
 \details{
-The purpose of this class is to provide a symbolic representation for the exponent of sets that
+The purpose of this class is to provide a symbolic representation for the exponentiation of sets that
 cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct this class directly but via
 the set operation methods: \link{union}, \link{product}, \link{power}, \link{setdiff}.
 }

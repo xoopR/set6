@@ -36,29 +36,3 @@ SetWrapper$set("public", "equals", function(x){
       return(FALSE)
   }
 })
-SetWrapper$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
-  if(testSet(x))
-    x <- list(x)
-  else if(!testSetList(x))
-    stop(sprintf("%s is not a Set or a list of Sets", substitute(x)))
-
-  ret <- unlist(lapply(x, function(y){
-    if(y$length != self$dimension)
-      stop(paste("Set should be of dimension",self$dimension))
-    ret <- numeric(self$dimension)
-    for(i in 1:self$dimension){
-      ret[[i]] <- self$wrappedSets[[i]]$liesInSet(y$elements[[i]], bound = bound) |
-        self$wrappedSets[[i]]$liesInSet(y$elements[[i]], bound = bound)
-    }
-
-    if(all(as.logical(ret)))
-      return(TRUE)
-    else
-      return(FALSE)
-  }))
-
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
-})

@@ -1,5 +1,5 @@
 #' @template SetWrapper
-#' @templateVar operation setdiff
+#' @templateVar operation difference
 #' @templateVar class DifferenceSet
 #' @templateVar constructor DifferenceSet$new(addlist, subtractlist, lower = NULL, upper = NULL, type = NULL)
 #' @templateVar arg1 `addlist` \tab list \tab Sets to add. \cr
@@ -25,13 +25,27 @@ DifferenceSet$set("public","strprint",function(n = 2){
  subtract = paste(lapply(self$subtractedSets, function(x) x$strprint(n)), collapse = " \u222A ")
  paste("{", add, subtract, "}", sep = " \ ")
 })
+DifferenceSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+  add = apply(do.call(rbind,
+                lapply(self$addedSets, function(y) y$liesInSet(x, all = all, bound = bound))),
+        2, any)
+  diff = apply(do.call(rbind,
+                      lapply(self$subtractedSets, function(y) y$liesInSet(x, all = all, bound = bound))),
+              2, any)
+
+  return(add & !diff)
+})
 DifferenceSet$set("active","elements",function(){
-  els = unique(unlist(sapply(self$wrappedSets, function(x) x$elements)))
-  if(any(is.nan(els)))
+  add_els = unlist(sapply(self$addedSets, function(x) x$elements))
+  if(any(is.nan(add_els)))
     return(NaN)
-  else
-    return(els)
-}) # to do
+
+  sub_els = unlist(sapply(self$subtractedSets, function(x) x$elements))
+  if(any(is.nan(sub_els)))
+    return(NaN)
+
+  add_els[!(add_els %in% sub_els)]
+})
 
 #' @name addedSets
 #' @rdname addedSets

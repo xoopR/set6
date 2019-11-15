@@ -7,7 +7,7 @@
 R6 object of class ProductSet, inheriting from SetWrapper.
 }
 \description{
-UnionSet class for symbolic union of mathematical sets.
+ProductSet class for symbolic product of mathematical sets.
 }
 \details{
 The purpose of this class is to provide a symbolic representation for the product of sets that

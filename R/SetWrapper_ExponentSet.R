@@ -1,5 +1,5 @@
 #' @template SetWrapper
-#' @templateVar operation exponent
+#' @templateVar operation exponentiation
 #' @templateVar class ExponentSet
 #' @templateVar constructor ExponentSet$new(setlist, lower = NULL, upper = NULL, type = NULL)
 #' @templateVar arg1 `setlist` \tab list \tab List of sets to wrap. \cr
