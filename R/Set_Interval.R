@@ -73,14 +73,20 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   private$.properties$bounded = ifelse(lower == -Inf | upper == Inf, FALSE, TRUE)
   if(private$.class == "numeric"){
     private$.properties$countability = "uncountable"
-    private$.properties$cardinality = "\u2136\u2081"
+    if(use_unicode())
+      private$.properties$cardinality = "\u2136\u2081"
+    else
+      private$.properties$cardinality = "Beth1"
   } else {
     if(private$.properties$bounded){
       private$.properties$countability = "countably finite"
       private$.properties$cardinality = self$length
     } else {
       private$.properties$countability = "countably infinite"
-      private$.properties$cardinality = "\u2135\u2080"
+      if(use_unicode())
+        private$.properties$cardinality = "\u2135\u2080"
+      else
+        private$.properties$cardinality = "Aleph0"
     }
   }
 
@@ -114,8 +120,8 @@ Interval$set("public","equals",function(x){
 })
 Interval$set("public","strprint",function(...){
 
-  inf <- ifelse(self$lower==-Inf, "-\u221E", self$lower)
-  sup <- ifelse(self$upper==Inf, "+\u221E", self$upper)
+  inf <- ifelse(self$lower==-Inf & use_unicode(), "-\u221E", self$lower)
+  sup <- ifelse(self$upper==Inf & use_unicode(), "+\u221E", self$upper)
 
   str <- paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2))
 

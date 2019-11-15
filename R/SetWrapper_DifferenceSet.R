@@ -1,67 +1,64 @@
 #' @template SetWrapper
 #' @templateVar operation difference
 #' @templateVar class DifferenceSet
-#' @templateVar constructor DifferenceSet$new(addlist, subtractlist, lower = NULL, upper = NULL, type = NULL)
-#' @templateVar arg1 `addlist` \tab list \tab Sets to add. \cr
-#' @templateVar arg2 `subtractlist` \tab list \tab Sets to subtract. \cr
-#' @templateVar field1 `addedSets` \tab [addedSets] \cr
-#' @templateVar field1 `subtractedSets` \tab [subtractedSets] \cr
+#' @templateVar constructor DifferenceSet$new(addset, subtractset, lower = NULL, upper = NULL, type = NULL)
+#' @templateVar arg1 `addset` \tab list \tab Sets to add. \cr
+#' @templateVar arg2 `subtractset` \tab list \tab Sets to subtract. \cr
+#' @templateVar field1 `addedSet` \tab [addedSet] \cr
+#' @templateVar field1 `subtractedSet` \tab [subtractedSet] \cr
 #'
 #' @export
 NULL
 DifferenceSet <- R6::R6Class("DifferenceSet", inherit = SetWrapper)
-DifferenceSet$set("public", "initialize", function(addlist, subtractlist, lower = NULL, upper = NULL, type = NULL){
+DifferenceSet$set("public", "initialize", function(addset, subtractset, lower = NULL, upper = NULL, type = NULL){
   if(is.null(lower)) lower = min(sapply(setlist, function(x) x$lower))
   if(is.null(upper)) upper = max(sapply(setlist, function(x) x$upper))
   if(is.null(type)) type = "{}"
-  private$.addedSets = addlist
-  private$.subtractedSets = subtractlist
-  super$initialize(setlist = c(addlist, subtractlist), lower = lower, upper = upper, type = type)
+  private$.addedSet = addset
+  private$.subtractedSet = subtractset
+  super$initialize(setlist = c(addset, subtractset), lower = lower, upper = upper, type = type)
 }) # to do
 DifferenceSet$set("public","strprint",function(n = 2){
- add = paste(lapply(self$addedSets, function(x) x$strprint(n)), collapse = " \u222A ")
- subtract = paste(lapply(self$subtractedSets, function(x) x$strprint(n)), collapse = " \u222A ")
- paste("{", add, subtract, "}", sep = " \\ ")
+ paste0("{", self$addedSet$strprint(n), " \\ ", self$subtractedSet$strprint(n), "}")
 })
 DifferenceSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
   add = apply(do.call(rbind,
-                lapply(self$addedSets, function(y) y$liesInSet(x, all = all, bound = bound))),
+                lapply(self$addedSet, function(y) y$liesInSet(x, all = all, bound = bound))),
         2, any)
   diff = apply(do.call(rbind,
-                      lapply(self$subtractedSets, function(y) y$liesInSet(x, all = all, bound = bound))),
+                      lapply(self$subtractedSet, function(y) y$liesInSet(x, all = all, bound = bound))),
               2, any)
 
   return(add & !diff)
 })
 DifferenceSet$set("active","elements",function(){
-  add_els = unlist(sapply(self$addedSets, function(x) x$elements))
+  add_els = unlist(sapply(self$addedSet, function(x) x$elements))
   if(any(is.nan(add_els)))
     return(NaN)
 
-  sub_els = unlist(sapply(self$subtractedSets, function(x) x$elements))
+  sub_els = unlist(sapply(self$subtractedSet, function(x) x$elements))
   if(any(is.nan(sub_els)))
     return(NaN)
 
   add_els[!(add_els %in% sub_els)]
 })
 
-#' @name addedSets
-#' @rdname addedSets
+#' @name addedSet
+#' @rdname addedSet
 #' @title Get Added Sets in Wrapper
-#' @description Gets the list of sets that are wrapped in the [DifferenceSet] wrapper, which are being
-#' subtracted from.
-#' @return List of `Set`s.
-#' @seealso [DifferenceSet], [subtractedSets]
-DifferenceSet$set("active","addedSets", function() return(private$.addedSets))
-#' @name subtractedSets
-#' @rdname subtractedSets
+#' @description For the `DifferenceSet` wrapper, `X-Y`, gets the set `X`.
+#' @return `Set`.
+#' @seealso [DifferenceSet], [subtractedSet]
+DifferenceSet$set("active","addedSet", function() return(private$.addedSet))
+#' @name subtractedSet
+#' @rdname subtractedSet
 #' @title Get Subtracted Sets in Wrapper
-#' @description Gets the list of sets that are subtracted from the added sets in the [DifferenceSet] wrapper.
-#' @return List of `Set`s.
-#' @seealso [DifferenceSet], [addedSets]
-DifferenceSet$set("active","subtractedSets",function() return(private$.subtractedSets))
-DifferenceSet$set("private",".addedSets",list())
-DifferenceSet$set("private",".subtractedSets",list())
+#' @description For the `DifferenceSet` wrapper, `X-Y`, gets the set `Y`.
+#' @return `Set`
+#' @seealso [DifferenceSet], [addedSet]
+DifferenceSet$set("active","subtractedSet",function() return(private$.subtractedSet))
+DifferenceSet$set("private",".addedSet",Set$new())
+DifferenceSet$set("private",".subtractedSet",Set$new())
 
 #' @name setdiff
 #' @param x,y Set
@@ -186,7 +183,7 @@ setdiff.Interval <- function(x, y){
       return(union(Interval$new(x$lower,y$lower,type=paste0(substr(x$type,1,1),")"),class = x$class),
                        Interval$new(y$upper,x$upper,type=paste0("(",substr(x$type,2,2)),class = x$class)))
   } else if (getR6Class(y) == "Set") # to do
-    return(DifferenceSet$new(list(x), list(y), lower = x$lower, upper = x$upper,
+    return(DifferenceSet$new(x, y, lower = x$lower, upper = x$upper,
                      type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
   else {
     message(sprintf("Difference of %s and %s is not compatible.", x$strprint(), y$strprint()))

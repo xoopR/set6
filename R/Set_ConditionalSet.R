@@ -116,9 +116,14 @@ ConditionalSet$set("public","equals",function(x){
   }
 })
 ConditionalSet$set("public","strprint",function(n = NULL){
+  if(use_unicode())
+    sep = " \u03B5 "
+  else
+    sep = " in "
+
   return(paste0("{",paste0(deparse(body(self$condition))," : ",
                            paste(names(self$class), sapply(self$class, function(x) x$strprint()),
-                                 sep = " \u03B5 ", collapse = ", "),"}")))
+                                 sep = sep, collapse = ", "),"}")))
 })
 ConditionalSet$set("public","summary",function(n = NULL){
   self$print()

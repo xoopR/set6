@@ -39,3 +39,5 @@ Collate:
     'assertions.R'
     'intersection.R'
     'listSpecialSets.R'
+    'use-unicode.R'
+    'zzz.R'

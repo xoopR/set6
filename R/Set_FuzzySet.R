@@ -80,9 +80,12 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
 })
 
 FuzzySet$set("public","strprint",function(n = 2){
-  if(self$properties$empty)
-    return("\u2205")
-  else{
+  if(self$properties$empty) {
+    if(use_unicode())
+      return("\u2205")
+    else
+      return("{}")
+  } else {
     elements <- sapply(self$elements, function(x){
       y = try(x$strprint(), silent = T)
       if(inherits(y,"try-error"))

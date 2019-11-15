@@ -14,7 +14,12 @@ UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NUL
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
 UnionSet$set("public","strprint",function(n = 2){
-  paste0("{",paste(lapply(c(self$wrappedSets, self$wrappedIntervals), function(x) x$strprint(n)), collapse = " \u222A "),"}")
+  if(use_unicode())
+    collapse = " \u222A "
+  else
+    collapse = " U "
+  paste0("{",paste(lapply(c(self$wrappedSets, self$wrappedIntervals), function(x) x$strprint(n)),
+                   collapse = collapse),"}")
 })
 UnionSet$set("active","elements",function(){
   els = unique(unlist(sapply(self$wrappedSets, function(x) x$elements)))

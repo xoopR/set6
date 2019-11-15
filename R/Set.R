@@ -126,9 +126,12 @@ Set$set("public","print",function(n = 2){
 #' Set$new(1:10)$strprint(n = 2)
 #' Set$new(1:10)$strprint()
 Set$set("public","strprint",function(n = 2){
-  if(self$properties$empty)
-    return("\u2205")
-  else{
+  if (self$properties$empty) {
+    if(use_unicode())
+      return("\u2205")
+    else
+      return("{}")
+  } else {
     type <- private$.type
     elements <- sapply(self$elements, function(x){
       y = try(x$strprint(), silent = T)

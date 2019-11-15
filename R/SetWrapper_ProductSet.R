@@ -18,10 +18,14 @@ ProductSet$set("active", "length", function(){
 })
 ProductSet$set("public","strprint",function(n = 2){
   str = lapply(self$wrappedSets, function(x) x$strprint(n))
+  if(use_unicode())
+    collapse = " \u00D7 "
+  else
+    collapse = " X "
   if(length(unique(str)) == 1)
     return(paste(unique(str), length(str), sep = "^"))
   else
-    return(paste0("{",paste(str, collapse = " \u00D7 "),"}"))
+    return(paste0("{",paste(str, collapse = collapse),"}"))
 })
 ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
 
