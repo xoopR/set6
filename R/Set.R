@@ -471,7 +471,7 @@ Set$set("active","length",function(){
 #---------------------------------------------
 # Private variables
 #---------------------------------------------
-Set$set("private",".class","ANY")
+Set$set("private",".class","multiple")
 Set$set("private",".type","{}")
 Set$set("private",".lower",numeric(0))
 Set$set("private",".upper",numeric(0))

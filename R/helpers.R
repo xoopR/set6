@@ -94,5 +94,5 @@ rlapply = function(X, FUN, ...){
 }
 rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE){
   FUN = as.character(substitute(FUN))
-  sapply(X, function(x) x[[FUN]](..., simplify = TRUE, USE.NAMES = TRUE))
+  sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES)
 }

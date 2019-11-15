@@ -52,3 +52,13 @@ test_that("modal",{
   expect_equal(modal(c(1,2,2,4,5,6,7,2,4,4,2,4,2)), 2)
   expect_equal(modal(c(1,2,2,4,5,6,7,2,4,4,2,4,2,4)), c(2,4))
 })
+
+test_that("toproper",{
+  expect_equal(toproper("PROPER CaSe"), "Proper Case")
+})
+
+test_that("rapply",{
+  expect_equal(rlapply(list(Set$new(1), Set$new(2)), strprint), list("{1}","{2}"))
+  expect_equal(rsapply(list(Set$new(1), Set$new(2)), strprint), c("{1}","{2}"))
+  expect_equal(rsapply(list(FuzzySet$new(1,0.1,2,0.2),FuzzySet$new(1,0.2,2,0.3)), membership, 1), c(0.1,0.2))
+})

@@ -14,16 +14,14 @@ DifferenceSet$set("public", "initialize", function(addlist, subtractlist, lower 
   if(is.null(lower)) lower = min(sapply(setlist, function(x) x$lower))
   if(is.null(upper)) upper = max(sapply(setlist, function(x) x$upper))
   if(is.null(type)) type = "{}"
-  if(is.null(dimension)) dimension = setlist[[1]]$dimension
   private$.addedSets = addlist
   private$.subtractedSets = subtractlist
-  super$initialize(setlist = c(addlist, subtractlist), lower = lower, upper = upper, type = type,
-                   dimension = dimension)
+  super$initialize(setlist = c(addlist, subtractlist), lower = lower, upper = upper, type = type)
 }) # to do
 DifferenceSet$set("public","strprint",function(n = 2){
  add = paste(lapply(self$addedSets, function(x) x$strprint(n)), collapse = " \u222A ")
  subtract = paste(lapply(self$subtractedSets, function(x) x$strprint(n)), collapse = " \u222A ")
- paste("{", add, subtract, "}", sep = " \ ")
+ paste("{", add, subtract, "}", sep = " \\ ")
 })
 DifferenceSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
   add = apply(do.call(rbind,
@@ -189,8 +187,7 @@ setdiff.Interval <- function(x, y){
                        Interval$new(y$upper,x$upper,type=paste0("(",substr(x$type,2,2)),class = x$class)))
   } else if (getR6Class(y) == "Set") # to do
     return(DifferenceSet$new(list(x), list(y), lower = x$lower, upper = x$upper,
-                     type = paste0(substr(x$type,1,1),substr(y$type,2,2)),
-                     dimension = x$dimension))
+                     type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
   else {
     message(sprintf("Difference of %s and %s is not compatible.", x$strprint(), y$strprint()))
     return(x)

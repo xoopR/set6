@@ -1,8 +1,5 @@
 setSymbol <- function(set){
-  x = try(class(set),silent = T)
-  if(inherits(x, "try-error"))
-    set = paste0(substitute(set))
-  else if(!inherits(set,"character"))
+ if(!inherits(set,"character"))
     set = paste0(substitute(set))
   set = tolower(set)
   return(switch(set,

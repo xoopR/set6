@@ -1,3 +1,5 @@
+#' @include helpers.R
+
 #' @template assertions_class
 #' @templateVar class Set
 #' @export

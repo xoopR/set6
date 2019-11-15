@@ -21,6 +21,8 @@ test_that("liesInSet",{
   expect_false(c$liesInSet(list(Set$new(0, 1), Set$new(-1, 1)), all = TRUE))
   expect_true(c$liesInSet(list(Set$new(2, -2), Set$new(-1, 1)), all = TRUE))
   expect_error(c$liesInSet(list(Set$new(1), Set$new(1,1))))
+  expect_true(ConditionalSet$new(function(x) x == 0)$liesInSet(0))
+  expect_false(ConditionalSet$new(function(x) x == 0)$liesInSet(1))
 })
 
 test_that("equals",{
@@ -33,6 +35,7 @@ test_that("equals",{
   expect_true(c1 == c3)
   expect_true(c1 != c4)
   expect_true(c1 != c5)
+  expect_false(c1 == Set$new())
 })
 
 test_that("strprint",{

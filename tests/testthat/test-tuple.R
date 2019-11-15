@@ -56,10 +56,14 @@ test_that("isSubset",{
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2)))
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2), proper = TRUE))
   expect_false(Tuple$new(1,2,3)$isSubset(Set$new(1,2,3)))
+  expect_false(Tuple$new(1)$isSubset(Tuple$new(1:2)))
+  expect_false(Tuple$new(1:2)$isSubset(Tuple$new(3:4)))
 })
 
 test_that("as.Tuple",{
   expect_equal(as.Tuple(c(1,2)), Tuple$new(1,2))
   expect_equal(as.Tuple(list(1,2)), Tuple$new(1,2))
   expect_equal(as.Tuple(matrix(c(1,2,3,4),nrow = 2)), list(Tuple$new(1,2),Tuple$new(3,4)))
+  expect_equal(as.Tuple(FuzzySet$new(1, 0.1, 2, 0.2)), Tuple$new(1, 2))
+  expect_equal(as.Tuple(Set$new(1:5)), Tuple$new(1:5))
 })

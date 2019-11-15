@@ -23,7 +23,6 @@ RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Collate: 
     'FuzzySet_FuzzyTuple.R'
-    'RSmisc_helpers.R'
     'Set.R'
     'SetWrapper.R'
     'SetWrapper_DifferenceSet.R'
@@ -36,6 +35,7 @@ Collate:
     'setSymbol.R'
     'Set_SpecialSet.R'
     'Set_Tuple.R'
+    'helpers.R'
     'assertions.R'
     'intersection.R'
     'listSpecialSets.R'

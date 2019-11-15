@@ -13,10 +13,12 @@ ExponentSet$set("public", "initialize", function(set, power){
   lower = Tuple$new(rep(set$lower, power))
   upper = Tuple$new(rep(set$upper, power))
   type = "{}"
-  private$.symbol = paste(set$strprint(), power, sep ="^")
   setlist = rep(list(set), power)
   private$.power = power
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
+})
+ExponentSet$set("public", "strprint", function(n = 2){
+  paste(self$wrappedSets[[1]]$strprint(n=n), self$power, sep = "^")
 })
 
 #' @name power

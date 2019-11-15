@@ -122,7 +122,7 @@ as.Tuple.matrix <- function(object){
 #' @rdname as.Tuple
 #' @export
 as.Tuple.FuzzySet <- function(object){
-  return(Tuple$new(object$support))
+  return(Tuple$new(object$support()))
 }
 #' @rdname as.Tuple
 #' @export

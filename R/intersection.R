@@ -102,7 +102,7 @@ intersection.Interval <- function(x, y){
 #' @export
 intersection.ConditionalSet <- function(x, y){
   if(!inherits(y, "ConditionalSet"))
-    return(Set$new())
+    return(Set$new(y$elements[x$liesInSet(sapply(y$elements, as.Set))]))
   else {
     if(x$equals(y))
       return(x)

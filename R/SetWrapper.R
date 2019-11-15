@@ -1,6 +1,6 @@
 SetWrapper <- R6::R6Class("SetWrapper", inherit = Set, lock_objects = FALSE)
 SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NULL, type = NULL,
-                                              dimension = NULL, symbol = NULL, class = NULL){
+                                              class = NULL){
   if(getR6Class(self) == "SetWrapper")
     stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
@@ -11,9 +11,15 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
   if(!is.null(lower)) private$.lower <- lower
   if(!is.null(upper)) private$.upper <- upper
   if(!is.null(type)) private$.type <- type
-  if(!is.null(class)) private$.class <- class
-  if(!is.null(symbol)) private$.symbol <- symbol
-  if(!is.null(dimension)) private$.dimension <- dimension
+  if(!is.null(class))
+    private$.class <- class
+  else{
+    class = sapply(setlist, function(x) x$class)
+    if(length(unique(class)) == 1)
+      private$.class <- unique(class)
+    else
+      private$.class <- "multiple"
+  }
 })
 
 #' @name wrappedSets
@@ -25,14 +31,20 @@ SetWrapper$set("active", "wrappedSets", function(){
   return(private$.wrappedSets)
 })
 SetWrapper$set("private", ".wrappedSets", list())
-SetWrapper$set("private", ".symbol", character(0))
 SetWrapper$set("public", "equals", function(x){
   if(getR6Class(x) != getR6Class(self))
     return(FALSE)
-  else{
-    if(all(sapply(self$active, getR6Class) == sapply(x$active, getR6Class)))
-      return(TRUE)
-    else
-      return(FALSE)
+
+  if(length(self$wrappedSets) != length(x$wrappedSets))
+    return(FALSE)
+
+  ret = TRUE
+  for(i in 1:length(self$wrappedSets)){
+    if(self$wrappedSets[[i]] != x$wrappedSets[[i]]){
+      ret = FALSE
+      break()
+    }
   }
+
+  return(ret)
 })

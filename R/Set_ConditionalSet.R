@@ -92,14 +92,16 @@ ConditionalSet$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
     return(ret)
 })
 ConditionalSet$set("public","equals",function(x){
+  if(!testConditionalSet(x))
+    return(FALSE)
+
   if(all(names(formals(x$condition)) == names(formals(self$condition))) &
      all(body(x$condition) == body(self$condition)) &
      all(unlist(lapply(x$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
     return(TRUE)
 
-  if(!testConditionalSet(x))
-    return(FALSE)
-  else if(!all(rsapply(self$class, strprint) == rsapply(x$class, strprint)))
+
+  if(!all(rsapply(self$class, strprint) == rsapply(x$class, strprint)))
     return(FALSE)
   else{
     xcond = body(x$condition)
