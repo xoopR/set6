@@ -81,7 +81,7 @@ intersection.Set <- function(x, y){
   if (inherits(y, "ConditionalSet"))
     return(Set$new())
   else
-    return(Set$new(x$elements[y$liesInSet(x$elements)]))
+    return(Set$new(x$elements[y$contains(x$elements)]))
 }
 #' @rdname intersection
 #' @export
@@ -96,13 +96,13 @@ intersection.Interval <- function(x, y){
       return(Interval$new(x$lower, y$upper,
                           type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
   } else
-    return(Set$new(y$elements[x$liesInSet(y$elements)]))
+    return(Set$new(y$elements[x$contains(y$elements)]))
 }
 #' @rdname intersection
 #' @export
 intersection.ConditionalSet <- function(x, y){
   if(!inherits(y, "ConditionalSet"))
-    return(Set$new(y$elements[x$liesInSet(sapply(y$elements, as.Set))]))
+    return(Set$new(y$elements[x$contains(sapply(y$elements, as.Set))]))
   else {
     if(x$equals(y))
       return(x)

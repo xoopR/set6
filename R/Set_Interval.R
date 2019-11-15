@@ -32,8 +32,8 @@
 #'
 #' # Half-open interval
 #' i = Interval$new(1, 10, "(]")
-#' i$liesInSet(c(1, 10))
-#' i$liesInSet(c(1, 10), bound = TRUE)
+#' i$contains(c(1, 10))
+#' i$contains(c(1, 10), bound = TRUE)
 #'
 #' # Equivalent Set and Interval
 #' Set$new(1:5) == Interval$new(1,5,class="integer")
@@ -127,7 +127,7 @@ Interval$set("public","strprint",function(...){
 
   return(str)
 })
-Interval$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
   if(testSet(x))
     x <- x$elements
 
@@ -170,7 +170,7 @@ Interval$set("public", "isSubset", function(x, proper = FALSE){
       return(FALSE)
     else{
       if(testMessage(as.Set(self))){
-        if(self$liesInSet(x, all = TRUE, bound = FALSE))
+        if(self$contains(x, all = TRUE, bound = FALSE))
           return(TRUE)
         else
           return(FALSE)

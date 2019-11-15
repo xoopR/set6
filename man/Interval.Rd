@@ -60,7 +60,7 @@ integer intervals over a continuous range.
 \tabular{ll}{
 
 \strong{Comparison Methods} \tab \strong{Link} \cr
-\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
 \code{equals(x)} \tab \link{equals} \cr
 \code{isSubset(x)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr
@@ -84,8 +84,8 @@ Interval$new(class = "integer")
 
 # Half-open interval
 i = Interval$new(1, 10, "(]")
-i$liesInSet(c(1, 10))
-i$liesInSet(c(1, 10), bound = TRUE)
+i$contains(c(1, 10))
+i$contains(c(1, 10), bound = TRUE)
 
 # Equivalent Set and Interval
 Set$new(1:5) == Interval$new(1,5,class="integer")

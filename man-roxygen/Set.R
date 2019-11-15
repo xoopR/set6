@@ -56,7 +56,7 @@
 #'   <%= if(exists("meth9")) meth9%>
 #'   <%= if(exists("meth10")) meth10%>
 #' **Comparison Methods** \tab **Link** \cr
-#' `liesInSet(x, all = FALSE, bound = NULL)` \tab [liesInSet] \cr
+#' `contains(x, all = FALSE, bound = NULL)` \tab [contains] \cr
 #' `equals(x)` \tab [equals] \cr
 #' `isSubset(x)` \tab [isSubset] \cr
 #' \tab \cr \tab \cr \tab \cr

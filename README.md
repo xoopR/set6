@@ -79,14 +79,14 @@ Set$new(1:5) - Set$new(2:3)
 
 ### Containedness and Comparators
 ```R
-Interval$new(1, 10)$liesInSet(5)
+Interval$new(1, 10)$contains(5)
 # check multiple elements
-Interval$new(1, 10)$liesInSet(8:12)
+Interval$new(1, 10)$contains(8:12)
 # only return TRUE if all are TRUE
-Interval$new(1, 10)$liesInSet(8:12, all = TRUE)
+Interval$new(1, 10)$contains(8:12, all = TRUE)
 # decide whether open bounds should be included
-Interval$new(1, 10, type = "()")$liesInSet(10, bound = TRUE)
-Interval$new(1, 10, type = "()")$liesInSet(10, bound = TRUE)
+Interval$new(1, 10, type = "()")$contains(10, bound = TRUE)
+Interval$new(1, 10, type = "()")$contains(10, bound = TRUE)
 
 Interval$new(1, 5, class = "numeric")$equals(Set$new(1:5))
 Interval$new(1, 5, class = "integer")$equals(Set$new(1:5))
@@ -103,7 +103,7 @@ Set$new(1:3) <= Set$new(1:3)
 
 # multi-dimensional checks
 x = PosReals$new()^2
-x$liesInSet(list(Tuple$new(1, 1), Tuple$new(-2, 3))
+x$contains(list(Tuple$new(1, 1), Tuple$new(-2, 3))
 ```
 
 ## Usage
@@ -111,7 +111,7 @@ x$liesInSet(list(Tuple$new(1, 1), Tuple$new(-2, 3))
 The primary use-cases of `set6` are:
 
 1. **Upgrading sets** Extend the R `sets` package to R6, which allows for generalised `Set` objects with a clear inheritance structure. As well as adding features including symbolic representation of infinite sets, and cartesian products.
-2. **Defining parameter interfaces** All objects inheriting from the `Set` parent class include methods `equals` and `liesInSet`, which are used to check if two sets are equal or if elements lie in the given set. This makes `set6` ideal for parameter interfaces in which a range of values (possibly multi-dimensional or of mixed types) need to be defined.
+2. **Defining parameter interfaces** All objects inheriting from the `Set` parent class include methods `equals` and `contains`, which are used to check if two sets are equal or if elements lie in the given set. This makes `set6` ideal for parameter interfaces in which a range of values (possibly multi-dimensional or of mixed types) need to be defined.
 
 ## Installation
 

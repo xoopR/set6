@@ -42,8 +42,8 @@ ExponentSet$set("public", "strprint", function(n = 2){
 #' Interval$new(2, 5)^5
 #' Reals$new()^3
 #'
-#' # Use tuples for liesInSet
-#' (PosNaturals$new()^3)$liesInSet(Tuple$new(1, 2, 3))
+#' # Use tuples for contains
+#' (PosNaturals$new()^3)$contains(Tuple$new(1, 2, 3))
 #'
 #' # Power of ConditionalSet is meaningless
 #' ConditionalSet$new(function(x) TRUE)^2

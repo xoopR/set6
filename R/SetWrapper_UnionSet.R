@@ -28,9 +28,9 @@ UnionSet$set("active","elements",function(){
   else
     return(els)
 })
-UnionSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+UnionSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
   apply(do.call(rbind,
-                lapply(self$wrappedSets, function(y) y$liesInSet(x, all = all, bound = bound))),
+                lapply(self$wrappedSets, function(y) y$contains(x, all = all, bound = bound))),
         2, any)
 })
 

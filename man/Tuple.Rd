@@ -11,7 +11,7 @@ A general Tuple object for mathematical tuples, inheriting from \code{Set}.
 }
 \details{
 Tuples are similar to sets, except that they drop the constraint for elements to be unique, and
-ordering in a tuple does matter. Tuples are useful for methods including \link{liesInSet} that may
+ordering in a tuple does matter. Tuples are useful for methods including \link{contains} that may
 require non-unique elements. They are also the return type of the product of sets. See examples.
 }
 \section{Constructor}{
@@ -57,7 +57,7 @@ require non-unique elements. They are also the return type of the product of set
 \tabular{ll}{
 
 \strong{Comparison Methods} \tab \strong{Link} \cr
-\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
 \code{equals(x)} \tab \link{equals} \cr
 \code{isSubset(x)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr

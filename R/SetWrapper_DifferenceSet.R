@@ -21,12 +21,12 @@ DifferenceSet$set("public", "initialize", function(addset, subtractset, lower = 
 DifferenceSet$set("public","strprint",function(n = 2){
  paste0("{", self$addedSet$strprint(n), " \\ ", self$subtractedSet$strprint(n), "}")
 })
-DifferenceSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+DifferenceSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
   add = apply(do.call(rbind,
-                lapply(self$addedSet, function(y) y$liesInSet(x, all = all, bound = bound))),
+                lapply(self$addedSet, function(y) y$contains(x, all = all, bound = bound))),
         2, any)
   diff = apply(do.call(rbind,
-                      lapply(self$subtractedSet, function(y) y$liesInSet(x, all = all, bound = bound))),
+                      lapply(self$subtractedSet, function(y) y$contains(x, all = all, bound = bound))),
               2, any)
 
   return(add & !diff)
@@ -133,9 +133,9 @@ setdiff.Set <- function(x, y){
   # difference of set and interval
   } else if(testInterval(y)){
     if(testTuple(x))
-      return(Tuple$new(x$elements[!y$liesInSet(x$elements)]))
+      return(Tuple$new(x$elements[!y$contains(x$elements)]))
     else
-      return(Set$new(x$elements[!y$liesInSet(x$elements)]))
+      return(Set$new(x$elements[!y$contains(x$elements)]))
   # otherwise incompatible
   } else {
     message(sprintf("Difference of %s and %s is not compatible.", x$strprint(), y$strprint()))

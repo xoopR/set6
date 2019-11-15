@@ -31,8 +31,8 @@ test_that("inherited_methods",{
   expect_equal(FuzzySet$new(1,0.2,"a",0.3)$range,numeric(0))
   expect_equal(FuzzySet$new(1,0.1,2,0.3,3,0.9)$elements,1:3)
   expect_equal(FuzzySet$new(1,0.1,2,0.3,3,0.9)$length,3)
-  expect_true(FuzzySet$new(1,0.1,2,0.3,3,0.9)$liesInSet(1))
-  expect_false(FuzzySet$new(1,0.1,2,0.3,3,0.9)$liesInSet(5))
+  expect_true(FuzzySet$new(1,0.1,2,0.3,3,0.9)$contains(1))
+  expect_false(FuzzySet$new(1,0.1,2,0.3,3,0.9)$contains(5))
 })
 f <- FuzzySet$new(elements = c(1,2,3), membership = c(0.1,0.2,0.3))
 test_that("membership",{

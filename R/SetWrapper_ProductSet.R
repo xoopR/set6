@@ -27,7 +27,7 @@ ProductSet$set("public","strprint",function(n = 2){
   else
     return(paste0("{",paste(str, collapse = collapse),"}"))
 })
-ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
+ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
 
   if(!testSetList(x))
     x = list(x)
@@ -37,7 +37,7 @@ ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
   rets[rets] = sapply(x[rets], function(el){
     ret = TRUE
     for (i in 1:el$length){
-      if (!self$wrappedSets[[i]]$liesInSet(el$elements[i], bound = bound)){
+      if (!self$wrappedSets[[i]]$contains(el$elements[i], bound = bound)){
         ret = FALSE
         break()
       }

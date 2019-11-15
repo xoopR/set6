@@ -35,12 +35,12 @@ test_that("conditional",{
                ConditionalSet$new(function(x, y) x == 0 & !(y > 0)))
 })
 
-test_that("liesInSet",{
+test_that("contains",{
   x = Interval$new(1,8) - Interval$new(5, 15, type = "()")
-  expect_false(x$liesInSet(0))
-  expect_true(x$liesInSet(1))
-  expect_false(x$liesInSet(6))
-  expect_false(x$liesInSet(9))
-  expect_false(x$liesInSet(16))
-  expect_equal(x$liesInSet(c(0,1,6,9,16)), c(FALSE, TRUE, FALSE, FALSE, FALSE))
+  expect_false(x$contains(0))
+  expect_true(x$contains(1))
+  expect_false(x$contains(6))
+  expect_false(x$contains(9))
+  expect_false(x$contains(16))
+  expect_equal(x$contains(c(0,1,6,9,16)), c(FALSE, TRUE, FALSE, FALSE, FALSE))
 })

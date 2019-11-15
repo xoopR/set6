@@ -163,39 +163,39 @@ Set$set("public","summary",function(n = 2){
 #---------------------------------------------
 # Public methods - Comparison
 #---------------------------------------------
-#' @name liesInSet
-#' @rdname liesInSet
-#' @title Do Elements Lie Within the Set?
+#' @name contains
+#' @rdname contains
+#' @title Are Elements Contained in the Set?
 #' @param x Set
 #' @param x numeric or Set
-#' @param all logical. If \code{TRUE} returns \code{TRUE} if all \code{x} lie in the Set, otherwise
+#' @param all logical. If \code{TRUE} returns \code{TRUE} if all \code{x} are contained in the Set, otherwise
 #' returns a vector of logicals
 #' @param bound logical. If \code{TRUE} then returns \code{TRUE} for elements of \code{x} if they are
 #' in or on the boundaries of the Set.
-#' @description Tests to see if \code{x}, lie(s) in the Set.
+#' @description Tests to see if \code{x} is contained in the Set.
 #' @details \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
 #' checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
 #' at the same time, then provide these as a list.
-#' @return If \code{all} is TRUE then returns TRUE if all elements of \code{x} lie in the Set, otherwise
+#' @return If \code{all} is TRUE then returns TRUE if all elements of \code{x} are contained in the Set, otherwise
 #' FALSE. If \code{all} is FALSE then returns a vector of logicals corresponding to each individual
 #' element of \code{x}.
-#' @section R6 Usage: $liesInSet(x, all = FALSE, bound = NULL)
+#' @section R6 Usage: $contains(x, all = FALSE, bound = NULL)
 #' @examples
 #' s = Set$new(1:5)
 #'
 #' # Simplest case
-#' s$liesInSet(4)
-#' s$liesInSet(8)
+#' s$contains(4)
+#' s$contains(8)
 #'
 #' # Test if multiple elements lie in the set
-#' s$liesInSet(4:6, all = FALSE)
-#' s$liesInSet(4:6, all = TRUE)
+#' s$contains(4:6, all = FALSE)
+#' s$contains(4:6, all = TRUE)
 #'
 #' # Check if a tuple lies in a Set of higher dimension
 #' s2 = s * s
-#' s2$liesInSet(Tuple$new(2,1))
-#' s2$liesInSet(list(Tuple$new(2,1), Tuple$new(1,7)))
-Set$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
+#' s2$contains(Tuple$new(2,1))
+#' s2$contains(list(Tuple$new(2,1), Tuple$new(1,7)))
+Set$set("public","contains",function(x, all = FALSE, bound = NULL){
   if(!checkmate::testList(x)){
     if(inherits(x, "R6"))
       x <- list(x)

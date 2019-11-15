@@ -14,7 +14,7 @@
 #'
 #' @details
 #' Tuples are similar to sets, except that they drop the constraint for elements to be unique, and
-#' ordering in a tuple does matter. Tuples are useful for methods including [liesInSet] that may
+#' ordering in a tuple does matter. Tuples are useful for methods including [contains] that may
 #' require non-unique elements. They are also the return type of the product of sets. See examples.
 #'
 #' @seealso

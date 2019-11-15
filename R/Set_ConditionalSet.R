@@ -20,22 +20,22 @@
 #' @examples
 #' # Set of positives
 #' s = ConditionalSet$new(function(x) x > 0)
-#' s$liesInSet(list(1,-1))
+#' s$contains(list(1,-1))
 #'
 #' # Set via equality
 #' s = ConditionalSet$new(function(x, y) x + y == 2)
-#' s$liesInSet(list(Set$new(2, 0), Set$new(0, 2)))
+#' s$contains(list(Set$new(2, 0), Set$new(0, 2)))
 #'
-#' # Tuples are recommended when using liesInSet as they allow non-unique elements
+#' # Tuples are recommended when using contains as they allow non-unique elements
 #' s = ConditionalSet$new(function(x, y) x + y == 4)
 #' \dontrun{
-#' s$liesInSet(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
+#' s$contains(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
 #' }
-#' s$liesInSet(Tuple$new(2, 2))
+#' s$contains(Tuple$new(2, 2))
 #'
 #' # Set of Positive Naturals
 #' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
-#' s$liesInSet(list(-2, 2))
+#' s$contains(list(-2, 2))
 #'
 #' @export
 NULL
@@ -70,7 +70,7 @@ ConditionalSet$set("public","initialize",function(condition, argclass = NULL){
 #---------------------------------------------
 # Public Methods
 #---------------------------------------------
-ConditionalSet$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
+ConditionalSet$set("public","contains",function(x, all = FALSE, bound = NULL){
   if(inherits(x, "Set"))
     x <- list(x)
   else if(inherits(x, "list")){
@@ -83,7 +83,7 @@ ConditionalSet$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
     if(length(els) != length(self$class))
       stop(sprintf("Set is of length %s, length %s expected.", length(els), length(self$class)))
     names(els) <- names(self$class)
-    do.call(self$condition, els) & all(mapply(function(x, y) x$liesInSet(y), self$class, els))
+    do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
   })
 
   if(all)

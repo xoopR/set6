@@ -50,13 +50,13 @@ test_that("length",{
   expect_equal(Set$new(Set$new(2), Interval$new(1,5))$length, 2)
 })
 
-test_that("liesInSet",{
+test_that("contains",{
   x <- Set$new(1,2,3)
   y <- c(2,3,4)
-  expect_equal(x$liesInSet(y, all = F), c(TRUE, TRUE, FALSE))
-  expect_false(x$liesInSet(y, all = T))
-  expect_true(x$liesInSet(c(2,3), all = T))
-  expect_true(Set$new(1,2,Set$new())$liesInSet(c(2,Set$new()), all = TRUE))
+  expect_equal(x$contains(y, all = F), c(TRUE, TRUE, FALSE))
+  expect_false(x$contains(y, all = T))
+  expect_true(x$contains(c(2,3), all = T))
+  expect_true(Set$new(1,2,Set$new())$contains(c(2,Set$new()), all = TRUE))
 })
 
 test_that("equals",{

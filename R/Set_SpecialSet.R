@@ -216,7 +216,7 @@ NegIntegers$set("public", "initialize", function(zero = FALSE){
 #' \deqn{Rationals = \{\frac{p}{q} | p,q \ \in \ Z\}}{Rationals = {p/q | p,q \epsilon Z}}
 #' where \eqn{Z} is the set of integers.
 #'
-#' The [liesInSet] method does not work for the set of Rationals as it is notoriously
+#' The [contains] method does not work for the set of Rationals as it is notoriously
 #' difficult/impossible to find an algorithm for determining if any given number is rational or not.
 #' Furthermore, computers must truncate all irrational numbers to rational numbers.
 #'
@@ -461,7 +461,7 @@ Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i){
                    countability = "uncountable",
                    cardinality = "Beth1", empty = FALSE)
 })
-Complex$set("public","liesInSet",function(x, all = FALSE, bound = NULL){
+Complex$set("public","contains",function(x, all = FALSE, bound = NULL){
   ret <- sapply(x, function(y) inherits(y, "complex"))
   if(all)
     return(all(ret))

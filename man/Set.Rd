@@ -59,7 +59,7 @@ but \link{Tuple}s can be used if this is required.
 \tabular{ll}{
 
 \strong{Comparison Methods} \tab \strong{Link} \cr
-\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
 \code{equals(x)} \tab \link{equals} \cr
 \code{isSubset(x)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr

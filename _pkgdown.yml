@@ -16,13 +16,13 @@ reference:
     - class
     - complement
     - condition
+    - contains
     - core
     - elements
     - equals
     - inclusion
     - isSubset
     - length
-    - liesInSet
     - lower
     - max
     - membership
@@ -77,3 +77,6 @@ reference:
   desc: S3 methods for coercing objects to Sets
   contents:
     - starts_with("as.")
+- title: Miscellaneous Functions
+  contents:
+    - use_unicode

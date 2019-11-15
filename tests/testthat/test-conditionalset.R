@@ -11,18 +11,18 @@ test_that("construction",{
   expect_error(ConditionalSet$new(function(x) TRUE, list(x = Reals)))
 })
 
-test_that("liesInSet",{
+test_that("contains",{
   c = ConditionalSet$new(function(x, y) x + y == 0)
-  expect_true(c$liesInSet(Set$new(2, -2)))
-  expect_true(c$liesInSet(Tuple$new(0, 0)))
-  expect_false(c$liesInSet(Set$new(1, 2)))
-  expect_error(c$liesInSet(Set$new(1)), "Set is of length")
-  expect_equal(c$liesInSet(list(Set$new(0, 1), Set$new(-1, 1))), c(FALSE, TRUE))
-  expect_false(c$liesInSet(list(Set$new(0, 1), Set$new(-1, 1)), all = TRUE))
-  expect_true(c$liesInSet(list(Set$new(2, -2), Set$new(-1, 1)), all = TRUE))
-  expect_error(c$liesInSet(list(Set$new(1), Set$new(1,1))))
-  expect_true(ConditionalSet$new(function(x) x == 0)$liesInSet(0))
-  expect_false(ConditionalSet$new(function(x) x == 0)$liesInSet(1))
+  expect_true(c$contains(Set$new(2, -2)))
+  expect_true(c$contains(Tuple$new(0, 0)))
+  expect_false(c$contains(Set$new(1, 2)))
+  expect_error(c$contains(Set$new(1)), "Set is of length")
+  expect_equal(c$contains(list(Set$new(0, 1), Set$new(-1, 1))), c(FALSE, TRUE))
+  expect_false(c$contains(list(Set$new(0, 1), Set$new(-1, 1)), all = TRUE))
+  expect_true(c$contains(list(Set$new(2, -2), Set$new(-1, 1)), all = TRUE))
+  expect_error(c$contains(list(Set$new(1), Set$new(1,1))))
+  expect_true(ConditionalSet$new(function(x) x == 0)$contains(0))
+  expect_false(ConditionalSet$new(function(x) x == 0)$contains(1))
 })
 
 test_that("equals",{

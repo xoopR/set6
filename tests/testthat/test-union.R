@@ -49,10 +49,10 @@ test_that("conditional",{
   expect_message(expect_equal(ConditionalSet$new(function(x) x == 0) + Set$new(1), Set$new()),"Union of")
 })
 
-test_that("liesInSet",{
+test_that("contains",{
   x = Interval$new(1,8) + Interval$new(5, 15, type = "()")
-  expect_true(x$liesInSet(c(1,4,6,15), all = TRUE, bound = TRUE))
-  expect_false(x$liesInSet(c(1,4,6,15), all = TRUE, bound = FALSE))
-  expect_equal(x$liesInSet(c(0,1,4,6,15,18), bound = TRUE), c(FALSE, TRUE, TRUE, TRUE, TRUE, FALSE))
-  expect_true(x$liesInSet(8))
+  expect_true(x$contains(c(1,4,6,15), all = TRUE, bound = TRUE))
+  expect_false(x$contains(c(1,4,6,15), all = TRUE, bound = FALSE))
+  expect_equal(x$contains(c(0,1,4,6,15,18), bound = TRUE), c(FALSE, TRUE, TRUE, TRUE, TRUE, FALSE))
+  expect_true(x$contains(8))
 })

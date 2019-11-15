@@ -28,11 +28,11 @@ test_that("special constructors",{
   expect_silent(PosReals$new(zero = F))
 })
 
-test_that("complex liesInSet",{
+test_that("complex contains",{
   c = Complex$new()
-  expect_false(c$liesInSet(1))
-  expect_true(c$liesInSet(1i))
-  expect_true(c$liesInSet(c(1i,2i), all = TRUE))
-  expect_false(c$liesInSet(list(1i,2), all = TRUE))
-  expect_equal(c$liesInSet(list(1,2i)), c(FALSE, TRUE))
+  expect_false(c$contains(1))
+  expect_true(c$contains(1i))
+  expect_true(c$contains(c(1i,2i), all = TRUE))
+  expect_false(c$contains(list(1i,2), all = TRUE))
+  expect_equal(c$contains(list(1,2i)), c(FALSE, TRUE))
 })

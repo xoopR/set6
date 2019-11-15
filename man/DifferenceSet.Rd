@@ -15,15 +15,15 @@ cannot be represented in a simpler class. Whilst this is not an abstract class, 
 the set operation methods: \link{union}, \link{product}, \link{power}, \link{setdiff}.
 }
 \section{Constructor}{
- \code{DifferenceSet$new(addlist, subtractlist, lower = NULL, upper = NULL, type = NULL)}
+ \code{DifferenceSet$new(addset, subtractset, lower = NULL, upper = NULL, type = NULL)}
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{addlist} \tab list \tab Sets to add. \cr
-\code{subtractlist} \tab list \tab Sets to subtract. \cr
+\code{addset} \tab list \tab Sets to add. \cr
+\code{subtractset} \tab list \tab Sets to subtract. \cr
 
 \code{lower} \tab Set \tab Lower limit of set. \cr
 \code{upper} \tab Set \tab Upper limit of set. \cr
@@ -39,7 +39,7 @@ the set operation methods: \link{union}, \link{product}, \link{power}, \link{set
 
 \tabular{ll}{
 \strong{Field} \tab \strong{Link} \cr
-\code{subtractedSets} \tab \link{subtractedSets} \cr
+\code{subtractedSet} \tab \link{subtractedSet} \cr
 
 \code{wrappedSets} \tab \link{wrappedSets} \cr
 \code{class} \tab \link{class} \cr
@@ -62,7 +62,7 @@ the set operation methods: \link{union}, \link{product}, \link{power}, \link{set
 \tabular{ll}{
 
 \strong{Comparison Methods} \tab \strong{Link} \cr
-\code{liesInSet(x, all = FALSE, bound = NULL)} \tab \link{liesInSet} \cr
+\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
 \code{equals(x)} \tab \link{equals} \cr
 \code{isSubset(x)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr
