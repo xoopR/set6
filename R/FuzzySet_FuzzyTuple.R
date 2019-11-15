@@ -65,14 +65,9 @@ FuzzyTuple <- R6::R6Class("FuzzyTuple", inherit = FuzzySet)
 
 FuzzyTuple$set("public","powerset",function(){
   y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
-  if(checkmate::testList(y))
-    y = lapply(y, function(z) apply(z, 2, function(x){
-      FuzzyTuple$new(elements = x, membership = self$membership(x))
-    }))
-  else
-    y = apply(y, 1, function(x){
-      FuzzyTuple$new(elements = x, membership = self$membership(x))
-    })
+  y = apply(y, 1, function(x){
+    FuzzyTuple$new(elements = x, membership = self$membership(x))
+  })
   return(Set$new(Set$new(), y, self))
 })
 FuzzyTuple$set("public","equals",function(x){

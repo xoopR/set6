@@ -40,6 +40,9 @@ test_that("equals",{
 
 test_that("strprint",{
   expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x", " \u03B5 ", setSymbol(Reals), "}"))
+  use_unicode(FALSE)
+  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x in ", setSymbol(Reals), "}"))
+  use_unicode(TRUE)
 })
 
 test_that("summary",{

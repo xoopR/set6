@@ -11,15 +11,12 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
   if(!is.null(lower)) private$.lower <- lower
   if(!is.null(upper)) private$.upper <- upper
   if(!is.null(type)) private$.type <- type
-  if(!is.null(class))
-    private$.class <- class
-  else{
-    class = sapply(setlist, function(x) x$class)
-    if(length(unique(class)) == 1)
-      private$.class <- unique(class)
-    else
-      private$.class <- "multiple"
-  }
+
+  class <- sapply(setlist, function(x) x$class)
+  if(length(unique(class)) == 1)
+    private$.class <- unique(class)
+  else
+    private$.class <- "multiple"
 })
 
 #' @name wrappedSets

@@ -1,7 +1,7 @@
 .onLoad = function(libname, pkgname) {
-  options("set.unicode" = TRUE)
+  options(set6.unicode = TRUE)
 }
 
-.onAttach = function(libname, pkgname) {
-  options("set.unicode" = TRUE)
+.onUnload = function(libname, pkgname) {
+  options(set6.unicode = NULL)
 }

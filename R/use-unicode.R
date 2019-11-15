@@ -14,9 +14,9 @@
 #' @export
 use_unicode <- function(use){
   if(missing(use))
-    return(getOption("set.unicode"))
+    return(getOption("set6.unicode"))
   else{
     checkmate::assertFlag(use)
-    options("set.unicode" = use)
+    options(set6.unicode = use)
   }
 }

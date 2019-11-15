@@ -58,6 +58,8 @@ FuzzySet <- R6::R6Class("FuzzySet", inherit = Set)
 FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements))){
   if(!is.null(elements) & !is.null(membership)){
     membership <- as.numeric(membership)
+    if(length(membership) == 1)
+      membership <- rep(membership, length(elements))
   } else if(length(list(...)) != 0){
     dots <- list(...)
     if(length(dots)%%2)

@@ -47,6 +47,8 @@ test_that("alphaCut",{
   expect_equal(f$alphaCut(0.15), 2:3)
   expect_equal(f$alphaCut(0.2, strong = FALSE), 2:3)
   expect_equal(f$alphaCut(0.2, strong = TRUE), 3)
+  expect_true(f$alphaCut(0.2, strong = TRUE, create = TRUE)$equals(Tuple$new(3)))
+  expect_equal(getR6Class(f$alphaCut(0.2, strong = TRUE, create = TRUE)), "Tuple")
 })
 test_that("support",{
   expect_equal(f$support(), 1:3)
@@ -71,6 +73,8 @@ test_that("equals",{
   expect_false(FuzzyTuple$new(1,0.1,2,0.1,3,0.1,4,0.1)$equals(FuzzyTuple$new(elements = 1:3, membership = rep(0.1,3))))
   expect_true(FuzzyTuple$new(1,0.1,2,0.1) != FuzzyTuple$new(2,0.1,1,0.1))
   expect_true(FuzzyTuple$new(2,0.1,2,0.1) != FuzzyTuple$new(2,0.1))
+  expect_true(FuzzyTuple$new(elements = 1:3)$equals(Set$new(1:3)))
+  expect_false(FuzzyTuple$new(1, 0.3, 2, 0.5)$equals(Interval$new(1, 3)))
 })
 test_that("complement",{
   expect_equal(FuzzyTuple$new(1,0.1,2,0.8)$complement(),FuzzyTuple$new(1,0.9,2,0.2))
@@ -78,6 +82,8 @@ test_that("complement",{
 test_that("powerset",{
   expect_equal(FuzzyTuple$new(1,0.1,2,0.2)$powerset(), Set$new(Set$new(), FuzzyTuple$new(1,0.1),FuzzyTuple$new(2,0.2),
                                                   FuzzyTuple$new(1,0.1,2,0.2)))
+  expect_equal(FuzzyTuple$new(1,0.1,"a",0.2)$powerset(), Set$new(Set$new(), FuzzyTuple$new(1,0.1),FuzzyTuple$new("a",0.2),
+                                                               FuzzyTuple$new(1,0.1,"a",0.2)))
 })
 
 test_that("isSubset",{
@@ -86,6 +92,9 @@ test_that("isSubset",{
   expect_true(f$isSubset(FuzzyTuple$new(2,0.2), proper = FALSE))
   expect_true(f$isSubset(FuzzyTuple$new(2,0.2), proper = TRUE))
   expect_false(f$isSubset(FuzzyTuple$new(2,0.1), proper = TRUE))
+  expect_true(Set$new(1) < FuzzySet$new(elements = 1:3))
+  expect_false(FuzzyTuple$new(elements = 1:5, membership = 0.1) < f)
+  expect_false(f$isSubset(FuzzyTuple$new(2,0.2,1,0.1,3,0.3), proper = TRUE))
 })
 
 test_that("as.FuzzyTuple",{
@@ -94,4 +103,5 @@ test_that("as.FuzzyTuple",{
   expect_equal(as.FuzzyTuple(matrix(c(1,2,3,0.1,0.2,0.3),ncol=2)), f)
   expect_equal(as.FuzzyTuple(data.frame(1:3, c(0.1,0.2,0.3))), f)
   expect_equal(as.FuzzyTuple(data.table::data.table(1:3, c(0.1,0.2,0.3))), f)
+  expect_equal(as.FuzzyTuple(FuzzySet$new(1,0.1,2,0.2)), FuzzyTuple$new(1,0.1,2,0.2))
 })

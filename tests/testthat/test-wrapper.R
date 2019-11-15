@@ -15,5 +15,5 @@ test_that("equals",{
   u = Set$new(1) + Interval$new(3, 4)
   expect_true(u$equals(Set$new(1) + Interval$new(3, 4)))
   expect_false(u$equals(Set$new(2) + Interval$new(3, 4)))
-  expect_false(u$equals(Set$new(1) * Interval$new(3, 4)))
+  expect_false((Set$new(1,2)*Interval$new(1,2))$equals((Set$new(1,2)*Interval$new(1,2))*Interval$new(5,6)))
 })
