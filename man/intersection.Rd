@@ -19,9 +19,7 @@ intersection(x, y)
 \method{&}{Set}(x, y)
 }
 \arguments{
-\item{x}{Set}
-
-\item{y}{Set}
+\item{x, y}{Set}
 }
 \value{
 A \code{Set} consisting of elements in both \code{x} and \code{y}.

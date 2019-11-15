@@ -2,17 +2,35 @@
 % Please edit documentation in R/SetWrapper_ProductSet.R
 \name{product}
 \alias{product}
+\alias{product.Set}
+\alias{product.Interval}
+\alias{product.FuzzySet}
+\alias{product.ConditionalSet}
+\alias{product.ProductSet}
 \alias{*.Set}
 \title{Cartesian Product of Two Sets}
 \usage{
-product(x, y)
+product(x, y, ...)
+
+\method{product}{Set}(x, y, simplify = TRUE, ...)
+
+\method{product}{Interval}(x, y, ...)
+
+\method{product}{FuzzySet}(x, y, simplify = TRUE, ...)
+
+\method{product}{ConditionalSet}(x, y, ...)
+
+\method{product}{ProductSet}(x, y, ...)
 
 \method{*}{Set}(x, y)
 }
 \arguments{
-\item{x}{Set}
+\item{x, y}{Set}
 
-\item{y}{Set}
+\item{...}{additional arguments}
+
+\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set}
+otherwise a \code{ProductSet}}
 }
 \value{
 An object inheriting from \code{Set} containing the cartesian product of elements in both \code{x} and \code{y}.
@@ -34,6 +52,7 @@ The product of two \link{ConditionalSet}s is currently defined as the same as th
 
 Set$new(-2:4) * Set$new(2:5)
 product(Set$new(1,4,"a"), Set$new("a", 6))
+product(Set$new(1,4,"a"), Set$new("a", 6), simplify = FALSE)
 
 # product of two intervals
 

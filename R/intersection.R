@@ -1,7 +1,6 @@
 #' @name intersection
 #' @rdname intersection
-#' @param x Set
-#' @param y Set
+#' @param x,y Set
 #' @title Intersection of Two Sets
 #' @return A `Set` consisting of elements in both `x` and `y`.
 #' @description Returns the intersection of two objects inheriting from class `Set`.

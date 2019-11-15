@@ -25,8 +25,7 @@ UnionSet$set("active","elements",function(){
 })
 
 #' @name union
-#' @param x Set
-#' @param y Set
+#' @param x,y Set
 #' @title Union of Two Sets
 #' @return An object inheriting from `Set` containing the union of elements in both `x` and `y`.
 #' @description Returns the union of two objects inheriting from class `Set`.

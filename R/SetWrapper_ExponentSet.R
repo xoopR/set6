@@ -40,7 +40,7 @@ ExponentSet$set("public", "initialize", function(set, power){
 #' Interval$new(2, 5)^5
 #' Reals$new()^3
 #'
-#' # Use tuples for `liesInSet`
+#' # Use tuples for liesInSet
 #' (PosNaturals$new()^3)$liesInSet(Tuple$new(1, 2, 3))
 #'
 #' # Power of ConditionalSet is meaningless
@@ -58,7 +58,7 @@ power <- function(x, power, ...){
 power.Set <- function(x, power, simplify = TRUE, ...){
   if(simplify){
     y = x
-    for (i in 1:power)
+    for (i in 1:(power-1))
       y = product(x, y)
     return(y)
   } else {

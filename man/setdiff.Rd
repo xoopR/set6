@@ -37,9 +37,7 @@ setdiff(x, y)
 \method{-}{Set}(x, y)
 }
 \arguments{
-\item{x}{Set}
-
-\item{y}{Set}
+\item{x, y}{Set}
 }
 \value{
 An object inheriting from \code{Set} containing the set difference of elements in both \code{x} and \code{y}.

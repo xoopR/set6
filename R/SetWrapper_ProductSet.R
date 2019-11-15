@@ -8,8 +8,8 @@
 NULL
 ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
 ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
-  if(is.null(lower)) lower = sapply(setlist, function(x) x$lower)
-  if(is.null(upper)) upper = sapply(setlist, function(x) x$upper)
+  if(is.null(lower)) lower = Tuple$new(sapply(setlist, function(x) x$lower))
+  if(is.null(upper)) upper = Tuple$new(sapply(setlist, function(x) x$upper))
   if(is.null(type)) type = "{}"
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
@@ -48,8 +48,10 @@ ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
 })
 
 #' @name product
-#' @param x Set
-#' @param y Set
+#' @param x,y Set
+#' @param simplify logical, if `TRUE` (default) returns the result in its simplest form, usually a `Set`
+#' otherwise a `ProductSet`
+#' @param ... additional arguments
 #' @title Cartesian Product of Two Sets
 #' @return An object inheriting from `Set` containing the cartesian product of elements in both `x` and `y`.
 #' @description Returns the cartesian product of two objects inheriting from class `Set`.
@@ -66,6 +68,7 @@ ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
 #'
 #' Set$new(-2:4) * Set$new(2:5)
 #' product(Set$new(1,4,"a"), Set$new("a", 6))
+#' product(Set$new(1,4,"a"), Set$new("a", 6), simplify = FALSE)
 #'
 #' # product of two intervals
 #'
@@ -94,7 +97,7 @@ ProductSet$set("public","liesInSet",function(x, all = FALSE, bound = FALSE){
 #' PosReals$new() * NegReals$new()
 #'
 #' @export
-product <- function(x, y){
+product <- function(x, y, ...){
   xl = x$length
   yl = y$length
 
@@ -108,15 +111,16 @@ product <- function(x, y){
     else if(yl == 0)
       return(x)
     else
-      UseMethod("product", x)
+      UseMethod("product")
   }
 }
+#' @rdname product
 #' @export
-product.Set <- function(x, y){
+product.Set <- function(x, y, simplify = TRUE, ...){
   if(inherits(y, "SetWrapper"))
     return(ProductSet$new(c(list(x), y$wrappedSets)))
 
-  if(testSet(y) & !testInterval(y) & !testConditionalSet(y))
+  if(testSet(y) & !testInterval(y) & !testConditionalSet(y) & simplify)
     return(Set$new(apply(expand.grid(x$elements, y$elements), 1, function(z) Tuple$new(z))))
   else if(!testConditionalSet(y))
     return(ProductSet$new(list(x, y)))
@@ -125,8 +129,9 @@ product.Set <- function(x, y){
     return(Set$new())
   }
 }
+#' @rdname product
 #' @export
-product.Interval <- function(x, y){
+product.Interval <- function(x, y, ...){
   if(inherits(y, "SetWrapper"))
     return(ProductSet$new(c(list(x), y$wrappedSets)))
 
@@ -140,8 +145,9 @@ product.Interval <- function(x, y){
   } else
     return(ProductSet$new(list(x, y)))
 }
+#' @rdname product
 #' @export
-product.FuzzySet <- function(x, y){
+product.FuzzySet <- function(x, y, simplify = TRUE, ...){
   if(inherits(y, "SetWrapper"))
     return(ProductSet$new(c(list(x), y$wrappedSets)))
 
@@ -152,14 +158,19 @@ product.FuzzySet <- function(x, y){
   if (testConditionalSet(y) | testInterval(y)) {
     message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
     return(Set$new())
-  } else if (testFuzzyTuple(x)){
-    return(ProductSet$new(list(x, as.FuzzyTuple(y))))
+  } else if (simplify){
+    y = as.FuzzySet(y)
+    mat = cbind(expand.grid(x$elements, y$elements),
+                expand.grid(x$membership(), y$membership()))
+    return(Set$new(apply(mat, 1, function(x) FuzzyTuple$new(elements = x[1:(ncol(mat)/2)],
+                                             membership = x[((ncol(mat)/2)+1):(ncol(mat))]))))
   } else {
     return(ProductSet$new(list(x, as.FuzzySet(y))))
   }
 }
+#' @rdname product
 #' @export
-product.ConditionalSet <- function(x, y){
+product.ConditionalSet <- function(x, y, ...){
   if(!inherits(y, "ConditionalSet"))
     return(Set$new())
   else {
@@ -181,8 +192,9 @@ product.ConditionalSet <- function(x, y){
     }
   }
 }
+#' @rdname product
 #' @export
-product.ProductSet <- function(x, y){
+product.ProductSet <- function(x, y, ...){
   ProductSet$new(c(x$wrappedSets, y))
 }
 

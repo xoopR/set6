@@ -52,8 +52,7 @@ DifferenceSet$set("private",".addedSets",list())
 DifferenceSet$set("private",".subtractedSets",list())
 
 #' @name setdiff
-#' @param x Set
-#' @param y Set
+#' @param x,y Set
 #' @title Difference of Two Sets
 #' @return An object inheriting from `Set` containing the set difference of elements in both `x` and `y`.
 #' @description Returns the set difference of two objects inheriting from class `Set`.

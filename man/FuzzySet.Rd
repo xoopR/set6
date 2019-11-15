@@ -19,7 +19,7 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 \link{FuzzyTuple}s can be used.
 }
 \section{Constructor}{
- \code{FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)), universe = NULL)}
+ \code{FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)))}
 }
 
 \section{Constructor Arguments}{
@@ -29,13 +29,12 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 \code{...} \tab ANY \tab Alternating elements and membership, see constructor details. \cr
 \code{elements} \tab ANY \tab Elements in the set, see constructor details. \cr
 \code{membership} \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
-\code{universe} \tab Set \tab Optional universe that the interval lives in.
 
 }
 }
 
 \section{Constructor Details}{
- \code{FuzzySet}s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to \code{elements} and a list of respective memberships to \code{membership}, see examples. The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+ \code{FuzzySet}s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to \code{elements} and a list of respective memberships to \code{membership}, see examples.
 }
 
 \section{Public Fields}{
