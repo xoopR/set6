@@ -88,11 +88,17 @@ toproper = function(str){
                                                      sep = "", collapse = " ")))
 }
 
-rlapply = function(X, FUN, ...){
+rlapply = function(X, FUN, ..., active = FALSE){
   FUN = as.character(substitute(FUN))
-  lapply(X, function(x) x[[FUN]](...))
+  if(active)
+    return(lapply(X, function(x) x[[FUN]]))
+  else
+    return(lapply(X, function(x) x[[FUN]](...)))
 }
-rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE){
+rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FALSE){
   FUN = as.character(substitute(FUN))
-  sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES)
+  if(active)
+    return(sapply(X, function(x) x[[FUN]], simplify = simplify, USE.NAMES = USE.NAMES))
+  else
+    return(sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES))
 }

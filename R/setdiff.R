@@ -50,6 +50,9 @@ setdiff <- function(x, y){
   if(!inherits(x, "R6"))
     return(base::setdiff(x, y))
 
+  if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
+    return(DifferenceSet$new(x, y))
+
   if(x <= y)
     return(Set$new())
 

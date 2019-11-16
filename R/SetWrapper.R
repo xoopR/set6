@@ -17,6 +17,12 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
     private$.class <- unique(class)
   else
     private$.class <- "multiple"
+
+  private$.properties$empty <- FALSE
+  private$.properties$singleton <- FALSE
+
+
+  invisible(self)
 })
 
 #' @name wrappedSets

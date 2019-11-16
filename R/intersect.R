@@ -54,6 +54,9 @@ intersect <- function(x, y){
   if(!inherits(x, "R6"))
     return(base::intersect(x, y))
 
+  if(inherits(y, "SetWrapper"))
+    return(intersect.SetWrapper(y, x))
+
   if(x$length == 0 | y$length == 0)
     return(Set$new())
 
@@ -125,6 +128,17 @@ intersect.ConditionalSet <- function(x, y){
         class = c(x$class, y$class)[!duplicated(names(c(x$class, y$class)))]
         return(ConditionalSet$new(condition = condition, argclass = class))
     }
+  }
+}
+#' @rdname intersect
+#' @export
+intersect.SetWrapper <- function(x, y){
+  if(inherits(x, "UnionSet")){
+    int = Set$new()
+    sets = sapply(x$wrappedSets, function(set) intersect(set, y))
+    for(i in 1:length(sets))
+      int = int + sets[[i]]
+    return(int)
   }
 }
 #' @rdname intersect

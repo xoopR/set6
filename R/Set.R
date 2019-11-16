@@ -480,7 +480,9 @@ Set$set("private",".lower",numeric(0))
 Set$set("private",".upper",numeric(0))
 Set$set("private",".universe",NULL)
 Set$set("private",".elements",list())
-Set$set("private",".properties",list())
+Set$set("private",".properties",list(empty = logical(0), singleton = logical(0),
+                                     cardinality = character(0), countability = character(0),
+                                     closure = character(0)))
 Set$set("private",".traits",list(crisp = TRUE))
 Set$set("private",".dimension", numeric(0))
 

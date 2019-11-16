@@ -56,6 +56,11 @@ power.ConditionalSet <- function(x, power, ...){
 }
 #' @rdname power
 #' @export
+power.SetWrapper <- function(x, power, ...){
+  ExponentSet$new(x, power)
+}
+#' @rdname power
+#' @export
 power.ExponentSet <- function(x, power, ...){
   ExponentSet$new(x$wrappedSets[[1]], x$power * power)
 }

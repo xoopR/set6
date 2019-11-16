@@ -53,7 +53,7 @@ union <- function(x, y){
     return(base::union(x, y))
 
   if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
-    UseMethod("union", x)
+    return(UnionSet$new(c(x, y)))
 
   if (x$isSubset(y))
     return(x)
@@ -218,11 +218,6 @@ union.ConditionalSet <- function(x, y){
         class = c(x$class, y$class)[!duplicated(names(c(x$class, y$class)))]
         return(ConditionalSet$new(condition = condition, argclass = class))
   }
-}
-#' @rdname union
-#' @export
-union.union <- function(x, y){
-  UnionSet$new(c(x$wrappedSets, list(y)))
 }
 
 #' @rdname union

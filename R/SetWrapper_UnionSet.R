@@ -11,6 +11,7 @@ UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NUL
   if(is.null(lower)) lower = min(unlist(sapply(setlist, function(x) x$lower)))
   if(is.null(upper)) upper = max(unlist(sapply(setlist, function(x) x$upper)))
   if(is.null(type)) type = "{}"
+
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
 UnionSet$set("public","strprint",function(n = 2){

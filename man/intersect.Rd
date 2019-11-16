@@ -5,6 +5,7 @@
 \alias{intersect.Set}
 \alias{intersect.Interval}
 \alias{intersect.ConditionalSet}
+\alias{intersect.SetWrapper}
 \alias{&.Set}
 \title{Intersection of Two Sets}
 \usage{
@@ -15,6 +16,8 @@ intersect(x, y)
 \method{intersect}{Interval}(x, y)
 
 \method{intersect}{ConditionalSet}(x, y)
+
+\method{intersect}{SetWrapper}(x, y)
 
 \method{&}{Set}(x, y)
 }

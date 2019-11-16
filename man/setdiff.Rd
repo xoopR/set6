@@ -10,6 +10,7 @@
 \alias{setdiff.Reals}
 \alias{setdiff.Rationals}
 \alias{setdiff.Integers}
+\alias{setdiff.WrapperSet}
 \alias{-.Set}
 \title{Difference of Two Sets}
 \usage{
@@ -30,6 +31,8 @@ setdiff(x, y)
 \method{setdiff}{Rationals}(x, y)
 
 \method{setdiff}{Integers}(x, y)
+
+\method{setdiff}{WrapperSet}(x, y)
 
 \method{-}{Set}(x, y)
 }

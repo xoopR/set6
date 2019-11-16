@@ -145,7 +145,7 @@ product.ConditionalSet <- function(x, y, ...){
 }
 #' @rdname product
 #' @export
-product.ProductSet <- function(x, y, ...){
+product.SetWrapper <- function(x, y, ...){
   ProductSet$new(c(x, y))
 }
 

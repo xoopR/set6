@@ -8,9 +8,14 @@
 NULL
 ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
 ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
-  if(is.null(lower)) lower = Tuple$new(sapply(setlist, function(x) x$lower))
-  if(is.null(upper)) upper = Tuple$new(sapply(setlist, function(x) x$upper))
+  if(is.null(lower)) lower = Tuple$new(rsapply(setlist, lower, active = TRUE))
+  if(is.null(upper)) upper = Tuple$new(rsapply(setlist, upper, active = TRUE))
   if(is.null(type)) type = "{}"
+
+  private$.properties$cardinality = Tuple$new(sapply(setlist, function(x) x$properties$cardinality))
+  private$.properties$countability = Tuple$new(sapply(setlist, function(x) x$properties$countability))
+  private$.properties$closure = Tuple$new(sapply(setlist, function(x) x$properties$closure))
+
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
 ProductSet$set("active", "length", function(){
