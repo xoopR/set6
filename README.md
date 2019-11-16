@@ -17,7 +17,7 @@
 * Tuples
 * Finite and infinite intervals
 * Fuzzy sets and tuples
-* Set operations including union, intersection, difference, and product
+* Set operations including union, intersect, (asymmetric and symmetric) difference, and product
 * Symbolic representation of infinite sets including common special sets such as the Reals and Integers
 * ConditionalSets for defining sets according to logical conditions
 

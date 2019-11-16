@@ -16,9 +16,9 @@ test_that("special sets",{
   expect_equal(NegIntegers$new() + PosIntegers$new(), Integers$new())
   expect_equal(Reals$new() + Set$new(-Inf, Inf), ExtendedReals$new())
   use_unicode(TRUE)
-  expect_equal((Reals$new() + Set$new("a"))$strprint(), "{{a} \u222A ℝ}")
+  expect_equal((Reals$new() + Set$new("a"))$strprint(), "{a} \u222A ℝ")
   use_unicode(FALSE)
-  expect_equal((Reals$new() + Set$new("a"))$strprint(), "{{a} U R}")
+  expect_equal((Reals$new() + Set$new("a"))$strprint(), "{a} U R")
   use_unicode(TRUE)
 })
 

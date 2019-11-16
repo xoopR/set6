@@ -122,8 +122,9 @@ Interval$set("public","strprint",function(...){
 
   inf <- ifelse(self$lower==-Inf & use_unicode(), "-\u221E", self$lower)
   sup <- ifelse(self$upper==Inf & use_unicode(), "+\u221E", self$upper)
+  sep <- ifelse(self$class == "integer", ",..,", ", ")
 
-  str <- paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2))
+  str <- paste0(substr(self$type,1,1),inf,sep,sup,substr(self$type,2,2))
 
   return(str)
 })
