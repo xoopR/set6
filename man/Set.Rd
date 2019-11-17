@@ -61,7 +61,7 @@ but \link{Tuple}s can be used if this is required.
 \strong{Comparison Methods} \tab \strong{Link} \cr
 \code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
 \code{equals(x)} \tab \link{equals} \cr
-\code{isSubset(x)} \tab \link{isSubset} \cr
+\code{isSubset(x, proper = FALSE)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Mathematical Methods} \tab \strong{Link} \cr
 \code{complement()} \tab \link{complement} \cr

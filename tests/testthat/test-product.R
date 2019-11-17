@@ -36,7 +36,7 @@ test_that("fuzzy",{
 
 test_that("ProductSet",{
   i = (Interval$new(1, 2) * Interval$new(3, 4)) * Interval$new(5, 6)
-  expect_equal(i$strprint(), "{[1, 2] \u00D7 [3, 4]} \u00D7 [5, 6]")
+  expect_equal(i$strprint(), "([1, 2] \u00D7 [3, 4]) \u00D7 [5, 6]")
   #expect_true(i$contains(c(Tuple$new(1,3,5), Tuple$new(2,4,5)), all = TRUE))
   #expect_false(i$contains(c(Tuple$new(0,3,5), Tuple$new(2,4,5)), all = TRUE))
   #expect_false(i$contains(Tuple$new(0,3)))

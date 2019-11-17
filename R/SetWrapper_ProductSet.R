@@ -24,7 +24,7 @@ ProductSet$set("active", "length", function(){
 ProductSet$set("public","strprint",function(n = 2){
   str = lapply(self$wrappedSets, function(x){
     if(inherits(x, "SetWrapper"))
-      paste0("{",x$strprint(n),"}")
+      paste0("(",x$strprint(n),")")
     else
       x$strprint(n)
   })
@@ -40,6 +40,9 @@ ProductSet$set("public","strprint",function(n = 2){
     return(paste(str, collapse = collapse))
 })
 ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
+
+  if(!inherits(x, "R6") & !inherits(x, "list"))
+    x = Set$new(x)
 
   if(!testSetList(x))
     x = list(x)

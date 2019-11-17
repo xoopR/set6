@@ -50,6 +50,9 @@ setdiff <- function(x, y){
   if(!inherits(x, "R6"))
     return(base::setdiff(x, y))
 
+  if(x == y)
+    return(Set$new())
+
   if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     return(DifferenceSet$new(x, y))
 
@@ -126,10 +129,31 @@ setdiff.Interval <- function(x, y){
     else if(y$upper <= x$upper & y$lower >= x$lower)
       return(union(Interval$new(x$lower,y$lower,type=paste0(substr(x$type,1,1),")"),class = x$class),
                        Interval$new(y$upper,x$upper,type=paste0("(",substr(x$type,2,2)),class = x$class)))
-  } else if (getR6Class(y) == "Set") # to do
-    return(DifferenceSet$new(x, y, lower = x$lower, upper = x$upper,
-                     type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-  else {
+  } else if (getR6Class(y) == "Set") {
+    y = Set$new(y$elements[x$contains(y)])
+    int = levels(cut(x$lower:x$upper, unique(c(x$lower, y$elements, x$upper))))
+    lower = as.numeric(sapply(int, function(x) substr(x, 2, gregexpr(",", x, fixed = TRUE)[[1]][[1]]-1)))
+    upper = as.numeric(sapply(int, function(x) substr(x, gregexpr(",", x, fixed = TRUE)[[1]][[1]]+1,
+                                                      gregexpr("]", x, fixed = TRUE)[[1]][[1]]-1)))
+    u = Set$new()
+    for (i in 1:length(lower)) {
+      if(diff(c(lower[[i]], upper[[i]])) == 1 & i != 1)
+        next()
+
+      if(i == 1)
+        type = paste0(substr(x$type,1,1), ")")
+      else if (i == length(lower))
+        type = paste0("(", substr(x$type,2,2))
+      else
+        type = "()"
+
+      u = u + Interval$new(lower[[i]], upper[[i]], type = type)
+    }
+
+    return(u)
+    # return(DifferenceSet$new(x, y, lower = x$lower, upper = x$upper,
+    #                  type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
+  } else {
     message(sprintf("Difference of %s and %s is not compatible.", x$strprint(), y$strprint()))
     return(x)
   }

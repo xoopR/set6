@@ -51,3 +51,9 @@ SetWrapper$set("public", "equals", function(x){
 
   return(ret)
 })
+SetWrapper$set("public","isSubset",function(x, proper = FALSE){
+  message("isSubset currently not implemented for wrapped sets.")
+})
+SetWrapper$set("public","complement",function(){
+  message("complement currently not implemented for wrapped sets.")
+})

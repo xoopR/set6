@@ -54,11 +54,11 @@ intersect <- function(x, y){
   if(!inherits(x, "R6"))
     return(base::intersect(x, y))
 
-  if(inherits(y, "SetWrapper"))
-    return(intersect.SetWrapper(y, x))
-
   if(x$length == 0 | y$length == 0)
     return(Set$new())
+
+  if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
+    UseMethod("intersect")
 
   if (y$isSubset(x, proper = FALSE))
     return(x)
@@ -132,14 +132,35 @@ intersect.ConditionalSet <- function(x, y){
 }
 #' @rdname intersect
 #' @export
-intersect.SetWrapper <- function(x, y){
-  if(inherits(x, "UnionSet")){
-    int = Set$new()
-    sets = sapply(x$wrappedSets, function(set) intersect(set, y))
-    for(i in 1:length(sets))
-      int = int + sets[[i]]
-    return(int)
+intersect.UnionSet <- function(x, y){
+  int = Set$new()
+  sets = sapply(x$wrappedSets, function(set) intersect(set, y))
+  for(i in 1:length(sets))
+    int = int + sets[[i]]
+
+  int
+}
+#' @rdname intersect
+#' @export
+intersect.DifferenceSet <- function(x, y){
+  if(inherits(y, "DifferenceSet")){
+    return((x$addedSet & y$addedSet) - (x$subtractedSet + y$subtractedSet))
+  } else {
+    add_int = intersect(x$addedSet, y)
+    sub_int = intersect(x$subtractedSet, y)
+
+    return(add_int - sub_int)
   }
+}
+#' @rdname intersect
+#' @export
+intersect.ProductSet <- function(x, y){
+  int = Set$new()
+  sets = lapply(x$wrappedSets, function(set) intersect(set, y))
+  for(i in 1:length(sets))
+    int = int * sets[[i]]
+
+  int
 }
 #' @rdname intersect
 #' @export

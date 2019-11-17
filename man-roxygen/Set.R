@@ -58,7 +58,7 @@
 #' **Comparison Methods** \tab **Link** \cr
 #' `contains(x, all = FALSE, bound = NULL)` \tab [contains] \cr
 #' `equals(x)` \tab [equals] \cr
-#' `isSubset(x)` \tab [isSubset] \cr
+#' `isSubset(x, proper = FALSE)` \tab [isSubset] \cr
 #' \tab \cr \tab \cr \tab \cr
 #' **Mathematical Methods** \tab \strong{Link} \cr
 #' `complement()` \tab [complement] \cr

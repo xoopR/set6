@@ -11,8 +11,32 @@
 NULL
 DifferenceSet <- R6::R6Class("DifferenceSet", inherit = SetWrapper)
 DifferenceSet$set("public", "initialize", function(addset, subtractset, lower = NULL, upper = NULL, type = NULL){
-  if(is.null(lower)) lower = min(sapply(setlist, function(x) x$lower))
-  if(is.null(upper)) upper = max(sapply(setlist, function(x) x$upper))
+  if(is.null(lower)){
+    if(!any(subtractset$contains(addset$lower, bound = TRUE)))
+      lower = addset$lower
+    else{
+      if(testInterval(addset) & class(addset)[1] == "numeric")
+        lower = addset$lower + .Machine$double.xmin
+      else if(testInterval(addset) & class(addset)[1] == "integer")
+        lower = lower + 1
+      else
+        lower = addset$elements[2]
+    }
+  }
+
+  if(is.null(upper)){
+    if(!any(subtractset$contains(addset$upper, bound = TRUE)))
+      upper = addset$upper
+    else{
+      if(testInterval(addset) & class(addset)[1] == "numeric")
+        upper = addset$upper - .Machine$double.xmin
+      else if(testInterval(addset) & class(addset)[1] == "integer")
+        upper = upper + 1
+      else
+        upper = addset$elements[length(addset$elements)-1]
+    }
+  }
+
   if(is.null(type)) type = "{}"
   private$.addedSet = addset
   private$.subtractedSet = subtractset
@@ -20,37 +44,39 @@ DifferenceSet$set("public", "initialize", function(addset, subtractset, lower = 
 })
 DifferenceSet$set("public","strprint",function(n = 2){
   if(inherits(self$addedSet, "SetWrapper"))
-    add = paste0("{",self$addedSet$strprint(n),"}")
+    add = paste0("(",self$addedSet$strprint(n),")")
   else
     add = self$addedSet$strprint(n)
 
   if(inherits(self$subtractedSet, "SetWrapper"))
-    sub = paste0("{",self$subtractedSet$strprint(n),"}")
+    sub = paste0("(",self$subtractedSet$strprint(n),")")
   else
     sub = self$subtractedSet$strprint(n)
 
- paste0("{", add, " \\ ", sub, "}")
+ paste0(add, " \\ ", sub)
 })
 DifferenceSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
-  add = apply(do.call(rbind,
-                lapply(self$addedSet, function(y) y$contains(x, all = all, bound = bound))),
-        2, any)
-  diff = apply(do.call(rbind,
-                      lapply(self$subtractedSet, function(y) y$contains(x, all = all, bound = bound))),
-              2, any)
+  add = self$addedSet$contains(x, all = all, bound = bound)
+  diff = self$subtractedSet$contains(x, all = all, bound = bound)
 
-  return(add & !diff)
+  add & !diff
 })
 DifferenceSet$set("active","elements",function(){
-  add_els = unlist(sapply(self$addedSet, function(x) x$elements))
+  add_els = self$addedSet$elements
   if(any(is.nan(add_els)))
     return(NaN)
 
-  sub_els = unlist(sapply(self$subtractedSet, function(x) x$elements))
+  sub_els = self$subtractedSet$elements
   if(any(is.nan(sub_els)))
     return(NaN)
 
   add_els[!(add_els %in% sub_els)]
+})
+DifferenceSet$set("active","length",function(){
+  if(self$addedSet$length == Inf)
+    return(Inf)
+  else
+    return(self$addedSet$length - self$subtractedSet$length)
 })
 
 #' @name addedSet

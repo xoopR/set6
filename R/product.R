@@ -52,6 +52,9 @@ product <- function(x, y, ...){
   xl = x$length
   yl = y$length
 
+  if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
+    UseMethod("product")
+
   if(inherits(xl, "R6") | inherits(yl, "R6"))
     UseMethod("product", x)
   else{

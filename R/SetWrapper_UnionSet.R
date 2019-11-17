@@ -8,8 +8,17 @@
 NULL
 UnionSet <- R6::R6Class("UnionSet", inherit = SetWrapper)
 UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
-  if(is.null(lower)) lower = min(unlist(sapply(setlist, function(x) x$lower)))
-  if(is.null(upper)) upper = max(unlist(sapply(setlist, function(x) x$upper)))
+  if(is.null(lower)){
+    lower = try(min(unlist(sapply(setlist, function(x) x$lower))), silent = T)
+    if(class(lower) == "try-error")
+      lower = NaN
+  }
+  if(is.null(upper)){
+    upper = try(max(unlist(sapply(setlist, function(x) x$upper))), silent = T)
+    if(class(upper) == "try-error")
+      upper = NaN
+  }
+
   if(is.null(type)) type = "{}"
 
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
@@ -22,7 +31,7 @@ UnionSet$set("public","strprint",function(n = 2){
 
   str = lapply(c(self$wrappedSets, self$wrappedIntervals), function(x){
     if(inherits(x, "SetWrapper"))
-      paste0("{",x$strprint(n),"}")
+      paste0("(",x$strprint(n),")")
     else
       x$strprint(n)
   })

@@ -52,6 +52,9 @@ union <- function(x, y){
   if(!inherits(x, "R6"))
     return(base::union(x, y))
 
+  if(x == y)
+    return(x)
+
   if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     return(UnionSet$new(c(x, y)))
 

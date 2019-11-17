@@ -122,11 +122,11 @@ Interval$set("public","strprint",function(...){
 
   inf <- ifelse(self$lower==-Inf & use_unicode(), "-\u221E", self$lower)
   sup <- ifelse(self$upper==Inf & use_unicode(), "+\u221E", self$upper)
-  sep <- ifelse(self$class == "integer", ",..,", ", ")
 
-  str <- paste0(substr(self$type,1,1),inf,sep,sup,substr(self$type,2,2))
-
-  return(str)
+  if(self$class == "integer")
+    return(paste0("{", inf, ",...,", sup, "}"))
+  else
+    return(paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2)))
 })
 Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
   if(testSet(x))

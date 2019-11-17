@@ -5,7 +5,9 @@
 \alias{intersect.Set}
 \alias{intersect.Interval}
 \alias{intersect.ConditionalSet}
-\alias{intersect.SetWrapper}
+\alias{intersect.UnionSet}
+\alias{intersect.DifferenceSet}
+\alias{intersect.ProductSet}
 \alias{&.Set}
 \title{Intersection of Two Sets}
 \usage{
@@ -17,7 +19,11 @@ intersect(x, y)
 
 \method{intersect}{ConditionalSet}(x, y)
 
-\method{intersect}{SetWrapper}(x, y)
+\method{intersect}{UnionSet}(x, y)
+
+\method{intersect}{DifferenceSet}(x, y)
+
+\method{intersect}{ProductSet}(x, y)
 
 \method{&}{Set}(x, y)
 }
