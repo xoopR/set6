@@ -14,7 +14,6 @@
 \alias{union.FuzzySet}
 \alias{union.FuzzyTuple}
 \alias{union.ConditionalSet}
-\alias{union.union}
 \alias{+.Set}
 \alias{|.Set}
 \title{Union of Two Sets}
@@ -44,8 +43,6 @@ union(x, y)
 \method{union}{FuzzyTuple}(x, y)
 
 \method{union}{ConditionalSet}(x, y)
-
-\method{union}{union}(x, y)
 
 \method{+}{Set}(x, y)
 

@@ -5,6 +5,7 @@
 \alias{power.Set}
 \alias{power.Interval}
 \alias{power.ConditionalSet}
+\alias{power.SetWrapper}
 \alias{power.ExponentSet}
 \alias{^.Set}
 \title{Power of a Set}
@@ -16,6 +17,8 @@ power(x, power, ...)
 \method{power}{Interval}(x, power, ...)
 
 \method{power}{ConditionalSet}(x, power, ...)
+
+\method{power}{SetWrapper}(x, power, ...)
 
 \method{power}{ExponentSet}(x, power, ...)
 

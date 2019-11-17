@@ -6,7 +6,7 @@
 \alias{product.Interval}
 \alias{product.FuzzySet}
 \alias{product.ConditionalSet}
-\alias{product.ProductSet}
+\alias{product.SetWrapper}
 \alias{*.Set}
 \title{Cartesian Product of Two Sets}
 \usage{
@@ -20,7 +20,7 @@ product(x, y, ...)
 
 \method{product}{ConditionalSet}(x, y, ...)
 
-\method{product}{ProductSet}(x, y, ...)
+\method{product}{SetWrapper}(x, y, ...)
 
 \method{*}{Set}(x, y)
 }
