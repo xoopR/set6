@@ -21,17 +21,3 @@ Powerset$set("public", "strprint", function(n = 2){
   else
     paste0("2^", self$wrappedSets[[1]]$strprint(n))
 })
-
-powerset <- function(set, simplify = TRUE){
-  if(set$properties$empty)
-    return(Set$new(Set$new()))
-  else{
-    if(simplify){
-      elements <- set$elements
-      y = Vectorize(function(m) combn(elements, m),vectorize.args = c("m"))(1:(set$length-1))
-      return(Set$new(Set$new(), unlist(lapply(y, as.Set)), set))
-    } else {
-      Powerset$new(list(set))
-    }
-  }
-}

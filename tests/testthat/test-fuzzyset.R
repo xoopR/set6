@@ -91,5 +91,4 @@ test_that("as.FuzzySet",{
   expect_equal(as.FuzzySet(list('0.1'=1,'0.2'=2,'0.3'=3)), f)
   expect_equal(as.FuzzySet(matrix(c(1,2,3,0.1,0.2,0.3),ncol=2)), f)
   expect_equal(as.FuzzySet(data.frame(1:3, c(0.1,0.2,0.3))), f)
-  expect_equal(as.FuzzySet(data.table::data.table(1:3, c(0.1,0.2,0.3))), f)
 })

@@ -69,7 +69,7 @@
 #' \tab \cr \tab \cr \tab \cr
 #' **Mathematical Methods** \tab \strong{Link} \cr
 #' `complement()` \tab [complement] \cr
-#' `powerset()` \tab [powerset] \cr
+#' `power_set(simplify = TRUE)` \tab [power_set] \cr
 #' \tab \cr \tab \cr \tab \cr
 #' **Representation Methods** \tab **Link** \cr
 #' `strprint(n = 2)` \tab [strprint] \cr

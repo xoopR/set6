@@ -102,6 +102,5 @@ test_that("as.FuzzyTuple",{
   expect_equal(as.FuzzyTuple(list('0.1'=1,'0.2'=2,'0.3'=3)), f)
   expect_equal(as.FuzzyTuple(matrix(c(1,2,3,0.1,0.2,0.3),ncol=2)), f)
   expect_equal(as.FuzzyTuple(data.frame(1:3, c(0.1,0.2,0.3))), f)
-  expect_equal(as.FuzzyTuple(data.table::data.table(1:3, c(0.1,0.2,0.3))), f)
   expect_equal(as.FuzzyTuple(FuzzySet$new(1,0.1,2,0.2)), FuzzyTuple$new(1,0.1,2,0.2))
 })

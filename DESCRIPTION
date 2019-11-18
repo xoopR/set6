@@ -12,7 +12,7 @@ Authors@R:
              role = "aut",
              email = "f.kiraly@ucl.ac.uk"))
 Description: set6 upgrades the sets package to R6. Many forms of Sets are implemented, including sets, tuples, intervals (countably infinite or uncountable), and fuzzy variants. Wrappers extend functionality by allowing symbolic representations of complex operations on sets, including unions, (cartesian) products, exponentiation, and differences (asymmetric and symmetric).
-Imports: checkmate, R6
+Imports: checkmate, R6, utils
 Suggests: knitr, testthat, devtools, rmarkdown
 License: MIT + file LICENSE
 LazyData: true

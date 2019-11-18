@@ -310,21 +310,27 @@ Set$set("public","complement",function(){
     invisible(self)
   }
 })
-#' @name powerset
-#' @rdname powerset
-#' @title Calculate a Set's Power Set
-#' @description Calculates and returns the power set of a Set.
-#' @details A power set of a set, S, is defined as the set of all subsets of S, including S itself and
+#' @name power_set
+#' @rdname power_set
+#' @title Calculate a Set's Powerset
+#' @description Calculates and returns the powerset of a Set.
+#' @details A powerset of a set, S, is defined as the set of all subsets of S, including S itself and
 #' the empty set.
-#' @section R6 Usage: $powerset()
+#' @param simplify logical, if `TRUE` (default) then tries to simplify the result to a `Set` otherwise
+#' creates an object of class `Powerset`.
+#' @section R6 Usage: $power_set(simplify = TRUE)
 #' @return Set
-Set$set("public","powerset",function(){
+Set$set("public","power_set",function(simplify = TRUE){
   if(self$properties$empty)
     return(Set$new(Set$new()))
   else{
-    elements <- self$elements
-    y = Vectorize(function(m) combn(elements, m),vectorize.args = c("m"))(1:(self$length-1))
-    return(Set$new(Set$new(), unlist(lapply(y, as.Set)), self))
+    if(simplify){
+      elements <- self$elements
+      y = Vectorize(function(m) utils::combn(elements, m),vectorize.args = c("m"))(1:(self$length-1))
+      return(Set$new(Set$new(), unlist(lapply(y, as.Set)), self))
+    } else {
+      Powerself$new(list(self))
+    }
   }
 })
 #---------------------------------------------

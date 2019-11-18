@@ -29,7 +29,7 @@ test_that("inherited_methods",{
   expect_equal(Set$new(1, "a")$class, "multiple")
   expect_equal(Set$new(1,2,3)$range,2)
   expect_equal(Set$new(1,"a")$range, numeric(0))
-  expect_silent(Set$new(1,"a")$complement())
+  expect_message(Set$new(1,"a")$complement())
   expect_equal(Set$new(1,2,universe = Set$new(1,2,3))$complement(),Set$new(3))
 })
 
@@ -78,8 +78,8 @@ test_that("strprint",{
   expect_equal(Set$new(1,2,3)$strprint(n = 1),"{1,...,3}")
 })
 
-test_that("powerset",{
-  expect_equal(Set$new(1,2)$powerset(),Set$new(Set$new(), Set$new(1),Set$new(2),Set$new(1,2)))
+test_that("power_set",{
+  expect_equal(Set$new(1,2)$power_set(),Set$new(Set$new(), Set$new(1),Set$new(2),Set$new(1,2)))
 })
 
 test_that("isSubset",{
