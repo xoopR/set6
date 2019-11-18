@@ -2,6 +2,15 @@ template:
   params:
     bootswatch: spacelab
 
+navbar:
+  right:
+  - text: Reference
+    href: reference/
+  - text: Changelog
+    href: news/index.html
+  - icon: fa-github fa-lg
+    href: https://github.com/RaphaelS1/set6
+    
 reference:
 - title: Sets
   desc: R6 classes and methods inheriting from class Set
