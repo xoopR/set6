@@ -113,6 +113,15 @@ The primary use-cases of `set6` are:
 1. **Upgrading sets** Extend the R `sets` package to R6, which allows for generalised `Set` objects with a clear inheritance structure. As well as adding features including symbolic representation of infinite sets, and cartesian products.
 2. **Defining parameter interfaces** All objects inheriting from the `Set` parent class include methods `equals` and `contains`, which are used to check if two sets are equal or if elements lie in the given set. This makes `set6` ideal for parameter interfaces in which a range of values (possibly multi-dimensional or of mixed types) need to be defined.
 
+## Short-term development plans
+
+Whilst the `set6` API is stable and there are no plans for any major updates, there are a few features we plan on implementing before we consider the package to be in its first complete version. These mainly focus on wrappers and include
+
+* Extending `union` and `intersection` to allow an arbitrary number of inputs (currently only two allowed)
+* Adding a `simplify` method to wrappers to reduce unnecessarily complicated classes to simpler ones, this would also favour the `UnionSet` class and where possible, reduce to this
+
+We may later consider adding Venn diagrams for visualisation of sets and intervals, but this is very low priority.
+
 ## Installation
 
 A CRAN release is expected by the end of November. Until then the latest stable build can be installed via

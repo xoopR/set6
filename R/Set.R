@@ -305,6 +305,10 @@ Set$set("public","isSubset",function(x, proper = FALSE){
 Set$set("public","complement",function(){
   if(!is.null(self$universe))
     return(setdiff(self$universe, self))
+  else{
+    message("Universe not provided, returning self.")
+    invisible(self)
+  }
 })
 #' @name powerset
 #' @rdname powerset
@@ -485,7 +489,13 @@ Set$set("private",".properties",list(empty = logical(0), singleton = logical(0),
                                      closure = character(0)))
 Set$set("private",".traits",list(crisp = TRUE))
 Set$set("private",".dimension", numeric(0))
-
+#---------------------------------------------
+# summary
+#---------------------------------------------
+#' @export
+summary.Set <- function(object, n = 2, ...){
+  object$summary(n)
+}
 #---------------------------------------------
 # as.Set
 #---------------------------------------------
