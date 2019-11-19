@@ -1,6 +1,6 @@
 library(testthat)
 
-context("difference")
+context("setdiff")
 
 test_that("subsets",{
   expect_equal(Set$new(1:3) - Set$new(1:4), Set$new())

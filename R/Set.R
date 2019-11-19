@@ -329,7 +329,7 @@ Set$set("public","power_set",function(simplify = TRUE){
       y = Vectorize(function(m) utils::combn(elements, m),vectorize.args = c("m"))(1:(self$length-1))
       return(Set$new(Set$new(), unlist(lapply(y, as.Set)), self))
     } else {
-      Powerself$new(list(self))
+      Powerset$new(self)
     }
   }
 })

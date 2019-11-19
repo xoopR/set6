@@ -80,6 +80,11 @@ test_that("strprint",{
 
 test_that("power_set",{
   expect_equal(Set$new(1,2)$power_set(),Set$new(Set$new(), Set$new(1),Set$new(2),Set$new(1,2)))
+  expect_equal(getR6Class(Set$new(1,2)$power_set(FALSE)), "Powerset")
+  expect_equal(Set$new(1,2)$power_set(FALSE)$strprint(), paste0("\U2118({1, 2})"))
+  use_unicode(FALSE)
+  expect_equal(Set$new(1,2)$power_set(FALSE)$strprint(), "2^{1, 2}")
+  use_unicode(TRUE)
 })
 
 test_that("isSubset",{

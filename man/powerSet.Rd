@@ -15,14 +15,14 @@ cannot be represented in a simpler class. Whilst this is not an abstract class, 
 the set operation methods: \link{union}, \link{product}, \link{power}, \link{setdiff}.
 }
 \section{Constructor}{
- \code{Powerset$new(setlist)}
+ \code{Powerset$new(set)}
 }
 
 \section{Constructor Arguments}{
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{setlist} \tab list \tab List of sets to wrap. \cr
+\code{set} \tab list \tab Set to wrap. \cr
 
 \code{lower} \tab Set \tab Lower limit of set. \cr
 \code{upper} \tab Set \tab Upper limit of set. \cr

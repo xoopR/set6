@@ -150,5 +150,5 @@ ConditionalSet$set("active","elements", function(){
 })
 ConditionalSet$set("private",".condition", NULL)
 ConditionalSet$set("private",".argclass", NULL)
-ConditionalSet$set("private",".traits", list())
+ConditionalSet$set("private",".traits", list(crisp = TRUE))
 ConditionalSet$set("private",".properties", list())

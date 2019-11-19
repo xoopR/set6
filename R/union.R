@@ -52,6 +52,10 @@ union <- function(x, y){
   if(!inherits(x, "R6"))
     return(base::union(x, y))
 
+  # if possible convert Interval to Set
+  if(!testMessage(as.Set(x)) & testInterval(x))
+    x = as.Set(x)
+
   if(x == y)
     return(x)
 
@@ -143,6 +147,7 @@ union.Set <- function(x, y){
 #' @rdname union
 #' @export
 union.Interval <- function(x, y){
+
   if (inherits(y, "ConditionalSet")) {
     message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
     return(Set$new())

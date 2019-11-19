@@ -50,6 +50,18 @@ setdiff <- function(x, y){
   if(!inherits(x, "R6"))
     return(base::setdiff(x, y))
 
+  if((testConditionalSet(x) & !testConditionalSet(y)) | (testConditionalSet(y) & !testConditionalSet(x)))
+    return(DifferenceSet$new(x, y))
+
+  if(testCrisp(x) & testFuzzyTuple(y))
+    y = as.Tuple(y)
+  else if(testCrisp(x) & testFuzzySet(y))
+    y = as.Set(y)
+
+  # if possible convert Interval to Set
+  if(!testMessage(as.Set(x)) & testInterval(x))
+    x = as.Set(x)
+
   if(x == y)
     return(Set$new())
 
@@ -92,27 +104,18 @@ setdiff.Set <- function(x, y){
 #' @rdname setdiff
 #' @export
 setdiff.Interval <- function(x, y){
-  # if(testSet(y) & testFuzzy(y) & !testInterval(y))
-  #   return(setdiff.FuzzySet(y, x))
-  # else if(testSet(y) & !testFuzzy(y) & !testInterval(y))
-  #   return(setdiff.Set(y, x))
-
-  # if possible convert x to a Set
-  if(!testMessage(as.Set(x)))
-    return(setdiff(as.Set(x), y))
-
-  if(testFuzzy(y) | testConditionalSet(y)){
-    message(sprintf("Difference of %s and %s is not compatible.", x$strprint(), y$strprint()))
-    return(x)
-  }
 
   # if x is a (proper) subset of y then return the Empty set
   if(y >= x)
     return(Set$new())
 
   # convert to interval if possible
-  if(!testMessage(as.Interval(y)))
+  if(!testMessage(as.Interval(y)) & !testInterval(y))
     y <- as.Interval(y)
+
+  if(x$class == "numeric" & y$class == "integer")
+    return(DifferenceSet$new(x, y, lower = x$lower, upper = x$upper,
+                             type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
 
   # difference of interval from interval
   if(testInterval(y)){

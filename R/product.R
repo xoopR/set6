@@ -49,6 +49,9 @@
 #'
 #' @export
 product <- function(x, y, ...){
+  if(!testMessage(as.Set(x)) & testInterval(x))
+    x = as.Set(x)
+
   xl = x$length
   yl = y$length
 
