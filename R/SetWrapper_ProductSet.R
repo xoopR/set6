@@ -34,15 +34,9 @@ ProductSet$set("public","strprint",function(n = 2){
   else
     collapse = " X "
 
-  if(length(unique(str)) == 1)
-    return(paste(unique(str), length(str), sep = "^"))
-  else
-    return(paste(str, collapse = collapse))
+  paste(str, collapse = collapse)
 })
 ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
-
-  if(!inherits(x, "R6") & !inherits(x, "list"))
-    x = Set$new(x)
 
   if(!testSetList(x))
     x = list(x)
@@ -61,7 +55,7 @@ ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
   })
 
   if (all)
-    return(all(rets))
+    return(all(unlist(rets)))
   else
     return(unlist(rets))
 })

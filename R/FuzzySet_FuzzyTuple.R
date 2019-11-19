@@ -164,11 +164,6 @@ as.FuzzyTuple.matrix <- function(object){
 }
 #' @rdname as.FuzzyTuple
 #' @export
-as.FuzzyTuple.data.table <- function(object){
-  return(as.FuzzyTuple(as.matrix(object)))
-}
-#' @rdname as.FuzzyTuple
-#' @export
 as.FuzzyTuple.data.frame <- function(object){
   return(as.FuzzyTuple(as.matrix(object)))
 }

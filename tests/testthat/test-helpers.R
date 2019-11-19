@@ -59,6 +59,7 @@ test_that("toproper",{
 
 test_that("rapply",{
   expect_equal(rlapply(list(Set$new(1), Set$new(2)), strprint), list("{1}","{2}"))
+  expect_equal(rlapply(list(Set$new(1), Set$new(2)), elements, active = TRUE), list(1, 2))
   expect_equal(rsapply(list(Set$new(1), Set$new(2)), strprint), c("{1}","{2}"))
   expect_equal(rsapply(list(FuzzySet$new(1,0.1,2,0.2),FuzzySet$new(1,0.2,2,0.3)), membership, 1), c(0.1,0.2))
 })

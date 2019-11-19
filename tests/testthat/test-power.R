@@ -24,3 +24,11 @@ test_that("interval",{
 test_that("exponent",{
   expect_equal((Interval$new(1,2)^2)^3, Interval$new(1,2)^6)
 })
+
+test_that("setwrapper",{
+  use_unicode(FALSE)
+  expect_equal(((Interval$new(1,2) + Interval$new(3,4))^2)$strprint(),
+               "([1, 2] U [3, 4])^2")
+  use_unicode(TRUE)
+})
+

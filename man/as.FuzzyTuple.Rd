@@ -5,7 +5,6 @@
 \alias{as.FuzzyTuple.numeric}
 \alias{as.FuzzyTuple.list}
 \alias{as.FuzzyTuple.matrix}
-\alias{as.FuzzyTuple.data.table}
 \alias{as.FuzzyTuple.data.frame}
 \alias{as.FuzzyTuple.Set}
 \alias{as.FuzzyTuple.FuzzyTuple}
@@ -19,8 +18,6 @@ as.FuzzyTuple(object)
 \method{as.FuzzyTuple}{list}(object)
 
 \method{as.FuzzyTuple}{matrix}(object)
-
-\method{as.FuzzyTuple}{data.table}(object)
 
 \method{as.FuzzyTuple}{data.frame}(object)
 

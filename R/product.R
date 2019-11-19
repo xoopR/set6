@@ -89,6 +89,9 @@ product.Set <- function(x, y, simplify = TRUE, ...){
 #' @rdname product
 #' @export
 product.Interval <- function(x, y, ...){
+  if(x$equals(y))
+    return(ExponentSet$new(x, 2))
+
   if(inherits(y, "SetWrapper"))
     return(ProductSet$new(c(list(x), y$wrappedSets)))
 
