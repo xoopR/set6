@@ -2,7 +2,7 @@
 
 [![Travis Build Status](https://travis-ci.com/RaphaelS1/set6.svg?branch=master)](https://travis-ci.com/RaphaelS1/set6)
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/ueqvqs5n38tcs3r8?svg=true)](https://ci.appveyor.com/project/RaphaelS1/set6)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 [![codecov](https://codecov.io/gh/RaphaelS1/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/set6/branch/master/graph/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CRAN Version](http://www.r-pkg.org/badges/version-ago/set6)](http://www.r-pkg.org/badges/version/set6)
