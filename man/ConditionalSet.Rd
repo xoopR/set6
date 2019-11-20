@@ -92,3 +92,9 @@ s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
 s$contains(list(-2, 2))
 
 }
+\seealso{
+Other sets: \code{\link{FuzzySet}},
+  \code{\link{FuzzyTuple}}, \code{\link{Interval}},
+  \code{\link{Set}}, \code{\link{Tuple}}
+}
+\concept{sets}

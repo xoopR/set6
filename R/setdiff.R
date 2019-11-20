@@ -13,6 +13,7 @@
 #'
 #' [base::setdiff] is called if `x` does not inherit from an R6 class, thus avoiding masking.
 #'
+#' @family operators
 #' @examples
 #' # setdiff of two sets
 #'
@@ -65,7 +66,9 @@ setdiff <- function(x, y){
   if(x == y)
     return(Set$new())
 
-  if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
+  if(inherits(x, "DifferenceSet"))
+    UseMethod("setdiff")
+  else if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     return(DifferenceSet$new(x, y))
 
   if(x <= y)
@@ -237,6 +240,12 @@ setdiff.Integers <- function(x, y){
   else
     return(setdiff.Interval(x, y))
 }
+#' @rdname setdiff
+#' @export
+setdiff.DifferenceSet <- function(x, y){
+  x$addedSet - (x$subtractedSet + y)
+}
+
 #' @rdname setdiff
 #' @export
 `-.Set` <- function(x, y){

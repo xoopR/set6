@@ -11,6 +11,7 @@
 #' Therefore `symdiff` is written as a thin wrapper over these operations, so for two sets, `A,B`: \cr
 #' `A %-% B = (A | B) - (A & B)`
 #'
+#' @family operators
 #' @examples
 #' # symdiff compared to union and intersection
 #' Set$new(1,2,3) %-% Set$new(3, 4)

@@ -10,6 +10,7 @@
 \alias{setdiff.Reals}
 \alias{setdiff.Rationals}
 \alias{setdiff.Integers}
+\alias{setdiff.DifferenceSet}
 \alias{-.Set}
 \title{Difference of Two Sets}
 \usage{
@@ -30,6 +31,8 @@ setdiff(x, y)
 \method{setdiff}{Rationals}(x, y)
 
 \method{setdiff}{Integers}(x, y)
+
+\method{setdiff}{DifferenceSet}(x, y)
 
 \method{-}{Set}(x, y)
 }
@@ -86,3 +89,10 @@ Rationals$new() - PosRationals$new()
 Integers$new() - PosIntegers$new()
 
 }
+\seealso{
+Other operators: \code{\link{intersect}},
+  \code{\link{power_set}}, \code{\link{power}},
+  \code{\link{product}}, \code{\link{symdiff}},
+  \code{\link{union}}
+}
+\concept{operators}

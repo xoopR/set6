@@ -83,3 +83,10 @@ ConditionalSet$new(function(x) x == 2) &
     ConditionalSet$new(function(x) x == 3)
 
 }
+\seealso{
+Other operators: \code{\link{power_set}},
+  \code{\link{power}}, \code{\link{product}},
+  \code{\link{setdiff}}, \code{\link{symdiff}},
+  \code{\link{union}}
+}
+\concept{operators}

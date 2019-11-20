@@ -44,3 +44,7 @@ test_that("contains",{
   expect_false(x$contains(16))
   expect_equal(x$contains(c(0,1,6,9,16)), c(FALSE, TRUE, FALSE, FALSE, FALSE))
 })
+
+test_that("DifferenceSet",{
+  expect_equal((Reals$new() - Integers$new()) - Set$new(1,2), Reals$new() - Integers$new())
+})

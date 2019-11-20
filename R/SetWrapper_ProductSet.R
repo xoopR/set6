@@ -1,3 +1,4 @@
+#' @name ProductSet
 #' @template SetWrapper
 #' @templateVar operation product
 #' @templateVar class ProductSet

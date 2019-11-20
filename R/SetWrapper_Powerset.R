@@ -1,3 +1,4 @@
+#' @name Powerset
 #' @template SetWrapper
 #' @templateVar operation exponentiation
 #' @templateVar class Powerset

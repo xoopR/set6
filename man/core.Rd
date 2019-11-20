@@ -12,7 +12,7 @@ Core elements in fuzzy set or a \link{Set} of the core elements.
 \description{
 The core of a fuzzy set is defined as the set of elements whose membership is equal to one,
 or the alpha-cut with \eqn{\alpha = 1},
-\deqn{A_\alpha = \{x \epsilon F | m \ge 1\}}{A_\alpha = {x \epsilon F | m \ge 1}}
+\deqn{A_\alpha = \{x \\ \epsilon \\ F \ : \ m \ge 1\}}{A_\alpha = {x \epsilon F : m \ge 1}}
 where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
 }
 \section{R6 Usage}{

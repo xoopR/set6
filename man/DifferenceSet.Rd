@@ -77,5 +77,8 @@ the set operation methods: \link{union}, \link{product}, \link{power}, \link{set
 }
 
 \seealso{
-\link{UnionSet}, \link{ExponentSet}, \link{ProductSet}, \link{DifferenceSet}
+Other wrappers: \code{\link{ExponentSet}},
+  \code{\link{Powerset}}, \code{\link{ProductSet}},
+  \code{\link{UnionSet}}
 }
+\concept{wrappers}

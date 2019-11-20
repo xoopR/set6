@@ -1,3 +1,4 @@
+#' @name UnionSet
 #' @template SetWrapper
 #' @templateVar operation union
 #' @templateVar class UnionSet

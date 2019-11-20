@@ -22,7 +22,6 @@ Encoding: UTF-8
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Collate: 
-    'FuzzySet_FuzzyTuple.R'
     'Set.R'
     'SetWrapper.R'
     'SetWrapper_DifferenceSet.R'
@@ -32,9 +31,10 @@ Collate:
     'SetWrapper_UnionSet.R'
     'Set_ConditionalSet.R'
     'Set_FuzzySet.R'
+    'Set_FuzzySet_FuzzyTuple.R'
     'Set_Interval.R'
     'setSymbol.R'
-    'Set_SpecialSet.R'
+    'Set_Interval_SpecialSet.R'
     'Set_Tuple.R'
     'helpers.R'
     'assertions.R'

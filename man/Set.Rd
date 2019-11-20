@@ -93,5 +93,8 @@ Set$new(1, 2) == Set$new(2, 1)
 
 }
 \seealso{
-\link{Interval}, \link{Tuple}, \link{FuzzySet}
+Other sets: \code{\link{ConditionalSet}},
+  \code{\link{FuzzySet}}, \code{\link{FuzzyTuple}},
+  \code{\link{Interval}}, \code{\link{Tuple}}
 }
+\concept{sets}

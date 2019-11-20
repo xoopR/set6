@@ -1,31 +1,32 @@
 #' @name union
-#' @param x,y Set
-#' @title Union of Two Sets
-#' @return An object inheriting from `Set` containing the union of elements in both `x` and `y`.
-#' @description Returns the union of two objects inheriting from class `Set`.
-#' @details The union of two sets, \eqn{X, Y}, is defined as the set of elements that exist
-#' in one or both sets,
-#' \deqn{U = \{x, y : x \epsilon X or y \epsilon Y\}}{U = {x, y : x \epsilon X or y \epsilon Y}}
+#' @param ... [Set]s
+#' @param x,y [Set]
+#' @title Union of Sets
+#' @return An object inheriting from [Set] containing the union of supplied sets.
+#' @description Returns the union of objects inheriting from class [Set].
+#' @details The union of \eqn{N} sets, \eqn{X1, ..., XN}, is defined as the set of elements that exist
+#' in one or more sets,
+#' \deqn{U = \{x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN\}}{U = {x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN}}
 #'
-#' The union of two [ConditionalSet]s is defined by combining their defining functions by an
+#' The union of multiple [ConditionalSet]s is given by combining their defining functions by an
 #' 'or', `|`, operator. See examples.
 #'
-#' [base::union] is called if `x` does not inherit from an R6 class, thus avoiding masking.
-#'
+#' @family operators
 #' @examples
-#' # union of two sets
+#' # union of Sets
 #'
 #' Set$new(-2:4) + Set$new(2:5)
 #' union(Set$new(1,4,"a"), Set$new("a", 6))
+#' Set$new(1,2) + Set$new("a", 1i) + Set$new(9)
 #'
-#' # union of two intervals
+#' # union of intervals
 #'
-#' Interval$new(1, 10) + Interval$new(5, 15)
+#' Interval$new(1, 10) + Interval$new(5, 15) + Interval$new(20, 30)
 #' Interval$new(1, 2, type = "()") + Interval$new(2, 3, type = "(]")
 #' Interval$new(1, 5, class = "integer") +
 #'     Interval$new(2, 7, class = "integer")
 #'
-#' # union of mixed set types
+#' # union of mixed types
 #'
 #' Set$new(1:10) + Interval$new(5, 15)
 #' Set$new(1:10) + Interval$new(5, 15, class = "integer")
@@ -33,15 +34,12 @@
 #'
 #' # union of FuzzySet
 #' FuzzySet$new(1, 0.1, 2, 0.5) + Set$new(2:5)
-#' # not the same when the order is reversed
-#' Set$new(2:5) + FuzzySet$new(1, 0.1, 2, 0.5)
 #'
 #' # union of conditional sets
 #'
 #' ConditionalSet$new(function(x, y) x >= y) +
-#'     ConditionalSet$new(function(x, y) x == y)
-#' ConditionalSet$new(function(x) x == 2) +
-#'     ConditionalSet$new(function(y) y == 3)
+#'     ConditionalSet$new(function(x, y) x == y) +
+#'     ConditionalSet$new(function(x) x == 2)
 #'
 #' # union of special sets
 #' PosReals$new() + NegReals$new()
@@ -196,7 +194,7 @@ union <- function(...){
     return(sets[[1]])
 
   condition = function(){}
-  names = unique(names(unlist(sapply(sets,function(x) formals(x$condition)))))
+  names = unique(names(unlist(lapply(sets,function(x) formals(x$condition)))))
   formals <- rep(list(bquote()), length(names))
   names(formals) = names
   formals(condition) = formals
@@ -210,7 +208,7 @@ union <- function(...){
 
   # in future updates we can change this so the union of the argument classes is kept
   # not just the argclass of x
-  class = unlist(rsapply(sets, class, active = TRUE))[!duplicated(names(unlist(rsapply(sets, class, active = TRUE))))]
+  class = unlist(rlapply(sets, class, active = TRUE))[!duplicated(names(unlist(rlapply(sets, class, active = TRUE))))]
   return(ConditionalSet$new(condition = condition, argclass = class))
 }
 

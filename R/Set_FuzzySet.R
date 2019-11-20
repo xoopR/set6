@@ -29,9 +29,6 @@
 #' must be unique and the ordering does not matter, to establish order and non-unique elements,
 #' [FuzzyTuple]s can be used.
 #'
-#' @seealso
-#' [Set], [FuzzyTuple]
-#'
 #' @examples
 #' # Different constructors
 #' FuzzySet$new(1, 0.5, 2, 1, 3, 0)
@@ -200,7 +197,7 @@ FuzzySet$set("public","support",function(create = FALSE){
 #' @param create logical, if `FALSE` (default) returns the core elements, otherwise returns a set of the core elements
 #' @description The core of a fuzzy set is defined as the set of elements whose membership is equal to one,
 #' or the alpha-cut with \eqn{\alpha = 1},
-#' \deqn{A_\alpha = \{x \epsilon F | m \ge 1\}}{A_\alpha = {x \epsilon F | m \ge 1}}
+#' \deqn{A_\alpha = \{x \\ \epsilon \\ F \ : \ m \ge 1\}}{A_\alpha = {x \epsilon F : m \ge 1}}
 #' where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
 #' @return Core elements in fuzzy set or a [Set] of the core elements.
 #' @section R6 Usage: $core(create = FALSE)

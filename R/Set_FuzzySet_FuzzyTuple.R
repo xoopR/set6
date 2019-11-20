@@ -28,9 +28,6 @@
 #' do not need to be unique and the ordering does matter, [FuzzySet]s are special cases where the ordering
 #' does not matter and elements must be unique.
 #'
-#' @seealso
-#' [Tuple], [FuzzySet]
-#'
 #' @examples
 #' # Different constructors
 #' FuzzyTuple$new(1, 0.5, 2, 1, 3, 0)

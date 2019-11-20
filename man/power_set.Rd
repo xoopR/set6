@@ -22,3 +22,10 @@ Calculates and returns the powerset of a Set.
 A powerset of a set, S, is defined as the set of all subsets of S, including S itself and
 the empty set.
 }
+\seealso{
+Other operators: \code{\link{intersect}},
+  \code{\link{power}}, \code{\link{product}},
+  \code{\link{setdiff}}, \code{\link{symdiff}},
+  \code{\link{union}}
+}
+\concept{operators}

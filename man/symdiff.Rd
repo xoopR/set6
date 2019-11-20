@@ -37,3 +37,10 @@ ConditionalSet$new(function(x) x > 0) \%-\%
   ConditionalSet$new(function(y) y == 0)
 
 }
+\seealso{
+Other operators: \code{\link{intersect}},
+  \code{\link{power_set}}, \code{\link{power}},
+  \code{\link{product}}, \code{\link{setdiff}},
+  \code{\link{union}}
+}
+\concept{operators}

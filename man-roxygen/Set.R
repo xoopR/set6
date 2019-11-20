@@ -69,3 +69,4 @@
 #' `summary(n = 2)` \tab [summary] \cr
 #' }
 #'
+#' @family sets

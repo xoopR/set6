@@ -19,9 +19,6 @@
 #' expanded for fuzzy logic by using [FuzzySet]s. Elements in a set cannot be duplicated
 #' but [Tuple]s can be used if this is required.
 #'
-#' @seealso
-#' [Interval], [Tuple], [FuzzySet]
-#'
 #' @examples
 #' # Set of integers
 #' Set$new(1:5)
@@ -166,16 +163,24 @@ Set$set("public","summary",function(n = 2){
 #' @name contains
 #' @rdname contains
 #' @title Are Elements Contained in the Set?
-#' @param x Set
-#' @param x numeric or Set
-#' @param all logical. If \code{TRUE} returns \code{TRUE} if all \code{x} are contained in the Set, otherwise
-#' returns a vector of logicals
-#' @param bound logical. If \code{TRUE} then returns \code{TRUE} for elements of \code{x} if they are
-#' in or on the boundaries of the Set.
 #' @description Tests to see if \code{x} is contained in the Set.
+#'
+#' @param x ANY
+#' @param y [Set]
+#'
 #' @details \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
 #' checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
 #' at the same time, then provide these as a list.
+#'
+#' If using the method directly, and not via one of the operators then the additional boolean
+#' arguments `all` and `bound`. If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set``, otherwise
+#' returns a vector of logicals. If `bound = TRUE` then returns `TRUE` for elements of `x` if they are
+#' in or on the boundaries of the Set.
+#'
+#' can be used to specify testing of subsets or proper subsets. A Set is a proper
+#' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+#' (non-proper) subset if it is fully contained by, or equal to, the other Set.
+#'
 #' @return If \code{all} is TRUE then returns TRUE if all elements of \code{x} are contained in the Set, otherwise
 #' FALSE. If \code{all} is FALSE then returns a vector of logicals corresponding to each individual
 #' element of \code{x}.
@@ -185,7 +190,7 @@ Set$set("public","summary",function(n = 2){
 #'
 #' # Simplest case
 #' s$contains(4)
-#' s$contains(8)
+#' 8 %inset% s
 #'
 #' # Test if multiple elements lie in the set
 #' s$contains(4:6, all = FALSE)
@@ -194,7 +199,7 @@ Set$set("public","summary",function(n = 2){
 #' # Check if a tuple lies in a Set of higher dimension
 #' s2 = s * s
 #' s2$contains(Tuple$new(2,1))
-#' s2$contains(list(Tuple$new(2,1), Tuple$new(1,7)))
+#' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
 Set$set("public","contains",function(x, all = FALSE, bound = NULL){
   if(!checkmate::testList(x)){
     if(inherits(x, "R6"))
@@ -257,8 +262,7 @@ Set$set("public","equals",function(x){
 #' @name isSubset
 #' @rdname isSubset
 #' @title Test If Two Sets Are Subsets
-#' @param x Set
-#' @param y Set
+#' @param x,y Set
 #' @details If using the method directly, and not via one of the operators then the additional boolean
 #' argument `proper` can be used to specify testing of subsets or proper subsets. A Set is a proper
 #' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a

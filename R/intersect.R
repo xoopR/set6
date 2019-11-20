@@ -14,6 +14,7 @@
 #'
 #' [base::intersect] is called if `x` does not inherit from an R6 class, thus avoiding masking.
 #'
+#' @family operators
 #' @examples
 #' # intersection of two sets
 #'

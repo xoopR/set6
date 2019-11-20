@@ -20,9 +20,6 @@
 #' The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
 #' integer intervals over a continuous range.
 #'
-#' @seealso
-#' [Set]
-#'
 #' @examples
 #' # Set of Reals
 #' Interval$new()
@@ -179,15 +176,16 @@ Interval$set("public", "isSubset", function(x, proper = FALSE){
         return(as.Set(self)$isSubset(x, proper = proper))
     }
   }
+
+  if(self$class == "integer" & x$class == "numeric")
+    return(FALSE)
+
   if(self$equals(x)){
     if(proper)
       return(FALSE)
     else
       return(TRUE)
   } else{
-    if(self == "numeric" & x == "integer")
-      return(FALSE)
-
     if(x$lower >= self$lower & x$upper <= self$upper)
       return(TRUE)
     else

@@ -14,8 +14,11 @@ power(x, power, simplify = FALSE, nest = FALSE, ...)
 
 \item{power, e2}{power to raise set to}
 
-\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set}
-otherwise a \code{ExponentSet}}
+\item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set}
+otherwise a \code{ExponentSet}.}
+
+\item{nest}{logical, if \code{FALSE} (default) then will treat any \link{ProductSet}s passed to \code{...} as unwrapped
+\link{Set}s. See details and examples.}
 
 \item{...}{additional arguments}
 }
@@ -45,3 +48,10 @@ ConditionalSet$new(function(x) TRUE)^2
 FuzzySet$new(1,0.1,2,0.5)^2
 
 }
+\seealso{
+Other operators: \code{\link{intersect}},
+  \code{\link{power_set}}, \code{\link{product}},
+  \code{\link{setdiff}}, \code{\link{symdiff}},
+  \code{\link{union}}
+}
+\concept{operators}

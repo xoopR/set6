@@ -17,9 +17,6 @@
 #' ordering in a tuple does matter. Tuples are useful for methods including [contains] that may
 #' require non-unique elements. They are also the return type of the product of sets. See examples.
 #'
-#' @seealso
-#' [Set]
-#'
 #' @examples
 #' # Tuple of integers
 #' Tuple$new(1:5)

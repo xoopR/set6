@@ -1,3 +1,4 @@
+#' @name ExponentSet
 #' @template SetWrapper
 #' @templateVar operation exponentiation
 #' @templateVar class ExponentSet
@@ -30,12 +31,14 @@ ExponentSet$set("public", "strprint", function(n = 2){
 })
 ExponentSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
 
-  if(!testSetList(x))
+  if(class(x)[[1]] != "list")
     x = list(x)
+
+  x = sapply(x, function(y) ifelse(testSet(y), return(y), return(as.Set(y))))
 
   rets = sapply(x, function(y) ifelse(y$length == self$power, return(TRUE), return(FALSE)))
 
-  rets[rets] = sapply(x[rets], function(el) all(self$wrappedSets[[1]]$contains(el, bound = bound)))
+  rets[rets] = sapply(x[rets], function(el) all(self$wrappedSets[[1]]$contains(el$elements, bound = bound)))
 
   if (all)
     return(all(unlist(rets)))

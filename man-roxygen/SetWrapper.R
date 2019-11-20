@@ -1,4 +1,3 @@
-#' @name <%=(class)%>
 #' @title Set of <%= toproper(operation)%>s
 #' @description <%=(class)%> class for symbolic <%=(operation)%> of mathematical sets.
 #' @section Constructor: `<%=constructor%>`
@@ -81,7 +80,7 @@
 #' cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct this class directly but via
 #' the set operation methods: [union], [product], [power], [setdiff].
 #'
-#' @seealso
-#' [UnionSet], [ExponentSet], [ProductSet], [DifferenceSet]
+#' @family wrappers
 #'
 #' @return R6 object of class <%=(class)%>, inheriting from SetWrapper.
+#'

@@ -2,13 +2,16 @@
 #' @rdname power
 #' @param x,e1 Set
 #' @param power,e2 power to raise set to
-#' @param simplify logical, if `TRUE` (default) returns the result in its simplest form, usually a `Set`
-#' otherwise a `ExponentSet`
+#' @param simplify logical, if `TRUE` returns the result in its simplest (unwrapped) form, usually a `Set`
+#' otherwise a `ExponentSet`.
+#' @param nest logical, if `FALSE` (default) then will treat any [ProductSet]s passed to `...` as unwrapped
+#' [Set]s. See details and examples.
 #' @param ... additional arguments
 #' @title Power of a Set
 #' @return An R6 object of class `Set` or ExponentSet` inheriting from `ProductSet`.
 #' @description A convenience wrapper for the cartesian product of a `Set` by itself, possibly multiple times.
 #'
+#' @family operators
 #' @examples
 #' # Power of a Set
 #' power(Set$new(1, 2), 3, simplify = FALSE)

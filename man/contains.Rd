@@ -8,15 +8,9 @@
 x \%inset\% y
 }
 \arguments{
-\item{x}{Set}
+\item{x}{ANY}
 
-\item{x}{numeric or Set}
-
-\item{all}{logical. If \code{TRUE} returns \code{TRUE} if all \code{x} are contained in the Set, otherwise
-returns a vector of logicals}
-
-\item{bound}{logical. If \code{TRUE} then returns \code{TRUE} for elements of \code{x} if they are
-in or on the boundaries of the Set.}
+\item{y}{\link{Set}}
 }
 \value{
 If \code{all} is TRUE then returns TRUE if all elements of \code{x} are contained in the Set, otherwise
@@ -30,6 +24,14 @@ Tests to see if \code{x} is contained in the Set.
 \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
 checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
 at the same time, then provide these as a list.
+
+If using the method directly, and not via one of the operators then the additional boolean
+arguments \code{all} and \code{bound}. If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set``, otherwise returns a vector of logicals. If }bound = TRUE\code{then returns}TRUE\code{for elements of}x` if they are
+in or on the boundaries of the Set.
+
+can be used to specify testing of subsets or proper subsets. A Set is a proper
+subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+(non-proper) subset if it is fully contained by, or equal to, the other Set.
 }
 \section{R6 Usage}{
  $contains(x, all = FALSE, bound = NULL)
@@ -40,7 +42,7 @@ s = Set$new(1:5)
 
 # Simplest case
 s$contains(4)
-s$contains(8)
+8 \%inset\% s
 
 # Test if multiple elements lie in the set
 s$contains(4:6, all = FALSE)
@@ -49,5 +51,5 @@ s$contains(4:6, all = TRUE)
 # Check if a tuple lies in a Set of higher dimension
 s2 = s * s
 s2$contains(Tuple$new(2,1))
-s2$contains(list(Tuple$new(2,1), Tuple$new(1,7)))
+c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
 }

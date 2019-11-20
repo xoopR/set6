@@ -1,3 +1,4 @@
+#' @name DifferenceSet
 #' @template SetWrapper
 #' @templateVar operation difference
 #' @templateVar class DifferenceSet

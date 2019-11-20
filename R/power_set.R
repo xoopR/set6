@@ -8,6 +8,7 @@
 #' @param simplify logical, if `TRUE` (default) then tries to simplify the result to a `Set` otherwise
 #' creates an object of class `Powerset`.
 #' @return [Set]
+#' @family operators
 #' @export
 power_set <- function(x, simplify = TRUE){
   if(x$properties$empty)
