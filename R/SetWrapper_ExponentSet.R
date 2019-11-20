@@ -28,3 +28,17 @@ ExponentSet$set("public", "strprint", function(n = 2){
   else
     paste(self$wrappedSets[[1]]$strprint(n=n), self$power, sep = "^")
 })
+ExponentSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
+
+  if(!testSetList(x))
+    x = list(x)
+
+  rets = sapply(x, function(y) ifelse(y$length == self$power, return(TRUE), return(FALSE)))
+
+  rets[rets] = sapply(x[rets], function(el) all(self$wrappedSets[[1]]$contains(el, bound = bound)))
+
+  if (all)
+    return(all(unlist(rets)))
+  else
+    return(unlist(rets))
+})

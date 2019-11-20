@@ -21,3 +21,23 @@ Powerset$set("public", "strprint", function(n = 2){
   else
     paste0("2^", self$wrappedSets[[1]]$strprint(n))
 })
+Powerset$set("public", "contains", function(x, all = FALSE, bound = NULL){
+  x = self$wrappedSets[[1]]$isSubset(x, proper = FALSE)
+  if(all)
+    return(all(x))
+  else
+    return(x)
+})
+Powerset$set("public", "isSubset", function(x, proper = FALSE){
+  if(self$equals(x)){
+    if(proper)
+      return(FALSE)
+    else
+      return(TRUE)
+  }
+
+  if(getR6Class(x) == "Powerset")
+    return(self$wrappedSets[[1]]$isSubset(x$wrappedSets[[1]], proper = proper))
+
+  all(self$wrappedSets[[1]]$isSubset(x$elements, proper = FALSE))
+})

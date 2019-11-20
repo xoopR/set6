@@ -102,3 +102,20 @@ rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FALS
   else
     return(sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES))
 }
+
+crispify = function(x){
+  if (testCrisp(x))
+    return(x)
+  else if (testFuzzyTuple(x))
+    return(as.Tuple(x))
+  else
+    return(as.Set(x))
+}
+fuzzify = function(x){
+  if (testFuzzy(x))
+    return(x)
+  else if (testTuple(x))
+    return(as.FuzzyTuple(x))
+  else
+    return(as.FuzzySet(x))
+}

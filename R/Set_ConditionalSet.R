@@ -104,10 +104,17 @@ ConditionalSet$set("public","equals",function(x){
   if(!all(rsapply(self$class, strprint) == rsapply(x$class, strprint)))
     return(FALSE)
   else{
+    sclass = self$class
+    xclass = x$class
+    if(length(sclass) < length(xclass))
+      sclass = rep(sclass, length(xclass))[1:length(xclass)]
+    if(length(xclass) < length(sclass))
+      xclass = rep(xclass, length(sclass))[1:length(sclass)]
+
     xcond = body(x$condition)
-    if(!all(names(self$class) == names(x$class))){
-      for(i in 1:length(names(x$class)))
-        xcond = gsub(names(x$class)[[i]], names(self$class)[[i]], xcond, fixed = TRUE)
+    if(!all(names(sclass) == names(xclass))){
+      for(i in 1:length(names(xclass)))
+        xcond = gsub(names(xclass)[[i]], names(sclass)[[i]], xcond, fixed = TRUE)
     }
     if(all(xcond == as.character(body(self$condition))))
       return(TRUE)

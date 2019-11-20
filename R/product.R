@@ -48,114 +48,35 @@
 #' PosReals$new() * NegReals$new()
 #'
 #' @export
-product <- function(x, y, ...){
-  if(!testMessage(as.Set(x)) & testInterval(x))
-    x = as.Set(x)
+product <- function(..., nest = FALSE, simplify = FALSE){
+  sets = operation_cleaner(list(...), "ProductSet", nest)
 
-  xl = x$length
-  yl = y$length
-
-  if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
-    UseMethod("product")
-
-  if(inherits(xl, "R6") | inherits(yl, "R6"))
-    UseMethod("product", x)
-  else{
-    if(xl == 0 & yl == 0)
-      return(Set$new())
-    else if(xl == 0)
-      return(y)
-    else if(yl == 0)
-      return(x)
-    else
-      UseMethod("product")
-  }
-}
-#' @rdname product
-#' @export
-product.Set <- function(x, y, simplify = TRUE, ...){
-  if(inherits(y, "SetWrapper"))
-    return(ProductSet$new(c(list(x), y$wrappedSets)))
-
-  if(testSet(y) & !testInterval(y) & !testConditionalSet(y) & simplify)
-    return(Set$new(apply(expand.grid(x$elements, y$elements), 1, function(z) Tuple$new(z))))
-  else if(!testConditionalSet(y))
-    return(ProductSet$new(list(x, y)))
-  else {
-    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
+  if(length(sets) == 0)
     return(Set$new())
-  }
+  else if(length(sets) == 1)
+    return(sets[[1]])
+
+
+  classes = sapply(sets, getR6Class)
+
+  if(length(unique(rsapply(sets, strprint))) == 1 & !simplify)
+    return(ExponentSet$new(sets[[1]], length(sets)))
+  else if (any(grepl("ConditionalSet|Interval|SetWrapper", classes)) | !simplify)
+    return(ProductSet$new(sets))
+  else if (grepl("FuzzySet|FuzzyTuple", unique(classes)))
+    return(.product_fuzzyset(sets))
+  else (grepl("Set|Tuple", unique(classes)))
+    return(.product_set(sets))
 }
-#' @rdname product
-#' @export
-product.Interval <- function(x, y, ...){
-  if(x$equals(y))
-    return(ExponentSet$new(x, 2))
 
-  if(inherits(y, "SetWrapper"))
-    return(ProductSet$new(c(list(x), y$wrappedSets)))
-
-  if(all(x$length == 0) & all(y$length == 0)) return(Set$new())
-  if(all(x$length == 0)) return(y)
-  if(all(y$length == 0)) return(x)
-
-  if (testConditionalSet(y)) {
-    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
-    return(Set$new())
-  } else
-    return(ProductSet$new(list(x, y)))
+.product_set <- function(sets){
+  Set$new(apply(expand.grid(rlapply(sets, elements,active = T)), 1, function(z) Tuple$new(z)))
 }
-#' @rdname product
-#' @export
-product.FuzzySet <- function(x, y, simplify = TRUE, ...){
-  if(inherits(y, "SetWrapper"))
-    return(ProductSet$new(c(list(x), y$wrappedSets)))
-
-  if(x$length == 0 & y$length == 0) return(Set$new())
-  if(x$length == 0) return(y)
-  if(y$length == 0) return(x)
-
-  if (testConditionalSet(y) | testInterval(y)) {
-    message(sprintf("Product of %s and %s not compatible.", x$strprint(), y$strprint()))
-    return(Set$new())
-  } else if (simplify){
-    y = as.FuzzySet(y)
-    mat = cbind(expand.grid(x$elements, y$elements),
-                expand.grid(x$membership(), y$membership()))
-    return(Set$new(apply(mat, 1, function(x) FuzzyTuple$new(elements = x[1:(ncol(mat)/2)],
-                                             membership = x[((ncol(mat)/2)+1):(ncol(mat))]))))
-  } else {
-    return(ProductSet$new(list(x, as.FuzzySet(y))))
-  }
-}
-#' @rdname product
-#' @export
-product.ConditionalSet <- function(x, y, ...){
-  if(!inherits(y, "ConditionalSet"))
-    return(Set$new())
-  else {
-    if(x$equals(y))
-      return(x)
-    else{
-      condition = function(){}
-      names = unique(names(c(formals(x$condition), formals(y$condition))))
-      formals <- rep(list(bquote()), length(names))
-      names(formals) = names
-      formals(condition) = formals
-      body(condition) = substitute(bx & by,
-                                   list(bx = body(x$condition),
-                                        by = body(y$condition)))
-      # in future updates we can change this so the product of the argument classes is kept
-      # not just the argclass of x
-      class = c(x$class, y$class)[!duplicated(names(c(x$class, y$class)))]
-      return(ConditionalSet$new(condition = condition, argclass = class))
-    }
-  }
-}
-#' @rdname product
-#' @export
-product.SetWrapper <- function(x, y, ...){
-  ProductSet$new(c(x, y))
+.product_fuzzyset <- function(sets){
+  mat = cbind(expand.grid(rsapply(sets, elements,active = T)),
+              expand.grid(rsapply(sets, membership)))
+  return(Set$new(apply(mat, 1, function(x) FuzzyTuple$new(elements = x[1:(ncol(mat)/2)],
+                                           membership = x[((ncol(mat)/2)+1):(ncol(mat))]))))
 }
 
 #' @rdname product

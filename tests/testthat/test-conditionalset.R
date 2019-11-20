@@ -36,6 +36,8 @@ test_that("equals",{
   expect_true(c1 != c4)
   expect_true(c1 != c5)
   expect_false(c1 == Set$new())
+  expect_true(ConditionalSet$new(function(x, y) x == 0) == ConditionalSet$new(function(z) z == 0))
+  expect_true(ConditionalSet$new(function(z) z == 0) == ConditionalSet$new(function(x, y) x == 0))
 })
 
 test_that("strprint",{

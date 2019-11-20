@@ -2,47 +2,11 @@
 % Please edit documentation in R/union.R
 \name{union}
 \alias{union}
-\alias{union.PosReals}
-\alias{union.NegReals}
-\alias{union.PosRationals}
-\alias{union.NegRationals}
-\alias{union.PosIntegers}
-\alias{union.NegIntegers}
-\alias{union.Reals}
-\alias{union.Set}
-\alias{union.Interval}
-\alias{union.FuzzySet}
-\alias{union.FuzzyTuple}
-\alias{union.ConditionalSet}
 \alias{+.Set}
 \alias{|.Set}
 \title{Union of Two Sets}
 \usage{
-union(x, y)
-
-\method{union}{PosReals}(x, y)
-
-\method{union}{NegReals}(x, y)
-
-\method{union}{PosRationals}(x, y)
-
-\method{union}{NegRationals}(x, y)
-
-\method{union}{PosIntegers}(x, y)
-
-\method{union}{NegIntegers}(x, y)
-
-\method{union}{Reals}(x, y)
-
-\method{union}{Set}(x, y)
-
-\method{union}{Interval}(x, y)
-
-\method{union}{FuzzySet}(x, y)
-
-\method{union}{FuzzyTuple}(x, y)
-
-\method{union}{ConditionalSet}(x, y)
+union(...)
 
 \method{+}{Set}(x, y)
 

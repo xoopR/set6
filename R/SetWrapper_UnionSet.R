@@ -39,7 +39,7 @@ UnionSet$set("public","strprint",function(n = 2){
   paste0(str, collapse = collapse)
 })
 UnionSet$set("active","elements",function(){
-  els = unique(unlist(sapply(self$wrappedSets, function(x) x$elements)))
+  els = unlist(unique(as.vector(rsapply(self$wrappedSets, elements, active = TRUE))))
   if(any(is.nan(els)))
     return(NaN)
   else

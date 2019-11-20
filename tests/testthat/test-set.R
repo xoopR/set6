@@ -78,15 +78,6 @@ test_that("strprint",{
   expect_equal(Set$new(1,2,3)$strprint(n = 1),"{1,...,3}")
 })
 
-test_that("power_set",{
-  expect_equal(Set$new(1,2)$power_set(),Set$new(Set$new(), Set$new(1),Set$new(2),Set$new(1,2)))
-  expect_equal(getR6Class(Set$new(1,2)$power_set(FALSE)), "Powerset")
-  expect_equal(Set$new(1,2)$power_set(FALSE)$strprint(), paste0("\U2118({1, 2})"))
-  use_unicode(FALSE)
-  expect_equal(Set$new(1,2)$power_set(FALSE)$strprint(), "2^{1, 2}")
-  use_unicode(TRUE)
-})
-
 test_that("isSubset",{
   x <- Set$new(1,2,3)
   expect_false(x$isSubset(Set$new(1,2,3), proper = T))

@@ -2,35 +2,20 @@
 % Please edit documentation in R/product.R
 \name{product}
 \alias{product}
-\alias{product.Set}
-\alias{product.Interval}
-\alias{product.FuzzySet}
-\alias{product.ConditionalSet}
-\alias{product.SetWrapper}
 \alias{*.Set}
 \title{Cartesian Product of Two Sets}
 \usage{
-product(x, y, ...)
-
-\method{product}{Set}(x, y, simplify = TRUE, ...)
-
-\method{product}{Interval}(x, y, ...)
-
-\method{product}{FuzzySet}(x, y, simplify = TRUE, ...)
-
-\method{product}{ConditionalSet}(x, y, ...)
-
-\method{product}{SetWrapper}(x, y, ...)
+product(..., nest = FALSE, simplify = FALSE)
 
 \method{*}{Set}(x, y)
 }
 \arguments{
-\item{x, y}{Set}
-
 \item{...}{additional arguments}
 
 \item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set}
 otherwise a \code{ProductSet}}
+
+\item{x, y}{Set}
 }
 \value{
 An object inheriting from \code{Set} containing the cartesian product of elements in both \code{x} and \code{y}.

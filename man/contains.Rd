@@ -2,7 +2,11 @@
 % Please edit documentation in R/Set.R
 \name{contains}
 \alias{contains}
+\alias{\%inset\%}
 \title{Are Elements Contained in the Set?}
+\usage{
+x \%inset\% y
+}
 \arguments{
 \item{x}{Set}
 

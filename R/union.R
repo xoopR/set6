@@ -48,184 +48,170 @@
 #' Set$new(-Inf, Inf) + Reals$new()
 #'
 #' @export
-union <- function(x, y){
-  if(!inherits(x, "R6"))
-    return(base::union(x, y))
+union <- function(...){
+  sets = list(...)
 
-  # if possible convert Interval to Set
-  if(!testMessage(as.Set(x)) & testInterval(x))
-    x = as.Set(x)
+  sets = operation_cleaner(sets, "UnionSet", nest = FALSE)
 
-  if(x == y)
-    return(x)
+  classes = sapply(sets, getR6Class)
+  if ("PosReals" %in% classes & "NegReals" %in% classes){
+    sets = c(sets, Reals$new())
+    sets = sets[-match(c("PosReals", "NegReals"), classes)]
+  } else if ("PosRationals" %in% classes & "NegRationals" %in% classes){
+    sets = c(sets, Rationals$new())
+    sets = sets[-match(c("PosRationals", "NegRationals"), classes)]
+  } else if ("PosIntegers" %in% classes & "NegIntegers" %in% classes){
+    sets = c(sets, Integers$new())
+    sets = sets[-match(c("PosIntegers", "NegIntegers"), classes)]
+  }
 
-  if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
-    return(UnionSet$new(c(x, y)))
+  classes = sapply(sets, getR6Class)
 
-  if (x$isSubset(y))
-    return(x)
-  else if (y$isSubset(x))
-    return(y)
+  if ("Reals" %in% classes & "{-Inf, Inf}" %in% rsapply(sets, strprint)){
+    sets = c(sets, ExtendedReals$new())
+    sets = sets[-c(match("Reals", classes), match("{-Inf, Inf}", rsapply(sets, strprint)))]
+  }
 
-  UseMethod("union", x)
-}
-#' @rdname union
-#' @export
-union.PosReals <- function(x, y){
-  if(getR6Class(y) == "NegReals")
-    return(Reals$new())
-  else
-    return(union.Interval(x, y))
-}
-#' @rdname union
-#' @export
-union.NegReals <- function(x, y){
-  if(getR6Class(y) == "PosReals")
-    return(Reals$new())
-  else
-    return(union.Interval(x, y))
-}
-#' @rdname union
-#' @export
-union.PosRationals <- function(x, y){
-  if(getR6Class(y) == "NegRationals")
-    return(Rationals$new())
-  else
-    return(union.Interval(x, y))
-}
-#' @rdname union
-#' @export
-union.NegRationals <- function(x, y){
-  if(getR6Class(y) == "PosRationals")
-    return(Rationals$new())
-  else
-    return(union.Interval(x, y))
-}
-#' @rdname union
-#' @export
-union.PosIntegers <- function(x, y){
-  if(getR6Class(y) == "NegIntegers")
-    return(Integers$new())
-  else
-    return(union.Interval(x, y))
-}
-#' @rdname union
-#' @export
-union.NegIntegers <- function(x, y){
-  if(getR6Class(y) == "PosIntegers")
-    return(Integers$new())
-  else
-    return(union.Interval(x, y))
-}
-#' @rdname union
-#' @export
-union.Reals <- function(x, y){
-  if(y$equals(Set$new(-Inf, Inf)))
-    return(ExtendedReals$new())
-  else
-    return(union.Interval(x, y))
-}
-#' @rdname union
-#' @export
-union.Set <- function(x, y){
-  if (inherits(y, "Interval")){
-    if (x$equals(Set$new(-Inf, Inf)) & getR6Class(y) == "Reals")
-      return(ExtendedReals$new())
-
-    if (testMessage(as.Set(y)))
-      return(UnionSet$new(list(x, y)))
-    else
-      return(union(x, as.Set(y)))
-  } else if (inherits(y, "ConditionalSet")) {
-    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
+  if(length(sets) == 0)
     return(Set$new())
-  } else if (inherits(x, "Tuple"))
-    return(Tuple$new(x$elements, y$elements))
-  else
-    return(Set$new(x$elements, y$elements))
-}
-#' @rdname union
-#' @export
-union.Interval <- function(x, y){
+  else if(length(sets) == 1)
+    return(sets[[1]])
 
-  if (inherits(y, "ConditionalSet")) {
-    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
-    return(Set$new())
-  } else if(inherits(y, "Interval")){
-    if (x$upper > y$lower & x$lower < y$lower)
-      return(Interval$new(x$lower, y$upper,
-                          type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-    else if(y$upper > x$lower & y$lower < x$lower)
-      return(Interval$new(y$lower, x$upper,
-                          type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-    else if(x$upper < y$lower)
-      return(UnionSet$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
-                       type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-    else if(y$upper < x$lower)
-      return(UnionSet$new(setlist = list(y,x), lower = y$lower, upper = x$upper,
-                       type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-    else if(y$upper == x$lower){
-      if(!testClosedAbove(y) & !testClosedBelow(x))
-        return(UnionSet$new(setlist = list(x,y), lower = y$lower, upper = x$upper,
-                         type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-      else
-        return(Interval$new(y$lower, x$upper,
-                            type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-    } else if (x$upper == y$lower){
-      if(!testClosedAbove(x) & !testClosedBelow(y))
-        return(UnionSet$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
-                         type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-      else
-        return(Interval$new(x$lower, y$upper,
-                            type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
+  if(length(unique(rsapply(sets, strprint))) == 1)
+    return(sets[[1]])
+
+  rm_ind = c()
+  for(i in 1:length(sets)){
+    for(j in 1:length(sets)){
+      if(i != j){
+        # separate subset and proper subset to prevent both sets being removed due to equality
+        if(sets[[i]] < sets[[j]] | (sets[[i]] == sets[[j]] & i < j))
+          rm_ind = c(rm_ind, i)
+      }
     }
-  } else
-    return(union(y, x))
-}
-#' @rdname union
-#' @export
-union.FuzzySet <- function(x, y){
-  if(inherits(y, "ConditionalSet")){
-    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
-    return(Set$new())
-  } else{
-    y = as.FuzzySet(y)
-    return(FuzzySet$new(elements = c(x$elements, y$elements),
-                        membership = c(x$membership(), y$membership())))
   }
-}
-#' @rdname union
-#' @export
-union.FuzzyTuple <- function(x, y){
-  if(inherits(y, "ConditionalSet")){
-    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
+  if(!is.null(rm_ind))
+    sets = sets[-rm_ind]
+
+  if(length(sets) == 0)
     return(Set$new())
-  } else{
-    y = as.FuzzyTuple(y)
-    return(FuzzyTuple$new(elements = c(x$elements, y$elements),
-                        membership = c(x$membership(), y$membership())))
-  }
+  else if(length(sets) == 1)
+    return(sets[[1]])
+
+  classes = sapply(sets, getR6Class)
+  # hacky fix for SpecialSets
+  classes[sapply(sets, function(x) inherits(x, "Interval"))] = "Interval"
+
+  conditionals = fuzzies = intervals = crisps = NULL
+
+  if(any(grepl("ConditionalSet", classes)))
+    conditionals = .union_conditionalset(sets[grepl("ConditionalSet", classes)])
+  if(any(grepl("Fuzzy", classes)))
+    fuzzies = .union_fuzzyset(sets[grepl("Fuzzy", classes)])
+  if(any(grepl("Interval", classes)))
+    intervals = .union_interval(sets[grepl("Interval", classes)])
+  if(any(classes %in% c("Set" , "Tuple")))
+    crisps = .union_set(sets[classes %in% c("Set" , "Tuple")])
+
+
+  sets = c(crisps, intervals, conditionals, fuzzies)
+
+  if(length(sets) == 1)
+    return(sets[[1]])
+  else
+    return(UnionSet$new(sets))
 }
-#' @rdname union
-#' @export
-union.ConditionalSet <- function(x, y){
-  if(!inherits(y, "ConditionalSet")){
-    message(sprintf("Union of %s and %s is not compatible.", x$strprint(), y$strprint()))
-    return(Set$new())
-  } else {
-    condition = function(){}
-    names = unique(names(c(formals(x$condition), formals(y$condition))))
-    formals <- rep(list(bquote()), length(names))
-    names(formals) = names
-    formals(condition) = formals
-        body(condition) = substitute(bx | by,
-                                     list(bx = body(x$condition),
-                                          by = body(y$condition)))
-        # in future updates we can change this so the union of the argument classes is kept
-        # not just the argclass of x
-        class = c(x$class, y$class)[!duplicated(names(c(x$class, y$class)))]
-        return(ConditionalSet$new(condition = condition, argclass = class))
+
+.union_set <- function(sets){
+  if(length(sets) == 1)
+    return(sets[[1]])
+
+  if(any(grepl("Set", sapply(sets, getR6Class))))
+    return(Set$new(rsapply(sets, elements, active = TRUE)))
+  else
+    return(Tuple$new(rsapply(sets, elements, active = TRUE)))
+}
+.union_interval <- function(sets){
+  if(length(sets) == 1)
+    return(sets[[1]])
+
+  rm = c()
+  sets = sets[order(rsapply(sets, lower, active = TRUE))]
+  for(i in 2:length(sets)){
+    if(sets[[i]]$lower > sets[[i-1]]$lower & sets[[i]]$lower < sets[[i-1]]$upper){
+      sets[[i]] = Interval$new(sets[[i-1]]$lower, sets[[i]]$upper,
+                               type = paste0(substr(sets[[i-1]]$type,1,1),
+                                             substr(sets[[i]]$type,2,2)))
+      rm = c(rm, i - 1)
+    }
   }
+  if(!is.null(rm))
+    sets = sets[-rm]
+
+  return(sets)
+#
+#
+#   # function to seee which overlap,add these into a single interval then UnionSet the rest
+#     if (x$upper > y$lower & x$lower < y$lower)
+#       return(Interval$new(x$lower, y$upper,
+#                           type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
+#     else if(y$upper > x$lower & y$lower < x$lower)
+#       return(Interval$new(y$lower, x$upper,
+#                           type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
+#     else if(x$upper < y$lower)
+#       return(UnionSet$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
+#                        type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
+#     else if(y$upper < x$lower)
+#       return(UnionSet$new(setlist = list(y,x), lower = y$lower, upper = x$upper,
+#                        type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
+#     else if(y$upper == x$lower){
+#       if(!testClosedAbove(y) & !testClosedBelow(x))
+#         return(UnionSet$new(setlist = list(x,y), lower = y$lower, upper = x$upper,
+#                          type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
+#       else
+#         return(Interval$new(y$lower, x$upper,
+#                             type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
+#     } else if (x$upper == y$lower){
+#       if(!testClosedAbove(x) & !testClosedBelow(y))
+#         return(UnionSet$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
+#                          type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
+#       else
+#         return(Interval$new(x$lower, y$upper,
+#                             type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
+#     }
+}
+.union_fuzzyset <- function(sets){
+  if(length(sets) == 1)
+    return(sets[[1]])
+
+  if(any(grepl("FuzzySet", sapply(sets, getR6Class))))
+    return(FuzzySet$new(elements = rsapply(sets, elements, active = TRUE),
+                        membership = rsapply(sets, membership)))
+  else
+    return(FuzzyTuple$new(elements = rsapply(sets, elements, active = TRUE),
+                        membership = rsapply(sets, membership)))
+}
+.union_conditionalset <- function(sets){
+  if(length(sets) == 1)
+    return(sets[[1]])
+
+  condition = function(){}
+  names = unique(names(unlist(sapply(sets,function(x) formals(x$condition)))))
+  formals <- rep(list(bquote()), length(names))
+  names(formals) = names
+  formals(condition) = formals
+  body(condition) = substitute(bx | by, list(bx = body(sets[[1]]$condition),
+                                             by = body(sets[[2]]$condition)))
+  if(length(sets) > 2){
+    for(i in 3:length(sets))
+      body(condition) = substitute(bx | by, list(bx = body(condition),
+                                                 by = body(sets[[i]]$condition)))
+  }
+
+  # in future updates we can change this so the union of the argument classes is kept
+  # not just the argclass of x
+  class = unlist(rsapply(sets, class, active = TRUE))[!duplicated(names(unlist(rsapply(sets, class, active = TRUE))))]
+  return(ConditionalSet$new(condition = condition, argclass = class))
 }
 
 #' @rdname union

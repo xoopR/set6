@@ -14,19 +14,20 @@ test_that("special sets",{
   expect_equal(NegRationals$new() + PosRationals$new(), Rationals$new())
   expect_equal(PosIntegers$new() + NegIntegers$new(), Integers$new())
   expect_equal(NegIntegers$new() + PosIntegers$new(), Integers$new())
-  expect_equal(Reals$new() + Set$new(-Inf, Inf), ExtendedReals$new())
   use_unicode(FALSE)
   expect_equal((Reals$new() + Set$new("a"))$strprint(), "{a} U R")
   use_unicode(TRUE)
 })
 
 test_that("set",{
-  expect_equal(Set$new(-Inf, Inf) + Reals$new(), ExtendedReals$new())
+  expect_true((Set$new(-Inf, Inf) + Reals$new())$equals(ExtendedReals$new()))
   expect_true((Set$new(1,2) | Interval$new(3, 4, class = "integer"))$equals(Set$new(1:4)))
   expect_equal(getR6Class(Set$new(1,2) + Interval$new(3, 4)), "UnionSet")
-  expect_message(expect_equal(Set$new(1,2) + ConditionalSet$new(function(x) TRUE), Set$new()), "Union of")
+  use_unicode(FALSE)
+  expect_equal((Set$new(1,2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {TRUE : x in R}")
+  use_unicode(TRUE)
   expect_true(union(Set$new(1,2,3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
-  expect_false(union(Tuple$new(1,2,3), Set$new("a", 1i))$equals(Tuple$new(1, 2, 3, 1i, "a")))
+  expect_equal(Set$new(1,2) + Set$new(5,7) + Set$new(1,10), Set$new(1,2,5,7,10))
 })
 
 test_that("interval",{
@@ -36,15 +37,18 @@ test_that("interval",{
 
 test_that("fuzzy",{
   expect_equal(FuzzySet$new(1,0.1) + FuzzySet$new(2, 0.3), FuzzySet$new(1,0.1,2,0.3))
-  expect_equal(FuzzySet$new(1,0.1) + Set$new(2), FuzzySet$new(1,0.1,2,1))
+  expect_equal(FuzzySet$new(1,0.1) + Set$new(2), Set$new(1,2))
   expect_equal(FuzzyTuple$new(1,0.1) + FuzzyTuple$new(2, 0.3), FuzzyTuple$new(1,0.1,2,0.3))
-  expect_equal(FuzzyTuple$new(1,0.1) + Set$new(2), FuzzyTuple$new(1,0.1,2,1))
+  expect_equal(FuzzyTuple$new(1,0.1) + Set$new(2), Set$new(1,2))
+  expect_equal(FuzzyTuple$new(1,0.1) + Tuple$new(2), Tuple$new(1,2))
 })
 
 test_that("conditional",{
   expect_equal(ConditionalSet$new(function(x) x == 0) + ConditionalSet$new(function(y) y > 0),
                ConditionalSet$new(function(x, y) x == 0 | y > 0))
-  expect_message(expect_equal(ConditionalSet$new(function(x) x == 0) + Set$new(1), Set$new()),"Union of")
+  expect_equal(ConditionalSet$new(function(x) x == 0) + ConditionalSet$new(function(y) y > 0) +
+                 ConditionalSet$new(function(z) z == 2),
+               ConditionalSet$new(function(x,y,z) x == 0|y>0|z==2))
 })
 
 test_that("contains",{

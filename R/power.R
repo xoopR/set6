@@ -29,41 +29,19 @@
 #' FuzzySet$new(1,0.1,2,0.5)^2
 #'
 #' @export
-power <- function(x, power, ...){
-  UseMethod("power")
+power <- function(x, power, simplify = FALSE, nest = FALSE, ...){
+  if(power == 1)
+    return(x)
+
+  if (getR6Class(x) %in% c("Set", "FuzzySet", "Tuple", "FuzzyTuple") & simplify){
+    x = rep(list(x), power)
+    return(do.call(product, c(x, list(nest = nest, simplify = TRUE))))
+  } else if (inherits(x, "ExponentSet"))
+    return(ExponentSet$new(x$wrappedSets[[1]], x$power * power))
+  else
+    return(ExponentSet$new(x, power))
 }
-#' @rdname power
-#' @export
-power.Set <- function(x, power, simplify = TRUE, ...){
-  if(simplify){
-    y = x
-    for (i in 1:(power-1))
-      y = product(x, y)
-    return(y)
-  } else {
-    ExponentSet$new(x, power)
-  }
-}
-#' @rdname power
-#' @export
-power.Interval <- function(x, power, ...){
-  ExponentSet$new(x, power)
-}
-#' @rdname power
-#' @export
-power.ConditionalSet <- function(x, power, ...){
-  return(x)
-}
-#' @rdname power
-#' @export
-power.SetWrapper <- function(x, power, ...){
-  ExponentSet$new(x, power)
-}
-#' @rdname power
-#' @export
-power.ExponentSet <- function(x, power, ...){
-  ExponentSet$new(x$wrappedSets[[1]], x$power * power)
-}
+
 #' @rdname power
 #' @export
 `^.Set` <- function(e1, e2){

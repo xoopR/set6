@@ -2,25 +2,10 @@
 % Please edit documentation in R/power.R
 \name{power}
 \alias{power}
-\alias{power.Set}
-\alias{power.Interval}
-\alias{power.ConditionalSet}
-\alias{power.SetWrapper}
-\alias{power.ExponentSet}
 \alias{^.Set}
 \title{Power of a Set}
 \usage{
-power(x, power, ...)
-
-\method{power}{Set}(x, power, simplify = TRUE, ...)
-
-\method{power}{Interval}(x, power, ...)
-
-\method{power}{ConditionalSet}(x, power, ...)
-
-\method{power}{SetWrapper}(x, power, ...)
-
-\method{power}{ExponentSet}(x, power, ...)
+power(x, power, simplify = FALSE, nest = FALSE, ...)
 
 \method{^}{Set}(e1, e2)
 }
@@ -29,10 +14,10 @@ power(x, power, ...)
 
 \item{power, e2}{power to raise set to}
 
-\item{...}{additional arguments}
-
 \item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set}
 otherwise a \code{ExponentSet}}
+
+\item{...}{additional arguments}
 }
 \value{
 An R6 object of class \code{Set} or ExponentSet\code{inheriting from}ProductSet`.
