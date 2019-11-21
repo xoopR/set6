@@ -20,10 +20,14 @@ isThat <- function(cond){
   return(testThat(cond))
 }
 
-makeChecks <- function(assertionName, cond, errormsg, args = alist(object=,errormsg=errormsg),
+makeChecks <- function(assertionName, cond, errormsg, args,
                        pos = -1){
+
+  if(missing(args))
+    args = c(alist(object = ), list(errormsg = errormsg))
+
   cond = substitute(cond)
-  errormsg = substitute(errormsg)
+  # errormsg = substitute(errormsg)
   value = function(){}
   formals(value) = args
   body(value) = substitute(assertThat(object,arg1,errormsg),list(arg1=cond))

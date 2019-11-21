@@ -62,7 +62,7 @@ require non-unique elements. They are also the return type of the product of set
 \code{isSubset(x, proper = FALSE)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Mathematical Methods} \tab \strong{Link} \cr
-\code{complement()} \tab \link{complement} \cr
+\code{absComplement()} \tab \link{absComplement} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Representation Methods} \tab \strong{Link} \cr
 \code{strprint(n = 2)} \tab \link{strprint} \cr

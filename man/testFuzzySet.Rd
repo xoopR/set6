@@ -6,11 +6,11 @@
 \alias{assertFuzzySet}
 \title{assert/check/test/FuzzySet}
 \usage{
-testFuzzySet(object, errormsg = errormsg)
+testFuzzySet(object, errormsg = "This is not an R6 FuzzySet object")
 
-checkFuzzySet(object, errormsg = errormsg)
+checkFuzzySet(object, errormsg = "This is not an R6 FuzzySet object")
 
-assertFuzzySet(object, errormsg = errormsg)
+assertFuzzySet(object, errormsg = "This is not an R6 FuzzySet object")
 }
 \arguments{
 \item{object}{object to test}

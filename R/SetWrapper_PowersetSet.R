@@ -1,14 +1,14 @@
-#' @name Powerset
+#' @name PowersetSet
 #' @template SetWrapper
 #' @templateVar operation exponentiation
-#' @templateVar class Powerset
-#' @templateVar constructor Powerset$new(set)
+#' @templateVar class PowersetSet
+#' @templateVar constructor PowersetSet$new(set)
 #' @templateVar arg1 `set` \tab list \tab Set to wrap. \cr
 #'
 #' @export
 NULL
-Powerset <- R6::R6Class("Powerset", inherit = ProductSet)
-Powerset$set("public", "initialize", function(set){
+PowersetSet <- R6::R6Class("PowersetSet", inherit = ProductSet)
+PowersetSet$set("public", "initialize", function(set){
   #
   # private$.properties$cardinality = Tuple$new(rep(set$properties$cardinality, power))
   # private$.properties$countability = Tuple$new(rep(set$properties$countability, power))
@@ -16,20 +16,21 @@ Powerset$set("public", "initialize", function(set){
 
   super$initialize(setlist = list(set), lower = Set$new(), upper = set, type = "{}")
 })
-Powerset$set("public", "strprint", function(n = 2){
+PowersetSet$set("public", "strprint", function(n = 2){
   if(use_unicode())
     paste0("\U2118(", self$wrappedSets[[1]]$strprint(n),")")
   else
     paste0("2^", self$wrappedSets[[1]]$strprint(n))
 })
-Powerset$set("public", "contains", function(x, all = FALSE, bound = NULL){
+PowersetSet$set("public", "contains", function(x, all = FALSE, bound = NULL){
   x = self$wrappedSets[[1]]$isSubset(x, proper = FALSE)
   if(all)
     return(all(x))
   else
     return(x)
 })
-Powerset$set("public", "isSubset", function(x, proper = FALSE){
+PowersetSet$set("public", "isSubset", function(x, proper = FALSE){
+
   if(self$equals(x)){
     if(proper)
       return(FALSE)
@@ -37,8 +38,14 @@ Powerset$set("public", "isSubset", function(x, proper = FALSE){
       return(TRUE)
   }
 
-  if(getR6Class(x) == "Powerset")
+  if(getR6Class(x) == "PowersetSet")
     return(self$wrappedSets[[1]]$isSubset(x$wrappedSets[[1]], proper = proper))
 
-  all(self$wrappedSets[[1]]$isSubset(x$elements, proper = FALSE))
+  if(!(getR6Class(x) %in% c("Tuple","Set")))
+    return(FALSE)
+
+  if(!testSet(x$elements[[1]]))
+    return(FALSE)
+
+  all(self$wrappedSets[[1]]$isSubset(x$elements[[1]], proper = FALSE))
 })

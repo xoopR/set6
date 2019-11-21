@@ -1,8 +1,8 @@
-#' @name DifferenceSet
+#' @name ComplementSet
 #' @template SetWrapper
-#' @templateVar operation difference
-#' @templateVar class DifferenceSet
-#' @templateVar constructor DifferenceSet$new(addset, subtractset, lower = NULL, upper = NULL, type = NULL)
+#' @templateVar operation complement
+#' @templateVar class ComplementSet
+#' @templateVar constructor ComplementSet$new(addset, subtractset, lower = NULL, upper = NULL, type = NULL)
 #' @templateVar arg1 `addset` \tab list \tab Sets to add. \cr
 #' @templateVar arg2 `subtractset` \tab list \tab Sets to subtract. \cr
 #' @templateVar field1 `addedSet` \tab [addedSet] \cr
@@ -10,8 +10,8 @@
 #'
 #' @export
 NULL
-DifferenceSet <- R6::R6Class("DifferenceSet", inherit = SetWrapper)
-DifferenceSet$set("public", "initialize", function(addset, subtractset, lower = NULL, upper = NULL, type = NULL){
+ComplementSet <- R6::R6Class("ComplementSet", inherit = SetWrapper)
+ComplementSet$set("public", "initialize", function(addset, subtractset, lower = NULL, upper = NULL, type = NULL){
   if(is.null(lower)){
     if(!any(subtractset$contains(addset$lower, bound = TRUE)))
       lower = addset$lower
@@ -43,7 +43,7 @@ DifferenceSet$set("public", "initialize", function(addset, subtractset, lower = 
   private$.subtractedSet = subtractset
   super$initialize(setlist = c(addset, subtractset), lower = lower, upper = upper, type = type)
 })
-DifferenceSet$set("public","strprint",function(n = 2){
+ComplementSet$set("public","strprint",function(n = 2){
   if(inherits(self$addedSet, "SetWrapper"))
     add = paste0("(",self$addedSet$strprint(n),")")
   else
@@ -56,13 +56,13 @@ DifferenceSet$set("public","strprint",function(n = 2){
 
  paste0(add, " \\ ", sub)
 })
-DifferenceSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
+ComplementSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
   add = self$addedSet$contains(x, all = all, bound = bound)
   diff = self$subtractedSet$contains(x, all = all, bound = bound)
 
   add & !diff
 })
-DifferenceSet$set("active","elements",function(){
+ComplementSet$set("active","elements",function(){
   add_els = self$addedSet$elements
   if(any(is.nan(add_els)))
     return(NaN)
@@ -73,7 +73,7 @@ DifferenceSet$set("active","elements",function(){
 
   add_els[!(add_els %in% sub_els)]
 })
-DifferenceSet$set("active","length",function(){
+ComplementSet$set("active","length",function(){
   if(self$addedSet$length == Inf)
     return(Inf)
   else
@@ -83,16 +83,16 @@ DifferenceSet$set("active","length",function(){
 #' @name addedSet
 #' @rdname addedSet
 #' @title Get Added Sets in Wrapper
-#' @description For the `DifferenceSet` wrapper, `X-Y`, gets the set `X`.
+#' @description For the `ComplementSet` wrapper, `X-Y`, gets the set `X`.
 #' @return `Set`.
-#' @seealso [DifferenceSet], [subtractedSet]
-DifferenceSet$set("active","addedSet", function() return(private$.addedSet))
+#' @seealso [ComplementSet], [subtractedSet]
+ComplementSet$set("active","addedSet", function() return(private$.addedSet))
 #' @name subtractedSet
 #' @rdname subtractedSet
 #' @title Get Subtracted Sets in Wrapper
-#' @description For the `DifferenceSet` wrapper, `X-Y`, gets the set `Y`.
+#' @description For the `ComplementSet` wrapper, `X-Y`, gets the set `Y`.
 #' @return `Set`
-#' @seealso [DifferenceSet], [addedSet]
-DifferenceSet$set("active","subtractedSet",function() return(private$.subtractedSet))
-DifferenceSet$set("private",".addedSet",Set$new())
-DifferenceSet$set("private",".subtractedSet",Set$new())
+#' @seealso [ComplementSet], [addedSet]
+ComplementSet$set("active","subtractedSet",function() return(private$.subtractedSet))
+ComplementSet$set("private",".addedSet",Set$new())
+ComplementSet$set("private",".subtractedSet",Set$new())

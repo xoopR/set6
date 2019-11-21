@@ -1,4 +1,4 @@
-#' @name product
+#' @name setproduct
 #' @param ... [Set]s
 #' @param x,y [Set]
 #' @param simplify logical, if `TRUE` returns the result in its simplest (unwrapped) form, usually a `Set`
@@ -9,13 +9,13 @@
 #' @return Either an object of class `ProductSet` or an unwrapped object inheriting from `Set`.
 #' @description Returns the cartesian product of objects inheriting from class `Set`.
 #'
-#' @details The cartesian product of multiple sets is often implemented in programming languages as being
-#' identical to the cartesian product of two sets being applied recursively. However, for sets \eqn{X, Y, Z},
-#' \deqn{X × Y × Z \ne (X × Y) × Z}{X × Y × Z != (X × Y) × Z} [product] accomodates this by
-#' adding the `nest` argument. If `nest == FALSE` then \eqn{X × Y × Z == (X × Y) × Z}, otherwise they
-#' are identical. As it appears the former (`!nest`) is more common, `nest = FALSE` is the default and thus
-#' `X * Y * Z` = \eqn{X × Y × Z}. Use `product(X, Y, Z)` for \eqn{(X × Y) × Z}. The cartesian
-#' product of \eqn{N} sets, \eqn{X1,...,XN}, is defined as
+#' @details The cartesian product of multiple sets, the 'n-ary Cartesian product', is often implemented in programming languages as being
+#' identical to the cartesian product of two sets applied recursively. However, for sets \eqn{X, Y, Z},
+#' \deqn{X × Y × Z \ne (X × Y) × Z}{X × Y × Z != (X × Y) × Z} [setproduct] accomodates this by
+#' adding the `nest` argument. If `nest == TRUE` then \eqn{X*Y*Z == (X × Y) × Z}, i.e. the cartesian
+#' product for two sets is applied recursively. If `nest == FALSE` then \eqn{X*Y*Z == (X × Y × Z)} and
+#' the n-ary cartesian product is computed. As it appears the latter (n-ary product) is more common, `nest = FALSE`
+#' is the default. The N-ary cartesian product of \eqn{N} sets, \eqn{X1,...,XN}, is defined as
 #' \deqn{X1 × ... × XN = \\{(x1,...,xN) : x1 \epsilon X1 \cap ... \cap xN \epsilon XN\\}}{X1 × ... × XN = {(x1,...,xN) : x1 \epsilon X1 and ... and xN \epsilon xN\}}
 #' where \eqn{(x1,...,xN)} is a tuple.
 #'
@@ -23,18 +23,18 @@
 #' @examples
 #' # difference between nesting
 #' Set$new(1, 2) * Set$new(2, 3) * Set$new(4, 5)
-#' product(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE) # same as above
-#' product(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
-#' unnest_set = product(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE)
-#' nest_set = product(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
+#' setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE) # same as above
+#' setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
+#' unnest_set = setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE)
+#' nest_set = setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
 #' # note the difference when using contains
 #' unnest_set$contains(Tuple$new(1,3,5))
 #' nest_set$contains(Tuple$new(Tuple$new(1, 3), 5))
 #'
 #' # product of two sets
 #' Set$new(-2:4) * Set$new(2:5)
-#' product(Set$new(1,4,"a"), Set$new("a", 6))
-#' product(Set$new(1,4,"a"), Set$new("a", 6), simplify = TRUE)
+#' setproduct(Set$new(1,4,"a"), Set$new("a", 6))
+#' setproduct(Set$new(1,4,"a"), Set$new("a", 6), simplify = TRUE)
 #'
 #' # product of two intervals
 #' Interval$new(1, 10) * Interval$new(5, 15)
@@ -58,7 +58,7 @@
 #' PosReals$new() * NegReals$new()
 #'
 #' @export
-product <- function(..., simplify = FALSE, nest = FALSE){
+setproduct <- function(..., simplify = FALSE, nest = FALSE){
   sets = operation_cleaner(list(...), "ProductSet", nest)
 
   if(length(sets) == 0)
@@ -89,8 +89,8 @@ product <- function(..., simplify = FALSE, nest = FALSE){
                                            membership = x[((ncol(mat)/2)+1):(ncol(mat))]))))
 }
 
-#' @rdname product
+#' @rdname setproduct
 #' @export
 `*.Set` <- function(x, y){
-  product(x, y)
+  setproduct(x, y)
 }

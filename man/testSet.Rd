@@ -6,11 +6,11 @@
 \alias{assertSet}
 \title{assert/check/test/Set}
 \usage{
-testSet(object, errormsg = errormsg)
+testSet(object, errormsg = "This is not an R6 Set object")
 
-checkSet(object, errormsg = errormsg)
+checkSet(object, errormsg = "This is not an R6 Set object")
 
-assertSet(object, errormsg = errormsg)
+assertSet(object, errormsg = "This is not an R6 Set object")
 }
 \arguments{
 \item{object}{object to test}

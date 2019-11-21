@@ -6,11 +6,11 @@
 \alias{assertClosed}
 \title{assert/check/test/Closed}
 \usage{
-testClosed(object, errormsg = errormsg)
+testClosed(object, errormsg = "This is not a closed set")
 
-checkClosed(object, errormsg = errormsg)
+checkClosed(object, errormsg = "This is not a closed set")
 
-assertClosed(object, errormsg = errormsg)
+assertClosed(object, errormsg = "This is not a closed set")
 }
 \arguments{
 \item{object}{object to test}

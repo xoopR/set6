@@ -1,4 +1,4 @@
-#' @name union
+#' @name setunion
 #' @param ... [Set]s
 #' @param x,y [Set]
 #' @title Union of Sets
@@ -16,7 +16,7 @@
 #' # union of Sets
 #'
 #' Set$new(-2:4) + Set$new(2:5)
-#' union(Set$new(1,4,"a"), Set$new("a", 6))
+#' setunion(Set$new(1,4,"a"), Set$new("a", 6))
 #' Set$new(1,2) + Set$new("a", 1i) + Set$new(9)
 #'
 #' # union of intervals
@@ -46,7 +46,7 @@
 #' Set$new(-Inf, Inf) + Reals$new()
 #'
 #' @export
-union <- function(...){
+setunion <- function(...){
   sets = list(...)
 
   sets = operation_cleaner(sets, "UnionSet", nest = FALSE)
@@ -212,14 +212,14 @@ union <- function(...){
   return(ConditionalSet$new(condition = condition, argclass = class))
 }
 
-#' @rdname union
+#' @rdname setunion
 #' @export
 `+.Set` <- function(x, y){
-  union(x, y)
+  setunion(x, y)
 }
 
-#' @rdname union
+#' @rdname setunion
 #' @export
 '|.Set' <- function(x, y){
-  union(x, y)
+  setunion(x, y)
 }

@@ -1,5 +1,5 @@
-#' @name intersect
-#' @rdname intersect
+#' @name setintersect
+#' @rdname setintersect
 #' @param x,y Set
 #' @title Intersection of Two Sets
 #' @return A `Set` consisting of elements in both `x` and `y`.
@@ -12,14 +12,12 @@
 #' The intersection of two [ConditionalSet]s is defined by combining their defining functions by an
 #' 'and', `&`, operator. See examples.
 #'
-#' [base::intersect] is called if `x` does not inherit from an R6 class, thus avoiding masking.
-#'
 #' @family operators
 #' @examples
 #' # intersection of two sets
 #'
 #' Set$new(-2:4) & Set$new(2:5)
-#' intersect(Set$new(1,4,"a"), Set$new("a", 6))
+#' setintersect(Set$new(1,4,"a"), Set$new("a", 6))
 #' Set$new(1:4) & Set$new(5:7)
 #'
 #' # intersection of two intervals
@@ -51,15 +49,13 @@
 #'     ConditionalSet$new(function(x) x == 3)
 #'
 #' @export
-intersect <- function(x, y){
-  if(!inherits(x, "R6"))
-    return(base::intersect(x, y))
+setintersect <- function(x, y){
 
   if(x$length == 0 | y$length == 0)
     return(Set$new())
 
   if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
-    UseMethod("intersect")
+    UseMethod("setintersect")
 
   if (y$isSubset(x, proper = FALSE))
     return(x)
@@ -67,7 +63,7 @@ intersect <- function(x, y){
     return(y)
 
   if(testConditionalSet(x) | testConditionalSet(y))
-    UseMethod("intersect")
+    UseMethod("setintersect")
 
   if(testMessage(as.Set(x)))
     x = suppressMessages(as.Interval(x))
@@ -80,21 +76,21 @@ intersect <- function(x, y){
     y = as.Set(y)
 
   if(any(grepl("NaN", x$elements)) | any(grepl("NaN", y$elements)))
-    UseMethod("intersect")
+    UseMethod("setintersect")
   else
     Set$new(intersect(x$elements, y$elements))
 }
-#' @rdname intersect
+#' @rdname setintersect
 #' @export
-intersect.Set <- function(x, y){
+setintersect.Set <- function(x, y){
   if (inherits(y, "ConditionalSet"))
     return(Set$new())
   else
     return(Set$new(x$elements[y$contains(x$elements)]))
 }
-#' @rdname intersect
+#' @rdname setintersect
 #' @export
-intersect.Interval <- function(x, y){
+setintersect.Interval <- function(x, y){
   if(inherits(y, "Interval")){
     if (x$lower > y$upper | y$lower > x$upper)
       return(Set$new())
@@ -107,9 +103,9 @@ intersect.Interval <- function(x, y){
   } else
     return(Set$new(y$elements[x$contains(y$elements)]))
 }
-#' @rdname intersect
+#' @rdname setintersect
 #' @export
-intersect.ConditionalSet <- function(x, y){
+setintersect.ConditionalSet <- function(x, y){
   if(!inherits(y, "ConditionalSet"))
     return(Set$new(y$elements[x$contains(sapply(y$elements, as.Set))]))
   else {
@@ -131,40 +127,40 @@ intersect.ConditionalSet <- function(x, y){
     }
   }
 }
-#' @rdname intersect
+#' @rdname setintersect
 #' @export
-intersect.UnionSet <- function(x, y){
+setintersect.UnionSet <- function(x, y){
   int = Set$new()
-  sets = sapply(x$wrappedSets, function(set) intersect(set, y))
+  sets = sapply(x$wrappedSets, function(set) setintersect(set, y))
   for(i in 1:length(sets))
     int = int + sets[[i]]
 
   int
 }
-#' @rdname intersect
+#' @rdname setintersect
 #' @export
-intersect.DifferenceSet <- function(x, y){
+setintersect.DifferenceSet <- function(x, y){
   if(inherits(y, "DifferenceSet")){
     return((x$addedSet & y$addedSet) - (x$subtractedSet + y$subtractedSet))
   } else {
-    add_int = intersect(x$addedSet, y)
-    sub_int = intersect(x$subtractedSet, y)
+    add_int = setintersect(x$addedSet, y)
+    sub_int = setintersect(x$subtractedSet, y)
 
     return(add_int - sub_int)
   }
 }
-#' @rdname intersect
+#' @rdname setintersect
 #' @export
-intersect.ProductSet <- function(x, y){
+setintersect.ProductSet <- function(x, y){
   int = Set$new()
-  sets = lapply(x$wrappedSets, function(set) intersect(set, y))
+  sets = lapply(x$wrappedSets, function(set) setintersect(set, y))
   for(i in 1:length(sets))
     int = int * sets[[i]]
 
   int
 }
-#' @rdname intersect
+#' @rdname setintersect
 #' @export
 '&.Set' <- function(x, y){
-  intersect(x, y)
+  setintersect(x, y)
 }

@@ -294,21 +294,20 @@ Set$set("public","isSubset",function(x, proper = FALSE){
 
 })
 #---------------------------------------------
-# Public methods - complement
+# Public methods - absComplement
 #---------------------------------------------
-#' @name complement
-#' @rdname complement
-#' @title Complement of a Set
-#' @description Calculates and returns the complement of a Set from its universe, if the universe
-#' is given in construction.
-#' @details Returns the complement of a Set, i.e. the set difference of the universe of the Set
-#' from the Set. If a universe is not provided then the method has no effect. To find the difference
-#' between multiple sets then use \code{\link{setdiff}}.
-#' @section R6 Usage: $complement()
+#' @name absComplement
+#' @rdname absComplement
+#' @title Absolute Complement of a Set
+#' @description Calculates and returns the absolute complement of a Set, which is the relative
+#' complement of a set from its universe.
+#' @details If a universe is not provided then the method has no effect. To find the relative difference
+#' between sets use [setcomplement].
+#' @section R6 Usage: $absComplement()
 #' @return Set
-Set$set("public","complement",function(){
+Set$set("public","absComplement",function(){
   if(!is.null(self$universe))
-    return(setdiff(self$universe, self))
+    return(setcomplement(self$universe, self))
   else{
     message("Universe not provided, returning self.")
     invisible(self)
@@ -467,8 +466,8 @@ Set$set("active","length",function(){
 #---------------------------------------------
 Set$set("private",".class","multiple")
 Set$set("private",".type","{}")
-Set$set("private",".lower",numeric(0))
-Set$set("private",".upper",numeric(0))
+Set$set("private",".lower", NaN)
+Set$set("private",".upper", NaN)
 Set$set("private",".universe",NULL)
 Set$set("private",".elements",list())
 Set$set("private",".properties",list(empty = logical(0), singleton = logical(0),

@@ -6,11 +6,11 @@
 \alias{assertClosedAbove}
 \title{assert/check/test/ClosedAbove}
 \usage{
-testClosedAbove(object, errormsg = errormsg)
+testClosedAbove(object, errormsg = "This is not a set closed above")
 
-checkClosedAbove(object, errormsg = errormsg)
+checkClosedAbove(object, errormsg = "This is not a set closed above")
 
-assertClosedAbove(object, errormsg = errormsg)
+assertClosedAbove(object, errormsg = "This is not a set closed above")
 }
 \arguments{
 \item{object}{object to test}

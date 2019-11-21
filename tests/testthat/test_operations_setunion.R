@@ -1,6 +1,6 @@
 library(testthat)
 
-context("union")
+context("setunion")
 
 test_that("subsets",{
   expect_equal(Set$new(1,2,3) + Set$new(1), Set$new(1,2,3))
@@ -26,7 +26,7 @@ test_that("set",{
   use_unicode(FALSE)
   expect_equal((Set$new(1,2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {TRUE : x in R}")
   use_unicode(TRUE)
-  expect_true(union(Set$new(1,2,3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
+  expect_true(setunion(Set$new(1,2,3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
   expect_equal(Set$new(1,2) + Set$new(5,7) + Set$new(1,10), Set$new(1,2,5,7,10))
 })
 

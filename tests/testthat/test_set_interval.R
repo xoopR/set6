@@ -23,8 +23,8 @@ test_that("inherited_methods",{
   expect_equal(Interval$new(1,2)$lower,1)
   expect_equal(Interval$new(1,2)$class, "numeric")
   expect_equal(Interval$new(1,3)$range,2)
-  expect_silent(Interval$new(1,10)$complement())
-  expect_equal(Interval$new(1,10,universe = Interval$new(1,15))$complement(),
+  expect_silent(Interval$new(1,10)$absComplement())
+  expect_equal(Interval$new(1,10,universe = Interval$new(1,15))$absComplement(),
                Interval$new(10,15, type = "(]"))
 })
 

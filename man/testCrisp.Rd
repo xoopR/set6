@@ -6,11 +6,11 @@
 \alias{assertCrisp}
 \title{assert/check/test/Crisp}
 \usage{
-testCrisp(object, errormsg = errormsg)
+testCrisp(object, errormsg = "This is not crisp.")
 
-checkCrisp(object, errormsg = errormsg)
+checkCrisp(object, errormsg = "This is not crisp.")
 
-assertCrisp(object, errormsg = errormsg)
+assertCrisp(object, errormsg = "This is not crisp.")
 }
 \arguments{
 \item{object}{object to test}

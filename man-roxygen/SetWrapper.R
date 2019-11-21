@@ -67,7 +67,7 @@
 #' `isSubset(x, proper = FALSE)` \tab [isSubset] \cr
 #' \tab \cr \tab \cr \tab \cr
 #' **Mathematical Methods** \tab \strong{Link} \cr
-#' `complement()` \tab [complement] \cr
+#' `absComplement()` \tab [absComplement] \cr
 #' \tab \cr \tab \cr \tab \cr
 #' **Representation Methods** \tab **Link** \cr
 #' `strprint(n = 2)` \tab [strprint] \cr

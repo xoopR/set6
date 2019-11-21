@@ -1,0 +1,35 @@
+library(testthat)
+
+context("ComplementSet")
+
+test_that("SpecialSets",{
+  use_unicode(FALSE)
+  x = Reals$new() - Naturals$new()
+  expect_equal(x$strprint(), "R \\ N")
+  expect_true(x$contains(1.1))
+  expect_false(x$contains(1))
+  expect_equal(x$elements, NaN)
+  expect_equal(x$length, Inf)
+  expect_equal(x$addedSet, Reals$new())
+  expect_equal(x$subtractedSet, Naturals$new())
+  use_unicode(TRUE)
+})
+
+test_that("constructor",{
+  expect_silent(ComplementSet$new(Set$new(1:10), Set$new(5, 7)))
+})
+
+test_that("fields",{
+  d = ComplementSet$new(Set$new(1:10), Set$new(5, 10))
+  expect_equal(d$length, 8)
+  expect_equal(d$lower, 1)
+  expect_equal(d$upper, 9)
+  expect_equal(d$elements, c(1:4, 6:9))
+  expect_equal(ComplementSet$new(Set$new(1:10), Interval$new(5, 10))$elements, NaN)
+  expect_equal(d$type, "{}")
+})
+
+test_that("strprint",{
+  d = ComplementSet$new(Set$new(1,2,3,4,5) + Interval$new(5,7), Set$new(5, 10) + Interval$new(10,15))
+  expect_equal(d$strprint(n = 1), "({1,...,5} ∪ [5, 7]) \\ ({5, 10} ∪ [10, 15])")
+})

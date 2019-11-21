@@ -26,6 +26,45 @@ The mathematical set of negative real numbers, defined as the union of the set o
 
 }
 
+\section{Public Fields}{
+
+\tabular{ll}{
+\strong{Field} \tab \strong{Link} \cr
+
+\code{class} \tab \link{class} \cr
+\code{elements} \tab \link{elements} \cr
+\code{length} \tab \link{length} \cr
+\code{lower} \tab \link{lower} \cr
+\code{upper} \tab \link{upper} \cr
+\code{max} \tab \link{max} \cr
+\code{min} \tab \link{min} \cr
+\code{range} \tab \link{range} \cr
+\code{properties} \tab \link{properties} \cr
+\code{traits} \tab \link{traits} \cr
+\code{type} \tab \link{type} \cr
+\code{universe} \tab \link{universe}
+}
+}
+
+\section{Public Methods}{
+
+\tabular{ll}{
+
+\strong{Comparison Methods} \tab \strong{Link} \cr
+\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
+\code{equals(x)} \tab \link{equals} \cr
+\code{isSubset(x, proper = FALSE)} \tab \link{isSubset} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Mathematical Methods} \tab \strong{Link} \cr
+\code{absComplement()} \tab \link{absComplement} \cr
+\tab \cr \tab \cr \tab \cr
+\strong{Representation Methods} \tab \strong{Link} \cr
+\code{strprint(n = 2)} \tab \link{strprint} \cr
+\code{print(n = 2)} \tab \link{print} \cr
+\code{summary(n = 2)} \tab \link{summary} \cr
+}
+}
+
 \examples{
 NegReals$new()
 }

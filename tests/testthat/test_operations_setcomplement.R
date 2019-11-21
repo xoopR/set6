@@ -1,6 +1,6 @@
 library(testthat)
 
-context("setdiff")
+context("setcomplement")
 
 test_that("subsets",{
   expect_equal(Set$new(1:3) - Set$new(1:4), Set$new())
@@ -45,6 +45,6 @@ test_that("contains",{
   expect_equal(x$contains(c(0,1,6,9,16)), c(FALSE, TRUE, FALSE, FALSE, FALSE))
 })
 
-test_that("DifferenceSet",{
+test_that("ComplementSet",{
   expect_equal((Reals$new() - Integers$new()) - Set$new(1,2), Reals$new() - Integers$new())
 })

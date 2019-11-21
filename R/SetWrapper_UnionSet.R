@@ -9,6 +9,8 @@
 NULL
 UnionSet <- R6::R6Class("UnionSet", inherit = SetWrapper)
 UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
+  checkmate::assertList(setlist)
+
   if(is.null(lower)){
     lower = try(min(unlist(sapply(setlist, function(x) x$lower))), silent = T)
     if(class(lower) == "try-error")
@@ -30,7 +32,7 @@ UnionSet$set("public","strprint",function(n = 2){
   else
     collapse = " U "
 
-  str = lapply(c(self$wrappedSets, self$wrappedIntervals), function(x){
+  str = lapply(self$wrappedSets, function(x){
     if(inherits(x, "SetWrapper"))
       paste0("(",x$strprint(n),")")
     else

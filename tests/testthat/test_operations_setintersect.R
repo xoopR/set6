@@ -1,9 +1,9 @@
 library(testthat)
 
-context("intersect")
+context("setintersect")
 
 test_that("SetXSet",{
-  expect_equal(intersect(Set$new(1,2,3), Set$new(3:5)), Set$new(3L))
+  expect_equal(setintersect(Set$new(1,2,3), Set$new(3:5)), Set$new(3L))
   expect_equal(Set$new(1) & Set$new(), Set$new())
   expect_equal(Set$new(1,2,3) & Set$new(1), Set$new(1))
   expect_equal(Tuple$new(1, "a", 2L) & Set$new(letters), Set$new("a"))

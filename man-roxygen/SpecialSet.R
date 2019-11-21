@@ -17,6 +17,8 @@
 #'   <%= if(exists("arg10")) arg10%>
 #'   }
 #' @section Constructor Details: <%= if(exists("constructorDets")) constructorDets%>
+#' @inheritSection Interval Public Fields
+#' @inheritSection Interval Public Methods
 #' @seealso [listSpecialSets]
 #' @family SpecialSets
 #' @return An R6 object of class <%=class%>.
