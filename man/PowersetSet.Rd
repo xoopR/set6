@@ -11,8 +11,8 @@ PowersetSet class for symbolic exponentiation of mathematical sets.
 }
 \details{
 The purpose of this class is to provide a symbolic representation for the exponentiation of sets that
-cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct this class directly but via
-the set operation methods: \link{union}, \link{product}, \link{power}, \link{setdiff}.
+cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct
+this class directly but via the set operation methods.
 }
 \section{Constructor}{
  \code{PowersetSet$new(set)}
@@ -75,6 +75,8 @@ the set operation methods: \link{union}, \link{product}, \link{power}, \link{set
 }
 
 \seealso{
+\link{setunion}, \link{setproduct}, \link{power}, \link{setcomplement},  \link{powerset}, \link{setintersect}, \link{symdiff}
+
 Other wrappers: \code{\link{ComplementSet}},
   \code{\link{ExponentSet}}, \code{\link{ProductSet}},
   \code{\link{UnionSet}}

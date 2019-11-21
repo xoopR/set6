@@ -11,8 +11,8 @@ ComplementSet class for symbolic complement of mathematical sets.
 }
 \details{
 The purpose of this class is to provide a symbolic representation for the complement of sets that
-cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct this class directly but via
-the set operation methods: \link{union}, \link{product}, \link{power}, \link{setdiff}.
+cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct
+this class directly but via the set operation methods.
 }
 \section{Constructor}{
  \code{ComplementSet$new(addset, subtractset, lower = NULL, upper = NULL, type = NULL)}
@@ -77,6 +77,8 @@ the set operation methods: \link{union}, \link{product}, \link{power}, \link{set
 }
 
 \seealso{
+\link{setunion}, \link{setproduct}, \link{power}, \link{setcomplement},  \link{powerset}, \link{setintersect}, \link{symdiff}
+
 Other wrappers: \code{\link{ExponentSet}},
   \code{\link{PowersetSet}}, \code{\link{ProductSet}},
   \code{\link{UnionSet}}
