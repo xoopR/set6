@@ -91,9 +91,7 @@ setunion <- function(...){
   if(!is.null(rm_ind))
     sets = sets[-rm_ind]
 
-  if(length(sets) == 0)
-    return(Set$new())
-  else if(length(sets) == 1)
+  if(length(sets) == 1)
     return(sets[[1]])
 
   classes = sapply(sets, getR6Class)
@@ -179,8 +177,8 @@ setunion <- function(...){
 #     }
 }
 .union_fuzzyset <- function(sets){
-  if(length(sets) == 1)
-    return(sets[[1]])
+  # if(length(sets) == 1)
+  #   return(sets[[1]])
 
   if(any(grepl("FuzzySet", sapply(sets, getR6Class))))
     return(FuzzySet$new(elements = rsapply(sets, elements, active = TRUE),

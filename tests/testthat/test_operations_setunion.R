@@ -28,6 +28,9 @@ test_that("set",{
   use_unicode(TRUE)
   expect_true(setunion(Set$new(1,2,3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
   expect_equal(Set$new(1,2) + Set$new(5,7) + Set$new(1,10), Set$new(1,2,5,7,10))
+  expect_equal(setunion(Set$new()), Set$new())
+  expect_equal(setunion(), Set$new())
+  expect_equal(Set$new(1) + Set$new(1), Set$new(1))
 })
 
 test_that("interval",{

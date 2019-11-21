@@ -43,7 +43,7 @@ UnionSet$set("public","strprint",function(n = 2){
 })
 UnionSet$set("active","elements",function(){
   els = unlist(unique(as.vector(rsapply(self$wrappedSets, elements, active = TRUE))))
-  if(any(is.nan(els)))
+  if("NaN" %in% els | any(is.nan(els)))
     return(NaN)
   else
     return(els)

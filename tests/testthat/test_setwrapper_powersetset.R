@@ -30,6 +30,8 @@ test_that("isSubset",{
   expect_false(ps < ps)
   expect_false(Set$new(1) < ps)
   expect_true(Set$new(Set$new(1)) < ps)
+  expect_true(powerset(Set$new(1,2)) < ps)
+  expect_false(FuzzySet$new(1,1) < ps)
 })
 
 test_that("isSubset Interval",{

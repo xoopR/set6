@@ -63,3 +63,16 @@ test_that("rapply",{
   expect_equal(rsapply(list(Set$new(1), Set$new(2)), strprint), c("{1}","{2}"))
   expect_equal(rsapply(list(FuzzySet$new(1,0.1,2,0.2),FuzzySet$new(1,0.2,2,0.3)), membership, 1), c(0.1,0.2))
 })
+
+test_that("crispify",{
+  expect_equal(crispify(Set$new(1)), Set$new(1))
+  expect_equal(crispify(FuzzySet$new(1,1)), Set$new(1))
+  expect_equal(crispify(FuzzyTuple$new(1,1)), Tuple$new(1))
+})
+
+test_that("fuzzify",{
+  expect_equal(fuzzify(Set$new(1)), FuzzySet$new(1, 1))
+  expect_equal(fuzzify(FuzzySet$new(1,1)), FuzzySet$new(1, 1))
+  expect_equal(fuzzify(Tuple$new(1)), FuzzyTuple$new(1, 1))
+  expect_error(fuzzify(Interval$new(1,4), "cannot be fuzzified"))
+})

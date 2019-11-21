@@ -45,7 +45,7 @@ test_that("fuzzy",{
   use_unicode(TRUE)
 })
 
-test_that("setproductSet",{
+test_that("productSet",{
   use_unicode(FALSE)
   i = (Interval$new(1, 2) * Interval$new(3, 4)) * Interval$new(5, 6)
   expect_equal(i$strprint(), "[1, 2] X [3, 4] X [5, 6]")
@@ -58,4 +58,5 @@ test_that("setproductSet",{
   expect_false(i$contains(Tuple$new(1, 3, 5)))
   expect_true(i$contains(c(Tuple$new(Tuple$new(1, 3), 5), Tuple$new(Tuple$new(2, 3), 6)), all = TRUE))
   use_unicode(TRUE)
+  expect_equal(i$strprint(), "([1, 2] \u00D7 [3, 4]) \u00D7 [5, 6]")
 })

@@ -120,6 +120,8 @@ fuzzify = function(x){
     return(x)
   else if (testTuple(x))
     return(as.FuzzyTuple(x))
-  else
+  else if(getR6Class(x) == "Set")
     return(as.FuzzySet(x))
+  else
+    stop(x$strprint(), " cannot be fuzzified.")
 }
