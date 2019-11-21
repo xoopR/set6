@@ -77,7 +77,7 @@ this class directly but via the set operation methods.
 }
 
 \seealso{
-\link{setunion}, \link{setproduct}, \link{power}, \link{setcomplement},  \link{powerset}, \link{setintersect}, \link{symdiff}
+Set operations: \link{setunion}, \link{setproduct}, \link{power}, \link{setcomplement}, \link{symdiff},  \link{powerset}, \link{setintersect}
 
 Other wrappers: \code{\link{ExponentSet}},
   \code{\link{PowersetSet}}, \code{\link{ProductSet}},
