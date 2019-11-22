@@ -41,6 +41,6 @@ subset of another if it is fully contained by the other Set (i.e. not equal to) 
 Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
 Set$new(1,2) < Set$new(1,2,3) # proper subset
 
-Set$new(1,2,3) < Set$new(1,2,3) # not proper
+c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
 Set$new(1,2,3) <= Set$new(1,2,3) # proper
 }

@@ -16,7 +16,9 @@
 \item{y}{Set}
 }
 \value{
-TRUE if both objects are equal, FALSE otherwise
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
 }
 \description{
 Are Two Sets Equal?
