@@ -306,9 +306,6 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
         return(FALSE)
     }
 
-    if(!testSet(el))
-      return(FALSE)
-
     elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
     selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
 
