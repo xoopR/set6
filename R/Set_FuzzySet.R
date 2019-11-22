@@ -77,7 +77,9 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
   super$initialize(elements)
   invisible(self)
 })
-
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 FuzzySet$set("public","strprint",function(n = 2){
   if(self$properties$empty) {
     if(use_unicode())
@@ -243,12 +245,7 @@ FuzzySet$set("public","equals",function(x, all = FALSE){
   if(all(self$membership() == 1))
     return(self$core(create = T)$equals(x))
 
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x <- listify(x)
 
   ret = sapply(x, function(el){
 
@@ -267,26 +264,13 @@ FuzzySet$set("public","equals",function(x, all = FALSE){
       return(FALSE)
   })
 
-  if(length(ret) == 1)
-    ret = ret[[1]]
-
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 FuzzySet$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
   if(all(self$membership() == 1))
     return(self$core(create = T)$isSubset(x, proper = proper, all = all))
 
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
-
-  assertSetList(x)
+  x <- listify(x)
 
   ret = rep(FALSE, length(x))
   ind = sapply(x, testFuzzySet)
@@ -308,13 +292,7 @@ FuzzySet$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
     }
   })
 
-  if(length(ret) == 1)
-    ret = ret[[1]]
-
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 FuzzySet$set("public","complement",function(){
   FuzzySet$new(elements = self$elements, membership = 1 - self$membership())
@@ -332,12 +310,17 @@ FuzzySet$set("public","powerset",function(){
   return(Set$new(Set$new(), y, self))
 })
 
+#---------------------------------------------
+# Private Fields
+#---------------------------------------------
 FuzzySet$set("private",".type","{}")
 FuzzySet$set("private",".membership", 0)
 FuzzySet$set("private",".properties",list())
 FuzzySet$set("private",".traits",list(crisp = FALSE))
 
-
+#---------------------------------------------
+# Coercions
+#---------------------------------------------
 #' @title Coercion to R6 FuzzySet
 #' @description Coerces objects to R6 FuzzySet
 #' @param object object to coerce

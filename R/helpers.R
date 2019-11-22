@@ -125,3 +125,23 @@ fuzzify = function(x){
   else
     stop(x$strprint(), " cannot be fuzzified.")
 }
+
+listify = function(x){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
+  }
+
+  return(x)
+}
+returner = function(x, all){
+  if(length(x) == 1 & class(x)[1] == "list")
+    x = x[[1]]
+
+  if(all)
+    return(all(x))
+  else
+    return(x)
+}

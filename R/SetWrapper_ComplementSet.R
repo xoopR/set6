@@ -1,3 +1,6 @@
+#---------------------------------------------
+# Documentation
+#---------------------------------------------
 #' @name ComplementSet
 #' @template SetWrapper
 #' @templateVar operation complement
@@ -10,6 +13,9 @@
 #'
 #' @export
 NULL
+#---------------------------------------------
+# Definition and Construction
+#---------------------------------------------
 ComplementSet <- R6::R6Class("ComplementSet", inherit = SetWrapper)
 ComplementSet$set("public", "initialize", function(addset, subtractset, lower = NULL, upper = NULL, type = NULL){
   if(is.null(lower)){
@@ -43,6 +49,9 @@ ComplementSet$set("public", "initialize", function(addset, subtractset, lower = 
   private$.subtractedSet = subtractset
   super$initialize(setlist = c(addset, subtractset), lower = lower, upper = upper, type = type)
 })
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 ComplementSet$set("public","strprint",function(n = 2){
   if(inherits(self$addedSet, "SetWrapper"))
     add = paste0("(",self$addedSet$strprint(n),")")
@@ -62,6 +71,9 @@ ComplementSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
 
   add & !diff
 })
+#---------------------------------------------
+# Public Fields
+#---------------------------------------------
 ComplementSet$set("active","elements",function(){
   add_els = self$addedSet$elements
   if(any(is.nan(add_els)))
@@ -79,7 +91,6 @@ ComplementSet$set("active","length",function(){
   else
     return(self$addedSet$length - self$subtractedSet$length)
 })
-
 #' @name addedSet
 #' @rdname addedSet
 #' @title Get Added Sets in Wrapper
@@ -94,5 +105,8 @@ ComplementSet$set("active","addedSet", function() return(private$.addedSet))
 #' @return `Set`
 #' @seealso [ComplementSet], [addedSet]
 ComplementSet$set("active","subtractedSet",function() return(private$.subtractedSet))
+#---------------------------------------------
+# Private Fields
+#---------------------------------------------
 ComplementSet$set("private",".addedSet",Set$new())
 ComplementSet$set("private",".subtractedSet",Set$new())

@@ -1,3 +1,6 @@
+#---------------------------------------------
+# Documentation
+#---------------------------------------------
 #' @name ExponentSet
 #' @template SetWrapper
 #' @templateVar operation exponentiation
@@ -7,9 +10,10 @@
 #'
 #' @export
 NULL
+#---------------------------------------------
+# Definition and Construction
+#---------------------------------------------
 ExponentSet <- R6::R6Class("ExponentSet", inherit = ProductSet)
-ExponentSet$set("private", ".power", 1)
-ExponentSet$set("active", "power", function() return(private$.power))
 ExponentSet$set("public", "initialize", function(set, power){
   lower = Tuple$new(rep(set$lower, power))
   upper = Tuple$new(rep(set$upper, power))
@@ -23,6 +27,9 @@ ExponentSet$set("public", "initialize", function(set, power){
 
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 ExponentSet$set("public", "strprint", function(n = 2){
   if(inherits(self$wrappedSets[[1]], "SetWrapper"))
     paste0("(",self$wrappedSets[[1]]$strprint(n=n),")^",self$power)
@@ -30,18 +37,25 @@ ExponentSet$set("public", "strprint", function(n = 2){
     paste(self$wrappedSets[[1]]$strprint(n=n), self$power, sep = "^")
 })
 ExponentSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
+  x <- listify(x)
 
-  if(class(x)[[1]] != "list")
-    x = list(x)
+  ret = sapply(x, function(el){
+    if(!testSet(el))
+      el = as.Set(el)
 
-  x = sapply(x, function(y) ifelse(testSet(y), return(y), return(as.Set(y))))
+    if(el$length != self$power)
+      return(FALSE)
 
-  rets = sapply(x, function(y) ifelse(y$length == self$power, return(TRUE), return(FALSE)))
+    all(self$wrappedSets[[1]]$contains(el$elements, bound = bound))
+  })
 
-  rets[rets] = sapply(x[rets], function(el) all(self$wrappedSets[[1]]$contains(el$elements, bound = bound)))
-
-  if (all)
-    return(all(unlist(rets)))
-  else
-    return(unlist(rets))
+  returner(ret, all)
 })
+#---------------------------------------------
+# Public Fields
+#---------------------------------------------
+ExponentSet$set("active", "power", function() return(private$.power))
+#---------------------------------------------
+# Private Fields
+#---------------------------------------------
+ExponentSet$set("private", ".power", 1)

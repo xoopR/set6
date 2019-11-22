@@ -71,12 +71,7 @@ ConditionalSet$set("public","initialize",function(condition, argclass = NULL){
 # Public Methods
 #---------------------------------------------
 ConditionalSet$set("public","contains",function(x, all = FALSE, bound = NULL){
-  if(inherits(x, "Set"))
-    x <- list(x)
-  else if(inherits(x, "list")){
-    x <- lapply(x, function(y) ifelse(testSet(y), return(y), return(Set$new(y))))
-  } else
-    x <- list(Set$new(x))
+  x <- lapply(listify(x), function(y) ifelse(testSet(y), return(y), return(Set$new(y))))
 
   ret <- sapply(1:length(x), function(i){
     els <- as.list(x[[i]]$elements)
@@ -86,18 +81,10 @@ ConditionalSet$set("public","contains",function(x, all = FALSE, bound = NULL){
     do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 ConditionalSet$set("public","equals",function(x, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x <- listify(x)
 
   ret = sapply(x, function(el){
     if(!testConditionalSet(el))
@@ -131,10 +118,7 @@ ConditionalSet$set("public","equals",function(x, all = FALSE){
     }
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 ConditionalSet$set("public","strprint",function(n = NULL){
   if(use_unicode())
@@ -154,6 +138,9 @@ ConditionalSet$set("public", "isSubset", function(x, proper = FALSE, all = FALSE
   return(FALSE)
 })
 
+#---------------------------------------------
+# Public Fields
+#---------------------------------------------
 #' @name condition
 #' @title ConditionalSet Condition
 #' @rdname condition
@@ -170,6 +157,10 @@ ConditionalSet$set("active","class", function(){
 ConditionalSet$set("active","elements", function(){
   return(NaN)
 })
+
+#---------------------------------------------
+# Private Fields
+#---------------------------------------------
 ConditionalSet$set("private",".condition", NULL)
 ConditionalSet$set("private",".argclass", NULL)
 ConditionalSet$set("private",".traits", list(crisp = TRUE))

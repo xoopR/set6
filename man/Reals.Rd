@@ -49,6 +49,9 @@ The mathematical set of real numbers, defined as the union of the set of rationa
 \section{Public Methods}{
 
 \tabular{ll}{
+\strong{Interval Methods} \tab \strong{Link} \cr
+isSubinterval(x, proper = FALSE, all = FALSE) \tab \link{isSubinterval} \cr
+\tab \cr \tab \cr \tab \cr
 
 \strong{Comparison Methods} \tab \strong{Link} \cr
 \code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr

@@ -42,6 +42,8 @@ test_that("length",{
 
 test_that("equals",{
   expect_true(Interval$new(1,4)$equals(Interval$new(1,4)))
+  expect_true(Interval$new(1,4, class = "integer")$equals(Set$new(1:4)))
+  expect_false(Interval$new(1,4)$equals(Set$new(1:4)))
   expect_false(Interval$new(1,4, class = "numeric")$equals(Interval$new(1,4, class = "integer")))
   expect_false(Interval$new(1,4)$equals(Interval$new(1,4, type = "(]")))
   expect_false(Interval$new(1,4) != Interval$new(1,4))
@@ -62,5 +64,34 @@ test_that("contains",{
   expect_false(x$contains(c(1,2.5,10,11), all = T))
   expect_true(x$contains(c(1.1,9.99), all = T))
   expect_equal(Interval$new(1,10)$contains(list(1,"a")), c(TRUE, FALSE))
+  expect_true(Interval$new(1,5,class = "integer")$contains(c(2,3,4), all = T))
 })
 
+test_that("isSubset",{
+  expect_true(Interval$new(2,3) < Interval$new(1,4))
+  expect_true(Interval$new(1,3) < Interval$new(1,4))
+  expect_true(Interval$new(2,4) < Interval$new(1,4))
+  expect_false(Interval$new(1,4) < Interval$new(1,4))
+  expect_true(Interval$new(1,4) <= Interval$new(1,4))
+  expect_true(Set$new(2, 3) < Interval$new(1,4))
+
+  expect_true(Interval$new(1,3)$isSubset(Set$new(1,2)))
+  expect_true(Interval$new(1,3)$isSubset(Set$new(2, 1)))
+  expect_true(Reals$new()$isSubset(Integers$new()))
+})
+
+test_that("isSubinterval",{
+  expect_true(Interval$new(1,4)$isSubinterval(Interval$new(2,3)))
+  expect_true(Interval$new(1,4)$isSubinterval(Interval$new(1,3)))
+  expect_true(Interval$new(1,4)$isSubinterval(Interval$new(2,4)))
+  expect_false(Interval$new(1,4)$isSubinterval(Interval$new(1,4), proper = TRUE))
+  expect_true(Interval$new(1,4)$isSubinterval(Interval$new(1,4), proper = FALSE))
+  expect_false(Interval$new(1,4)$isSubinterval(Set$new(1,2,3)))
+  expect_false(Interval$new(1,4)$isSubinterval(Set$new(3,2,1)))
+  expect_true(Interval$new(1,4,class = "integer")$isSubinterval(Set$new(1,2,3)))
+
+  expect_true(Interval$new(1,3, class = "integer")$isSubinterval(Set$new(1, 2)))
+  expect_false(Interval$new(1,3)$isSubinterval(Set$new(1, 2)))
+  expect_false(Interval$new(1,3)$isSubinterval(Set$new(2, 1)))
+  expect_false(Reals$new()$isSubinterval(Integers$new()))
+})

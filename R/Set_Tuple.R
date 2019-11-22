@@ -42,6 +42,9 @@ NULL
 #---------------------------------------------
 Tuple <- R6::R6Class("Tuple", inherit = Set)
 
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 Tuple$set("public","equals",function(x, all = FALSE){
   if(!checkmate::testList(x)){
     if(inherits(x, "R6"))
@@ -91,19 +94,18 @@ Tuple$set("public","powerset",function(){
 })
 
 Tuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x <- listify(x)
 
-  assertSetList(x)
+  ret = sapply(x, function(el){
+    if(!inherits(el, "R6"))
+      return(FALSE)
 
-  ret = rep(FALSE, length(x))
-  ind = sapply(x, function(el) testTuple(el) & el$length <= self$length)
+    if(!testMessage(as.Tuple(el)))
+      el = as.Tuple(el)
 
-  ret[ind] = unlist(sapply(x[ind], function(el){
+    if(!testSet(el) | testFuzzy(el) | testConditionalSet(el) | testInterval(el))
+      return(FALSE)
+
     if(el$length > self$length)
       return(FALSE)
     else if(el$length == self$length){
@@ -121,17 +123,20 @@ Tuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
       else
         return(FALSE)
     }
-  }))
+  })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 
+#---------------------------------------------
+# Private Fields
+#---------------------------------------------
 Tuple$set("private",".type","()")
 Tuple$set("private",".properties",list(crisp = TRUE))
 
+#---------------------------------------------
+# Coercions
+#---------------------------------------------
 #' @title Coercion to R6 Tuple
 #' @description Coerces objects to R6 Tuples
 #' @param object object to coerce
@@ -163,4 +168,14 @@ as.Tuple.FuzzySet <- function(object){
 #' @export
 as.Tuple.Set <- function(object){
   return(Tuple$new(object$elements))
+}
+#' @rdname as.Tuple
+#' @export
+as.Tuple.Interval <- function(object){
+  if(any(is.nan(object$elements))){
+    message("Interval cannot be coerced to Tuple.")
+    return(object)
+  } else {
+    return(Tuple$new(object$elements))
+  }
 }

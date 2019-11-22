@@ -1,3 +1,6 @@
+#---------------------------------------------
+# Documentation
+#---------------------------------------------
 #' @name ProductSet
 #' @template SetWrapper
 #' @templateVar operation product
@@ -8,6 +11,9 @@
 #' @export
 NULL
 ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
+#---------------------------------------------
+# Definition and Construction
+#---------------------------------------------
 ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
   if(is.null(lower)) lower = Tuple$new(rsapply(setlist, lower, active = TRUE))
   if(is.null(upper)) upper = Tuple$new(rsapply(setlist, upper, active = TRUE))
@@ -19,9 +25,9 @@ ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = N
 
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
-ProductSet$set("active", "length", function(){
-  return(Tuple$new(sapply(self$wrappedSets, function(x) x$length)))
-})
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 ProductSet$set("public","strprint",function(n = 2){
   str = lapply(self$wrappedSets, function(x){
     if(inherits(x, "SetWrapper"))
@@ -38,13 +44,12 @@ ProductSet$set("public","strprint",function(n = 2){
   paste(str, collapse = collapse)
 })
 ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
+  x <- listify(x)
 
-  if(!testSetList(x))
-    x = list(x)
+  rets = sapply(x, function(el){
+    if(el$length != self$length$length)
+      return(FALSE)
 
-  rets = sapply(x, function(y) ifelse(y$length == self$length$length, return(TRUE), return(FALSE)))
-
-  rets[rets] = sapply(x[rets], function(el){
     ret = TRUE
     for (i in 1:el$length){
       if (!self$wrappedSets[[i]]$contains(el$elements[i], bound = bound)){
@@ -55,8 +60,11 @@ ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
     return(ret)
   })
 
-  if (all)
-    return(all(unlist(rets)))
-  else
-    return(unlist(rets))
+  returner(rets, all)
+})
+#---------------------------------------------
+# Public Fields
+#---------------------------------------------
+ProductSet$set("active", "length", function(){
+  return(Tuple$new(rsapply(self$wrappedSets, length, active = TRUE)))
 })

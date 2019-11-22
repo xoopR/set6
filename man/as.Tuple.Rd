@@ -7,6 +7,7 @@
 \alias{as.Tuple.matrix}
 \alias{as.Tuple.FuzzySet}
 \alias{as.Tuple.Set}
+\alias{as.Tuple.Interval}
 \title{Coercion to R6 Tuple}
 \usage{
 as.Tuple(object)
@@ -20,6 +21,8 @@ as.Tuple(object)
 \method{as.Tuple}{FuzzySet}(object)
 
 \method{as.Tuple}{Set}(object)
+
+\method{as.Tuple}{Interval}(object)
 }
 \arguments{
 \item{object}{object to coerce}

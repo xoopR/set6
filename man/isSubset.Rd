@@ -17,7 +17,7 @@
 \method{>=}{Set}(x, y)
 }
 \arguments{
-\item{x, y}{Set}
+\item{x, y}{\link{Set}}
 }
 \value{
 If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
@@ -32,6 +32,10 @@ If using the method directly, and not via one of the operators then the addition
 argument \code{proper} can be used to specify testing of subsets or proper subsets. A Set is a proper
 subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
 (non-proper) subset if it is fully contained by, or equal to, the other Set.
+
+When calling \link{isSubset} on objects inheriting from \link{Interval}, the method treats the interval as if
+it is a \link{Set}, i.e. ordering and class are ignored. Use \link{isSubinterval} to test if one interval
+is a subinterval of another.
 }
 \section{R6 Usage}{
  $isSubset(x, proper = FALSE, all = FALSE)
@@ -43,4 +47,7 @@ Set$new(1,2) < Set$new(1,2,3) # proper subset
 
 c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
 Set$new(1,2,3) <= Set$new(1,2,3) # proper
+}
+\seealso{
+\link{isSubinterval}
 }

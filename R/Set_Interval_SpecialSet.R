@@ -291,8 +291,5 @@ Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i){
 })
 Complex$set("public","contains",function(x, all = FALSE, bound = NULL){
   ret <- sapply(x, function(y) inherits(y, "complex"))
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })

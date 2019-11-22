@@ -15,6 +15,9 @@
 #' @templateVar arg4 `class` \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
 #' @templateVar arg5 `universe` \tab Set \tab Optional universe that the interval lives in.
 #' @templateVar constructorDets If defaults are used then the Real number line is constructed. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar meth1 **Interval Methods** \tab **Link** \cr
+#' @templateVar meth2 isSubinterval(x, proper = FALSE, all = FALSE) \tab [isSubinterval] \cr
+#' @templateVar meth3  \tab \cr \tab \cr \tab \cr
 #'
 #' @details
 #' The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
@@ -101,52 +104,42 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
 
   invisible(self)
 })
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
+Interval$set("public","strprint",function(...){
 
+inf <- ifelse(self$lower==-Inf & use_unicode(), "-\u221E", self$lower)
+sup <- ifelse(self$upper==Inf & use_unicode(), "+\u221E", self$upper)
+
+if(self$class == "integer")
+  return(paste0("{", inf, ",...,", sup, "}"))
+else
+  return(paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2)))
+})
 Interval$set("public","equals",function(x, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  if(!testMessage(as.Set(self)))
+    return(super$equals(x, all))
 
-  assertSetList(x)
+  x <- listify(x)
 
   ret = sapply(x, function(el){
     if (!testInterval(el))
       return(FALSE)
-    if (el$type == self$type & el$class == self$class){
-      if (is.null(el$lower) & is.null(self$lower) & is.null(el$upper) & is.null(self$upper))
-        return(TRUE)
-      else if (el$lower == self$lower & el$upper == self$upper)
-        return(TRUE)
-      else
-        return(FALSE)
-    } else
+
+    if (el$lower == self$lower & el$upper == self$upper & el$type == self$type & el$class == self$class)
+      return(TRUE)
+    else
       return(FALSE)
   })
 
-  if(length(ret) == 1)
-    ret = ret[[1]]
-
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
-})
-Interval$set("public","strprint",function(...){
-
-  inf <- ifelse(self$lower==-Inf & use_unicode(), "-\u221E", self$lower)
-  sup <- ifelse(self$upper==Inf & use_unicode(), "+\u221E", self$upper)
-
-  if(self$class == "integer")
-    return(paste0("{", inf, ",...,", sup, "}"))
-  else
-    return(paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2)))
+  returner(ret, all)
 })
 Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
-  if(testSet(x))
-    x <- x$elements
+  if(!testMessage(as.Set(self)))
+    return(super$contains(x, all, bound))
+
+  x <- listify(x)
 
   ret = rep(FALSE, length(x))
 
@@ -173,51 +166,34 @@ Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
     ret[index] = TRUE
   }
 
-  if(length(ret) == 1)
-    ret = ret[[1]]
-
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  if(!testMessage(as.Set(self)))
+    return(super$isSubset(x, proper, all))
 
-  assertSetList(x)
+  x <- listify(x)
 
   ret = sapply(x, function(el){
+    if(!testSet(el))
+      return(FALSE)
+
     if(el$properties$empty)
       return(TRUE)
 
-    if(testSet(el) & !testInterval(el) & !testConditionalSet(el)){
-      if(testFuzzy(el))
+    if(!testInterval(el)){
+      if(self$contains(el$elements, all = TRUE, bound = FALSE))
+        return(TRUE)
+      else
         return(FALSE)
-      else{
-        if(testMessage(as.Set(self))){
-          if(self$contains(el, all = TRUE, bound = FALSE))
-            return(TRUE)
-          else
-            return(FALSE)
-        } else
-          return(as.Set(self)$isSubset(el, proper = proper))
-      }
     }
 
-    if(self$class == "integer" & el$class == "numeric")
-      return(FALSE)
-
-    if(self$equals(el)){
-      if(proper)
-        return(FALSE)
-      else
+    if(proper){
+      if((el$lower > self$lower & el$upper <= self$upper) | (el$lower >= self$lower & el$upper < self$upper))
         return(TRUE)
-    } else{
+      else
+        return(FALSE)
+    } else {
       if(el$lower >= self$lower & el$upper <= self$upper)
         return(TRUE)
       else
@@ -225,14 +201,75 @@ Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
     }
   })
 
-  if(length(ret) == 1)
-    ret = ret[[1]]
-
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
+#' @name isSubinterval
+#' @rdname isSubinterval
+#' @title Test If Two Intervals Are Subintervals
+#' @param x [Set] or `list`
+#' @param proper If `TRUE` then tests if `x` is a proper subinterval (i.e. subinterval and not equal to)
+#' of `self`, otherwise `FALSE` tests if `x` is a (non-proper) subinterval.
+#' @param all If `TRUE` then returns `TRUE` if all `x` are subintervals, otherwise returns a vector of logicals.
+#' @details If `x` is a [Set] then will be coerced to an [Interval] if possible. [isSubinterval] differs
+#' from [isSubset] in that ordering and class are respected in [isSubinterval]. See examples for
+#' a clearer illustration of the difference.
+#' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
+#' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+#' element of `x`.
+#' @section R6 Usage: $isSubinterval(x, proper = FALSE, all = FALSE)
+#' @seealso [isSubset]
+#' @examples
+#' Interval$new(1,3)$isSubset(Set$new(1,2)) # TRUE
+#' Interval$new(1,3)$isSubset(Set$new(2, 1)) # TRUE
+#' Interval$new(1,3, class = "integer")$isSubinterval(Set$new(1, 2)) # TRUE
+#' Interval$new(1,3)$isSubinterval(Set$new(1, 2)) # FALSE
+#' Interval$new(1,3)$isSubinterval(Set$new(2, 1)) # FALSE
+#'
+#' Reals$new()$isSubset(Integers$new()) # TRUE
+#' Reals$new()$isSubinterval(Integers$new()) # FALSE
+Interval$set("public", "isSubinterval", function(x, proper = FALSE, all = FALSE){
+  if(!testMessage(as.Tuple(self)))
+    return(as.Tuple(self)$isSubset(x, proper, all))
+
+  x <- listify(x)
+
+  ret = sapply(x, function(el){
+    if(!testSet(el))
+      return(FALSE)
+
+    if(el$properties$empty)
+      return(TRUE)
+
+    if(testFuzzy(el) | testConditionalSet(el))
+      return(FALSE)
+
+    if(testMessage(as.Interval(el)))
+      return(FALSE)
+    else
+      el = as.Interval(el)
+
+    if(el$class != self$class)
+      return(FALSE)
+
+    if(proper){
+      if((el$lower > self$lower & el$upper <= self$upper) | (el$lower >= self$lower & el$upper < self$upper))
+        return(TRUE)
+      else
+        return(FALSE)
+    } else {
+      if(el$lower >= self$lower & el$upper <= self$upper)
+        return(TRUE)
+      else
+        return(FALSE)
+    }
+  })
+
+  returner(ret, all)
+})
+
+#---------------------------------------------
+# Public Fields
+#---------------------------------------------
 Interval$set("active","length",function(){
   if(self$lower == -Inf | self$upper == Inf)
     return(Inf)
@@ -250,6 +287,9 @@ Interval$set("active", "elements", function(){
     return(NaN)
 })
 
+#---------------------------------------------
+# Coercions
+#---------------------------------------------
 #' @export
 as.double.Interval <- function(x,...){
   x$elements

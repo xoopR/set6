@@ -55,7 +55,7 @@ test_that("isSubset",{
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,3)))
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2)))
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2), proper = TRUE))
-  expect_false(Tuple$new(1,2,3)$isSubset(Set$new(1,2,3)))
+  expect_true(Tuple$new(1,2,3)$isSubset(Set$new(1,2,3)))
   expect_false(Tuple$new(1)$isSubset(Tuple$new(1:2)))
   expect_false(Tuple$new(1:2)$isSubset(Tuple$new(3:4)))
   expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(4)))

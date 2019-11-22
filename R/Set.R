@@ -201,38 +201,34 @@ Set$set("public","summary",function(n = 2){
 #' s2$contains(Tuple$new(2,1))
 #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
 Set$set("public","contains",function(x, all = FALSE, bound = NULL){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x = listify(x)
 
   ret = rep(FALSE, length(x))
 
+  # determine which elements are R6 and need a special equals method
   r6.fil <- sapply(x, function(y) ifelse(inherits(y, "R6"), TRUE, FALSE))
   r6.match <- x[r6.fil]
   atom.match <- x[!r6.fil]
 
+  # for base classes simply use %in% for containedness
   if(length(atom.match) > 0)
     ret[!r6.fil][atom.match %in% self$elements] = TRUE
 
+  # for R6 classes a
   if(length(r6.match) > 0){
     r6.tr <- sapply(r6.match, function(y){
       if(Set$new()$equals(y))
         y <- Set$new()
       cl <- getR6Class(y)
+      # first check to see if they are same class
       fil <- sapply(self$elements, function(z) ifelse(inherits(z, cl), TRUE, FALSE))
-      els <- self$elements[fil]
-      any(sapply(els, function(z) y$equals(z)))
+      # if they are then check if any of elements of self are equal to x
+      any(sapply(self$elements[fil], function(z) y$equals(z)))
     })
     ret[r6.fil][r6.tr] = TRUE
   }
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 #' @name equals
 #' @rdname equals
@@ -253,52 +249,42 @@ Set$set("public","contains",function(x, all = FALSE, bound = NULL){
 #' !Set$new(1,2)$equals(Set$new(1,2))
 #' Set$new(1,2) != Set$new(1,5)
 Set$set("public","equals",function(x, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x <- listify(x)
 
   ret = sapply(x, function(el){
     if(testFuzzy(el)){
       if(all(el$membership() == 1))
         el = as.Set(el)
+      else
+        return(FALSE)
     }
 
-    if(testInterval(el) & !testMessage(as.Set(el)))
-      el = as.Set(el)
-    else if(testInterval(el) & el$length > 1)
-      return(FALSE)
-    else if(testConditionalSet(el))
+    if(!testSet(el))
       return(FALSE)
 
-    if(el$length != self$length)
-      return(FALSE)
-
-    if(all(el$elements %in% self$elements) & all(self$elements %in% el$elements))
-      return(TRUE)
-    else
-      return(FALSE)
+    suppressWarnings(all(el$elements %in% self$elements) & all(self$elements %in% el$elements))
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 #' @name isSubset
 #' @rdname isSubset
 #' @title Test If Two Sets Are Subsets
-#' @param x,y Set
+#' @param x,y [Set]
 #' @details If using the method directly, and not via one of the operators then the additional boolean
 #' argument `proper` can be used to specify testing of subsets or proper subsets. A Set is a proper
 #' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
 #' (non-proper) subset if it is fully contained by, or equal to, the other Set.
+#'
+#' When calling [isSubset] on objects inheriting from [Interval], the method treats the interval as if
+#' it is a [Set], i.e. ordering and class are ignored. Use [isSubinterval] to test if one interval
+#' is a subinterval of another.
+#'
 #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
 #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
 #' element of `x`.
 #' @section R6 Usage: $isSubset(x, proper = FALSE, all = FALSE)
+#' @seealso [isSubinterval]
 #' @examples
 #' Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
 #' Set$new(1,2) < Set$new(1,2,3) # proper subset
@@ -306,19 +292,22 @@ Set$set("public","equals",function(x, all = FALSE){
 #' c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
 #' Set$new(1,2,3) <= Set$new(1,2,3) # proper
 Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x = listify(x)
 
-  assertSetList(x)
+  ret = sapply(x, function(el){
+    if(!inherits(el, "R6"))
+      return(FALSE)
 
-  ret = rep(FALSE, length(x))
-  ind = sapply(x, function(el) !testInterval(el) & !testFuzzy(el))
+    if(testFuzzy(el)){
+      if(all(el$membership() == 1))
+        el = as.Set(el)
+      else
+        return(FALSE)
+    }
 
-  ret[ind] = sapply(x[ind], function(el){
+    if(!testSet(el))
+      return(FALSE)
+
     if(proper){
       if(all(el$elements %in% self$elements) & !all(self$elements %in% el$elements))
         return(TRUE)
@@ -332,13 +321,7 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
     }
   })
 
-  if(length(ret) == 1)
-    ret = ret[[1]]
-
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 #---------------------------------------------
 # Public methods - absComplement

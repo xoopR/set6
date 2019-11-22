@@ -1,3 +1,6 @@
+#---------------------------------------------
+# Documentation
+#---------------------------------------------
 #' @name PowersetSet
 #' @template SetWrapper
 #' @templateVar operation exponentiation
@@ -7,6 +10,9 @@
 #'
 #' @export
 NULL
+#---------------------------------------------
+# Definition and Construction
+#---------------------------------------------
 PowersetSet <- R6::R6Class("PowersetSet", inherit = ProductSet)
 PowersetSet$set("public", "initialize", function(set){
   #
@@ -16,6 +22,9 @@ PowersetSet$set("public", "initialize", function(set){
 
   super$initialize(setlist = list(set), lower = Set$new(), upper = set, type = "{}")
 })
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 PowersetSet$set("public", "strprint", function(n = 2){
   if(use_unicode())
     paste0("\U2118(", self$wrappedSets[[1]]$strprint(n),")")
@@ -23,24 +32,15 @@ PowersetSet$set("public", "strprint", function(n = 2){
     paste0("2^", self$wrappedSets[[1]]$strprint(n))
 })
 PowersetSet$set("public", "contains", function(x, all = FALSE, bound = NULL){
-  x = self$wrappedSets[[1]]$isSubset(x, proper = FALSE)
-  if(all)
-    return(all(x))
-  else
-    return(x)
+  self$wrappedSets[[1]]$isSubset(x, proper = FALSE, all = all)
 })
 PowersetSet$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
-
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
-
-  assertSetList(x)
+  x <- listify(x)
 
   ret = sapply(x, function(el){
+    if(!inherits(el, "R6"))
+      return(FALSE)
+
     if(self$equals(el)){
       if(proper)
         return(FALSE)
@@ -60,8 +60,5 @@ PowersetSet$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
     all(self$wrappedSets[[1]]$isSubset(el$elements[[1]], proper = FALSE))
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })

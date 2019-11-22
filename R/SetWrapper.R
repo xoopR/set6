@@ -1,3 +1,6 @@
+#---------------------------------------------
+# Definition and Construction
+#---------------------------------------------
 SetWrapper <- R6::R6Class("SetWrapper", inherit = Set, lock_objects = FALSE)
 SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NULL, type = NULL,
                                               class = NULL){
@@ -24,23 +27,11 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
 
   invisible(self)
 })
-
-#' @name wrappedSets
-#' @rdname wrappedSets
-#' @title Get Sets in Wrapper
-#' @description Gets the list of sets that are wrapped in the given wrapper.
-#' @return List of `Set`s.
-SetWrapper$set("active", "wrappedSets", function(){
-  return(private$.wrappedSets)
-})
-SetWrapper$set("private", ".wrappedSets", list())
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 SetWrapper$set("public", "equals", function(x, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x <- listify(x)
 
   ret = sapply(x, function(el){
     if(getR6Class(el) != getR6Class(self))
@@ -60,10 +51,7 @@ SetWrapper$set("public", "equals", function(x, all = FALSE){
     return(ret)
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 SetWrapper$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
   message("isSubset currently not implemented for this wrapper.")
@@ -71,3 +59,19 @@ SetWrapper$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 SetWrapper$set("public","absComplement",function(){
   message("absComplement currently not implemented for this wrapper.")
 })
+#---------------------------------------------
+# Public Fields
+#---------------------------------------------
+#' @name wrappedSets
+#' @rdname wrappedSets
+#' @title Get Sets in Wrapper
+#' @description Gets the list of sets that are wrapped in the given wrapper.
+#' @return List of `Set`s.
+SetWrapper$set("active", "wrappedSets", function(){
+  return(private$.wrappedSets)
+})
+
+#---------------------------------------------
+# Private Fields
+#---------------------------------------------
+SetWrapper$set("private", ".wrappedSets", list())

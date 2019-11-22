@@ -60,6 +60,9 @@ NULL
 #---------------------------------------------
 FuzzyTuple <- R6::R6Class("FuzzyTuple", inherit = FuzzySet)
 
+#---------------------------------------------
+# Public Methods
+#---------------------------------------------
 FuzzyTuple$set("public","powerset",function(){
   y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
   y = apply(y, 1, function(x){
@@ -71,12 +74,7 @@ FuzzyTuple$set("public","equals",function(x, all = FALSE){
   if(all(self$membership() == 1))
     return(self$core(create = T)$equals(x))
 
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x <- listify(x)
 
   ret = sapply(x, function(el){
     if(!testFuzzySet(el))
@@ -92,23 +90,13 @@ FuzzyTuple$set("public","equals",function(x, all = FALSE){
       return(FALSE)
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 FuzzyTuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
   if(all(self$membership() == 1))
     return(self$core(create = T)$isSubset(x, proper = proper, all = all))
 
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
-
-  assertSetList(x)
+  x <- listify(x)
 
   ret = rep(FALSE, length(x))
   ind = sapply(x, testFuzzyTuple)
@@ -136,10 +124,7 @@ FuzzyTuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
     }
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
   if(strong)
@@ -163,10 +148,16 @@ FuzzyTuple$set("public","complement",function(){
   FuzzyTuple$new(elements = self$elements, membership = 1 - self$membership())
 })
 
+#---------------------------------------------
+# Private Fields
+#---------------------------------------------
 FuzzyTuple$set("private",".type","()")
 FuzzyTuple$set("private",".membership", 0)
 FuzzyTuple$set("private",".properties",list(crisp = FALSE))
 
+#---------------------------------------------
+# Coercions
+#---------------------------------------------
 #' @title Coercion to R6 FuzzyTuple
 #' @description Coerces objects to R6 FuzzyTuple
 #' @param object object to coerce
