@@ -34,3 +34,8 @@ test_that("contains",{
   expect_true(u$contains(1, "a", all = TRUE))
   expect_equal(u$contains(c(1, "b", 6)), c(TRUE, TRUE, FALSE))
 })
+
+test_that("length",{
+  expect_equal(UnionSet$new(list(Set$new(1,2,3), Set$new(letters[1:5])))$length, 8)
+  expect_equal(UnionSet$new(list(Set$new(1,2,3), Interval$new()))$length, Inf)
+})

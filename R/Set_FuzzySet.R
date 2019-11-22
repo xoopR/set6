@@ -334,11 +334,6 @@ as.FuzzySet.matrix <- function(object){
 }
 #' @rdname as.FuzzySet
 #' @export
-as.FuzzySet.data.table <- function(object){
-  return(as.FuzzySet(as.matrix(object)))
-}
-#' @rdname as.FuzzySet
-#' @export
 as.FuzzySet.data.frame <- function(object){
   return(as.FuzzySet(as.matrix(object)))
 }

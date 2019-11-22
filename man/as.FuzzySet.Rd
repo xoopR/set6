@@ -5,7 +5,6 @@
 \alias{as.FuzzySet.numeric}
 \alias{as.FuzzySet.list}
 \alias{as.FuzzySet.matrix}
-\alias{as.FuzzySet.data.table}
 \alias{as.FuzzySet.data.frame}
 \alias{as.FuzzySet.Set}
 \alias{as.FuzzySet.FuzzySet}
@@ -18,8 +17,6 @@ as.FuzzySet(object)
 \method{as.FuzzySet}{list}(object)
 
 \method{as.FuzzySet}{matrix}(object)
-
-\method{as.FuzzySet}{data.table}(object)
 
 \method{as.FuzzySet}{data.frame}(object)
 

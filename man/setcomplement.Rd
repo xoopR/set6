@@ -14,7 +14,7 @@
 \alias{-.Set}
 \title{(Relative) Complement of Two Sets}
 \usage{
-setcomplement(x, y)
+setcomplement(x, y, simplify = TRUE)
 
 \method{setcomplement}{Set}(x, y)
 
@@ -38,9 +38,12 @@ setcomplement(x, y)
 }
 \arguments{
 \item{x, y}{Set}
+
+\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set} or
+\link{UnionSet}, otherwise a \code{ProductSet}.}
 }
 \value{
-An object inheriting from \code{Set} containing the set difference of elements in both \code{x} and \code{y}.
+An object inheriting from \code{Set} containing the set difference of elements in \code{x} and \code{y}.
 }
 \description{
 Returns the set difference of two objects inheriting from class \code{Set}.

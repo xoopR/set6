@@ -70,12 +70,22 @@ test_that("equals",{
   expect_false(Set$new(1,2,3) == Set$new(1,2))
   expect_true(Set$new(1,2,3) != Set$new(1,2))
   expect_false(Set$new(1,2,3)$equals(Set$new(1,2,3,4)))
+  expect_true(Set$new(1,2,3)$equals(FuzzySet$new(elements = 1:3)))
+  expect_false(Set$new(1,2,3)$equals(FuzzySet$new(elements = 1:3, membership = 0.1)))
+  expect_false(Set$new(1,2,3) == Interval$new(1,2))
+  expect_false(Set$new(1,2,3) == 1)
+  expect_true(Set$new(1,2,3) == Interval$new(1,3, class = "integer"))
 })
 
 test_that("strprint",{
   expect_equal(Set$new(1)$strprint(),"{1}")
   expect_equal(Set$new(1,"a")$strprint(),"{1, a}")
   expect_equal(Set$new(1,2,3)$strprint(n = 1),"{1,...,3}")
+})
+
+test_that("summary",{
+  expect_output(Set$new(1,2,3)$summary())
+  expect_output(summary(Set$new(1,2,3)))
 })
 
 test_that("isSubset",{
@@ -98,10 +108,17 @@ test_that("isSubset",{
   expect_equal(c(Set$new(1), Set$new(2,4), Set$new(5), Set$new(1,2,3,4)) < Set$new(1,2,3,4), c(TRUE, TRUE, FALSE, FALSE))
   expect_equal(c(Set$new(1), Set$new(2,4), Set$new(5), Set$new(1,2,3,4)) <= Set$new(1,2,3,4), c(TRUE, TRUE, FALSE, TRUE))
   expect_false(Set$new(1,2,3,4)$isSubset(c(Set$new(1), Set$new(2,4), Set$new(5)), all = TRUE))
+
+  expect_false(Set$new(1,2,3)$isSubset(FuzzySet$new(elements = 1:3, membership = 0.1)))
+  expect_false(Set$new(1,2,3) > Interval$new(1,2))
+  expect_false(Set$new(1,2,3) > 1)
+  expect_true(Set$new(1,2,3) >= Interval$new(1,3, class = "integer"))
 })
 
 test_that("as.Set",{
   expect_equal(as.Set(c(1,2)), Set$new(1,2))
   expect_equal(as.Set(list(1,2)), Set$new(1,2))
   expect_equal(as.Set(matrix(c(1,2,3,4),nrow = 2)), list(Set$new(1,2),Set$new(3,4)))
+  expect_message(expect_equal(as.Set(Interval$new()), Interval$new()), "Interval cannot be")
+  expect_message(expect_equal(as.Set(ConditionalSet$new(function(x) TRUE)), ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
 })

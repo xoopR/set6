@@ -22,10 +22,10 @@ ComplementSet$set("public", "initialize", function(addset, subtractset, lower = 
     if(!any(subtractset$contains(addset$lower, bound = TRUE)))
       lower = addset$lower
     else{
-      if(testInterval(addset) & class(addset)[1] == "numeric")
+      if(testInterval(addset) & addset$class == "numeric")
         lower = addset$lower + .Machine$double.xmin
-      else if(testInterval(addset) & class(addset)[1] == "integer")
-        lower = lower + 1
+      else if(testInterval(addset) & addset$class == "integer")
+        lower = addset$lower + 1
       else
         lower = addset$elements[2]
     }
@@ -35,10 +35,10 @@ ComplementSet$set("public", "initialize", function(addset, subtractset, lower = 
     if(!any(subtractset$contains(addset$upper, bound = TRUE)))
       upper = addset$upper
     else{
-      if(testInterval(addset) & class(addset)[1] == "numeric")
+      if(testInterval(addset) & addset$class == "numeric")
         upper = addset$upper - .Machine$double.xmin
-      else if(testInterval(addset) & class(addset)[1] == "integer")
-        upper = upper + 1
+      else if(testInterval(addset) & addset$class == "integer")
+        upper = addset$upper - 1
       else
         upper = addset$elements[length(addset$elements)-1]
     }

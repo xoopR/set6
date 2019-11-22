@@ -123,9 +123,9 @@ setunion <- function(...){
     return(sets[[1]])
 
   if(any(grepl("Set", sapply(sets, getR6Class))))
-    return(Set$new(rsapply(sets, elements, active = TRUE)))
+    return(Set$new(unlist(rsapply(sets, elements, active = TRUE))))
   else
-    return(Tuple$new(rsapply(sets, elements, active = TRUE)))
+    return(Tuple$new(unlist(rsapply(sets, elements, active = TRUE))))
 }
 .union_interval <- function(sets){
   if(length(sets) == 1)

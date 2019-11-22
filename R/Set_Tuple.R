@@ -46,14 +46,12 @@ Tuple <- R6::R6Class("Tuple", inherit = Set)
 # Public Methods
 #---------------------------------------------
 Tuple$set("public","equals",function(x, all = FALSE){
-  if(!checkmate::testList(x)){
-    if(inherits(x, "R6"))
-      x <- list(x)
-    else
-      x <- as.list(x)
-  }
+  x <- listify(x)
 
   ret = sapply(x, function(el){
+    if(!inherits(el, "R6"))
+      return(FALSE)
+
     if(testFuzzy(el)){
       if(all(el$membership() == 1))
         el = as.Tuple(el)
@@ -63,15 +61,13 @@ Tuple$set("public","equals",function(x, all = FALSE){
       el = as.Tuple(el)
     else if(testConditionalSet(el))
       return(FALSE)
-    else if(testInterval(el) & el$length > 1)
-      return(FALSE)
 
     if(el$length != self$length)
       return(FALSE)
 
     if(class(el$elements) == "list" | class(self$elements) == "list"){
       ret = TRUE
-      for(i in 1:length(el)){
+      for(i in el$length){
         if(el$elements[[i]] != self$elements[[i]]){
           ret = FALSE
           break()
@@ -79,22 +75,26 @@ Tuple$set("public","equals",function(x, all = FALSE){
       }
     } else
       ret = suppressWarnings(all(el$elements == self$elements))
+
+    return(ret)
   })
 
-  if(all)
-    return(all(ret))
-  else
-    return(ret)
+  returner(ret, all)
 })
 
 Tuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
   x <- listify(x)
 
+  if(testFuzzy(el)){
+    if(all(el$membership() == 1))
+      el = as.Tuple(el)
+  }
+
   ret = sapply(x, function(el){
     if(!inherits(el, "R6"))
       return(FALSE)
 
-    if(!testMessage(as.Tuple(el)))
+    if(testInterval(el) & !testMessage(as.Tuple(el)))
       el = as.Tuple(el)
 
     if(!testSet(el) | testFuzzy(el) | testConditionalSet(el) | testInterval(el))

@@ -44,6 +44,9 @@ makeChecks <- function(assertionName, cond, errormsg, args,
 }
 
 getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1){
+  if(!inherits(object, "R6"))
+    return(class(object))
+
   if(classname)
     return(get(class(object)[[n.par+1]], pos = pos)$classname)
   else

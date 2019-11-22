@@ -38,8 +38,13 @@ test_that("inherited_methods",{
 
 test_that("equals",{
   expect_true(Tuple$new(1,2,3)$equals(Tuple$new(1,2,3)))
+  expect_true(Tuple$new(Set$new(1),2,3)$equals(Tuple$new(Set$new(1),2,3)))
+  expect_true(Tuple$new(1,2,3)$equals(Interval$new(1,3,class='integer')))
+  expect_true(Tuple$new(1,2,3)$equals(FuzzyTuple$new(elements = 1:3)))
   expect_false(Tuple$new(1,2,3)$equals(Tuple$new(1,2,3,2,3,3)))
   expect_false(Tuple$new(1,2,3)$equals(Tuple$new(2,1,3)))
+  expect_false(Tuple$new(1,2,3)$equals(1))
+  expect_false(Tuple$new(1,2,3)$equals(ConditionalSet$new(function(x)TRUE)))
 })
 
 test_that("isSubset",{
@@ -54,6 +59,8 @@ test_that("isSubset",{
   expect_false(Tuple$new(1)$isSubset(Tuple$new(1:2)))
   expect_false(Tuple$new(1:2)$isSubset(Tuple$new(3:4)))
   expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(4)))
+  expect_false(Tuple$new(1,2,3)$isSubset(4))
+  expect_false(Tuple$new(1,2,3)$isSubset(FuzzySet$new(1,0.5)))
 
   expect_equal(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5), Tuple$new(1,2,3,4)) < Tuple$new(1,2,3,4), c(TRUE, TRUE, FALSE, FALSE))
   expect_equal(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5), Tuple$new(1,2,3,4)) <= Tuple$new(1,2,3,4), c(TRUE, TRUE, FALSE, TRUE))
@@ -66,4 +73,5 @@ test_that("as.Tuple",{
   expect_equal(as.Tuple(matrix(c(1,2,3,4),nrow = 2)), list(Tuple$new(1,2),Tuple$new(3,4)))
   expect_equal(as.Tuple(FuzzySet$new(1, 0.1, 2, 0.2)), Tuple$new(1, 2))
   expect_equal(as.Tuple(Set$new(1:5)), Tuple$new(1:5))
+  expect_message(expect_equal(as.Tuple(Interval$new()), Interval$new()),"Interval cannot")
 })

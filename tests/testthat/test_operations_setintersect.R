@@ -34,3 +34,9 @@ test_that("mixed",{
   expect_equal(Set$new("a",2) & Interval$new(1,10), Set$new(2))
   expect_equal(Interval$new(1,10) & Set$new("a",2), Set$new(2))
 })
+
+test_that("UnionSet",{
+  expect_equal(setintersect(UnionSet$new(list(Set$new(1,2,5),Set$new(2,"a",Tuple$new(2)))),
+                            Set$new(1, "a", Tuple$new(2), 7)),
+               Set$new(1, "a", Tuple$new(2)))
+})

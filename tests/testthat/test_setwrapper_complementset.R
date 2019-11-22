@@ -17,6 +17,12 @@ test_that("SpecialSets",{
 
 test_that("constructor",{
   expect_silent(ComplementSet$new(Set$new(1:10), Set$new(5, 7)))
+  expect_equal(ComplementSet$new(Interval$new(1, 3), Interval$new(1, 2))$lower, 1 + .Machine$double.xmin)
+  expect_equal(ComplementSet$new(Interval$new(1, 3, class = "integer"), Interval$new(1, 2))$lower, 2)
+  expect_equal(ComplementSet$new(Interval$new(1, 3), Interval$new(2, 3))$upper, 3 - .Machine$double.xmin)
+  expect_equal(ComplementSet$new(Interval$new(1, 3, class = "integer"), Interval$new(2,3))$upper, 2)
+  expect_equal(ComplementSet$new(Interval$new(1, 3, class = "integer"), Interval$new(1, 2))$upper, 3)
+  expect_equal(ComplementSet$new(Interval$new(1, 3, class = "integer"), Interval$new(2, 3))$lower, 1)
 })
 
 test_that("fields",{

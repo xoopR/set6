@@ -186,8 +186,13 @@ Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
         return(FALSE)
     }
 
+    if(el$class == "numeric" & self$class == "integer")
+      return(FALSE)
+
     if(proper){
-      if((el$lower > self$lower & el$upper <= self$upper) | (el$lower >= self$lower & el$upper < self$upper))
+      if((el$lower > self$lower & el$upper <= self$upper) |
+         (el$lower >= self$lower & el$upper < self$upper) |
+         (el$lower >= self$lower & el$upper <= self$upper & el$class == "integer" & self$class == "numeric"))
         return(TRUE)
       else
         return(FALSE)
@@ -269,14 +274,10 @@ Interval$set("public", "isSubinterval", function(x, proper = FALSE, all = FALSE)
 # Public Fields
 #---------------------------------------------
 Interval$set("active","length",function(){
-  if(self$lower == -Inf | self$upper == Inf)
+  if(self$lower == -Inf | self$upper == Inf | (self$class == "numeric" & self$lower != self$upper))
     return(Inf)
-  if(self$class == "numeric" & self$lower != self$upper)
-    return(Inf)
-  else if(self$class == "numeric" & self$lower == self$upper)
-    return(1)
-
-  return(length(self$elements))
+  else
+    return(length(self$elements))
 })
 Interval$set("active", "elements", function(){
   if(self$properties$countability == "countably finite")

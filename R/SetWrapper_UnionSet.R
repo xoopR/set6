@@ -65,3 +65,8 @@ UnionSet$set("active","elements",function(){
   else
     return(els)
 })
+UnionSet$set("active","length",function(){
+  len = rsapply(self$wrappedSets, length, active = TRUE)
+
+  sum(unlist(len))
+})

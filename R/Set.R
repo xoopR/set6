@@ -459,13 +459,8 @@ Set$set("active","elements",function(){
 #' @description Returns the universe of the Set.
 #' @details The universe is an optional Set that specifies where the given Set lives. This is useful
 #' for taking the complement of a Set.
-Set$set("active","universe",function(x){
-  if(missing(x))
-    return(private$.universe)
-  else{
-    assertSet(x)
-    private$.universe <- x
-  }
+Set$set("active","universe",function(){
+  return(private$.universe)
 })
 #' @name range
 #' @title Numeric Range of Set
@@ -555,7 +550,7 @@ as.Set.Interval <- function(object){
 #' @rdname as.Set
 #' @export
 as.Set.ConditionalSet <- function(object){
-  message("Interval cannot be coerced to Set.")
+  message("ConditionalSet cannot be coerced to Set.")
   return(object)
 }
 #---------------------------------------------
