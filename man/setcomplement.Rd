@@ -16,23 +16,23 @@
 \usage{
 setcomplement(x, y, simplify = TRUE)
 
-\method{setcomplement}{Set}(x, y)
+\method{setcomplement}{Set}(x, y, simplify = TRUE)
 
-\method{setcomplement}{Interval}(x, y)
+\method{setcomplement}{Interval}(x, y, simplify = TRUE)
 
-\method{setcomplement}{FuzzySet}(x, y)
+\method{setcomplement}{FuzzySet}(x, y, simplify = TRUE)
 
-\method{setcomplement}{FuzzyTuple}(x, y)
+\method{setcomplement}{FuzzyTuple}(x, y, simplify = TRUE)
 
-\method{setcomplement}{ConditionalSet}(x, y)
+\method{setcomplement}{ConditionalSet}(x, y, simplify = TRUE)
 
-\method{setcomplement}{Reals}(x, y)
+\method{setcomplement}{Reals}(x, y, simplify = TRUE)
 
-\method{setcomplement}{Rationals}(x, y)
+\method{setcomplement}{Rationals}(x, y, simplify = TRUE)
 
-\method{setcomplement}{Integers}(x, y)
+\method{setcomplement}{Integers}(x, y, simplify = TRUE)
 
-\method{setcomplement}{ComplementSet}(x, y)
+\method{setcomplement}{ComplementSet}(x, y, simplify = TRUE)
 
 \method{-}{Set}(x, y)
 }
@@ -81,8 +81,8 @@ Set$new(2:5) - FuzzySet$new(1, 0.1, 2, 0.5)
 
 # complement of conditional sets
 
-ConditionalSet$new(function(x, y) x >= y) -
-    ConditionalSet$new(function(x, y) x == y)
+ConditionalSet$new(function(x, y, simplify = TRUE) x >= y) -
+    ConditionalSet$new(function(x, y, simplify = TRUE) x == y)
 
 # complement of special sets
 Reals$new() - NegReals$new()

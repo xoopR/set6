@@ -39,8 +39,8 @@
 #'
 #' # complement of conditional sets
 #'
-#' ConditionalSet$new(function(x, y) x >= y) -
-#'     ConditionalSet$new(function(x, y) x == y)
+#' ConditionalSet$new(function(x, y, simplify = TRUE) x >= y) -
+#'     ConditionalSet$new(function(x, y, simplify = TRUE) x == y)
 #'
 #' # complement of special sets
 #' Reals$new() - NegReals$new()
@@ -81,7 +81,7 @@ setcomplement <- function(x, y, simplify = TRUE){
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.Set <- function(x, y){
+setcomplement.Set <- function(x, y, simplify = TRUE){
   # difference of two sets
   if(getR6Class(y) %in% c("Set", "Tuple","FuzzySet","FuzzyTuple")){
     if(testTuple(x))
@@ -98,7 +98,7 @@ setcomplement.Set <- function(x, y){
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.Interval <- function(x, y){
+setcomplement.Interval <- function(x, y, simplify = TRUE){
   # if possible convert Interval to Set
   if(!testMessage(as.Set(x)))
     return(setcomplement.Set(as.Set(x), y))
@@ -153,21 +153,21 @@ setcomplement.Interval <- function(x, y){
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.FuzzySet <- function(x, y){
+setcomplement.FuzzySet <- function(x, y, simplify = TRUE){
   y = as.FuzzySet(y)
   ind = !(x$elements %in% y$elements)
   return(FuzzySet$new(elements = x$elements[ind], membership = x$membership()[ind]))
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.FuzzyTuple <- function(x, y){
+setcomplement.FuzzyTuple <- function(x, y, simplify = TRUE){
   y = as.FuzzyTuple(y)
   ind = !(x$elements %in% y$elements)
   return(FuzzyTuple$new(elements = x$elements[ind], membership = x$membership()[ind]))
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.ConditionalSet <- function(x, y){
+setcomplement.ConditionalSet <- function(x, y, simplify = TRUE){
   if(x$equals(y))
     return(x)
   else{
@@ -187,7 +187,7 @@ setcomplement.ConditionalSet <- function(x, y){
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.Reals <- function(x, y){
+setcomplement.Reals <- function(x, y, simplify = TRUE){
   if(getR6Class(y) == "PosReals")
     return(NegReals$new())
   else if(getR6Class(y) == "NegReals")
@@ -197,7 +197,7 @@ setcomplement.Reals <- function(x, y){
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.Rationals <- function(x, y){
+setcomplement.Rationals <- function(x, y, simplify = TRUE){
   if(getR6Class(y) == "PosRationals")
     return(NegRationals$new())
   else if(getR6Class(y) == "NegRationals")
@@ -207,7 +207,7 @@ setcomplement.Rationals <- function(x, y){
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.Integers <- function(x, y){
+setcomplement.Integers <- function(x, y, simplify = TRUE){
   if(getR6Class(y) == "PosIntegers")
     return(NegIntegers$new())
   else if(getR6Class(y) == "NegIntegers")
@@ -217,7 +217,7 @@ setcomplement.Integers <- function(x, y){
 }
 #' @rdname setcomplement
 #' @export
-setcomplement.ComplementSet <- function(x, y){
+setcomplement.ComplementSet <- function(x, y, simplify = TRUE){
   x$addedSet - (x$subtractedSet + y)
 }
 
@@ -227,6 +227,3 @@ setcomplement.ComplementSet <- function(x, y){
   setcomplement(x, y)
 }
 
-unionise <- function(x){
-
-}
