@@ -54,6 +54,7 @@ NULL
 FuzzySet <- R6::R6Class("FuzzySet", inherit = Set)
 FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements))){
   if(!is.null(elements) & !is.null(membership)){
+    elements <- listify(elements)
     membership <- as.numeric(membership)
     if(length(membership) == 1)
       membership <- rep(membership, length(elements))
@@ -110,12 +111,12 @@ FuzzySet$set("public","strprint",function(n = 2){
 #' @name membership
 #' @rdname membership
 #' @title Get Membership of Element in FuzzySet
-#' @param element element in the set, if NULL returns membership of all elements
-#' @description Returns the membership, i.e. value in \[0, 1\], of either the given element
+#' @param element element or list of element in the `set`, if NULL returns membership of all elements
+#' @description Returns the membership, i.e. value in \[0, 1\], of either the given element(s)
 #' or all elements in the fuzzy set.
-#' @details For `FuzzySet`s this is straightforward and returns the membership of the given element,
+#' @details For `FuzzySet`s this is straightforward and returns the membership of the given element(s),
 #' however in `FuzzyTuple`s when an element may be duplicated, the function returns the membership of
-#' the first instance of the element.
+#' all instances of the element.
 #' @return Value, or vector of values, in \[0, 1\]
 #' @section R6 Usage: $membership(element = NULL)
 #' @examples
@@ -125,14 +126,16 @@ FuzzySet$set("public","strprint",function(n = 2){
 FuzzySet$set("public","membership",function(element = NULL){
   if(is.null(element))
     return(private$.membership)
-  else{
-    x <-  match(element, self$elements)
-    if(is.na(x)){
-      message(sprintf("%s is not in this fuzzy set.", element))
-      return(NA)
-    }else
-      return(private$.membership[match(element, self$elements)])
-  }
+
+  element = listify(element)
+
+  ind = match(lapply(element, function(x) ifelse(testSet(x), x$strprint(), x)),
+              lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+
+  ret = numeric(length(element))
+  ret[!is.na(ind)] = private$.membership[ind[!is.na(ind)]]
+
+  ret
 })
 
 #' @name alphaCut
@@ -214,32 +217,30 @@ FuzzySet$set("public","core",function(create = FALSE){
 #' @name inclusion
 #' @rdname inclusion
 #' @title Get Inclusion Level of Element In FuzzySet
-#' @param element element in fuzzy set for which to get the inclusion level
+#' @param element element or list of elements in fuzzy set for which to get the inclusion level
 #' @description An element in a fuzzy set is:
 #' * Included - If m = 1
 #' * Partially Included - If 0 < m < 1
 #' * Not Included - If m = 0
 #' @return One of: "Included", "Partially Included", "Not Included"
 #' @section R6 Usage: $inclusion(element)
-#' @details For `FuzzySet`s this is straightforward and returns the inclusion level of the given element,
+#' @details For `FuzzySet`s this is straightforward and returns the inclusion level of the given element(s),
 #' however in `FuzzyTuple`s when an element may be duplicated, the function returns the inclusion level of
-#' the first instance of the element.
+#' all instances of the element.
 #' @examples
 #' f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
 #' f$inclusion(0.1)
 #' f$inclusion(1)
 #' f$inclusion(3)
 FuzzySet$set("public","inclusion",function(element){
-  member <- self$membership()[self$elements %in% element]
-  if(length(member) == 0)
-    return("Not Included")
 
-  if(member == 1)
-    return("Fully Included")
-  else if(member == 0)
-    return("Not Included")
-  else
-    return("Partially Included")
+  member <- self$membership(element)
+
+  member[member == 0] = "Not Included"
+  member[member == 1] = "Fully Included"
+  member[member > 0 & member < 1] = "Partially Included"
+
+  member
 })
 FuzzySet$set("public","equals",function(x, all = FALSE){
   if(all(self$membership() == 1))
@@ -294,20 +295,8 @@ FuzzySet$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 
   returner(ret, all)
 })
-FuzzySet$set("public","complement",function(){
+FuzzySet$set("public","absComplement",function(){
   FuzzySet$new(elements = self$elements, membership = 1 - self$membership())
-})
-FuzzySet$set("public","powerset",function(){
-  y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
-  if(checkmate::testList(y))
-    y = lapply(y, function(z) apply(z, 2, function(x){
-      FuzzySet$new(elements = x, membership = self$membership(x))
-    }))
-  else
-    y = apply(y, 1, function(x){
-      FuzzySet$new(elements = x, membership = self$membership(x))
-    })
-  return(Set$new(Set$new(), y, self))
 })
 
 #---------------------------------------------

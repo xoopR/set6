@@ -63,13 +63,6 @@ FuzzyTuple <- R6::R6Class("FuzzyTuple", inherit = FuzzySet)
 #---------------------------------------------
 # Public Methods
 #---------------------------------------------
-FuzzyTuple$set("public","powerset",function(){
-  y = Vectorize(function(m) combn(self$elements, m),vectorize.args = c("m"))(1:(self$length-1))
-  y = apply(y, 1, function(x){
-    FuzzyTuple$new(elements = x, membership = self$membership(x))
-  })
-  return(Set$new(Set$new(), y, self))
-})
 FuzzyTuple$set("public","equals",function(x, all = FALSE){
   if(all(self$membership() == 1))
     return(self$core(create = T)$equals(x))
@@ -144,7 +137,7 @@ FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALS
       return(els)
   }
 })
-FuzzyTuple$set("public","complement",function(){
+FuzzyTuple$set("public","absComplement",function(){
   FuzzyTuple$new(elements = self$elements, membership = 1 - self$membership())
 })
 

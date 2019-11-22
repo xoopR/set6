@@ -38,15 +38,24 @@ f <- FuzzySet$new(elements = c(1,2,3), membership = c(0.1,0.2,0.3))
 test_that("membership",{
   expect_equal(f$membership(), c(0.1,0.2,0.3))
   expect_equal(f$membership(1), 0.1)
-  expect_message(expect_equal(f$membership(5), NA))
+  expect_equal(f$membership(c(1,5)), c(0.1,0))
 })
 test_that("strprint",{
+  use_unicode(TRUE)
+  expect_equal(FuzzySet$new()$strprint(), "\u2205")
+  use_unicode(FALSE)
+  expect_equal(FuzzySet$new()$strprint(), "{}")
   expect_equal(f$strprint(),"{1(0.1), 2(0.2), 3(0.3)}")
+  expect_equal(f$strprint(1),"{1(0.1),...,3(0.3)}")
+  expect_equal(FuzzySet$new(Set$new(1), 0.2, 2, 0.5)$strprint(),
+               "{{1}(0.2), 2(0.5)}")
+  use_unicode(TRUE)
 })
 test_that("alphaCut",{
   expect_equal(f$alphaCut(0.15), 2:3)
   expect_equal(f$alphaCut(0.2, strong = FALSE), 2:3)
   expect_equal(f$alphaCut(0.2, strong = TRUE), 3)
+  expect_equal(f$alphaCut(0.2, create = TRUE), Set$new(2,3))
 })
 test_that("support",{
   expect_equal(f$support(), 1:3)
@@ -64,21 +73,21 @@ test_that("inclusion",{
   expect_equal(FuzzySet$new(1,0,2,0.4,3,1)$inclusion(4),"Not Included")
   expect_equal(FuzzySet$new(1,0,2,0.4,3,1)$inclusion(2),"Partially Included")
   expect_equal(FuzzySet$new(1,0,2,0.4,3,1)$inclusion(3),"Fully Included")
+  expect_equal(FuzzySet$new(1,0,2,0.4,3,1)$inclusion(c(2,5)),c("Partially Included", "Not Included"))
 })
 test_that("equals",{
+  expect_true(FuzzySet$new(1,1,2,1)$equals(Set$new(1:2)))
+  expect_false(FuzzySet$new(1,0.1,2,0.1)$equals(Set$new(1:2)))
   expect_true(FuzzySet$new(1,0.1,2,0.1,3,0.1)$equals(FuzzySet$new(elements = 1:3, membership = rep(0.1,3))))
   expect_false(FuzzySet$new(1,0.1,2,0.2,3,0.1)$equals(FuzzySet$new(elements = 1:3, membership = rep(0.1,3))))
   expect_false(FuzzySet$new(1,0.1,2,0.1,3,0.1,4,0.1)$equals(FuzzySet$new(elements = 1:3, membership = rep(0.1,3))))
 })
-test_that("complement",{
-  expect_equal(FuzzySet$new(1,0.1,2,0.8)$complement(),FuzzySet$new(1,0.9,2,0.2))
-})
-test_that("powerset",{
-  expect_equal(FuzzySet$new(1,0.1,2,0.2)$powerset(), Set$new(Set$new(), FuzzySet$new(1,0.1),FuzzySet$new(2,0.2),
-                                                  FuzzySet$new(1,0.1,2,0.2)))
+test_that("absComplement",{
+  expect_equal(FuzzySet$new(1,0.1,2,0.8)$absComplement(),FuzzySet$new(1,0.9,2,0.2))
 })
 
 test_that("isSubset",{
+  expect_true(FuzzySet$new(1,1,2,1,3,1)$isSubset(Set$new(1:2)))
   expect_true(f$isSubset(f, proper = FALSE))
   expect_false(f$isSubset(f, proper = TRUE))
   expect_true(f$isSubset(FuzzySet$new(2,0.2), proper = FALSE))

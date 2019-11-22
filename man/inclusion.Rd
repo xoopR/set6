@@ -4,7 +4,7 @@
 \alias{inclusion}
 \title{Get Inclusion Level of Element In FuzzySet}
 \arguments{
-\item{element}{element in fuzzy set for which to get the inclusion level}
+\item{element}{element or list of elements in fuzzy set for which to get the inclusion level}
 }
 \value{
 One of: "Included", "Partially Included", "Not Included"
@@ -18,9 +18,9 @@ An element in a fuzzy set is:
 }
 }
 \details{
-For \code{FuzzySet}s this is straightforward and returns the inclusion level of the given element,
+For \code{FuzzySet}s this is straightforward and returns the inclusion level of the given element(s),
 however in \code{FuzzyTuple}s when an element may be duplicated, the function returns the inclusion level of
-the first instance of the element.
+all instances of the element.
 }
 \section{R6 Usage}{
  $inclusion(element)

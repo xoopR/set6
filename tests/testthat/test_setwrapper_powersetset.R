@@ -1,9 +1,8 @@
 library(testthat)
 
-context("powerset")
+context("PowersetSet")
 
 test_that("Set",{
-  expect_equal(powerset(Set$new(1,2), simplify = TRUE),Set$new(Set$new(), Set$new(1),Set$new(2),Set$new(1,2)))
   expect_equal(getR6Class(powerset(Set$new(1,2),FALSE)), "PowersetSet")
   expect_equal(powerset(Set$new(1,2), FALSE)$strprint(), paste0("\U2118(", "{1, 2}", ")"))
   use_unicode(FALSE)
@@ -26,6 +25,7 @@ test_that("contains Interval",{
 
 test_that("isSubset",{
   ps = powerset(Set$new(1,2,3,5))
+  expect_false(ps$isSubset(1))
   expect_true(ps <= ps)
   expect_false(ps < ps)
   expect_false(Set$new(1) < ps)

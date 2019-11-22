@@ -42,11 +42,6 @@ test_that("equals",{
   expect_false(Tuple$new(1,2,3)$equals(Tuple$new(2,1,3)))
 })
 
-test_that("powerset",{
-  expect_equal(Tuple$new(1,2)$powerset(),Set$new(Tuple$new(),Tuple$new(1),Tuple$new(2),
-                                                 Tuple$new(1,2)))
-})
-
 test_that("isSubset",{
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2,3)))
   expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2,3), proper = TRUE))

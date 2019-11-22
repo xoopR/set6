@@ -38,6 +38,7 @@ test_that("length",{
   expect_equal(Interval$new(1,10,class="numeric")$length, Inf)
   expect_equal(Interval$new(1,Inf,class="integer")$length, Inf)
   expect_equal(Interval$new(1,10,class="integer")$length, 10)
+  expect_equal(Interval$new(1,1)$length, 1)
 })
 
 test_that("equals",{
@@ -53,6 +54,7 @@ test_that("strprint",{
   expect_equal(Interval$new()$strprint(),"[-\u221E, +\u221E]")
   expect_equal(Interval$new(1,10,type="(]")$strprint(),"(1, 10]")
   expect_equal(Interval$new(1,3)$strprint(),"[1, 3]")
+  expect_equal(Interval$new(1,3,class="integer")$strprint(),"{1,...,3}")
 })
 
 test_that("contains",{
@@ -74,6 +76,8 @@ test_that("isSubset",{
   expect_false(Interval$new(1,4) < Interval$new(1,4))
   expect_true(Interval$new(1,4) <= Interval$new(1,4))
   expect_true(Set$new(2, 3) < Interval$new(1,4))
+  expect_false(Interval$new()$isSubset(1))
+  expect_true(Interval$new()$isSubset(Set$new()))
 
   expect_true(Interval$new(1,3)$isSubset(Set$new(1,2)))
   expect_true(Interval$new(1,3)$isSubset(Set$new(2, 1)))
@@ -90,8 +94,23 @@ test_that("isSubinterval",{
   expect_false(Interval$new(1,4)$isSubinterval(Set$new(3,2,1)))
   expect_true(Interval$new(1,4,class = "integer")$isSubinterval(Set$new(1,2,3)))
 
+  expect_true(Interval$new(1,4)$isSubinterval(Interval$new(2,3), proper = TRUE))
+  expect_false(Interval$new(1,4)$isSubinterval(Interval$new(0,3), proper = FALSE))
+
   expect_true(Interval$new(1,3, class = "integer")$isSubinterval(Set$new(1, 2)))
   expect_false(Interval$new(1,3)$isSubinterval(Set$new(1, 2)))
   expect_false(Interval$new(1,3)$isSubinterval(Set$new(2, 1)))
   expect_false(Reals$new()$isSubinterval(Integers$new()))
+
+  expect_false(Interval$new()$isSubinterval(1))
+  expect_false(Interval$new()$isSubinterval(FuzzySet$new(2,0.2)))
+  expect_true(Interval$new()$isSubinterval(Set$new()))
 })
+
+test_that("coercions",{
+  expect_equal(as.double(Interval$new(1,5,class="integer")), 1:5)
+  expect_message(expect_equal(as.Interval(Set$new(1,5)), Set$new(1,5)), "Set cannot be")
+})
+
+
+

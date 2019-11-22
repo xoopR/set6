@@ -147,8 +147,6 @@ Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
     class_test = sapply(x, checkmate::testIntegerish)
   else if(self$class == "numeric")
     class_test = sapply(x, checkmate::testNumeric)
-  else if(self$class == "complex")
-    class_test = sapply(x, checkmate::testComplex)
 
   if(bound)
     ret[class_test][(x >= self$lower & x <= self$upper)] = TRUE

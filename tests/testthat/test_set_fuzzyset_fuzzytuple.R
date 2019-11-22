@@ -38,7 +38,7 @@ f <- FuzzyTuple$new(elements = c(1,2,3), membership = c(0.1,0.2,0.3))
 test_that("membership",{
   expect_equal(f$membership(), c(0.1,0.2,0.3))
   expect_equal(f$membership(1), 0.1)
-  expect_message(expect_equal(f$membership(5), NA))
+  expect_equal(f$membership(c(1,5)), c(0.1,0))
 })
 test_that("strprint",{
   expect_equal(f$strprint(),"(1(0.1), 2(0.2), 3(0.3))")
@@ -76,14 +76,8 @@ test_that("equals",{
   expect_true(FuzzyTuple$new(elements = 1:3)$equals(Set$new(1:3)))
   expect_false(FuzzyTuple$new(1, 0.3, 2, 0.5)$equals(Interval$new(1, 3)))
 })
-test_that("complement",{
-  expect_equal(FuzzyTuple$new(1,0.1,2,0.8)$complement(),FuzzyTuple$new(1,0.9,2,0.2))
-})
-test_that("powerset",{
-  expect_equal(FuzzyTuple$new(1,0.1,2,0.2)$powerset(), Set$new(Set$new(), FuzzyTuple$new(1,0.1),FuzzyTuple$new(2,0.2),
-                                                  FuzzyTuple$new(1,0.1,2,0.2)))
-  expect_equal(FuzzyTuple$new(1,0.1,"a",0.2)$powerset(), Set$new(Set$new(), FuzzyTuple$new(1,0.1),FuzzyTuple$new("a",0.2),
-                                                               FuzzyTuple$new(1,0.1,"a",0.2)))
+test_that("absComplement",{
+  expect_equal(FuzzyTuple$new(1,0.1,2,0.8)$absComplement(),FuzzyTuple$new(1,0.9,2,0.2))
 })
 
 test_that("isSubset",{
