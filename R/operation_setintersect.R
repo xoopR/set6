@@ -54,6 +54,8 @@ setintersect <- function(x, y){
   if(x$length == 0 | y$length == 0)
     return(Set$new())
 
+  if(inherits(y, "SetWrapper") & !inherits(x, "SetWrapper"))
+    return(setintersect(y, x))
   if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     UseMethod("setintersect")
 

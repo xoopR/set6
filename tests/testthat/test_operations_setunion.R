@@ -49,8 +49,11 @@ test_that("fuzzy",{
 test_that("conditional",{
   expect_equal(ConditionalSet$new(function(x) x == 0) + ConditionalSet$new(function(y) y > 0),
                ConditionalSet$new(function(x, y) x == 0 | y > 0))
+  expect_equal(setunion(ConditionalSet$new(function(x) x == 0), ConditionalSet$new(function(y) y > 0),
+                        ConditionalSet$new(function(z) z == 2)),
+               ConditionalSet$new(function(x,y,z) x == 0|y>0|z==2))
   expect_equal(ConditionalSet$new(function(x) x == 0) + ConditionalSet$new(function(y) y > 0) +
-                 ConditionalSet$new(function(z) z == 2),
+                        ConditionalSet$new(function(z) z == 2),
                ConditionalSet$new(function(x,y,z) x == 0|y>0|z==2))
 })
 

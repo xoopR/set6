@@ -53,8 +53,6 @@ Set$set("public","initialize",function(..., universe = NULL){
     class <- unique(sapply(dots,function(x) class(x)[[1]]))
     if(length(class)==1)
       private$.class <- class
-    else if(length(class)==2 & "list" %in% class)
-      private$.class <- class[!(class %in% "list")]
     else
       private$.class <- "multiple"
 

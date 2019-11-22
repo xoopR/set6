@@ -13,8 +13,12 @@ test_that("special sets",{
   expect_equal(Reals$new() - NegReals$new(), PosReals$new())
   expect_equal(Rationals$new() - PosRationals$new(), NegRationals$new())
   expect_equal(Rationals$new() - NegRationals$new(), PosRationals$new())
+  expect_equal(Rationals$new() - Interval$new(5,10), Interval$new(-Inf, 5, type = "()") +
+                 Interval$new(10, Inf, type = "()"))
   expect_equal(Integers$new() - PosIntegers$new(), NegIntegers$new())
   expect_equal(Integers$new() - NegIntegers$new(), PosIntegers$new())
+  expect_equal(Integers$new() - Interval$new(5,10), Interval$new(-Inf, 5, type = "()",class="integer") +
+                 Interval$new(10, Inf, type = "()",class="integer"))
 })
 
 test_that("set",{
@@ -27,6 +31,8 @@ test_that("set",{
 
 test_that("interval",{
   expect_equal(Interval$new(1,10) - Interval$new(11, 20), Interval$new(1, 10))
+  expect_equal(Interval$new(1,10) - Set$new(1), Interval$new(1, 10, type = "(]"))
+  expect_equal(Interval$new(1,10) - Set$new(10), Interval$new(1, 10, type = "[)"))
   expect_equal(Interval$new(1,10) - Interval$new(5, 10), Interval$new(1, 5, type = "[)"))
   expect_true((Interval$new(1,10,class="integer") - Set$new(5:15))$equals(Set$new(1:4)))
   expect_equal(Interval$new(1,10) - Set$new(1,3,5),
@@ -49,6 +55,7 @@ test_that("interval",{
 
 test_that("fuzzy",{
   expect_equal(FuzzySet$new(1,0.1,2,0.2,3,0.3) - FuzzySet$new(3,0.3,4,0.4), FuzzySet$new(1,0.1,2,0.2))
+  expect_equal(FuzzyTuple$new(1,0.1,2,0.2,3,0.3) - FuzzyTuple$new(3,0.3,4,0.4), FuzzyTuple$new(1,0.1,2,0.2))
   expect_equal(Tuple$new(2) - FuzzyTuple$new(2, 0.1), Set$new())
   expect_equal(Tuple$new(2) - FuzzySet$new(1, 0.1), Tuple$new(2))
 })

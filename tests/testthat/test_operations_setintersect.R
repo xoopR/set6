@@ -39,6 +39,8 @@ test_that("UnionSet",{
   expect_equal(setintersect(UnionSet$new(list(Set$new(1,2,5),Set$new(2,"a",Tuple$new(2)))),
                             Set$new(1, "a", Tuple$new(2), 7)),
                Set$new(1, "a", Tuple$new(2)))
+  expect_true(setintersect(UnionSet$new(list(Set$new(1,2,5),Set$new(4,3))),
+                            UnionSet$new(list(Set$new(1,2,5),Set$new(4,3))))$equals(Set$new(1:5)))
 })
 
 test_that("ComplementSet",{
@@ -46,6 +48,8 @@ test_that("ComplementSet",{
                Set$new(1.1,4.5))
   expect_equal(ComplementSet$new(Reals$new(), Integers$new()) &
                  ComplementSet$new(Set$new(1.1, 2.3), Set$new(2)), Set$new(1.1, 2.3))
+  expect_true(setintersect(ComplementSet$new(Set$new(1,2,5),Set$new(4,3)),
+                           ComplementSet$new(Set$new(1,2,5),Set$new(4,3)))$equals(Set$new(1,2,5)))
 })
 
 test_that("ProductSet",{

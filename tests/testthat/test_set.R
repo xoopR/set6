@@ -113,9 +113,10 @@ test_that("isSubset",{
   expect_false(Set$new(1,2,3,4)$isSubset(c(Set$new(1), Set$new(2,4), Set$new(5)), all = TRUE))
 
   expect_false(Set$new(1,2,3)$isSubset(FuzzySet$new(elements = 1:3, membership = 0.1)))
-  expect_false(Set$new(1,2,3) > Interval$new(1,2))
-  expect_false(Set$new(1,2,3) > 1)
-  expect_true(Set$new(1,2,3) >= Interval$new(1,3, class = "integer"))
+  expect_true(Set$new(1,2,3)$isSubset(FuzzySet$new(elements = 1:3)))
+  expect_false(Set$new(1,2,3)$isSubset(Interval$new(1,2)))
+  expect_false(Set$new(1,2,3)$isSubset(1))
+  expect_true(Set$new(1,2,3)$isSubset(Interval$new(1,3, class = "integer")))
 })
 
 test_that("as.Set",{

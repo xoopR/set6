@@ -83,7 +83,7 @@ setunion <- function(...){
     for(j in 1:length(sets)){
       if(i != j){
         # separate subset and proper subset to prevent both sets being removed due to equality
-        if(sets[[i]] < sets[[j]] | (sets[[i]] == sets[[j]] & i < j))
+        if(suppressMessages(sets[[i]] < sets[[j]]) | suppressMessages((sets[[i]] == sets[[j]] & i < j)))
           rm_ind = c(rm_ind, i)
       }
     }

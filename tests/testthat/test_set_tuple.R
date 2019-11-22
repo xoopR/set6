@@ -48,6 +48,7 @@ test_that("equals",{
   expect_true(Tuple$new(Set$new(1),2) == Tuple$new(Set$new(1),2))
   expect_true(Tuple$new(Set$new(1),2) != Tuple$new(2, Set$new(1)))
   expect_true(Tuple$new(Set$new(1),2) != Tuple$new(2))
+  expect_true(Tuple$new(1,2) == Interval$new(1,2,class="integer"))
 })
 
 test_that("isSubset",{
@@ -70,7 +71,7 @@ test_that("isSubset",{
   expect_equal(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5), Tuple$new(1,2,3,4)) <= Tuple$new(1,2,3,4), c(TRUE, TRUE, FALSE, TRUE))
   expect_false(Tuple$new(1,2,3,4)$isSubset(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5)), all = TRUE))
 
-  expect_true(Tuple$new(1,2) == Interval$new(1,2,class="integer"))
+  expect_true(Tuple$new(1,2)$isSubset(Interval$new(1,2,class="integer")))
 })
 
 test_that("as.Tuple",{

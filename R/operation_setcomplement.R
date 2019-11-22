@@ -177,22 +177,19 @@ setcomplement.FuzzyTuple <- function(x, y, simplify = TRUE){
 #' @rdname setcomplement
 #' @export
 setcomplement.ConditionalSet <- function(x, y, simplify = TRUE){
-  if(x$equals(y))
-    return(x)
-  else{
-    condition = function(){}
-    names = unique(names(c(formals(x$condition), formals(y$condition))))
-    formals <- rep(list(bquote()), length(names))
-    names(formals) = names
-    formals(condition) = formals
-    body(condition) = substitute(bx & !(by),
-                                 list(bx = body(x$condition),
-                                      by = body(y$condition)))
-    # in future updates we can change this so the intersection of the argument classes is kept
-    # not just the argclass of x
-    class = c(x$class, y$class)[!duplicated(names(c(x$class, y$class)))]
-    return(ConditionalSet$new(condition = condition, argclass = class))
-  }
+  condition = function(){}
+  names = unique(names(c(formals(x$condition), formals(y$condition))))
+  formals <- rep(list(bquote()), length(names))
+  names(formals) = names
+  formals(condition) = formals
+  body(condition) = substitute(bx & !(by),
+                               list(bx = body(x$condition),
+                                    by = body(y$condition)))
+  # in future updates we can change this so the intersection of the argument classes is kept
+  # not just the argclass of x
+  class = c(x$class, y$class)[!duplicated(names(c(x$class, y$class)))]
+
+  ConditionalSet$new(condition = condition, argclass = class)
 }
 #' @rdname setcomplement
 #' @export
