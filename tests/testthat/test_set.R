@@ -94,6 +94,10 @@ test_that("isSubset",{
   expect_false(Set$new(1,2,3) > Set$new(1,2,3))
   expect_true(Set$new(1,2,3,4) > Set$new(1,2,3))
   expect_true(Set$new(1,2,3) >= Set$new(1,2,3))
+
+  expect_equal(c(Set$new(1), Set$new(2,4), Set$new(5), Set$new(1,2,3,4)) < Set$new(1,2,3,4), c(TRUE, TRUE, FALSE, FALSE))
+  expect_equal(c(Set$new(1), Set$new(2,4), Set$new(5), Set$new(1,2,3,4)) <= Set$new(1,2,3,4), c(TRUE, TRUE, FALSE, TRUE))
+  expect_false(Set$new(1,2,3,4)$isSubset(c(Set$new(1), Set$new(2,4), Set$new(5)), all = TRUE))
 })
 
 test_that("as.Set",{

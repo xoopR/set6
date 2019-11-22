@@ -34,26 +34,40 @@ SetWrapper$set("active", "wrappedSets", function(){
   return(private$.wrappedSets)
 })
 SetWrapper$set("private", ".wrappedSets", list())
-SetWrapper$set("public", "equals", function(x){
-  if(getR6Class(x) != getR6Class(self))
-    return(FALSE)
-
-  if(length(self$wrappedSets) != length(x$wrappedSets))
-    return(FALSE)
-
-  ret = TRUE
-  for(i in 1:length(self$wrappedSets)){
-    if(self$wrappedSets[[i]] != x$wrappedSets[[i]]){
-      ret = FALSE
-      break()
-    }
+SetWrapper$set("public", "equals", function(x, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
   }
 
-  return(ret)
+  ret = sapply(x, function(el){
+    if(getR6Class(el) != getR6Class(self))
+      return(FALSE)
+
+    if(length(self$wrappedSets) != length(el$wrappedSets))
+      return(FALSE)
+
+    ret = TRUE
+    for(i in 1:length(self$wrappedSets)){
+      if(self$wrappedSets[[i]] != el$wrappedSets[[i]]){
+        ret = FALSE
+        break()
+      }
+    }
+
+    return(ret)
+  })
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
-SetWrapper$set("public","isSubset",function(x, proper = FALSE){
-  message("isSubset currently not implemented for wrapped sets.")
+SetWrapper$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
+  message("isSubset currently not implemented for this wrapper.")
 })
-SetWrapper$set("public","complement",function(){
-  message("complement currently not implemented for wrapped sets.")
+SetWrapper$set("public","absComplement",function(){
+  message("absComplement currently not implemented for this wrapper.")
 })

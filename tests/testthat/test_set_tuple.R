@@ -59,6 +59,10 @@ test_that("isSubset",{
   expect_false(Tuple$new(1)$isSubset(Tuple$new(1:2)))
   expect_false(Tuple$new(1:2)$isSubset(Tuple$new(3:4)))
   expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(4)))
+
+  expect_equal(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5), Tuple$new(1,2,3,4)) < Tuple$new(1,2,3,4), c(TRUE, TRUE, FALSE, FALSE))
+  expect_equal(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5), Tuple$new(1,2,3,4)) <= Tuple$new(1,2,3,4), c(TRUE, TRUE, FALSE, TRUE))
+  expect_false(Tuple$new(1,2,3,4)$isSubset(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5)), all = TRUE))
 })
 
 test_that("as.Tuple",{

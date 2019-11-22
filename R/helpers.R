@@ -102,9 +102,9 @@ rlapply = function(X, FUN, ..., active = FALSE){
 rsapply = function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FALSE){
   FUN = as.character(substitute(FUN))
   if(active)
-    return(unlist(sapply(X, function(x) x[[FUN]], simplify = simplify, USE.NAMES = USE.NAMES)))
+    return(sapply(X, function(x) x[[FUN]], simplify = simplify, USE.NAMES = USE.NAMES))
   else
-    return(unlist(sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES)))
+    return(sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES))
 }
 
 crispify = function(x){

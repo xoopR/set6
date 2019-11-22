@@ -91,36 +91,50 @@ ConditionalSet$set("public","contains",function(x, all = FALSE, bound = NULL){
   else
     return(ret)
 })
-ConditionalSet$set("public","equals",function(x){
-  if(!testConditionalSet(x))
-    return(FALSE)
-
-  if(all(names(formals(x$condition)) == names(formals(self$condition))) &
-     all(body(x$condition) == body(self$condition)) &
-     all(unlist(lapply(x$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
-    return(TRUE)
-
-
-  if(!all(rsapply(self$class, strprint) == rsapply(x$class, strprint)))
-    return(FALSE)
-  else{
-    sclass = self$class
-    xclass = x$class
-    if(length(sclass) < length(xclass))
-      sclass = rep(sclass, length(xclass))[1:length(xclass)]
-    if(length(xclass) < length(sclass))
-      xclass = rep(xclass, length(sclass))[1:length(sclass)]
-
-    xcond = body(x$condition)
-    if(!all(names(sclass) == names(xclass))){
-      for(i in 1:length(names(xclass)))
-        xcond = gsub(names(xclass)[[i]], names(sclass)[[i]], xcond, fixed = TRUE)
-    }
-    if(all(xcond == as.character(body(self$condition))))
-      return(TRUE)
+ConditionalSet$set("public","equals",function(x, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
     else
-      return(FALSE)
+      x <- as.list(x)
   }
+
+  ret = sapply(x, function(el){
+    if(!testConditionalSet(el))
+      return(FALSE)
+
+    if(all(names(formals(el$condition)) == names(formals(self$condition))) &
+       all(body(el$condition) == body(self$condition)) &
+       all(unlist(lapply(el$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
+      return(TRUE)
+
+
+    if(!all(rsapply(self$class, strprint) == rsapply(el$class, strprint)))
+      return(FALSE)
+    else{
+      sclass = self$class
+      elclass = el$class
+      if(length(sclass) < length(elclass))
+        sclass = rep(sclass, length(elclass))[1:length(elclass)]
+      if(length(elclass) < length(sclass))
+        elclass = rep(elclass, length(sclass))[1:length(sclass)]
+
+      elcond = body(el$condition)
+      if(!all(names(sclass) == names(elclass))){
+        for(i in 1:length(names(elclass)))
+          elcond = gsub(names(elclass)[[i]], names(sclass)[[i]], elcond, fixed = TRUE)
+      }
+      if(all(elcond == as.character(body(self$condition))))
+        return(TRUE)
+      else
+        return(FALSE)
+    }
+  })
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 ConditionalSet$set("public","strprint",function(n = NULL){
   if(use_unicode())
@@ -135,7 +149,8 @@ ConditionalSet$set("public","strprint",function(n = NULL){
 ConditionalSet$set("public","summary",function(n = NULL){
   self$print()
 })
-ConditionalSet$set("public", "isSubset", function(x, proper = FALSE){
+ConditionalSet$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
+  message("isSubset is currently undefined for conditional sets.")
   return(FALSE)
 })
 

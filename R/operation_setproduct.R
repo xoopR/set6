@@ -83,8 +83,8 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE){
   Set$new(apply(expand.grid(rlapply(sets, elements,active = T)), 1, function(z) Tuple$new(z)))
 }
 .product_fuzzyset <- function(sets){
-  mat = cbind(expand.grid(rsapply(sets, elements, active = T)),
-              expand.grid(rsapply(sets, membership)))
+  mat = cbind(expand.grid(rlapply(sets, elements, active = T)),
+              expand.grid(rlapply(sets, membership)))
   return(Set$new(apply(mat, 1, function(x) FuzzyTuple$new(elements = x[1:(ncol(mat)/2)],
                                            membership = x[((ncol(mat)/2)+1):(ncol(mat))]))))
 }

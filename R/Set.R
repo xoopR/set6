@@ -239,7 +239,9 @@ Set$set("public","contains",function(x, all = FALSE, bound = NULL){
 #' @param x Set
 #' @param y Set
 #' @title Are Two Sets Equal?
-#' @return TRUE if both objects are equal, FALSE otherwise
+#' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
+#' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+#' element of `x`.
 #' @section R6 Usage: $equals(x)
 #' @examples
 #' # Equals
@@ -250,14 +252,40 @@ Set$set("public","contains",function(x, all = FALSE, bound = NULL){
 #' # Not equal
 #' !Set$new(1,2)$equals(Set$new(1,2))
 #' Set$new(1,2) != Set$new(1,5)
-Set$set("public","equals",function(x){
-  if(!testSet(x))
-    return(FALSE)
+Set$set("public","equals",function(x, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
+  }
 
-  if(all(x$elements %in% self$elements) & all(self$elements %in% x$elements))
-    return(TRUE)
+  ret = sapply(x, function(el){
+    if(testFuzzy(el)){
+      if(all(el$membership() == 1))
+        el = as.Set(el)
+    }
+
+    if(testInterval(el) & !testMessage(as.Set(el)))
+      el = as.Set(el)
+    else if(testInterval(el) & el$length > 1)
+      return(FALSE)
+    else if(testConditionalSet(el))
+      return(FALSE)
+
+    if(el$length != self$length)
+      return(FALSE)
+
+    if(all(el$elements %in% self$elements) & all(self$elements %in% el$elements))
+      return(TRUE)
+    else
+      return(FALSE)
+  })
+
+  if(all)
+    return(all(ret))
   else
-    return(FALSE)
+    return(ret)
 })
 #' @name isSubset
 #' @rdname isSubset
@@ -267,31 +295,50 @@ Set$set("public","equals",function(x){
 #' argument `proper` can be used to specify testing of subsets or proper subsets. A Set is a proper
 #' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
 #' (non-proper) subset if it is fully contained by, or equal to, the other Set.
-#' @return TRUE if object x is a subset of self, FALSE otherwise
-#' @section R6 Usage: $isSubset(x, proper = FALSE)
+#' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
+#' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+#' element of `x`.
+#' @section R6 Usage: $isSubset(x, proper = FALSE, all = FALSE)
 #' @examples
 #' Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
 #' Set$new(1,2) < Set$new(1,2,3) # proper subset
 #'
-#' Set$new(1,2,3) < Set$new(1,2,3) # not proper
+#' c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
 #' Set$new(1,2,3) <= Set$new(1,2,3) # proper
-Set$set("public","isSubset",function(x, proper = FALSE){
-  assertSet(x)
-  if(testInterval(x) | testFuzzy(x))
-    return(FALSE)
-
-  if(proper){
-    if(all(x$elements %in% self$elements) & !all(self$elements %in% x$elements))
-      return(TRUE)
+Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
     else
-      return(FALSE)
-  }else{
-    if(all(x$elements %in% self$elements))
-      return(TRUE)
-    else
-      return(FALSE)
+      x <- as.list(x)
   }
 
+  assertSetList(x)
+
+  ret = rep(FALSE, length(x))
+  ind = sapply(x, function(el) !testInterval(el) & !testFuzzy(el))
+
+  ret[ind] = sapply(x[ind], function(el){
+    if(proper){
+      if(all(el$elements %in% self$elements) & !all(self$elements %in% el$elements))
+        return(TRUE)
+      else
+        return(FALSE)
+    }else{
+      if(all(el$elements %in% self$elements))
+        return(TRUE)
+      else
+        return(FALSE)
+    }
+  })
+
+  if(length(ret) == 1)
+    ret = ret[[1]]
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 #---------------------------------------------
 # Public methods - absComplement

@@ -68,6 +68,9 @@ setcomplement <- function(x, y){
   else if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     return(ComplementSet$new(x, y))
 
+  if(testConditionalSet(x))
+    UseMethod("setcomplement")
+
   if(x <= y)
     return(Set$new())
 

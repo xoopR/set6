@@ -29,23 +29,39 @@ PowersetSet$set("public", "contains", function(x, all = FALSE, bound = NULL){
   else
     return(x)
 })
-PowersetSet$set("public", "isSubset", function(x, proper = FALSE){
+PowersetSet$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
 
-  if(self$equals(x)){
-    if(proper)
-      return(FALSE)
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
     else
-      return(TRUE)
+      x <- as.list(x)
   }
 
-  if(getR6Class(x) == "PowersetSet")
-    return(self$wrappedSets[[1]]$isSubset(x$wrappedSets[[1]], proper = proper))
+  assertSetList(x)
 
-  if(!(getR6Class(x) %in% c("Tuple","Set")))
-    return(FALSE)
+  ret = sapply(x, function(el){
+    if(self$equals(el)){
+      if(proper)
+        return(FALSE)
+      else
+        return(TRUE)
+    }
 
-  if(!testSet(x$elements[[1]]))
-    return(FALSE)
+    if(getR6Class(el) == "PowersetSet")
+      return(self$wrappedSets[[1]]$isSubset(el$wrappedSets[[1]], proper = proper))
 
-  all(self$wrappedSets[[1]]$isSubset(x$elements[[1]], proper = FALSE))
+    if(!(getR6Class(el) %in% c("Tuple","Set")))
+      return(FALSE)
+
+    if(!testSet(el$elements[[1]]))
+      return(FALSE)
+
+    all(self$wrappedSets[[1]]$isSubset(el$elements[[1]], proper = FALSE))
+  })
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })

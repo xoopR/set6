@@ -67,49 +67,79 @@ FuzzyTuple$set("public","powerset",function(){
   })
   return(Set$new(Set$new(), y, self))
 })
-FuzzyTuple$set("public","equals",function(x){
+FuzzyTuple$set("public","equals",function(x, all = FALSE){
   if(all(self$membership() == 1))
     return(self$core(create = T)$equals(x))
 
-  if(!testFuzzyTuple(x))
-    return(FALSE)
-
-  if(x$length != self$length)
-    return(FALSE)
-
-  if(suppressWarnings(all(x$elements == self$elements) &
-                      all(x$membership() == self$membership())))
-    return(TRUE)
-  else
-    return(FALSE)
-})
-FuzzyTuple$set("public","isSubset",function(x, proper = FALSE){
-  if(all(self$membership() == 1))
-    return(self$core(create = T)$isSubset(x, proper = proper))
-
-  if(!testFuzzyTuple(x))
-    return(FALSE)
-
-  self_comp <- paste(self$elements, self$membership(), sep=";")
-  x_comp <- paste(x$elements, x$membership(), sep=";")
-
-  if(x$length > self$length)
-    return(FALSE)
-  else if(x$length == self$length){
-    if(!proper & x$equals(self))
-      return(TRUE)
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
     else
-      return(FALSE)
-  } else{
-    mtc <- match(x_comp, self_comp)
-    if(all(is.na(mtc)))
-      return(FALSE)
-
-    if(all(order(mtc) == (1:length(x$elements))))
-      return(TRUE)
-    else
-      return(FALSE)
+      x <- as.list(x)
   }
+
+  ret = sapply(x, function(el){
+    if(!testFuzzySet(el))
+      return(FALSE)
+
+    if(el$length != self$length)
+      return(FALSE)
+
+    if(suppressWarnings(all(el$elements == self$elements) &
+                        all(el$membership() == self$membership())))
+      return(TRUE)
+    else
+      return(FALSE)
+  })
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
+})
+FuzzyTuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
+  if(all(self$membership() == 1))
+    return(self$core(create = T)$isSubset(x, proper = proper, all = all))
+
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
+  }
+
+  assertSetList(x)
+
+  ret = rep(FALSE, length(x))
+  ind = sapply(x, testFuzzyTuple)
+
+  ret[ind] = sapply(x[ind], function(el){
+    self_comp <- paste(self$elements, self$membership(), sep=";")
+    el_comp <- paste(el$elements, el$membership(), sep=";")
+
+    if(el$length > self$length)
+      return(FALSE)
+    else if(el$length == self$length){
+      if(!proper & el$equals(self))
+        return(TRUE)
+      else
+        return(FALSE)
+    } else{
+      mtc <- match(el_comp, self_comp)
+      if(all(is.na(mtc)))
+        return(FALSE)
+
+      if(all(order(mtc) == (1:length(el$elements))))
+        return(TRUE)
+      else
+        return(FALSE)
+    }
+  })
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
   if(strong)

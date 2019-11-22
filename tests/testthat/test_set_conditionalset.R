@@ -52,8 +52,8 @@ test_that("summary",{
 })
 
 test_that("isSubset",{
-  expect_false(ConditionalSet$new(function(x) TRUE)$isSubset(Set$new(1)))
-  expect_false(ConditionalSet$new(function(x) TRUE)$isSubset(1))
+  expect_message(ConditionalSet$new(function(x) TRUE)$isSubset(Set$new(1)), "undefined")
+  expect_message(ConditionalSet$new(function(x) TRUE)$isSubset(1), "undefined")
 })
 
 test_that("fields",{

@@ -20,7 +20,9 @@
 \item{x, y}{Set}
 }
 \value{
-TRUE if object x is a subset of self, FALSE otherwise
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
 }
 \description{
 Test If Two Sets Are Subsets
@@ -32,7 +34,7 @@ subset of another if it is fully contained by the other Set (i.e. not equal to) 
 (non-proper) subset if it is fully contained by, or equal to, the other Set.
 }
 \section{R6 Usage}{
- $isSubset(x, proper = FALSE)
+ $isSubset(x, proper = FALSE, all = FALSE)
 }
 
 \examples{

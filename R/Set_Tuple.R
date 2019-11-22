@@ -42,24 +42,46 @@ NULL
 #---------------------------------------------
 Tuple <- R6::R6Class("Tuple", inherit = Set)
 
-Tuple$set("public","equals",function(x){
-  assertSet(x)
+Tuple$set("public","equals",function(x, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
+  }
 
-  if(x$length != self$length)
-    return(FALSE)
-
-  if(class(x$elements) == "list" | class(self$elements) == "list"){
-    ret = TRUE
-    for(i in 1:length(x)){
-      if(x$elements[[i]] != self$elements[[i]]){
-        ret = FALSE
-        break()
-      }
+  ret = sapply(x, function(el){
+    if(testFuzzy(el)){
+      if(all(el$membership() == 1))
+        el = as.Tuple(el)
     }
-  } else
-    ret = suppressWarnings(all(x$elements == self$elements))
 
-  return(ret)
+    if(testInterval(el) & !testMessage(as.Tuple(el)))
+      el = as.Tuple(el)
+    else if(testConditionalSet(el))
+      return(FALSE)
+    else if(testInterval(el) & el$length > 1)
+      return(FALSE)
+
+    if(el$length != self$length)
+      return(FALSE)
+
+    if(class(el$elements) == "list" | class(self$elements) == "list"){
+      ret = TRUE
+      for(i in 1:length(el)){
+        if(el$elements[[i]] != self$elements[[i]]){
+          ret = FALSE
+          break()
+        }
+      }
+    } else
+      ret = suppressWarnings(all(el$elements == self$elements))
+  })
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 
 Tuple$set("public","powerset",function(){
@@ -68,27 +90,43 @@ Tuple$set("public","powerset",function(){
   return(Set$new(Tuple$new(), unlist(lapply(y, as.Tuple)), self))
 })
 
-Tuple$set("public","isSubset",function(x, proper = FALSE){
-  if(!testTuple(x))
-    return(FALSE)
-
-  if(x$length > self$length)
-    return(FALSE)
-  else if(x$length == self$length){
-    if(!proper & x$equals(self))
-      return(TRUE)
+Tuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
     else
-      return(FALSE)
-  } else{
-    mtc <- match(x$elements, self$elements)
-    if(all(is.na(mtc)))
-      return(FALSE)
-
-    if(all(order(mtc) == (1:length(x$elements))))
-      return(TRUE)
-    else
-      return(FALSE)
+      x <- as.list(x)
   }
+
+  assertSetList(x)
+
+  ret = rep(FALSE, length(x))
+  ind = sapply(x, function(el) testTuple(el) & el$length <= self$length)
+
+  ret[ind] = unlist(sapply(x[ind], function(el){
+    if(el$length > self$length)
+      return(FALSE)
+    else if(el$length == self$length){
+      if(!proper & el$equals(self))
+        return(TRUE)
+      else
+        return(FALSE)
+    } else{
+      mtc <- match(el$elements, self$elements)
+      if(all(is.na(mtc)))
+        return(FALSE)
+
+      if(all(order(mtc) == (1:length(el$elements))))
+        return(TRUE)
+      else
+        return(FALSE)
+    }
+  }))
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 
 Tuple$set("private",".type","()")

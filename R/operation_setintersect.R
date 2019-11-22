@@ -57,13 +57,13 @@ setintersect <- function(x, y){
   if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     UseMethod("setintersect")
 
+  if(testConditionalSet(x) | testConditionalSet(y))
+    UseMethod("setintersect")
+
   if (y$isSubset(x, proper = FALSE))
     return(x)
   else if (x$isSubset(y, proper = FALSE))
     return(y)
-
-  if(testConditionalSet(x) | testConditionalSet(y))
-    UseMethod("setintersect")
 
   if(testMessage(as.Set(x)))
     x = suppressMessages(as.Interval(x))

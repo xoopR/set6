@@ -239,45 +239,82 @@ FuzzySet$set("public","inclusion",function(element){
   else
     return("Partially Included")
 })
-FuzzySet$set("public","equals",function(x){
+FuzzySet$set("public","equals",function(x, all = FALSE){
   if(all(self$membership() == 1))
     return(self$core(create = T)$equals(x))
 
-  if(!testFuzzySet(x))
-    return(FALSE)
-
-  x_mat = matrix(c(x$elements,x$membership()),ncol=2)[order(x$elements),]
-  self_mat = matrix(c(self$elements,self$membership()),ncol=2)[order(self$elements),]
-
-  if(any(dim(x_mat) != dim(self_mat)))
-    return(FALSE)
-
-  if(all(x_mat == self_mat))
-    return(TRUE)
-  else
-    return(FALSE)
-})
-FuzzySet$set("public","isSubset",function(x, proper = FALSE){
-  if(all(self$membership() == 1))
-    return(self$core(create = T)$isSubset(x, proper = proper))
-
-  if(!testFuzzySet(x))
-    return(FALSE)
-
-  self_comp <- paste(self$elements, self$membership(), sep=";")
-  x_comp <- paste(x$elements, x$membership(), sep=";")
-
-  if(proper){
-    if(all(x_comp %in% self_comp) & !all(self_comp %in% x_comp))
-      return(TRUE)
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
     else
-      return(FALSE)
-  }else{
-    if(all(x_comp %in% self_comp))
-      return(TRUE)
-    else
-      return(FALSE)
+      x <- as.list(x)
   }
+
+  ret = sapply(x, function(el){
+
+    if(!testFuzzySet(el))
+      return(FALSE)
+
+    el_mat = matrix(c(el$elements,el$membership()),ncol=2)[order(el$elements),]
+    self_mat = matrix(c(self$elements,self$membership()),ncol=2)[order(self$elements),]
+
+    if(any(dim(el_mat) != dim(self_mat)))
+      return(FALSE)
+
+    if(all(el_mat == self_mat))
+      return(TRUE)
+    else
+      return(FALSE)
+  })
+
+  if(length(ret) == 1)
+    ret = ret[[1]]
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
+})
+FuzzySet$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
+  if(all(self$membership() == 1))
+    return(self$core(create = T)$isSubset(x, proper = proper, all = all))
+
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
+  }
+
+  assertSetList(x)
+
+  ret = rep(FALSE, length(x))
+  ind = sapply(x, testFuzzySet)
+
+  ret[ind] = sapply(x[ind], function(el){
+    self_comp <- paste(self$elements, self$membership(), sep=";")
+    el_comp <- paste(el$elements, el$membership(), sep=";")
+
+    if(proper){
+      if(all(el_comp %in% self_comp) & !all(self_comp %in% el_comp))
+        return(TRUE)
+      else
+        return(FALSE)
+    }else{
+      if(all(el_comp %in% self_comp))
+        return(TRUE)
+      else
+        return(FALSE)
+    }
+  })
+
+  if(length(ret) == 1)
+    ret = ret[[1]]
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 FuzzySet$set("public","complement",function(){
   FuzzySet$new(elements = self$elements, membership = 1 - self$membership())

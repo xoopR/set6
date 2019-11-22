@@ -102,18 +102,37 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   invisible(self)
 })
 
-Interval$set("public","equals",function(x){
-  if (!testInterval(x))
-    return(FALSE)
-  if (x$type == self$type & x$class == self$class){
-    if (is.null(x$lower) & is.null(self$lower) & is.null(x$upper) & is.null(self$upper))
-      return(TRUE)
-    else if (x$lower == self$lower & x$upper == self$upper)
-      return(TRUE)
+Interval$set("public","equals",function(x, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
     else
+      x <- as.list(x)
+  }
+
+  assertSetList(x)
+
+  ret = sapply(x, function(el){
+    if (!testInterval(el))
       return(FALSE)
-  } else
-    return(FALSE)
+    if (el$type == self$type & el$class == self$class){
+      if (is.null(el$lower) & is.null(self$lower) & is.null(el$upper) & is.null(self$upper))
+        return(TRUE)
+      else if (el$lower == self$lower & el$upper == self$upper)
+        return(TRUE)
+      else
+        return(FALSE)
+    } else
+      return(FALSE)
+  })
+
+  if(length(ret) == 1)
+    ret = ret[[1]]
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 Interval$set("public","strprint",function(...){
 
@@ -154,43 +173,65 @@ Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
     ret[index] = TRUE
   }
 
+  if(length(ret) == 1)
+    ret = ret[[1]]
+
   if(all)
     return(all(ret))
   else
     return(ret)
 })
-Interval$set("public", "isSubset", function(x, proper = FALSE){
-  if(x$properties$empty)
-    return(TRUE)
+Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
+  if(!checkmate::testList(x)){
+    if(inherits(x, "R6"))
+      x <- list(x)
+    else
+      x <- as.list(x)
+  }
 
-  if(testSet(x) & !testInterval(x) & !testConditionalSet(x)){
-    if(testFuzzy(x))
-      return(FALSE)
-    else{
-      if(testMessage(as.Set(self))){
-        if(self$contains(x, all = TRUE, bound = FALSE))
-          return(TRUE)
-        else
-          return(FALSE)
-      } else
-        return(as.Set(self)$isSubset(x, proper = proper))
+  assertSetList(x)
+
+  ret = sapply(x, function(el){
+    if(el$properties$empty)
+      return(TRUE)
+
+    if(testSet(el) & !testInterval(el) & !testConditionalSet(el)){
+      if(testFuzzy(el))
+        return(FALSE)
+      else{
+        if(testMessage(as.Set(self))){
+          if(self$contains(el, all = TRUE, bound = FALSE))
+            return(TRUE)
+          else
+            return(FALSE)
+        } else
+          return(as.Set(self)$isSubset(el, proper = proper))
+      }
     }
-  }
 
-  if(self$class == "integer" & x$class == "numeric")
-    return(FALSE)
+    if(self$class == "integer" & el$class == "numeric")
+      return(FALSE)
 
-  if(self$equals(x)){
-    if(proper)
-      return(FALSE)
-    else
-      return(TRUE)
-  } else{
-    if(x$lower >= self$lower & x$upper <= self$upper)
-      return(TRUE)
-    else
-      return(FALSE)
-  }
+    if(self$equals(el)){
+      if(proper)
+        return(FALSE)
+      else
+        return(TRUE)
+    } else{
+      if(el$lower >= self$lower & el$upper <= self$upper)
+        return(TRUE)
+      else
+        return(FALSE)
+    }
+  })
+
+  if(length(ret) == 1)
+    ret = ret[[1]]
+
+  if(all)
+    return(all(ret))
+  else
+    return(ret)
 })
 Interval$set("active","length",function(){
   if(self$lower == -Inf | self$upper == Inf)
