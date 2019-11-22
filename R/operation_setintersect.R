@@ -57,8 +57,10 @@ setintersect <- function(x, y){
   if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     UseMethod("setintersect")
 
-  if(testConditionalSet(x) | testConditionalSet(y))
+  if(testConditionalSet(x))
     UseMethod("setintersect")
+  else if (testConditionalSet(y))
+    return(Set$new(x$elements[y$contains(x$elements)]))
 
   if (y$isSubset(x, proper = FALSE))
     return(x)
@@ -75,19 +77,19 @@ setintersect <- function(x, y){
   else
     y = as.Set(y)
 
-  if(any(grepl("NaN", x$elements)) | any(grepl("NaN", y$elements)))
+  if(testInterval(x))
     UseMethod("setintersect")
-  else
-    Set$new(intersect(x$elements, y$elements))
+
+  return(Set$new(x$elements[y$contains(x$elements)]))
 }
-#' @rdname setintersect
-#' @export
-setintersect.Set <- function(x, y){
-  if (inherits(y, "ConditionalSet"))
-    return(Set$new())
-  else
-    return(Set$new(x$elements[y$contains(x$elements)]))
-}
+# #' rdname setintersect
+# #' export
+# setintersect.Set <- function(x, y){
+#   if (inherits(y, "ConditionalSet"))
+#     return(Set$new())
+#   else
+#     return(Set$new(x$elements[y$contains(x$elements)]))
+# }
 #' @rdname setintersect
 #' @export
 setintersect.Interval <- function(x, y){
@@ -130,17 +132,23 @@ setintersect.ConditionalSet <- function(x, y){
 #' @rdname setintersect
 #' @export
 setintersect.UnionSet <- function(x, y){
-  int = Set$new()
-  sets = sapply(x$wrappedSets, function(set) setintersect(set, y))
-  for(i in 1:length(sets))
-    int = int + sets[[i]]
+  if(!inherits(y, "SetWrapper"))
+    return(Set$new(unlist(y$elements[x$contains(y$elements)])))
+  else {
+    int = Set$new()
+    sets = sapply(x$wrappedSets, function(set) setintersect(set, y))
+    for(i in 1:length(sets))
+      int = int + sets[[i]]
 
-  int
+    return(int)
+  }
 }
 #' @rdname setintersect
 #' @export
-setintersect.DifferenceSet <- function(x, y){
-  if(inherits(y, "DifferenceSet")){
+setintersect.ComplementSet <- function(x, y){
+  if(!inherits(y, "SetWrapper"))
+    return(Set$new(unlist(y$elements[x$contains(y$elements)])))
+  else if(inherits(y, "ComplementSet")){
     return((x$addedSet & y$addedSet) - (x$subtractedSet + y$subtractedSet))
   } else {
     add_int = setintersect(x$addedSet, y)
@@ -152,12 +160,10 @@ setintersect.DifferenceSet <- function(x, y){
 #' @rdname setintersect
 #' @export
 setintersect.ProductSet <- function(x, y){
-  int = Set$new()
-  sets = lapply(x$wrappedSets, function(set) setintersect(set, y))
-  for(i in 1:length(sets))
-    int = int * sets[[i]]
-
-  int
+  if (!inherits(y, "SetWrapper"))
+    return(Set$new(unlist(y$elements[x$contains(y$elements)])))
+  else
+    message("setIntersect of ProductSet & SetWrapper currently not implemented.")
 }
 #' @rdname setintersect
 #' @export

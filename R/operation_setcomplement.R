@@ -134,19 +134,28 @@ setcomplement.Interval <- function(x, y, simplify = TRUE){
     }
     u = Set$new()
     for(i in 1:y$length){
-      if(i == 1 & y$elements[[1]] == x$lower)
-        u = u + Interval$new(x$lower, y$elements[[2]], type = "()")
-      else if(i == 1)
-        u = u + Interval$new(x$lower, y$elements[[1]], type = paste0(substr(x$type,1,1),")"))
-      else if(i == (y$length - 1) & y$elements[[y$length]] == x$upper){
-        u = u + Interval$new(y$elements[[i]], x$upper, type = "()")
+      if (i == y$length & y$elements[[i]] == x$upper)
         break()
-      } else if(i == y$length){
-        u = u + Interval$new(y$elements[[i]], x$upper, type = paste0("(", substr(x$type,2,2)))
-        break()
-      }
 
-      u = u + Interval$new(y$elements[[i]], y$elements[[i+1]], type = "()")
+      if(i == 1 & y$elements[[1]] != x$lower)
+        u = u + Interval$new(x$lower, y$elements[[1]], type = paste0(substr(x$type,1,1),")"))
+
+      if((i == 1 & y$elements[[1]] != x$lower) | (i != 1))
+        lower = y$elements[[i]]
+      else
+        lower = x$lower
+
+      if((i == (y$length - 1) & y$elements[[y$length]] == x$upper) | (i == y$length))
+        upper = x$upper
+      else
+        upper = y$elements[[i + 1]]
+
+      if(i == y$length)
+        type = paste0("(", substr(x$type,2,2))
+      else
+        type = "()"
+
+      u = u + Interval$new(lower, upper, type)
     }
     return(u)
   }

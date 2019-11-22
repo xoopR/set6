@@ -44,6 +44,7 @@ test_that("interval",{
   expect_equal(setcomplement(Interval$new(1,10), Interval$new(2,4,class="integer"),
                              simplify = FALSE)$strprint(),
                "[1, 10] \\ {2,...,4}")
+  expect_equal(Interval$new(1,5)-Set$new(3,5), Interval$new(1,3,type="[)") + Interval$new(3,5,type='()'))
 })
 
 test_that("fuzzy",{

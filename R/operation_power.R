@@ -1,7 +1,7 @@
 #' @name power
 #' @rdname power
-#' @param x,e1 Set
-#' @param power,e2 power to raise set to
+#' @param x Set
+#' @param power power to raise set to
 #' @param simplify logical, if `TRUE` returns the result in its simplest (unwrapped) form, usually a `Set`
 #' otherwise a `ExponentSet`.
 #' @param nest logical, if `FALSE` (default) returns the n-ary cartesian product, otherwise returns
@@ -50,6 +50,6 @@ power <- function(x, power, simplify = FALSE, nest = FALSE, ...){
 
 #' @rdname power
 #' @export
-`^.Set` <- function(e1, e2){
-  power(e1, e2)
+`^.Set` <- function(x, power){
+  power(x, power)
 }

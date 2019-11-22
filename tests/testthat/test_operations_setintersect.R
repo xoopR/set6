@@ -3,7 +3,7 @@ library(testthat)
 context("setintersect")
 
 test_that("SetXSet",{
-  expect_equal(setintersect(Set$new(1,2,3), Set$new(3:5)), Set$new(3L))
+  expect_true(setintersect(Set$new(1,2,3), Set$new(3:5)) == (Set$new(3)))
   expect_equal(Set$new(1) & Set$new(), Set$new())
   expect_equal(Set$new(1,2,3) & Set$new(1), Set$new(1))
   expect_equal(Tuple$new(1, "a", 2L) & Set$new(letters), Set$new("a"))
@@ -19,7 +19,7 @@ test_that("conditionalset",{
 })
 
 test_that("fuzzy",{
-  expect_equal(FuzzySet$new(1,0.1,2,0.3) & Set$new(2:5), Set$new(2L))
+  expect_true((FuzzySet$new(1,0.1,2,0.3) & Set$new(2:5)) == Set$new(2))
 })
 
 test_that("interval",{
@@ -30,7 +30,7 @@ test_that("interval",{
 })
 
 test_that("mixed",{
-  expect_equal(Set$new(1:2) & ConditionalSet$new(function(x) TRUE), Set$new())
+  expect_equal(Set$new(1:2) & ConditionalSet$new(function(x) x == 3), Set$new())
   expect_equal(Set$new("a",2) & Interval$new(1,10), Set$new(2))
   expect_equal(Interval$new(1,10) & Set$new("a",2), Set$new(2))
 })
@@ -40,3 +40,20 @@ test_that("UnionSet",{
                             Set$new(1, "a", Tuple$new(2), 7)),
                Set$new(1, "a", Tuple$new(2)))
 })
+
+test_that("ComplementSet",{
+  expect_equal(ComplementSet$new(Reals$new(), Integers$new()) & Set$new(1.1, 2, 4.5, "a"),
+               Set$new(1.1,4.5))
+  expect_equal(ComplementSet$new(Reals$new(), Integers$new()) &
+                 ComplementSet$new(Set$new(1.1, 2.3), Set$new(2)), Set$new(1.1, 2.3))
+})
+
+test_that("ProductSet",{
+  expect_equal(setproduct(Set$new(1,2), Set$new(3,4), simplify = TRUE) & Set$new(Tuple$new(1,4)),
+               Set$new(Tuple$new(1,4)))
+  expect_equal((Set$new(1,2) * Set$new(3,4)) & Set$new(Tuple$new(1,4), Tuple$new(5,6)), Set$new(Tuple$new(1,4)))
+  expect_equal((Set$new(1,2) * Set$new(3,4)) & Tuple$new(1,4), Set$new())
+  expect_message((Set$new(1,2) * Set$new(3,4)) & (Set$new(1,2) * Set$new(3,4)), "currently not implemented")
+})
+
+

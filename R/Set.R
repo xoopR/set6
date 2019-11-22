@@ -262,7 +262,10 @@ Set$set("public","equals",function(x, all = FALSE){
     if(!testSet(el))
       return(FALSE)
 
-    suppressWarnings(all(el$elements %in% self$elements) & all(self$elements %in% el$elements))
+    elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+    selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+
+    suppressWarnings(all(elel %in% selel) & all(selel %in% elel))
   })
 
   returner(ret, all)
@@ -308,13 +311,16 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
     if(!testSet(el))
       return(FALSE)
 
+    elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+    selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+
     if(proper){
-      if(all(el$elements %in% self$elements) & !all(self$elements %in% el$elements))
+      if(all(elel %in% selel) & !all(selel %in% elel))
         return(TRUE)
       else
         return(FALSE)
     }else{
-      if(all(el$elements %in% self$elements))
+      if(all(elel %in% selel))
         return(TRUE)
       else
         return(FALSE)

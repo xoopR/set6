@@ -45,6 +45,9 @@ test_that("equals",{
   expect_false(Tuple$new(1,2,3)$equals(Tuple$new(2,1,3)))
   expect_false(Tuple$new(1,2,3)$equals(1))
   expect_false(Tuple$new(1,2,3)$equals(ConditionalSet$new(function(x)TRUE)))
+  expect_true(Tuple$new(Set$new(1),2) == Tuple$new(Set$new(1),2))
+  expect_true(Tuple$new(Set$new(1),2) != Tuple$new(2, Set$new(1)))
+  expect_true(Tuple$new(Set$new(1),2) != Tuple$new(2))
 })
 
 test_that("isSubset",{
@@ -54,6 +57,7 @@ test_that("isSubset",{
   expect_false(Tuple$new(1,2,3)$isSubset(Tuple$new(3,1)))
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,3)))
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2)))
+  expect_true(Tuple$new(1,2,3)$isSubset(FuzzySet$new(elements = 1:2)))
   expect_true(Tuple$new(1,2,3)$isSubset(Tuple$new(1,2), proper = TRUE))
   expect_true(Tuple$new(1,2,3)$isSubset(Set$new(1,2,3)))
   expect_false(Tuple$new(1)$isSubset(Tuple$new(1:2)))
@@ -65,6 +69,8 @@ test_that("isSubset",{
   expect_equal(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5), Tuple$new(1,2,3,4)) < Tuple$new(1,2,3,4), c(TRUE, TRUE, FALSE, FALSE))
   expect_equal(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5), Tuple$new(1,2,3,4)) <= Tuple$new(1,2,3,4), c(TRUE, TRUE, FALSE, TRUE))
   expect_false(Tuple$new(1,2,3,4)$isSubset(c(Tuple$new(1), Tuple$new(2,4), Tuple$new(5)), all = TRUE))
+
+  expect_true(Tuple$new(1,2) == Interval$new(1,2,class="integer"))
 })
 
 test_that("as.Tuple",{

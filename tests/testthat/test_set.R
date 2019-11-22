@@ -75,6 +75,7 @@ test_that("equals",{
   expect_false(Set$new(1,2,3) == Interval$new(1,2))
   expect_false(Set$new(1,2,3) == 1)
   expect_true(Set$new(1,2,3) == Interval$new(1,3, class = "integer"))
+  expect_false(Set$new(Tuple$new(1),Tuple$new(2,3), Tuple$new(1,4)) == Set$new(Tuple$new(1,4)))
 })
 
 test_that("strprint",{
@@ -85,6 +86,8 @@ test_that("strprint",{
 
 test_that("summary",{
   expect_output(Set$new(1,2,3)$summary())
+  expect_output(Set$new(1)$summary(), "Singleton")
+  expect_output(Set$new()$summary(), "Empty")
   expect_output(summary(Set$new(1,2,3)))
 })
 

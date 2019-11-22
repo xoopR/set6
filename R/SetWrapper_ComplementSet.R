@@ -27,7 +27,7 @@ ComplementSet$set("public", "initialize", function(addset, subtractset, lower = 
       else if(testInterval(addset) & addset$class == "integer")
         lower = addset$lower + 1
       else
-        lower = addset$elements[2]
+        lower = addset$elements[!subtractset$contains(addset$elements, bound = TRUE)][1]
     }
   }
 
@@ -40,7 +40,7 @@ ComplementSet$set("public", "initialize", function(addset, subtractset, lower = 
       else if(testInterval(addset) & addset$class == "integer")
         upper = addset$upper - 1
       else
-        upper = addset$elements[length(addset$elements)-1]
+        upper = addset$elements[!subtractset$contains(addset$elements, bound = TRUE)][sum(!subtractset$contains(addset$elements, bound = TRUE))]
     }
   }
 

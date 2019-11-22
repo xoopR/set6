@@ -7,12 +7,12 @@
 \usage{
 power(x, power, simplify = FALSE, nest = FALSE, ...)
 
-\method{^}{Set}(e1, e2)
+\method{^}{Set}(x, power)
 }
 \arguments{
-\item{x, e1}{Set}
+\item{x}{Set}
 
-\item{power, e2}{power to raise set to}
+\item{power}{power to raise set to}
 
 \item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set}
 otherwise a \code{ExponentSet}.}

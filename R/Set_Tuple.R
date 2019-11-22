@@ -85,14 +85,14 @@ Tuple$set("public","equals",function(x, all = FALSE){
 Tuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
   x <- listify(x)
 
-  if(testFuzzy(el)){
-    if(all(el$membership() == 1))
-      el = as.Tuple(el)
-  }
-
   ret = sapply(x, function(el){
     if(!inherits(el, "R6"))
       return(FALSE)
+
+    if(testFuzzy(el)){
+      if(all(el$membership() == 1))
+        el = as.Tuple(el)
+    }
 
     if(testInterval(el) & !testMessage(as.Tuple(el)))
       el = as.Tuple(el)

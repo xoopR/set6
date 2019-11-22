@@ -2,18 +2,15 @@
 % Please edit documentation in R/operation_setintersect.R
 \name{setintersect}
 \alias{setintersect}
-\alias{setintersect.Set}
 \alias{setintersect.Interval}
 \alias{setintersect.ConditionalSet}
 \alias{setintersect.UnionSet}
-\alias{setintersect.DifferenceSet}
+\alias{setintersect.ComplementSet}
 \alias{setintersect.ProductSet}
 \alias{&.Set}
 \title{Intersection of Two Sets}
 \usage{
 setintersect(x, y)
-
-\method{setintersect}{Set}(x, y)
 
 \method{setintersect}{Interval}(x, y)
 
@@ -21,7 +18,7 @@ setintersect(x, y)
 
 \method{setintersect}{UnionSet}(x, y)
 
-\method{setintersect}{DifferenceSet}(x, y)
+\method{setintersect}{ComplementSet}(x, y)
 
 \method{setintersect}{ProductSet}(x, y)
 

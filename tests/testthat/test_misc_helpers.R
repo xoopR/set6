@@ -74,5 +74,5 @@ test_that("fuzzify",{
   expect_equal(fuzzify(Set$new(1)), FuzzySet$new(1, 1))
   expect_equal(fuzzify(FuzzySet$new(1,1)), FuzzySet$new(1, 1))
   expect_equal(fuzzify(Tuple$new(1)), FuzzyTuple$new(1, 1))
-  expect_error(fuzzify(Interval$new(1,4), "cannot be fuzzified"))
+  expect_error(fuzzify(Interval$new(1,4)), "cannot be fuzzified")
 })

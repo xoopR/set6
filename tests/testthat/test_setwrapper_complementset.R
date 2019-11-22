@@ -23,6 +23,10 @@ test_that("constructor",{
   expect_equal(ComplementSet$new(Interval$new(1, 3, class = "integer"), Interval$new(2,3))$upper, 2)
   expect_equal(ComplementSet$new(Interval$new(1, 3, class = "integer"), Interval$new(1, 2))$upper, 3)
   expect_equal(ComplementSet$new(Interval$new(1, 3, class = "integer"), Interval$new(2, 3))$lower, 1)
+  expect_equal(ComplementSet$new(Set$new(1, 3), Set$new(1))$lower, 3)
+  expect_equal(ComplementSet$new(Set$new(1, 2, 3), Set$new(1,2))$lower, 3)
+  expect_equal(ComplementSet$new(Set$new(1, 3), Set$new(3))$upper, 1)
+  expect_equal(ComplementSet$new(Set$new(1, 2, 3), Set$new(2,3))$upper, 1)
 })
 
 test_that("fields",{

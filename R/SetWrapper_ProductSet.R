@@ -47,6 +47,9 @@ ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
   x <- listify(x)
 
   rets = sapply(x, function(el){
+    if(!inherits(el, "R6"))
+      return(FALSE)
+
     if(el$length != self$length$length)
       return(FALSE)
 
