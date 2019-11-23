@@ -1,6 +1,8 @@
 #' @name setunion
 #' @param ... [Set]s
 #' @param x,y [Set]
+#' @param simplify logical, if `TRUE` (default) returns the result in its simplest (unwrapped) form, usually a `Set`
+#' otherwise a `UnionSet`.
 #' @title Union of Sets
 #' @return An object inheriting from [Set] containing the union of supplied sets.
 #' @description Returns the union of objects inheriting from class [Set].
@@ -46,7 +48,7 @@
 #' Set$new(-Inf, Inf) + Reals$new()
 #'
 #' @export
-setunion <- function(...){
+setunion <- function(..., simplify = TRUE){
   sets = list(...)
 
   sets = operation_cleaner(sets, "UnionSet", nest = FALSE)
@@ -93,6 +95,9 @@ setunion <- function(...){
 
   if(length(sets) == 1)
     return(sets[[1]])
+
+  if(!simplify)
+    return(UnionSet$new(sets))
 
   classes = sapply(sets, getR6Class)
   # hacky fix for SpecialSets

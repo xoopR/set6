@@ -70,8 +70,8 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 
 \strong{Comparison Methods} \tab \strong{Link} \cr
 \code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE)} \tab \link{isSubset} \cr
+\code{equals(x, all = FALSE)} \tab \link{equals} \cr
+\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Mathematical Methods} \tab \strong{Link} \cr
 \code{absComplement()} \tab \link{absComplement} \cr

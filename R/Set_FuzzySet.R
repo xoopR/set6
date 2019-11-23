@@ -253,8 +253,16 @@ FuzzySet$set("public","equals",function(x, all = FALSE){
     if(!testFuzzySet(el))
       return(FALSE)
 
-    el_mat = matrix(c(el$elements,el$membership()),ncol=2)[order(el$elements),]
-    self_mat = matrix(c(self$elements,self$membership()),ncol=2)[order(self$elements),]
+    if(class(el$elements) == "list" | class(self$elements) == "list"){
+      elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+      selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+    } else {
+      elel = el$elements
+      selel = self$elements
+    }
+
+    el_mat = matrix(c(elel,el$membership()),ncol=2)[order(elel),]
+    self_mat = matrix(c(selel,self$membership()),ncol=2)[order(selel),]
 
     if(any(dim(el_mat) != dim(self_mat)))
       return(FALSE)

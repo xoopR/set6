@@ -71,16 +71,25 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE){
 
   if(length(unique(rsapply(sets, strprint))) == 1 & !simplify)
     return(ExponentSet$new(sets[[1]], length(sets)))
-  else if (any(grepl("ConditionalSet|Interval|SetWrapper", classes)) | !simplify)
+  else if (any(sapply(sets, function(x) inherits(x, "SetWrapper"))) |
+           any(grepl("ConditionalSet|Interval", classes)) | !simplify)
     return(ProductSet$new(sets))
-  else if (grepl("FuzzySet|FuzzyTuple", unique(classes)))
+  else if (any(grepl("FuzzySet|FuzzyTuple", unique(classes))))
     return(.product_fuzzyset(sets))
-  else (grepl("Set|Tuple", unique(classes)))
-    return(.product_set(sets))
+  else (any(grepl("Set|Tuple", unique(classes))))
+    return(.product_set(sets, nest))
 }
 
-.product_set <- function(sets){
-  Set$new(apply(expand.grid(rlapply(sets, elements,active = T)), 1, function(z) Tuple$new(z)))
+.product_set <- function(sets, nest){
+  if (!nest | length(sets) < 3)
+    return(Set$new(apply(expand.grid(rlapply(sets, elements,active = T)), 1, function(z) Tuple$new(z))))
+  else {
+    s = Set$new(apply(expand.grid(sets[[1]]$elements, sets[[2]]$elements), 1, function(z) Tuple$new(z)))
+    for(i in 3:length(sets)){
+      s = Set$new(apply(expand.grid(s$elements, sets[[3]]$elements), 1, function(z) Tuple$new(z)))
+    }
+    return(s)
+  }
 }
 .product_fuzzyset <- function(sets){
   mat = cbind(expand.grid(rlapply(sets, elements, active = T)),

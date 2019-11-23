@@ -9,6 +9,10 @@ test_that("Set",{
   expect_true(setproduct(Set$new(1, 2), Set$new(2), simplify = TRUE)$equals(Set$new(Tuple$new(1, 2), Tuple$new(2, 2))))
   expect_equal(setproduct(Set$new(1, 2), Set$new(2), simplify = FALSE)$strprint(),
                "{1, 2} X {2}")
+  expect_equal(setproduct(Set$new(1, 2) * Set$new(3, 4), Set$new(5, 6), simplify = T, nest = T)$strprint(),
+               "({1, 2} X {3, 4}) X {5, 6}")
+  expect_equal(setproduct(Set$new(1, 2), Set$new(3, 4), Set$new(5, 6), simplify = T, nest = T)$strprint(),
+               "{((1, 3), 5), ((2, 3), 5),...,((1, 4), 6), ((2, 4), 6)}")
   use_unicode(TRUE)
 })
 

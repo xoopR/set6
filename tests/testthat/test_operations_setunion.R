@@ -25,12 +25,14 @@ test_that("set",{
   expect_equal(getR6Class(Set$new(1,2) + Interval$new(3, 4)), "UnionSet")
   use_unicode(FALSE)
   expect_equal((Set$new(1,2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {TRUE : x in R}")
-  use_unicode(TRUE)
   expect_true(setunion(Set$new(1,2,3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
   expect_equal(Set$new(1,2) + Set$new(5,7) + Set$new(1,10), Set$new(1,2,5,7,10))
   expect_equal(setunion(Set$new()), Set$new())
   expect_equal(setunion(), Set$new())
-  expect_equal(Set$new(1) + Set$new(1), Set$new(1))
+  expect_true((Set$new(1, 2, 3) + Set$new(4, 5))$equals(Set$new(1:5)))
+  expect_true(setunion(Set$new(1, 2, 3), Set$new(4, 5))$equals(Set$new(1:5)))
+  expect_equal(setunion(Set$new(1, 2, 3), Set$new(4, 5), simplify = FALSE)$strprint(), "{1, 2, 3} U {4, 5}")
+  use_unicode(TRUE)
 })
 
 test_that("interval",{

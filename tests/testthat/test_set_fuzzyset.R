@@ -76,11 +76,16 @@ test_that("inclusion",{
   expect_equal(FuzzySet$new(1,0,2,0.4,3,1)$inclusion(c(2,5)),c("Partially Included", "Not Included"))
 })
 test_that("equals",{
+  expect_true(FuzzySet$new(1,0.1,2,0.2)$equals(FuzzySet$new(1,0.1,2,0.2)))
+  expect_true(FuzzySet$new(1,0.1,2,0.2)$equals(FuzzySet$new(2,0.2,1,0.1)))
   expect_true(FuzzySet$new(1,1,2,1)$equals(Set$new(1:2)))
   expect_false(FuzzySet$new(1,0.1,2,0.1)$equals(Set$new(1:2)))
   expect_true(FuzzySet$new(1,0.1,2,0.1,3,0.1)$equals(FuzzySet$new(elements = 1:3, membership = rep(0.1,3))))
   expect_false(FuzzySet$new(1,0.1,2,0.2,3,0.1)$equals(FuzzySet$new(elements = 1:3, membership = rep(0.1,3))))
   expect_false(FuzzySet$new(1,0.1,2,0.1,3,0.1,4,0.1)$equals(FuzzySet$new(elements = 1:3, membership = rep(0.1,3))))
+  expect_true(FuzzySet$new(1, 0.1, 2, 0.2, "a", 0.3) == FuzzySet$new(elements = list(1,2,"a"), membership = c(0.1,0.2,0.3)))
+  expect_true(FuzzySet$new(2, 0.1, 1, 0.2, "a", 0.3) ==
+                FuzzySet$new(elements = list(1,2,"a"), membership = c(0.2,0.1,0.3)))
 })
 test_that("absComplement",{
   expect_equal(FuzzySet$new(1,0.1,2,0.8)$absComplement(),FuzzySet$new(1,0.9,2,0.2))

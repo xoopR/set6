@@ -1,0 +1,227 @@
+---
+title: "Introduction to set6"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{set6}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+set6 is an object-oriented interface for constructing and manipulating mathematical sets using R6. set6 allows a variety of mathematical sets, including Sets, Tuple, Intervals and Fuzzy variants; there are also Conditional sets for creating sets out of complex logical instructions. A full set of tutorials can be found [here](https://raphaels1.github.io/set6/). In this introductory vignette we briefly demonstrate how to construct a set, access its properties and traits, and some basic algebra of sets.
+
+Before we get started note that by default `set6` uses unicode for printing representations of sets. Whilst this is preferred for neater printing, some machines, operating systems, or R versions may not behave as expected when printing unicode and therefore we allow the option to turn this off.
+
+```{r, eval = FALSE}
+use_unicode(FALSE)
+```
+
+This vignette does use the unicode representations.
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+library("set6")
+set.seed(42)
+```
+
+## Constructing a Set
+
+Classes in `set6` can be split into two groups: set objects, and wrappers. When we refer to sets (lower-case 's') we refer to objects inheriting from the base class `Set`. All sets in `set6` inherit from `Set`, meaning that, at a very minimum, they share the same methods and fields as `Set`.
+
+The simplest set of all is the empty set, we can see how even this has methods for printing and summarising, as well as a list of properties and traits.
+```{r}
+empty = Set$new()
+empty
+summary(empty)
+empty$properties
+empty$traits
+```
+
+Sets can take elements of any class, including other sets.
+```{r}
+Set$new(1,2,3)
+Set$new(letters[1:5])
+Set$new(1, 2i, "a", Set$new(1))
+```
+
+## The different kind of sets
+
+Each set class has its own unique mathematical properties, we will not cover these extensively here but summarise each with a short example.
+
+```{r}
+# A Set cannot have duplicated elements, and ordering does not matter
+Set$new(1,2,2,3) == Set$new(3,2,1)
+
+# A Tuple can have duplicated elements, and ordering does matter
+Tuple$new(1,2,2,3) != Tuple$new(1,2,3)
+Tuple$new(1,3) != Tuple$new(3,1)
+
+# An interval can be an interval of integers or numerics, but must be continuous
+Interval$new(1, 10, class = "integer")
+Interval$new(1, 10) # numeric is default
+# `type` is used to specify the interval upper and lower closure
+Interval$new(1, 10, type = "()") 
+
+# SpecialSets are useful for common 'special' mathematical sets
+# Use listSpecialSets() to see which are available.
+Reals$new()
+PosIntegers$new()
+
+# ConditionalSets are user-built sets from logical statements.
+# For example, the set of even numbers.
+ConditionalSet$new(function(x) x %% 2 == 0)
+
+# Finally FuzzySets and FuzzyTuples expand Sets and Tuples to allow for partial 
+# membership of elements. These have two constructors, either by specifying the elements
+# and membership alternatively, or by passing these separately to the given arguments.
+FuzzySet$new(1, 0.1, 2, 0.2, "a", 0.3) ==
+  FuzzySet$new(elements = c(1,2,"a"), membership = c(0.1,0.2,0.3))
+```
+
+
+## Comparisons and Containedness
+
+Every set has methods for comparing it to other sets, as well as for checking which elements are contained within in. Operators are overloaded where possible, and where not other infix operators are defined, these are:
+
+* `$isSubset(x, proper = TRUE)` (`<`) - Is `x` a proper subset of `self`
+* `$isSubset(x, proper = FALSE)` (`<=`) - Is `x` a (non-proper) subset of `self`
+* `$isSubset(x, proper = TRUE)` (`>`) - Is `self` a proper subset of `x`
+* `$isSubset(x, proper = FALSE)` (`>=`) - Is `self` a (non-proper) subset of `x`
+* `$equals(x)` (`==`) - Is `x` (mathematically) equal to `self`
+* `!($equals(x))` (`!=`) - Is `x` (mathematically) not equal to `self`
+* `$contains(x)` (`%inset%`) - Is `x` contained in `self`
+
+
+All methods are vectorized for multiple testing.
+
+```{r}
+s = Set$new(1,2,3)
+s$contains(1)
+s$contains(2, 4)
+c(2, 4) %inset% s
+
+s$isSubset(Set$new(1,2,3), proper = FALSE)
+s$isSubset(Set$new(1,2,3), proper = TRUE)
+c(Set$new(1), Set$new(4, 5)) < s
+
+# Sets are FuzzySets with membership = 1
+s$equals(FuzzySet$new(elements = 1:3, membership = 1))
+s$equals(FuzzySet$new(elements = 1:3, membership = 0.1))
+s == Set$new(1, 2, 3)
+s != c(Set$new(1,2,3), Set$new(1, 2))
+
+1:10 %inset% ConditionalSet$new(function(x) x %% 2 == 0)
+
+# The `bound` argument in `isSubset` is used for specifying
+#   how open interval containedness should be checked
+i = Interval$new(1, 10, type = "(]")
+i$contains(1, bound = FALSE)
+i$contains(10, bound = FALSE)
+i$contains(1, bound = TRUE)
+i$contains(10, bound = TRUE)
+```
+
+## Algebra of Sets
+
+`set6` includes the following operations:
+
+  * `setunion` (`+`) - Union of multiple sets
+  * `powerset` - Powerset of a given set
+  * `power` (`^`) - n-ary cartesian product of a given set
+  * `setcomplement` (`-`) - Relative complement, or set difference, of two sets
+  * `setintersect` (`&`) - Intersection of two sets
+  * `setproduct` (`*`) - Cartesian product of multiple sets
+  * `symdiff` (`%-%`) - Symmetric difference of two sets
+
+We will look at the most common of these below.
+
+### Union of Sets
+
+The union of sets is defined the as the set of elements in all the sets of interest.
+
+```{r}
+Set$new(1) + Set$new(2) + Set$new(3)
+Interval$new(1, 10) + Set$new(1) # no effect
+setunion(Set$new(1,2), Interval$new(3, 10), Set$new(16))
+
+PosReals$new() + NegReals$new()
+```
+
+### Relative Complement
+
+The relative complement of two sets, $A-B$, is defined as the set of elements in $A$ but not in $B$.
+
+```{r}
+Set$new(1:10) - Set$new(4:10)
+Set$new(1,2,3,4) - Set$new(2)
+
+Reals$new() - PosReals$new()
+
+Interval$new(5, 10) - Interval$new(3, 12)
+Interval$new(5, 10) - Interval$new(7, 12)
+Interval$new(5, 10) - Interval$new(11, 12) # no effect
+```
+
+### Cartesian Product
+
+The cartesian product of multiple sets is often confused with the n-ary cartesian product, read the help page at `?setproduct` for a full description of the problem. Both forms are allowed in `set6` with the `nest` argument.
+
+```{r}
+Set$new(1, 2) * Set$new(3, 4)
+Set$new(1, 2) * Set$new(3, 4) * Set$new(5, 6) # n-ary
+
+# nest = FALSE default - we will return to the `simplify` argument below
+setproduct(Set$new(1, 2), Set$new(3, 4), Set$new(5, 6), nest = TRUE, simplify = TRUE)
+setproduct(Set$new(1, 2), Set$new(3, 4), Set$new(5, 6), nest = FALSE, simplify = TRUE)
+
+# n-ary cartesian product on the same set
+power(Set$new(1,2), 3, simplify = TRUE)
+```
+
+### Intersection
+
+The intersection of two sets is defined as the set of elements that lie in both sets.
+```{r}
+Set$new(1,2,3) & Set$new(3,5,6)
+Set$new(5,6) & Reals$new()
+Set$new(1) & Set$new(2)
+```
+
+## Wrappers
+
+Finally we look briefly at wrappers, and the `simplify` argument. 
+Each operation has an associated wrapper that will be created if `simplify == FALSE` or if the
+resulting set is too complicated to return as a single `Set` object. The operations concerned with
+products, i.e. `setproduct`, `power`, `powerset`, all have `simplify == FALSE` as the default; whereas
+the others concerned with unions and differences, have `simplify == TRUE` as the default.
+
+```{r}
+# default: simplify = TRUE
+setunion(Set$new(1,2,3), Set$new(4,5))
+setunion(Set$new(1,2,3), Set$new(4,5), simplify = FALSE)
+
+# default: simplify = FALSE
+setproduct(Set$new(1,2), Set$new(4,5))
+setproduct(Set$new(1,2), Set$new(4,5), simplify = TRUE)
+
+# default: simplify = FALSE
+powerset(Set$new(1,2,3))
+powerset(Set$new(1,2,3), simplify = TRUE)
+```
+
+All wrappers inherit from `Set` and therefore share the same methods and fields.
+
+```{r}
+u = setunion(Set$new(1,2,3), Set$new(4,5), simplify = FALSE)
+c(2,5,8) %inset% u
+
+p = Set$new(1,2) * Set$new(3,4)
+p$contains(Tuple$new(2, 4))
+```
+
+## Going Forward
+
+`set6` is still in its early stages and the API is considered to be maturing, this means that whilst no big changes are expected to the design, minor ones can be expected. `set6` will be considered to be in its version 1 once all methods and fields are finalised (some are missing from wrappers), and when the code has been refactored to be more efficient. See [the website](https://raphaels1.github.io/set6/) for more tutorials and
+follow/star on [GitHub](https://github.com/RaphaelS1/set6) for updates.
+ 

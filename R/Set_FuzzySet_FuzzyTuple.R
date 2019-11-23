@@ -76,11 +76,15 @@ FuzzyTuple$set("public","equals",function(x, all = FALSE){
     if(el$length != self$length)
       return(FALSE)
 
-    if(suppressWarnings(all(el$elements == self$elements) &
-                        all(el$membership() == self$membership())))
-      return(TRUE)
-    else
-      return(FALSE)
+    if(class(el$elements) == "list" | class(self$elements) == "list"){
+      elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+      selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+    } else {
+      elel = el$elements
+      selel = self$elements
+    }
+
+    return(suppressWarnings(all(elel == selel) & all(el$membership() == self$membership())))
   })
 
   returner(ret, all)

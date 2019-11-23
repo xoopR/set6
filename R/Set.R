@@ -236,7 +236,7 @@ Set$set("public","contains",function(x, all = FALSE, bound = NULL){
 #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
 #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
 #' element of `x`.
-#' @section R6 Usage: $equals(x)
+#' @section R6 Usage: $equals(x, all = FALSE)
 #' @examples
 #' # Equals
 #' Set$new(1,2)$equals(Set$new(5,6))

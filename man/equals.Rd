@@ -24,7 +24,7 @@ element of \code{x}.
 Are Two Sets Equal?
 }
 \section{R6 Usage}{
- $equals(x)
+ $equals(x, all = FALSE)
 }
 
 \examples{

@@ -47,5 +47,7 @@ Collate:
     'operation_setproduct.R'
     'operation_setunion.R'
     'operation_symdiff.R'
+    'set6.R'
+    'set6.news.R'
     'use-unicode.R'
     'zzz.R'

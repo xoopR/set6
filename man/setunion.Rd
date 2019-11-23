@@ -6,7 +6,7 @@
 \alias{|.Set}
 \title{Union of Sets}
 \usage{
-setunion(...)
+setunion(..., simplify = TRUE)
 
 \method{+}{Set}(x, y)
 
@@ -14,6 +14,9 @@ setunion(...)
 }
 \arguments{
 \item{...}{\link{Set}s}
+
+\item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set}
+otherwise a \code{UnionSet}.}
 
 \item{x, y}{\link{Set}}
 }

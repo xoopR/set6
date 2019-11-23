@@ -75,6 +75,8 @@ test_that("equals",{
   expect_true(FuzzyTuple$new(2,0.1,2,0.1) != FuzzyTuple$new(2,0.1))
   expect_true(FuzzyTuple$new(elements = 1:3)$equals(Set$new(1:3)))
   expect_false(FuzzyTuple$new(1, 0.3, 2, 0.5)$equals(Interval$new(1, 3)))
+  expect_true(FuzzyTuple$new(1, 0.1, 2, 0.2, "a", 0.3) == FuzzyTuple$new(elements = list(1,2,"a"), membership = c(0.1,0.2,0.3)))
+  expect_false(FuzzyTuple$new(2, 0.1, 1, 0.2, "a", 0.3) == FuzzyTuple$new(elements = list(1,2,"a"), membership = c(0.1,0.2,0.3)))
 })
 test_that("absComplement",{
   expect_equal(FuzzyTuple$new(1,0.1,2,0.8)$absComplement(),FuzzyTuple$new(1,0.9,2,0.2))

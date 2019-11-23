@@ -57,8 +57,8 @@
 #'   <%= if(exists("meth10")) meth10%>
 #' **Comparison Methods** \tab **Link** \cr
 #' `contains(x, all = FALSE, bound = NULL)` \tab [contains] \cr
-#' `equals(x)` \tab [equals] \cr
-#' `isSubset(x, proper = FALSE)` \tab [isSubset] \cr
+#' `equals(x, all = FALSE)` \tab [equals] \cr
+#' `isSubset(x, proper = FALSE, all = FALSE)` \tab [isSubset] \cr
 #' \tab \cr \tab \cr \tab \cr
 #' **Mathematical Methods** \tab \strong{Link} \cr
 #' `absComplement()` \tab [absComplement] \cr
