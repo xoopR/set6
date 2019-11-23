@@ -23,7 +23,7 @@ reference:
     - ConditionalSet
     - alphaCut
     - class
-    - complement
+    - absComplement
     - condition
     - contains
     - core
@@ -40,7 +40,6 @@ reference:
     - properties
     - range
     - strprint
-    - subtractedSets
     - support
     - traits
     - type
@@ -69,15 +68,17 @@ reference:
   desc: Classes and operators for combining sets
   contents:
     - UnionSet
-    - union
+    - setunion
     - ProductSet
-    - product
+    - setproduct
     - ExponentSet
     - power
     - DifferenceSet
-    - setdiff
-    - intersection
+    - setcomplement
+    - setintersect
     - addedSets
+    - subtractedSets
+    - symdiff
 - title: Assertions
   desc: Validation checks for Sets
   contents:
@@ -89,3 +90,4 @@ reference:
 - title: Miscellaneous Functions
   contents:
     - use_unicode
+    - set6News
