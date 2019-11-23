@@ -73,11 +73,11 @@ reference:
     - setproduct
     - ExponentSet
     - power
-    - DifferenceSet
+    - ComplementSet
     - setcomplement
     - setintersect
-    - addedSets
-    - subtractedSets
+    - addedSet
+    - subtractedSet
     - symdiff
 - title: Assertions
   desc: Validation checks for Sets
