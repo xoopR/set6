@@ -30,13 +30,13 @@ There were no ERRORs or WARNINGs.
 There were 2 NOTEs:
 
 * Undefined global functions or variables: elements lower membership strprint
-   These are not undefined. The NOTE is picking up a function that takes in as inputs other functions, but incorrectly thinking these are variables (as they are defined in the package).
+  * These are not undefined. The NOTE is picking up a function that takes in as inputs other functions, but incorrectly thinking these are variables (as they are defined in the package).
    
 * Dropping empty section 'Constructor Details'
-   This is referring to one of the man-roxygen templates, for several classes a custom section is deliberately ignored as it is not required.
+  * This is referring to one of the man-roxygen templates, for several classes a custom section is deliberately ignored as it is not required.
    
 * Possibly mis-spelled words in DESCRIPTION: tuples (14:138)
-  It isn't! 
+  * It isn't! 
    
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
