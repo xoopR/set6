@@ -19,6 +19,3 @@ Lists special sets that can be used in Set.
 listSpecialSets()
 listSpecialSets(TRUE)
 }
-\seealso{
-\link{SpecialSet}
-}
