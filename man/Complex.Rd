@@ -17,6 +17,8 @@ The mathematical set of complex numbers, defined as the set of reals with possib
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
+\code{lower} \tab complex \tab Lower limit of interval. \cr
+\code{upper} \tab complex \tab Upper limit of interval.
 
 }
 }

@@ -6,12 +6,12 @@
 \arguments{
 \item{alpha}{numeric in [0, 1] to determine which elements to return}
 
-\item{strong}{logical, if \code{FALSE} (default) then only includes elements strictly greater than alpha, otherwise greater than or equal}
+\item{strong}{logical, if \code{FALSE} (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than}
 
 \item{create}{logical, if \code{FALSE} (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements}
 }
 \value{
-Elements in fuzzy set or a \link{Set} of the elements.
+Elements in \link{FuzzySet} or a \link{Set} of the elements.
 }
 \description{
 The alpha-cut of a fuzzy set is defined as the set
@@ -32,4 +32,7 @@ f$alphaCut(0.5, strong = TRUE)
 
 # Create a set from the alpha-cut
 f$alphaCut(0.5, create = TRUE)
+}
+\seealso{
+\link{support}, \link{core}
 }

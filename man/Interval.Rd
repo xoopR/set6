@@ -7,12 +7,12 @@
 R6 object of class Interval inheriting from \link{Set}.
 }
 \description{
-A general Interval object for mathematical intervals, inheriting from \code{Set}. Intervals
+A general Interval object for mathematical intervals, inheriting from \link{Set}. Intervals
 may be open, closed, or half-open; as well as bounded above, below, or not at all.
 }
 \details{
 The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
-integer intervals over a continuous range.
+integer intervals over a finite continuous range. Use \link{Complex} to define an interval with complex values.
 }
 \section{Constructor}{
  \code{Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())}

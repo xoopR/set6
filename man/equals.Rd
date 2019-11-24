@@ -37,3 +37,8 @@ Set$new(1,2) == Interval$new(1,2, class = "integer")
 !Set$new(1,2)$equals(Set$new(1,2))
 Set$new(1,2) != Set$new(1,5)
 }
+\seealso{
+Other set methods: \code{\link{absComplement}},
+  \code{\link{contains}}, \code{\link{isSubset}}
+}
+\concept{set methods}

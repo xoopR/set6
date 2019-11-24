@@ -7,6 +7,7 @@
 #' @templateVar class ExponentSet
 #' @templateVar constructor ExponentSet$new(set, power)
 #' @templateVar arg1 `set` \tab list \tab Set to wrap. \cr
+#' @templateVar field1 `power` \tab [power] \cr
 #'
 #' @export
 NULL
@@ -57,6 +58,12 @@ ExponentSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
 #---------------------------------------------
 # Public Fields
 #---------------------------------------------
+#' @name power
+#' @rdname power
+#' @title Get The Power of ExponentSet
+#' @description For the `ExponentSet` wrapper, gets the power the [Set] is raised to.
+#' @return `numeric`
+#' @seealso [ExponentSet]
 ExponentSet$set("active", "power", function() return(private$.power))
 #---------------------------------------------
 # Private Fields

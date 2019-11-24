@@ -7,7 +7,7 @@
 Returns the maximum of the Set.
 }
 \details{
-If the Set consists of numerics only then return the maximum element in the Set. For
+If the Set consists of numerics only then returns the maximum element in the Set. For
 open or half-open sets, then the maximum is defined by
 \deqn{upper - .Machine\$double.xmin}
 }
@@ -15,3 +15,12 @@ open or half-open sets, then the maximum is defined by
  $max
 }
 
+\seealso{
+Other set accessors: \code{\link{class}},
+  \code{\link{elements}}, \code{\link{length}},
+  \code{\link{lower}}, \code{\link{min}},
+  \code{\link{properties}}, \code{\link{range}},
+  \code{\link{traits}}, \code{\link{type}},
+  \code{\link{universe}}, \code{\link{upper}}
+}
+\concept{set accessors}

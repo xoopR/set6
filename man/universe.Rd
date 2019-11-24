@@ -8,9 +8,18 @@ Returns the universe of the Set.
 }
 \details{
 The universe is an optional Set that specifies where the given Set lives. This is useful
-for taking the complement of a Set.
+for taking the absolute complement of a Set.
 }
 \section{R6 Usage}{
  $universe
 }
 
+\seealso{
+Other set accessors: \code{\link{class}},
+  \code{\link{elements}}, \code{\link{length}},
+  \code{\link{lower}}, \code{\link{max}},
+  \code{\link{min}}, \code{\link{properties}},
+  \code{\link{range}}, \code{\link{traits}},
+  \code{\link{type}}, \code{\link{upper}}
+}
+\concept{set accessors}

@@ -29,13 +29,15 @@ Returns the cartesian product of objects inheriting from class \code{Set}.
 \details{
 The cartesian product of multiple sets, the 'n-ary Cartesian product', is often implemented in programming languages as being
 identical to the cartesian product of two sets applied recursively. However, for sets \eqn{X, Y, Z},
-\deqn{X × Y × Z \ne (X × Y) × Z}{X × Y × Z != (X × Y) × Z} [setproduct] accommodates this by
-adding the \code{nest} argument. If \code{nest == TRUE} then \eqn{X*Y*Z == (X × Y) × Z}, i.e. the cartesian
+\deqn{XYZ \ne (XY)Z}{X × Y × Z != (X × Y) × Z}
+This is accommodated with the \code{nest} argument. If \code{nest == TRUE} then \eqn{X*Y*Z == (X × Y) × Z}, i.e. the cartesian
 product for two sets is applied recursively. If \code{nest == FALSE} then \eqn{X*Y*Z == (X × Y × Z)} and
 the n-ary cartesian product is computed. As it appears the latter (n-ary product) is more common, \code{nest = FALSE}
 is the default. The N-ary cartesian product of \eqn{N} sets, \eqn{X1,...,XN}, is defined as
 \deqn{X1 × ... × XN = \{(x1,...,xN) : x1 \epsilon X1 \cap ... \cap xN \epsilon XN\}}{X1 × ... × XN = {(x1,...,xN) : x1 \epsilon X1 and ... and xN \epsilon xN}}
 where \eqn{(x1,...,xN)} is a tuple.
+
+The product of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
 }
 \examples{
 # difference between nesting

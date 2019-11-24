@@ -14,7 +14,7 @@ setpower(x, power, simplify = FALSE, nest = FALSE)
 
 \item{power}{power to raise set to}
 
-\item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set}
+\item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set},
 otherwise a \code{ExponentSet}.}
 
 \item{nest}{logical, if \code{FALSE} (default) returns the n-ary cartesian product, otherwise returns
@@ -22,7 +22,7 @@ the cartesian product applied n times.
 \link{Set}s. See details and examples.}
 }
 \value{
-An R6 object of class \code{Set} or ExponentSet\code{inheriting from}ProductSet`.
+An R6 object of class \code{Set} or \code{ExponentSet} inheriting from \code{ProductSet}.
 }
 \description{
 A convenience wrapper for the n-ary cartesian product of a \code{Set} by itself, possibly multiple times.

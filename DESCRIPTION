@@ -50,5 +50,5 @@ Collate:
     'operation_setunion.R'
     'set6.R'
     'set6.news.R'
-    'use-unicode.R'
+    'useUnicode.R'
     'zzz.R'

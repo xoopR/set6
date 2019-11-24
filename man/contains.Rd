@@ -26,12 +26,9 @@ checking to see if it lies within a set of dimension greater than one. To test f
 at the same time, then provide these as a list.
 
 If using the method directly, and not via one of the operators then the additional boolean
-arguments \code{all} and \code{bound}. If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set``, otherwise returns a vector of logicals. If }bound = TRUE\code{then returns}TRUE\code{for elements of}x` if they are
-in or on the boundaries of the Set.
-
-can be used to specify testing of subsets or proper subsets. A Set is a proper
-subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
-(non-proper) subset if it is fully contained by, or equal to, the other Set.
+arguments \code{all} and \code{bound}. If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set}, otherwise
+returns a vector of logicals. For \link{Interval}s, \code{bound} is used to specify if elements lying on the
+(possibly open) boundary of the interval are considered contained (\code{bound = TRUE}) or not (\code{bound = FALSE}).
 }
 \section{R6 Usage}{
  $contains(x, all = FALSE, bound = NULL)
@@ -53,3 +50,8 @@ s2 = s * s
 s2$contains(Tuple$new(2,1))
 c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
 }
+\seealso{
+Other set methods: \code{\link{absComplement}},
+  \code{\link{equals}}, \code{\link{isSubset}}
+}
+\concept{set methods}

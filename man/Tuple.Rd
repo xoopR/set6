@@ -29,7 +29,7 @@ require non-unique elements. They are also the return type of the product of set
 }
 
 \section{Constructor Details}{
- Tuples are constructed by elements of any types (including R6 classes). The optional \code{universe} argument is useful for taking the complement of the \code{Tuple}. If a universe isn't given then \link{Reals} is assumed.
+ Tuples are constructed by elements of any types (including R6 classes). The optional \code{universe} argument is useful for taking the absolute complement of the \code{Tuple}. If a universe isn't given then \link{Reals} is assumed.
 }
 
 \section{Public Fields}{

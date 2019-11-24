@@ -1,17 +1,19 @@
 #' @name setunion
 #' @param ... [Set]s
 #' @param x,y [Set]
-#' @param simplify logical, if `TRUE` (default) returns the result in its simplest (unwrapped) form, usually a `Set`
+#' @param simplify logical, if `TRUE` (default) returns the result in its simplest (unwrapped) form, usually a `Set`,
 #' otherwise a `UnionSet`.
 #' @title Union of Sets
 #' @return An object inheriting from [Set] containing the union of supplied sets.
 #' @description Returns the union of objects inheriting from class [Set].
 #' @details The union of \eqn{N} sets, \eqn{X1, ..., XN}, is defined as the set of elements that exist
 #' in one or more sets,
-#' \deqn{U = \{x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN\}}{U = {x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN}}
+#' \deqn{U = \{x : x \epsilon X1\text{ or }x \epsilon X2\text{ or }...\text{ or }x \epsilon XN\}}{U = {x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN}}
 #'
 #' The union of multiple [ConditionalSet]s is given by combining their defining functions by an
 #' 'or', `|`, operator. See examples.
+#'
+#' The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
 #'
 #' @family operators
 #' @examples

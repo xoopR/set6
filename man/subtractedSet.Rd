@@ -2,7 +2,7 @@
 % Please edit documentation in R/SetWrapper_ComplementSet.R
 \name{subtractedSet}
 \alias{subtractedSet}
-\title{Get Subtracted Sets in Wrapper}
+\title{Get Subtracted Set in Wrapper}
 \value{
 \code{Set}
 }

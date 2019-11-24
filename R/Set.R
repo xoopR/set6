@@ -11,13 +11,13 @@
 #' @templateVar constructor Set$new(..., universe = NULL)
 #' @templateVar arg1 `...` \tab ANY \tab Elements in the set. \cr
 #' @templateVar arg2 `universe` \tab Set \tab Optional universe that the Set lives in.
-#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The optional `universe` argument is useful for taking the absolute complement of the `Set`. If a universe isn't given then [Reals] is assumed.
 #'
 #' @details
 #' Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
 #' is used for sets of finite elements, for infinite sets use [Interval]. These can be
-#' expanded for fuzzy logic by using [FuzzySet]s. Elements in a set cannot be duplicated
-#' but [Tuple]s can be used if this is required.
+#' expanded for fuzzy logic by using [FuzzySet]s. Elements in a set cannot be duplicated and ordering
+#' of elements does not matter, [Tuple]s can be used if duplicates or ordering are required.
 #'
 #' @examples
 #' # Set of integers
@@ -97,12 +97,11 @@ Set$set("public","print",function(n = 2){
 })
 #' @title String Representation For Print
 #' @name strprint
-#' @description Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
+#' @description Parsable object to be supplied to \code{print}, \code{data.frame}, etc.
 #' @details `strprint` is a suggested method that should be included in all R6 classes to be passed to
-#' methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
-#' parse R6 objects into data-frames, see examples.
+#' methods such as \code{cat}, \code{summary} and \code{print}.
 #'
-#' It is often not required to call this directly and the print method is recommended for printing
+#' It is often not required to call this directly; the print method is recommended for printing
 #' strings to the console.
 #'
 #' @param object R6 object
@@ -153,6 +152,7 @@ Set$set("public","summary",function(n = 2){
 #---------------------------------------------
 #' @name contains
 #' @rdname contains
+#' @family set methods
 #' @title Are Elements Contained in the Set?
 #' @description Tests to see if \code{x} is contained in the Set.
 #'
@@ -164,13 +164,9 @@ Set$set("public","summary",function(n = 2){
 #' at the same time, then provide these as a list.
 #'
 #' If using the method directly, and not via one of the operators then the additional boolean
-#' arguments `all` and `bound`. If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set``, otherwise
-#' returns a vector of logicals. If `bound = TRUE` then returns `TRUE` for elements of `x` if they are
-#' in or on the boundaries of the Set.
-#'
-#' can be used to specify testing of subsets or proper subsets. A Set is a proper
-#' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
-#' (non-proper) subset if it is fully contained by, or equal to, the other Set.
+#' arguments `all` and `bound`. If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set`, otherwise
+#' returns a vector of logicals. For [Interval]s, `bound` is used to specify if elements lying on the
+#' (possibly open) boundary of the interval are considered contained (`bound = TRUE`) or not (`bound = FALSE`).
 #'
 #' @return If \code{all} is TRUE then returns TRUE if all elements of \code{x} are contained in the Set, otherwise
 #' FALSE. If \code{all} is FALSE then returns a vector of logicals corresponding to each individual
@@ -223,6 +219,7 @@ Set$set("public","contains",function(x, all = FALSE, bound = NULL){
 })
 #' @name equals
 #' @rdname equals
+#' @family set methods
 #' @param x Set
 #' @param y Set
 #' @title Are Two Sets Equal?
@@ -263,6 +260,7 @@ Set$set("public","equals",function(x, all = FALSE){
 })
 #' @name isSubset
 #' @rdname isSubset
+#' @family set methods
 #' @title Test If Two Sets Are Subsets
 #' @param x,y [Set]
 #' @details If using the method directly, and not via one of the operators then the additional boolean
@@ -322,12 +320,14 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 #---------------------------------------------
 #' @name absComplement
 #' @rdname absComplement
+#' @family set methods
 #' @title Absolute Complement of a Set
 #' @description Calculates and returns the absolute complement of a Set, which is the relative
 #' complement of a set from its universe.
 #' @details If a universe is not provided then the method has no effect. To find the relative difference
 #' between sets use [setcomplement].
 #' @section R6 Usage: $absComplement()
+#' @seealso [setcomplement]
 #' @return Set
 Set$set("public","absComplement",function(){
   if(!is.null(self$universe))
@@ -343,6 +343,7 @@ Set$set("public","absComplement",function(){
 #' @name properties
 #' @title Set Properties
 #' @rdname properties
+#' @family set accessors
 #' @section R6 Usage: $properties
 #' @description Returns an object of class `Properties`, which lists the properties of the Set.
 #' @details Set properties include:
@@ -350,18 +351,19 @@ Set$set("public","absComplement",function(){
 #'  \item \code{empty} - is the Set empty or does it contain elements?
 #'  \item \code{singleton} - is the Set a singleton? i.e. Does it contain only one element?
 #'  \item \code{cardinality} - number of elements in the Set
-#'  \item \code{countability} - One of countably finite, countably infinite, uncountable
-#'  \item \code{closure} - One of closed, open, half-open
+#'  \item \code{countability} - One of: countably finite, countably infinite, uncountable
+#'  \item \code{closure} - One of: closed, open, half-open
 #' }
 #'
-#' The `Properties` class is essentially a read-only `list`, with `$` and `[` for accessing elements
-#' but without a `[[` method. It is not exported and therefore can be considered abstract.
+#' The `Properties` class is essentially a read-only `list`, with `'$'` and `'['` for accessing elements
+#' but without a `'[['` method. It is not exported and therefore can be considered abstract.
 Set$set("active","properties",function(){
   return(private$.properties)
 })
 #' @name traits
 #' @title Set Traits
 #' @rdname traits
+#' @family set accessors
 #' @section R6 Usage: $traits
 #' @description List the traits of the Set.
 #' @details Set traits include:
@@ -374,6 +376,7 @@ Set$set("active","traits",function(){
 #' @name type
 #' @title Set Type
 #' @rdname type
+#' @family set accessors
 #' @section R6 Usage: $type
 #' @description Returns the type of the Set.
 #' @details Set type is one of: (), (], [), [], \{\}
@@ -383,56 +386,67 @@ Set$set("active","type",function(){
 #' @name max
 #' @title Set Maximum
 #' @rdname max
+#' @family set accessors
 #' @section R6 Usage: $max
 #' @description Returns the maximum of the Set.
-#' @details If the Set consists of numerics only then return the maximum element in the Set. For
+#' @details If the Set consists of numerics only then returns the maximum element in the Set. For
 #' open or half-open sets, then the maximum is defined by
 #' \deqn{upper - .Machine\$double.xmin}
 Set$set("active","max",function(){
   if(private$.type %in% c("()","[)"))
-    return(self$upper-.Machine$double.xmin)
+    return(private$.upper-.Machine$double.xmin)
   else
-    return(self$upper)
+    return(private$.upper)
 })
 #' @name min
 #' @title Set Minimum
 #' @rdname min
+#' @family set accessors
 #' @section R6 Usage: $min
 #' @description Returns the minimum of the Set.
-#' @details If the Set consists of numerics only then return the minimum element in the Set. For
+#' @details If the Set consists of numerics only, then returns the minimum element in the Set. For
 #' open or half-open sets, then the minimum is defined by
 #' \deqn{lower + .Machine\$double.xmin}
 Set$set("active","min",function(){
   if(private$.type %in% c("()","(]"))
-    return(self$lower+.Machine$double.xmin)
+    return(private$.lower+.Machine$double.xmin)
   else
-    return(self$lower)
+    return(private$.lower)
 })
 #' @name upper
 #' @title Upper Limit of Set
 #' @rdname upper
+#' @family set accessors
 #' @section R6 Usage: $upper
 #' @description Returns the upper limit or last element in the Set.
 #' @details If the Set consists of numerics only then returns the upper limit, or supremum, of the Set.
 #' Otherwise assumes that the elements were supplied in a particular order and returns the last
 #' element.
 Set$set("active","upper",function(){
-  return(private$.upper)
+  if(is.nan(private$.upper))
+    return(self$elements[[self$length]])
+  else
+    return(private$.upper)
 })
 #' @name lower
 #' @title Lower Limit of Set
 #' @rdname lower
+#' @family set accessors
 #' @section R6 Usage: $lower
 #' @description Returns the lower limit or first element in the Set.
 #' @details If the Set consists of numerics only then returns the lower limit, or infimum, of the Set.
 #' Otherwise assumes that the elements were supplied in a particular order and returns the first
 #' element.
 Set$set("active","lower",function(){
-  return(private$.lower)
+  if(is.nan(private$.lower))
+    return(self$elements[[1]])
+  else
+    return(private$.lower)
 })
 #' @name class
 #' @title Class of Set
 #' @rdname class
+#' @family set accessors
 #' @section R6 Usage: $class
 #' @description Returns the class of the Set.
 #' @details If all elements in the Set are of the same class, then returns the class. Otherwise
@@ -443,6 +457,7 @@ Set$set("active","class",function(){
 #' @name elements
 #' @title Set Elements
 #' @rdname elements
+#' @family set accessors
 #' @section R6 Usage: $elements
 #' @description Returns the elements in the Set.
 #' @details If the Set is countably finite then the elements in the Set are returned, otherwise NaN.
@@ -452,20 +467,21 @@ Set$set("active","elements",function(){
 #' @name universe
 #' @title Universe of a Set
 #' @rdname universe
+#' @family set accessors
 #' @section R6 Usage: $universe
 #' @description Returns the universe of the Set.
 #' @details The universe is an optional Set that specifies where the given Set lives. This is useful
-#' for taking the complement of a Set.
+#' for taking the absolute complement of a Set.
 Set$set("active","universe",function(){
   return(private$.universe)
 })
 #' @name range
 #' @title Numeric Range of Set
 #' @rdname range
+#' @family set accessors
 #' @section R6 Usage: $range
 #' @description Returns the range of the Set.
-#' @details If the Set consists of numerics only then returns
-#' \deqn{max - min}.
+#' @details If the Set consists of numerics only then returns \deqn{max - min}
 Set$set("active","range",function(){
   if(self$class %in% c("numeric", "integer"))
     return(self$upper - self$lower)
@@ -475,6 +491,7 @@ Set$set("active","range",function(){
 #' @name length
 #' @title Number of Elements in the Set
 #' @rdname length
+#' @family set accessors
 #' @section R6 Usage: $length
 #' @description Returns the number of elements in the Set.
 #' @details Returns either the number of elements in the Set, or \code{Inf} for infinite intervals.

@@ -51,11 +51,12 @@ Returns the set difference of two objects inheriting from class \code{Set}.
 \details{
 The difference of two sets, \eqn{X, Y}, is defined as the set of elements that exist
 in set \eqn{X} and not \eqn{Y},
-\deqn{X-Y = \{z : z \epsilon X and !(z \epsilon Y)\}}{X-Y = {z : z \epsilon X and !(z \epsilon Y)}}
+\deqn{X-Y = \{z : z \epsilon X \\ and \\ \neg(z \epsilon Y)\}}{X-Y = {z : z \epsilon X and !(z \epsilon Y)}}
 
 The set difference of two \link{ConditionalSet}s is defined by combining their defining functions by a negated
-'and', \code{!&}, operator. See examples. The set difference of fuzzy sets and tuples only looks at the
-elements and ignores the memberships.
+'and', \code{!&}, operator. See examples.
+
+The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
 }
 \examples{
 # complement of two sets

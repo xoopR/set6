@@ -6,10 +6,10 @@
 #' @templateVar operation complement
 #' @templateVar class ComplementSet
 #' @templateVar constructor ComplementSet$new(addset, subtractset, lower = NULL, upper = NULL, type = NULL)
-#' @templateVar arg1 `addset` \tab list \tab Sets to add. \cr
-#' @templateVar arg2 `subtractset` \tab list \tab Sets to subtract. \cr
+#' @templateVar arg1 `addset` \tab [Set] \tab Set to add. \cr
+#' @templateVar arg2 `subtractset` \tab [Set] \tab Set to subtract. \cr
 #' @templateVar field1 `addedSet` \tab [addedSet] \cr
-#' @templateVar field1 `subtractedSet` \tab [subtractedSet] \cr
+#' @templateVar field2 `subtractedSet` \tab [subtractedSet] \cr
 #'
 #' @export
 NULL
@@ -18,6 +18,9 @@ NULL
 #---------------------------------------------
 ComplementSet <- R6::R6Class("ComplementSet", inherit = SetWrapper)
 ComplementSet$set("public", "initialize", function(addset, subtractset, lower = NULL, upper = NULL, type = NULL){
+  assertSet(addset)
+  assertSet(subtractset)
+
   if(is.null(lower)){
     if(!any(subtractset$contains(addset$lower, bound = TRUE)))
       lower = addset$lower
@@ -95,14 +98,14 @@ ComplementSet$set("active","length",function(){
 })
 #' @name addedSet
 #' @rdname addedSet
-#' @title Get Added Sets in Wrapper
+#' @title Get Added Set in Wrapper
 #' @description For the `ComplementSet` wrapper, `X-Y`, gets the set `X`.
 #' @return `Set`.
 #' @seealso [ComplementSet], [subtractedSet]
 ComplementSet$set("active","addedSet", function() return(private$.addedSet))
 #' @name subtractedSet
 #' @rdname subtractedSet
-#' @title Get Subtracted Sets in Wrapper
+#' @title Get Subtracted Set in Wrapper
 #' @description For the `ComplementSet` wrapper, `X-Y`, gets the set `Y`.
 #' @return `Set`
 #' @seealso [ComplementSet], [addedSet]

@@ -15,7 +15,7 @@ setunion(..., simplify = TRUE)
 \arguments{
 \item{...}{\link{Set}s}
 
-\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest (unwrapped) form, usually a \code{Set}
+\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest (unwrapped) form, usually a \code{Set},
 otherwise a \code{UnionSet}.}
 
 \item{x, y}{\link{Set}}
@@ -29,10 +29,12 @@ Returns the union of objects inheriting from class \link{Set}.
 \details{
 The union of \eqn{N} sets, \eqn{X1, ..., XN}, is defined as the set of elements that exist
 in one or more sets,
-\deqn{U = \{x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN\}}{U = {x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN}}
+\deqn{U = \{x : x \epsilon X1\text{ or }x \epsilon X2\text{ or }...\text{ or }x \epsilon XN\}}{U = {x : x \epsilon X1 or x \epsilon X2 or ... or x \epsilon XN}}
 
 The union of multiple \link{ConditionalSet}s is given by combining their defining functions by an
 'or', \code{|}, operator. See examples.
+
+The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
 }
 \examples{
 # union of Sets

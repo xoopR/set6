@@ -10,11 +10,11 @@
 #' @templateVar constructor ConditionalSet$new(condition, argclass = NULL)
 #' @templateVar arg1 `condition` \tab function \tab Function for defining the set. See constructor details. \cr
 #' @templateVar arg2 `argclass` \tab list \tab Optional list of sets that the function arguments live in. See constructor details.
-#' @templateVar constructorDets The `condition` should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the [Set] that the arguments in the function live in, if these are not given then the [Reals] is assumed. See examples.
+#' @templateVar constructorDets The `condition` should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the universe of the function arguments as [Set]s, if these are not given then the [Reals] is assumed. See examples.
 #' @templateVar field1 `condition` \tab [condition] \cr
 #'
 #' @details
-#' Conditional sets are a useful tool for symbolically defining infinite sets. They can be combined
+#' Conditional sets are a useful tool for symbolically defining possibly infinite sets. They can be combined
 #' using standard 'and', `&`, and 'or', `|`, operators.
 #'
 #' @examples

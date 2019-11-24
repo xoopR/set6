@@ -143,13 +143,14 @@ FuzzySet$set("public","membership",function(element = NULL){
 #' @rdname alphaCut
 #' @title Get Elements in FuzzySet with Membership Greater than Alpha
 #' @param alpha numeric in \[0, 1\] to determine which elements to return
-#' @param strong logical, if `FALSE` (default) then only includes elements strictly greater than alpha, otherwise greater than or equal
+#' @param strong logical, if `FALSE` (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than
 #' @param create logical, if `FALSE` (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements
 #' @description The alpha-cut of a fuzzy set is defined as the set
 #' \deqn{A_\alpha = \{x \epsilon F | m \ge \alpha\}}{A_\alpha = {x \epsilon F | m \ge \alpha}}
 #' where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
-#' @return Elements in fuzzy set or a [Set] of the elements.
+#' @return Elements in [FuzzySet] or a [Set] of the elements.
 #' @section R6 Usage: $alphaCut(alpha, strong = FALSE, create = FALSE)
+#' @seealso [support], [core]
 #' @examples
 #' f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
 #' # Alpha-cut
@@ -182,13 +183,14 @@ FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE)
 #' @name support
 #' @rdname support
 #' @title Get Support of FuzzySet
-#' @param create logical, if `FALSE` (default) returns the support elements, otherwise returns a set of the support elements
+#' @param create logical, if `FALSE` (default) returns the support elements, otherwise returns a [Set] of the support elements
 #' @description The support of a fuzzy set is defined as the set of elements whose membership is greater than zero, or the strong
 #' alpha-cut with \eqn{\alpha = 0},
 #' \deqn{A_\alpha = \{x \epsilon F | m > 0\}}{A_\alpha = {x \epsilon F | m > 0}}
 #' where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
 #' @return Support elements in fuzzy set or a [Set] of the support elements.
 #' @section R6 Usage: $support(create = FALSE)
+#' @seealso [core], [alphaCut]
 #' @examples
 #' f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
 #' f$support()
@@ -200,13 +202,14 @@ FuzzySet$set("public","support",function(create = FALSE){
 #' @name core
 #' @rdname core
 #' @title Get Core of FuzzySet
-#' @param create logical, if `FALSE` (default) returns the core elements, otherwise returns a set of the core elements
+#' @param create logical, if `FALSE` (default) returns the core elements, otherwise returns a [Set] of the core elements
 #' @description The core of a fuzzy set is defined as the set of elements whose membership is equal to one,
 #' or the alpha-cut with \eqn{\alpha = 1},
-#' \deqn{A_\alpha = \{x \\ \epsilon \\ F \ : \ m \ge 1\}}{A_\alpha = {x \epsilon F : m \ge 1}}
+#' \deqn{A_\alpha = \{x \epsilon F \ : \ m \ge 1\}}{A_\alpha = {x \epsilon F : m \ge 1}}
 #' where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
-#' @return Core elements in fuzzy set or a [Set] of the core elements.
+#' @return Core elements in [FuzzySet] or a [Set] of the core elements.
 #' @section R6 Usage: $core(create = FALSE)
+#' @seealso [support], [alphaCut]
 #' @examples
 #' f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
 #' f$core()
@@ -219,14 +222,14 @@ FuzzySet$set("public","core",function(create = FALSE){
 #' @rdname inclusion
 #' @title Get Inclusion Level of Element In FuzzySet
 #' @param element element or list of elements in fuzzy set for which to get the inclusion level
-#' @description An element in a fuzzy set is:
-#' * Included - If m = 1
-#' * Partially Included - If 0 < m < 1
-#' * Not Included - If m = 0
+#' @description An element in a fuzzy set, with corresponding membership \eqn{m}, is:
+#' * Included - If \eqn{m = 1}
+#' * Partially Included - If \eqn{0 < m < 1}
+#' * Not Included - If \eqn{m = 0}
 #' @return One of: "Included", "Partially Included", "Not Included"
 #' @section R6 Usage: $inclusion(element)
-#' @details For `FuzzySet`s this is straightforward and returns the inclusion level of the given element(s),
-#' however in `FuzzyTuple`s when an element may be duplicated, the function returns the inclusion level of
+#' @details For [FuzzySet]s this is straightforward and returns the inclusion level of the given element(s),
+#' however in [FuzzyTuple]s when an element may be duplicated, the function returns the inclusion level of
 #' all instances of the element.
 #' @examples
 #' f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)

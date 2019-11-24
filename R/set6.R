@@ -11,7 +11,7 @@
 #' \itemize{
 #' \item Object-oriented programming, which allows a clear inheritance structure for Sets, Intervals,
 #' Tuples, and other variants.
-#' \item Set operations and wrappers for both explicit and symbolic representations algebra of sets.
+#' \item Set operations and wrappers for both explicit and symbolic representations for algebra of sets.
 #' \item Methods for assertions and comparison checks, including subsets, equality, and containedness.
 #' }
 #'

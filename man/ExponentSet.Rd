@@ -38,6 +38,7 @@ this class directly but via the set operation methods.
 
 \tabular{ll}{
 \strong{Field} \tab \strong{Link} \cr
+\code{power} \tab \link{power} \cr
 
 \code{wrappedSets} \tab \link{wrappedSets} \cr
 \code{class} \tab \link{class} \cr

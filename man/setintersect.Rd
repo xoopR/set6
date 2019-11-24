@@ -36,11 +36,13 @@ Returns the intersection of two objects inheriting from class \code{Set}.
 \details{
 The intersection of two sets, \eqn{X, Y}, is defined as the set of elements that exist
 in both sets,
-\deqn{X \cap Y = \{z : z \epsilon X and `` \epsilon Y\}}{{z : z \epsilon X and z \epsilon Y}}
+\deqn{X \cap Y = \{z : z \epsilon X \text{ and } z \epsilon Y\}}{{z : z \epsilon X and z \epsilon Y}}
 In the case where no elements are common to either set, then the empty set is returned.
 
 The intersection of two \link{ConditionalSet}s is defined by combining their defining functions by an
 'and', \code{&}, operator. See examples.
+
+The intersection of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
 }
 \examples{
 # intersection of two sets

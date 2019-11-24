@@ -18,3 +18,10 @@ between sets use \link{setcomplement}.
  $absComplement()
 }
 
+\seealso{
+\link{setcomplement}
+
+Other set methods: \code{\link{contains}},
+  \code{\link{equals}}, \code{\link{isSubset}}
+}
+\concept{set methods}

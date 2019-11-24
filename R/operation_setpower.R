@@ -2,13 +2,13 @@
 #' @rdname setpower
 #' @param x Set
 #' @param power power to raise set to
-#' @param simplify logical, if `TRUE` returns the result in its simplest (unwrapped) form, usually a `Set`
+#' @param simplify logical, if `TRUE` returns the result in its simplest (unwrapped) form, usually a `Set`,
 #' otherwise a `ExponentSet`.
 #' @param nest logical, if `FALSE` (default) returns the n-ary cartesian product, otherwise returns
 #' the cartesian product applied n times.
 #' [Set]s. See details and examples.
 #' @title Power of a Set
-#' @return An R6 object of class `Set` or ExponentSet` inheriting from `ProductSet`.
+#' @return An R6 object of class `Set` or `ExponentSet` inheriting from `ProductSet`.
 #' @description A convenience wrapper for the n-ary cartesian product of a `Set` by itself, possibly multiple times.
 #' @details See the details of [setproduct] for a longer discussion on the use of the `nest` argument, in particular
 #' with regards to n-ary cartesian products vs. 'standard' cartesian products.

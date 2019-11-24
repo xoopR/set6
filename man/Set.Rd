@@ -13,8 +13,8 @@ intervals, tuples, and fuzzy variants.
 \details{
 Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
 is used for sets of finite elements, for infinite sets use \link{Interval}. These can be
-expanded for fuzzy logic by using \link{FuzzySet}s. Elements in a set cannot be duplicated
-but \link{Tuple}s can be used if this is required.
+expanded for fuzzy logic by using \link{FuzzySet}s. Elements in a set cannot be duplicated and ordering
+of elements does not matter, \link{Tuple}s can be used if duplicates or ordering are required.
 }
 \section{Constructor}{
  \code{Set$new(..., universe = NULL)}
@@ -31,7 +31,7 @@ but \link{Tuple}s can be used if this is required.
 }
 
 \section{Constructor Details}{
- Sets are constructed by elements of any types (including R6 classes), excluding lists. \code{Set}s should be used within \code{Set}s instead of lists. The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+ Sets are constructed by elements of any types (including R6 classes), excluding lists. \code{Set}s should be used within \code{Set}s instead of lists. The optional \code{universe} argument is useful for taking the absolute complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
 }
 
 \section{Public Fields}{

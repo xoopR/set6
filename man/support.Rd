@@ -4,7 +4,7 @@
 \alias{support}
 \title{Get Support of FuzzySet}
 \arguments{
-\item{create}{logical, if \code{FALSE} (default) returns the support elements, otherwise returns a set of the support elements}
+\item{create}{logical, if \code{FALSE} (default) returns the support elements, otherwise returns a \link{Set} of the support elements}
 }
 \value{
 Support elements in fuzzy set or a \link{Set} of the support elements.
@@ -23,4 +23,7 @@ where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corres
 f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
 f$support()
 f$support(TRUE)
+}
+\seealso{
+\link{core}, \link{alphaCut}
 }

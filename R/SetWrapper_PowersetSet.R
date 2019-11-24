@@ -3,7 +3,7 @@
 #---------------------------------------------
 #' @name PowersetSet
 #' @template SetWrapper
-#' @templateVar operation exponentiation
+#' @templateVar operation powerset
 #' @templateVar class PowersetSet
 #' @templateVar constructor PowersetSet$new(set)
 #' @templateVar arg1 `set` \tab list \tab Set to wrap. \cr

@@ -22,8 +22,8 @@ this class directly but via the set operation methods.
 
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{addset} \tab list \tab Sets to add. \cr
-\code{subtractset} \tab list \tab Sets to subtract. \cr
+\code{addset} \tab \link{Set} \tab Set to add. \cr
+\code{subtractset} \tab \link{Set} \tab Set to subtract. \cr
 
 \code{lower} \tab Set \tab Lower limit of set. \cr
 \code{upper} \tab Set \tab Upper limit of set. \cr
@@ -39,6 +39,7 @@ this class directly but via the set operation methods.
 
 \tabular{ll}{
 \strong{Field} \tab \strong{Link} \cr
+\code{addedSet} \tab \link{addedSet} \cr
 \code{subtractedSet} \tab \link{subtractedSet} \cr
 
 \code{wrappedSets} \tab \link{wrappedSets} \cr

@@ -14,3 +14,12 @@ See \code{cardinality} in \code{\link{properties}} for the type of infinity.
  $length
 }
 
+\seealso{
+Other set accessors: \code{\link{class}},
+  \code{\link{elements}}, \code{\link{lower}},
+  \code{\link{max}}, \code{\link{min}},
+  \code{\link{properties}}, \code{\link{range}},
+  \code{\link{traits}}, \code{\link{type}},
+  \code{\link{universe}}, \code{\link{upper}}
+}
+\concept{set accessors}

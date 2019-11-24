@@ -22,6 +22,18 @@ Calculates and returns the powerset of a Set.
 A powerset of a set, S, is defined as the set of all subsets of S, including S itself and
 the empty set.
 }
+\examples{
+# simplify = FALSE is default
+powerset(Set$new(1,2))
+powerset(Set$new(1,2), simplify = TRUE)
+
+# powerset of intervals
+powerset(Interval$new())
+
+# powerset of powersets
+powerset(powerset(Reals$new()))
+powerset(powerset(Reals$new()))$properties$cardinality
+}
 \seealso{
 Other operators: \code{\link{setcomplement}},
   \code{\link{setintersect}}, \code{\link{setpower}},

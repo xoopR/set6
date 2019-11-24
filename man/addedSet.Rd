@@ -2,7 +2,7 @@
 % Please edit documentation in R/SetWrapper_ComplementSet.R
 \name{addedSet}
 \alias{addedSet}
-\title{Get Added Sets in Wrapper}
+\title{Get Added Set in Wrapper}
 \value{
 \code{Set}.
 }

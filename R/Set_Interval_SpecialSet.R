@@ -1,22 +1,4 @@
 #' @include Set.R setSymbol.R
-#'
-#' @title Special Mathematical Sets
-#'
-#' @description Abstract class for the representation of the 'special' mathematical sets.
-#'
-#' @name SpecialSet
-#'
-#' @details
-#' Special sets refer to the most commonly used (and important) sets in mathematics. Including
-#' the sets of natural numbers, integers and reals.
-#'
-#' This is an abstract class that cannot be constructed, instead construct one of the implemented
-#' SpecialSet child-classes. For a full list of these see \code{\link{listSpecialSets}}.
-#'
-#' @seealso \code{\link{listSpecialSets}}
-#'
-#' @export
-NULL
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
 SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()", class = "numeric"){
   if(getR6Class(self, pos = environment()) == "SpecialSet")
@@ -246,8 +228,8 @@ ExtendedReals$set("public", "initialize", function(){
 #' @templateVar latexeqn \\{a + bi \\ : \\ a,b \in R\\}
 #' @templateVar roxeqn {a + bi : a,b \epsilon R}
 #' @templateVar conargs lower = -Inf+0i, upper = Inf+0i
-#' @templateVar `lower` \tab complex \tab Lower limit of interval.
-#' @templateVar `upper` \tab complex \tab Upper limit of interval.
+#' @templateVar arg1 `lower` \tab complex \tab Lower limit of interval. \cr
+#' @templateVar arg2 `upper` \tab complex \tab Upper limit of interval.
 #' @templateVar support where \eqn{R} is the set of reals.
 #' @export
 NULL

@@ -9,6 +9,17 @@
 #' creates an object of class [PowersetSet].
 #' @return [Set]
 #' @family operators
+#' @examples
+#' # simplify = FALSE is default
+#' powerset(Set$new(1,2))
+#' powerset(Set$new(1,2), simplify = TRUE)
+#'
+#' # powerset of intervals
+#' powerset(Interval$new())
+#'
+#' # powerset of powersets
+#' powerset(powerset(Reals$new()))
+#' powerset(powerset(Reals$new()))$properties$cardinality
 #' @export
 powerset <- function(x, simplify = FALSE){
   if(x$properties$empty)

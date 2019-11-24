@@ -12,14 +12,13 @@
 String representation of the set.
 }
 \description{
-Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
+Parsable object to be supplied to \code{print}, \code{data.frame}, etc.
 }
 \details{
 \code{strprint} is a suggested method that should be included in all R6 classes to be passed to
-methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
-parse R6 objects into data-frames, see examples.
+methods such as \code{cat}, \code{summary} and \code{print}.
 
-It is often not required to call this directly and the print method is recommended for printing
+It is often not required to call this directly; the print method is recommended for printing
 strings to the console.
 }
 \section{R6 Usage}{

@@ -2,15 +2,15 @@
 % Please edit documentation in R/SetWrapper_PowersetSet.R
 \name{PowersetSet}
 \alias{PowersetSet}
-\title{Set of Exponentiations}
+\title{Set of Powersets}
 \value{
 R6 object of class PowersetSet, inheriting from SetWrapper.
 }
 \description{
-PowersetSet class for symbolic exponentiation of mathematical sets.
+PowersetSet class for symbolic powerset of mathematical sets.
 }
 \details{
-The purpose of this class is to provide a symbolic representation for the exponentiation of sets that
+The purpose of this class is to provide a symbolic representation for the powerset of sets that
 cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct
 this class directly but via the set operation methods.
 }

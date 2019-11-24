@@ -10,16 +10,16 @@
 One of: "Included", "Partially Included", "Not Included"
 }
 \description{
-An element in a fuzzy set is:
+An element in a fuzzy set, with corresponding membership \eqn{m}, is:
 \itemize{
-\item Included - If m = 1
-\item Partially Included - If 0 < m < 1
-\item Not Included - If m = 0
+\item Included - If \eqn{m = 1}
+\item Partially Included - If \eqn{0 < m < 1}
+\item Not Included - If \eqn{m = 0}
 }
 }
 \details{
-For \code{FuzzySet}s this is straightforward and returns the inclusion level of the given element(s),
-however in \code{FuzzyTuple}s when an element may be duplicated, the function returns the inclusion level of
+For \link{FuzzySet}s this is straightforward and returns the inclusion level of the given element(s),
+however in \link{FuzzyTuple}s when an element may be duplicated, the function returns the inclusion level of
 all instances of the element.
 }
 \section{R6 Usage}{

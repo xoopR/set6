@@ -4,15 +4,15 @@
 \alias{core}
 \title{Get Core of FuzzySet}
 \arguments{
-\item{create}{logical, if \code{FALSE} (default) returns the core elements, otherwise returns a set of the core elements}
+\item{create}{logical, if \code{FALSE} (default) returns the core elements, otherwise returns a \link{Set} of the core elements}
 }
 \value{
-Core elements in fuzzy set or a \link{Set} of the core elements.
+Core elements in \link{FuzzySet} or a \link{Set} of the core elements.
 }
 \description{
 The core of a fuzzy set is defined as the set of elements whose membership is equal to one,
 or the alpha-cut with \eqn{\alpha = 1},
-\deqn{A_\alpha = \{x \\ \epsilon \\ F \ : \ m \ge 1\}}{A_\alpha = {x \epsilon F : m \ge 1}}
+\deqn{A_\alpha = \{x \epsilon F \ : \ m \ge 1\}}{A_\alpha = {x \epsilon F : m \ge 1}}
 where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
 }
 \section{R6 Usage}{
@@ -23,4 +23,7 @@ where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corres
 f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
 f$core()
 f$core(TRUE)
+}
+\seealso{
+\link{support}, \link{alphaCut}
 }

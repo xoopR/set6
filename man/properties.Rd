@@ -12,14 +12,23 @@ Set properties include:
 \item \code{empty} - is the Set empty or does it contain elements?
 \item \code{singleton} - is the Set a singleton? i.e. Does it contain only one element?
 \item \code{cardinality} - number of elements in the Set
-\item \code{countability} - One of countably finite, countably infinite, uncountable
-\item \code{closure} - One of closed, open, half-open
+\item \code{countability} - One of: countably finite, countably infinite, uncountable
+\item \code{closure} - One of: closed, open, half-open
 }
 
-The \code{Properties} class is essentially a read-only \code{list}, with \code{$} and \code{[} for accessing elements
-but without a \code{[[} method. It is not exported and therefore can be considered abstract.
+The \code{Properties} class is essentially a read-only \code{list}, with \code{'$'} and \code{'['} for accessing elements
+but without a \code{'[['} method. It is not exported and therefore can be considered abstract.
 }
 \section{R6 Usage}{
  $properties
 }
 
+\seealso{
+Other set accessors: \code{\link{class}},
+  \code{\link{elements}}, \code{\link{length}},
+  \code{\link{lower}}, \code{\link{max}},
+  \code{\link{min}}, \code{\link{range}},
+  \code{\link{traits}}, \code{\link{type}},
+  \code{\link{universe}}, \code{\link{upper}}
+}
+\concept{set accessors}

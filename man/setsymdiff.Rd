@@ -24,11 +24,13 @@ Returns the symmetric difference of two objects inheriting from class \code{Set}
 \details{
 The symmetric difference, aka disjunctive union, of two sets, \eqn{X, Y}, is defined as the set
 of elements that exist in set \eqn{X} or in \eqn{Y} but not both,
-\deqn{\{z : (z \epsilon X \cup z \epsilon Y) \cap !(z \epsilon X \cap z \epsilon Y)\}}{\{z : (z \epsilon X or z \epsilon Y) and !(z \epsilon X and z \epsilon Y)\}}
+\deqn{\{z : (z \epsilon X \cup z \epsilon Y) \\ \cap \\ \neg(z \epsilon X \cap z \epsilon Y)\}}{\{z : (z \epsilon X or z \epsilon Y) and !(z \epsilon X and z \epsilon Y)\}}
 
 The symmetric difference can also be expressed as the union of two sets minus the intersection.
 Therefore \code{setsymdiff} is written as a thin wrapper over these operations, so for two sets, \code{A,B}: \cr
-\code{A \%-\% B = (A | B) - (A & B)}
+\code{A \%-\% B = (A | B) - (A & B)}.
+
+The symmetric difference of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
 }
 \examples{
 # symmetrical difference compared to union and intersection

@@ -4,7 +4,7 @@
 #' @name Interval
 #' @title Mathematical Finite or Infinite Interval
 #'
-#' @description A general Interval object for mathematical intervals, inheriting from `Set`. Intervals
+#' @description A general Interval object for mathematical intervals, inheriting from [Set]. Intervals
 #' may be open, closed, or half-open; as well as bounded above, below, or not at all.
 #' @return R6 object of class Interval inheriting from [Set].
 #' @template Set
@@ -21,7 +21,7 @@
 #'
 #' @details
 #' The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
-#' integer intervals over a continuous range.
+#' integer intervals over a finite continuous range. Use [Complex] to define an interval with complex values.
 #'
 #' @examples
 #' # Set of Reals
@@ -290,7 +290,7 @@ Interval$set("active", "elements", function(){
 #' * `as.Interval.list/as.Interval.data.frame` - Assumes the `list`/`data.frame` has named items/columns:
 #' `lower, upper, type, class`.
 #' * `as.Interval.numeric` - If the `numeric` vector is a continuous interval with no breaks then coerces to an [Interval]
-#' with `lower = min(object), upper = max(object), class = "integer"`, ignoring ordering.
+#' with: `lower = min(object), upper = max(object), class = "integer"`. Ordering is ignored.
 #' * `as.Interval.matrix` - Tries coercion via [as.Interval.numeric] on the first column of the matrix.
 #' * `as.Interval.Set` - First tries coercion via [as.Interval.numeric], if possible wraps result in a [Set].
 #' * `as.Interval.FuzzySet` - Tries coercion via [as.Interval.Set] on the [support] of the [FuzzySet].
