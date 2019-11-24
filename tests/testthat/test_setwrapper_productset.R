@@ -32,6 +32,7 @@ test_that("conditionalset",{
 })
 
 test_that("fuzzy",{
+  use_unicode(FALSE)
   expect_equal((FuzzySet$new(1,0.5) * ConditionalSet$new(function(x) TRUE))$strprint(),
                "{1} X {TRUE : x in R}")
   expect_true(setproduct(FuzzySet$new(1, 0.1), FuzzySet$new(2, 0.2), simplify = TRUE)$equals(Set$new(FuzzyTuple$new(1, 0.1, 2, 0.2))))

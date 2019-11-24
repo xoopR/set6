@@ -21,7 +21,9 @@ ExponentSet$set("public", "initialize", function(set, power){
   setlist = rep(list(set), power)
   private$.power = power
 
-  if(grepl("Beth|Aleph", set$properties$cardinality))
+  if(is.null(set$properties$cardinality))
+    cardinality = NULL
+  else if(grepl("Beth|Aleph", set$properties$cardinality))
     cardinality = set$properties$cardinality
   else
     cardinality = set$properties$cardinality^power
