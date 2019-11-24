@@ -3,6 +3,9 @@ template:
     bootswatch: spacelab
 
 navbar:
+  left:
+  - text: Get started
+    href: articles/set6.html
   right:
   - text: Reference
     href: reference/
