@@ -503,11 +503,26 @@ summary.Set <- function(object, n = 2, ...){
   object$summary(n)
 }
 #---------------------------------------------
+# as.double
+#---------------------------------------------
+#' @export
+as.double.Set <- function(object) {
+  if(testFuzzy(object))
+    return(object$support())
+  else
+    return(object$elements)
+}
+#---------------------------------------------
 # as.Set
 #---------------------------------------------
-#' @title Coercion to R6 Set
-#' @description Coerces objects to R6 Sets
-#' @param object object to coerce
+#' @template coercion2
+#' @templateVar class1 Set
+#' @templateVar class2 Tuple
+#' @details
+#' * `as.Set.list` - Creates a [Set] for each element in `list`.
+#' * `as.Set.matrix/as.Set.data.frame` - Creates a [Set] for each column in `matrix/data.frame`.
+#' * `as.Set.FuzzySet` - Creates a [Set] from the [support] of the [FuzzySet].
+#' * `as.Set.Interval` - If the interval has finite cardinality then creates a [Set] from the [Interval] elements.
 #' @export
 as.Set <- function(object){
   UseMethod("as.Set",object)
@@ -520,7 +535,7 @@ as.Set.numeric <- function(object){
 #' @rdname as.Set
 #' @export
 as.Set.list <- function(object){
-  return(Set$new(unlist(object)))
+  return(lapply(object, function(x) Set$new(x)))
 }
 #' @rdname as.Set
 #' @export
@@ -529,8 +544,16 @@ as.Set.matrix <- function(object){
 }
 #' @rdname as.Set
 #' @export
+as.Set.data.frame <- as.Set.matrix
+#' @rdname as.Set
+#' @export
 as.Set.Set <- function(object){
   return(Set$new(object$elements))
+}
+#' @rdname as.Set
+#' @export
+as.Set.FuzzySet <- function(object){
+  return(object$support(create = TRUE))
 }
 #' @rdname as.Set
 #' @export

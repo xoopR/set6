@@ -318,9 +318,18 @@ FuzzySet$set("private",".traits",list(crisp = FALSE))
 #---------------------------------------------
 # Coercions
 #---------------------------------------------
-#' @title Coercion to R6 FuzzySet
-#' @description Coerces objects to R6 FuzzySet
-#' @param object object to coerce
+#' @template coercion2
+#' @templateVar class1 FuzzySet
+#' @templateVar class2 FuzzyTuple
+#' @details
+#' * `as.FuzzySet.list` - Assumes `list` has two items, named `elements` and `membership`,
+#' and that they are ordered to be corresponding.
+#' * `as.FuzzySet.matrix` - Assumes first column corresponds to `elements` and second column corresponds
+#' to their respective `membership`.
+#' * `as.FuzzySet.data.frame` - First checks to see if one column is called `elements` and the other is called `membership`.
+#' If not then uses `as.FuzzySet.matrix`.
+#' * `as.FuzzySet.Set` - Creates a [FuzzySet] by assuming [Set] elements all have `membership` equal to \eqn{1}.
+#' * `as.FuzzySet.Interval` - First tries coercion via [as.Set.Interval] then uses [as.FuzzySet.Set].
 #' @export
 as.FuzzySet <- function(object){
   UseMethod("as.FuzzySet",object)
@@ -328,12 +337,13 @@ as.FuzzySet <- function(object){
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzySet.numeric <- function(object){
-  return(FuzzySet$new(elements = as.numeric(object), membership = names(object)))
+  FuzzySet$new(elements = object[seq.int(1,length(object),2)],
+                membership = as.numeric(object[seq.int(2,length(object),2)]))
 }
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzySet.list <- function(object){
-  return(FuzzySet$new(elements = unlist(object, use.names = FALSE), membership = names(object)))
+  return(FuzzySet$new(elements = object$elements, membership = object$membership))
 }
 #' @rdname as.FuzzySet
 #' @export
@@ -343,7 +353,10 @@ as.FuzzySet.matrix <- function(object){
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzySet.data.frame <- function(object){
-  return(as.FuzzySet(as.matrix(object)))
+  if(all(c("elements", "membership") %in% colnames(object)))
+    return(FuzzySet$new(elements = object$elements, membership = object$membership))
+  else
+    return(FuzzySet$new(elements = object[,1], membership = object[,2]))
 }
 #' @rdname as.FuzzySet
 #' @export
@@ -353,10 +366,21 @@ as.FuzzySet.Set <- function(object){
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzySet.FuzzySet <- function(object){
-  return(object)
+  return(FuzzySet$new(elements = object$elements, membership = object$membership()))
 }
 #' @rdname as.FuzzySet
 #' @export
-as.FuzzySet.FuzzySet <- function(object){
-  return(FuzzySet$new(elements = object$elements, membership = object$membership()))
+as.FuzzySet.Interval <- function(object){
+  if(testMessage(as.Set.Interval(object))) {
+    message("Interval cannot be coerced to FuzzySet.")
+    return(object)
+  } else
+    return(as.FuzzySet.Set(as.Set.Interval(object)))
 }
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzySet.ConditionalSet <- function(object){
+  message("ConditionalSet cannot be coerced to FuzzySet.")
+  return(object)
+}
+

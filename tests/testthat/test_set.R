@@ -121,7 +121,7 @@ test_that("isSubset",{
 
 test_that("as.Set",{
   expect_equal(as.Set(c(1,2)), Set$new(1,2))
-  expect_equal(as.Set(list(1,2)), Set$new(1,2))
+  expect_equal(as.Set(list(1,2)), list(Set$new(1), Set$new(2)))
   expect_equal(as.Set(matrix(c(1,2,3,4),nrow = 2)), list(Set$new(1,2),Set$new(3,4)))
   expect_message(expect_equal(as.Set(Interval$new()), Interval$new()), "Interval cannot be")
   expect_message(expect_equal(as.Set(ConditionalSet$new(function(x) TRUE)), ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")

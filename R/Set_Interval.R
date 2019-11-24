@@ -284,14 +284,16 @@ Interval$set("active", "elements", function(){
 #---------------------------------------------
 # Coercions
 #---------------------------------------------
-#' @export
-as.double.Interval <- function(x,...){
-  x$elements
-}
-
-#' @title Coercion to R6 Interval
-#' @description Coerces objects to R6 Intervals
-#' @param object object to coerce
+#' @template coercion1
+#' @templateVar class1 Interval
+#' @details
+#' * `as.Interval.list/as.Interval.data.frame` - Assumes the `list`/`data.frame` has named items/columns:
+#' `lower, upper, type, class`.
+#' * `as.Interval.numeric` - If the `numeric` vector is a continuous interval with no breaks then coerces to an [Interval]
+#' with `lower = min(object), upper = max(object), class = "integer"`, ignoring ordering.
+#' * `as.Interval.matrix` - Tries coercion via [as.Interval.numeric] on the first column of the matrix.
+#' * `as.Interval.FuzzyInterval` - Creates a [Interval] from the [support] of the [FuzzyInterval].
+#' * `as.Interval.Set` - First tries coercion via [as.Interval.numeric], if possible wraps result in a [Set].
 #' @export
 as.Interval <- function(object){
   UseMethod("as.Interval",object)
@@ -299,18 +301,53 @@ as.Interval <- function(object){
 #' @rdname as.Interval
 #' @export
 as.Interval.Set <- function(object){
-  if (object$length == 1)
-    return(Interval$new(object$elements, object$elements))
-  else if (all(diff(object$elements) == 1))
-    return(Interval$new(min(object$elements), max(object$elements), class = "integer"))
-  else {
+  if(testFuzzy(object))
+    object = object$support(create = TRUE)
+
+  if(testMessage(as.Interval.numeric(object$elements))){
     message("Set cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
     return(object)
+  } else {
+    return(as.Interval.numeric(object$elements))
   }
-
 }
 #' @rdname as.Interval
 #' @export
 as.Interval.Interval <- function(object){
   return(Interval$new(object$lower, object$upper, type = object$type, class = object$class))
 }
+#' @rdname as.Interval
+#' @export
+as.Interval.list <- function(object){
+  return(Interval$new(object$lower, object$upper, type = object$type, class = object$class))
+}
+#' @rdname as.Interval
+#' @export
+as.Interval.data.frame <- function(object){
+  return(Interval$new(object$lower, object$upper, type = object$type, class = object$class))
+}
+#' @rdname as.Interval
+#' @export
+as.Interval.matrix <- function(object){
+  return(as.Interval.numeric(matrix[,1]))
+}
+#' @rdname as.Interval
+#' @export
+as.Interval.numeric <- function(object){
+  if (length(object) == 1)
+    return(Interval$new(object, object))
+  else if (all(diff(object) == 1))
+    return(Interval$new(min(object), max(object), class = "integer"))
+  else {
+    message("Numeric cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
+    return(object)
+  }
+}
+#' @rdname as.Interval
+#' @export
+as.Interval.ConditionalSet <- function(object){
+  message("ConditionalSet cannot be coerced to Interval.")
+  return(object)
+}
+
+

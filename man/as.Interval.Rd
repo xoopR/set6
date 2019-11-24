@@ -4,17 +4,47 @@
 \alias{as.Interval}
 \alias{as.Interval.Set}
 \alias{as.Interval.Interval}
-\title{Coercion to R6 Interval}
+\alias{as.Interval.list}
+\alias{as.Interval.data.frame}
+\alias{as.Interval.matrix}
+\alias{as.Interval.numeric}
+\title{Coercion to R6 \code{Interval}}
 \usage{
 as.Interval(object)
 
 \method{as.Interval}{Set}(object)
 
 \method{as.Interval}{Interval}(object)
+
+\method{as.Interval}{list}(object)
+
+\method{as.Interval}{data.frame}(object)
+
+\method{as.Interval}{matrix}(object)
+
+\method{as.Interval}{numeric}(object)
 }
 \arguments{
 \item{object}{object to coerce}
 }
 \description{
-Coerces objects to R6 Intervals
+Coerces object to an R6 \link{Interval}.
 }
+\details{
+\itemize{
+\item \code{as.Interval.list/as.Interval.data.frame} - Assumes the \code{list}/\code{data.frame} has named items/columns:
+\code{lower, upper, type, class}.
+\item \code{as.Interval.numeric} - If the \code{numeric} vector is a continuous interval with no breaks then coerces to an \link{Interval}
+with \code{lower = min(object), upper = max(object), class = "integer"}, ignoring ordering.
+\item \code{as.Interval.matrix} - Tries coercion via \link{as.Interval.numeric} on the first column of the matrix.
+\item \code{as.Interval.FuzzyInterval} - Creates a \link{Interval} from the \link{support} of the \link{FuzzyInterval}.
+\item \code{as.Interval.Set} - First tries coercion via \link{as.Interval.numeric}, if possible wraps result in a \link{Set}.
+}
+}
+\seealso{
+\link{Interval}
+
+Other coercions: \code{\link{as.FuzzySet}},
+  \code{\link{as.Set}}
+}
+\concept{coercions}

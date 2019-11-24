@@ -130,39 +130,41 @@ Tuple$set("private",".type","()")
 #---------------------------------------------
 # Coercions
 #---------------------------------------------
-#' @title Coercion to R6 Tuple
-#' @description Coerces objects to R6 Tuples
-#' @param object object to coerce
+#' @rdname as.Set
+#' @aliases as.Tuple
 #' @export
 as.Tuple <- function(object){
   UseMethod("as.Tuple",object)
 }
-#' @rdname as.Tuple
+#' @rdname as.Set
 #' @export
 as.Tuple.numeric <- function(object){
   Tuple$new(object)
 }
-#' @rdname as.Tuple
+#' @rdname as.Set
 #' @export
 as.Tuple.list <- function(object){
-  return(Tuple$new(unlist(object)))
+  return(lapply(object, function(x) Tuple$new(x)))
 }
-#' @rdname as.Tuple
+#' @rdname as.Set
 #' @export
 as.Tuple.matrix <- function(object){
   return(apply(object,2,function(x) Tuple$new(x)))
 }
-#' @rdname as.Tuple
+#' @rdname as.Set
+#' @export
+as.Tuple.data.frame <- as.Tuple.matrix
+#' @rdname as.Set
 #' @export
 as.Tuple.FuzzySet <- function(object){
   return(Tuple$new(object$support()))
 }
-#' @rdname as.Tuple
+#' @rdname as.Set
 #' @export
 as.Tuple.Set <- function(object){
   return(Tuple$new(object$elements))
 }
-#' @rdname as.Tuple
+#' @rdname as.Set
 #' @export
 as.Tuple.Interval <- function(object){
   if(any(is.nan(object$elements))){
@@ -171,4 +173,10 @@ as.Tuple.Interval <- function(object){
   } else {
     return(Tuple$new(object$elements))
   }
+}
+#' @rdname as.Set
+#' @export
+as.Tuple.ConditionalSet <- function(object){
+  message("ConditionalSet cannot be coerced to Tuple.")
+  return(object)
 }

@@ -153,46 +153,58 @@ FuzzyTuple$set("private",".type","()")
 #---------------------------------------------
 # Coercions
 #---------------------------------------------
-#' @title Coercion to R6 FuzzyTuple
-#' @description Coerces objects to R6 FuzzyTuple
-#' @param object object to coerce
+#' @rdname as.FuzzySet
+#' @aliases as.FuzzyTuple
 #' @export
 as.FuzzyTuple <- function(object){
   UseMethod("as.FuzzyTuple",object)
 }
-#' @rdname as.FuzzyTuple
+#' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.numeric <- function(object){
-  return(FuzzyTuple$new(elements = as.numeric(object), membership = names(object)))
+  FuzzyTuple$new(elements = object[seq.int(1,length(object),2)],
+               membership = as.numeric(object[seq.int(2,length(object),2)]))
 }
-#' @rdname as.FuzzyTuple
+#' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.list <- function(object){
-  return(FuzzyTuple$new(elements = unlist(object, use.names = FALSE), membership = names(object)))
+  return(FuzzyTuple$new(elements = object$elements, membership = object$membership))
 }
-#' @rdname as.FuzzyTuple
+#' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.matrix <- function(object){
   return(FuzzyTuple$new(elements = object[,1], membership = object[,2]))
 }
-#' @rdname as.FuzzyTuple
+#' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.data.frame <- function(object){
-  return(as.FuzzyTuple(as.matrix(object)))
+  if(all(c("elements", "membership") %in% colnames(object)))
+    return(FuzzyTuple$new(elements = object$elements, membership = object$membership))
+  else
+    return(FuzzyTuple$new(elements = object[,1], membership = object[,2]))
 }
-#' @rdname as.FuzzyTuple
+#' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.Set <- function(object){
   return(FuzzyTuple$new(elements = object$elements))
 }
-#' @rdname as.FuzzyTuple
-#' @export
-as.FuzzyTuple.FuzzyTuple <- function(object){
-  return(object)
-}
-#' @rdname as.FuzzyTuple
+#' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.FuzzySet <- function(object){
   return(FuzzyTuple$new(elements = object$elements, membership = object$membership()))
 }
-
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyTuple.Interval <- function(object){
+  if(testMessage(as.Set.Interval(object))) {
+    message("Interval cannot be coerced to FuzzyTuple.")
+    return(object)
+  } else
+    return(as.FuzzyTuple.Set(as.Set.Interval(object)))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyTuple.ConditionalSet <- function(object){
+  message("ConditionalSet cannot be coerced to FuzzyTuple.")
+  return(object)
+}
