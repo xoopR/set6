@@ -3,7 +3,7 @@
 #' @param x Set
 #' @param power power to raise set to
 #' @param simplify logical, if `TRUE` returns the result in its simplest (unwrapped) form, usually a `Set`,
-#' otherwise a `ExponentSet`.
+#' otherwise an `ExponentSet`.
 #' @param nest logical, if `FALSE` (default) returns the n-ary cartesian product, otherwise returns
 #' the cartesian product applied n times.
 #' [Set]s. See details and examples.

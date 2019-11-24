@@ -4,15 +4,15 @@
 \alias{lower}
 \title{Lower Limit of Set}
 \description{
-Returns the lower limit or first element in the Set.
+Returns the lower limit or first element in the \link{Set}.
 }
 \details{
-If the Set consists of numerics only then returns the lower limit, or infimum, of the Set.
+If the \link{Set} consists of numerics only then returns the lower limit, or infimum, of the \code{Set}.
 Otherwise assumes that the elements were supplied in a particular order and returns the first
 element.
 }
 \section{R6 Usage}{
- $lower
+ \code{$lower}
 }
 
 \seealso{

@@ -51,7 +51,7 @@ Returns the set difference of two objects inheriting from class \code{Set}.
 \details{
 The difference of two sets, \eqn{X, Y}, is defined as the set of elements that exist
 in set \eqn{X} and not \eqn{Y},
-\deqn{X-Y = \{z : z \epsilon X \\ and \\ \neg(z \epsilon Y)\}}{X-Y = {z : z \epsilon X and !(z \epsilon Y)}}
+\deqn{X-Y = \{z : z \epsilon X \quad and \quad \neg(z \epsilon Y)\}}{X-Y = {z : z \epsilon X and !(z \epsilon Y)}}
 
 The set difference of two \link{ConditionalSet}s is defined by combining their defining functions by a negated
 'and', \code{!&}, operator. See examples.

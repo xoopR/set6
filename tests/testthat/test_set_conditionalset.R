@@ -4,6 +4,10 @@ context("ConditionalSet")
 
 test_that("construction",{
   expect_silent(ConditionalSet$new(function(x) x == 0))
+  expect_equal(ConditionalSet$new(function(x) x == 0)$lower, NA)
+  expect_equal(ConditionalSet$new(function(x) x == 0)$upper, NA)
+  expect_equal(ConditionalSet$new(function(x) x == 0)$min, NaN)
+  expect_equal(ConditionalSet$new(function(x) x == 0)$max, NaN)
   expect_error(ConditionalSet$new(function(x) x), "'condition' should result")
   expect_error(ConditionalSet$new(1), "'condition' must be")
   expect_silent(ConditionalSet$new(function(x, y) x + y == 0))

@@ -4,7 +4,7 @@
 \alias{upper}
 \title{Upper Limit of Set}
 \description{
-Returns the upper limit or last element in the Set.
+Returns the upper limit or last element in the \link{Set}.
 }
 \details{
 If the Set consists of numerics only then returns the upper limit, or supremum, of the Set.
@@ -12,7 +12,7 @@ Otherwise assumes that the elements were supplied in a particular order and retu
 element.
 }
 \section{R6 Usage}{
- $upper
+ \code{$upper}
 }
 
 \seealso{

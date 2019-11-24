@@ -417,31 +417,47 @@ Set$set("active","min",function(){
 #' @title Upper Limit of Set
 #' @rdname upper
 #' @family set accessors
-#' @section R6 Usage: $upper
-#' @description Returns the upper limit or last element in the Set.
+#' @section R6 Usage: `$upper`
+#' @description Returns the upper limit or last element in the [Set].
 #' @details If the Set consists of numerics only then returns the upper limit, or supremum, of the Set.
 #' Otherwise assumes that the elements were supplied in a particular order and returns the last
 #' element.
 Set$set("active","upper",function(){
-  if(is.nan(private$.upper))
-    return(self$elements[[self$length]])
-  else
+  if(testSet(private$.upper))
     return(private$.upper)
+
+  x = private$.upper
+
+  if(is.nan(x))
+    x = try(self$elements[[self$length]], silent = TRUE)
+
+  if (inherits(x, "try-error") | is.nan(x))
+    return(NA)
+  else
+    return(x)
 })
 #' @name lower
 #' @title Lower Limit of Set
 #' @rdname lower
 #' @family set accessors
-#' @section R6 Usage: $lower
-#' @description Returns the lower limit or first element in the Set.
-#' @details If the Set consists of numerics only then returns the lower limit, or infimum, of the Set.
+#' @section R6 Usage: `$lower`
+#' @description Returns the lower limit or first element in the [Set].
+#' @details If the [Set] consists of numerics only then returns the lower limit, or infimum, of the `Set`.
 #' Otherwise assumes that the elements were supplied in a particular order and returns the first
 #' element.
 Set$set("active","lower",function(){
-  if(is.nan(private$.lower))
-    return(self$elements[[1]])
-  else
+  if(testSet(private$.lower))
     return(private$.lower)
+
+  x = private$.lower
+
+  if(is.nan(x))
+    x = try(self$elements[[1]], silent = TRUE)
+
+  if (inherits(x, "try-error") | is.nan(x))
+    return(NA)
+  else
+    return(x)
 })
 #' @name class
 #' @title Class of Set

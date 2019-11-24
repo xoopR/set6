@@ -21,8 +21,8 @@ test_that("strprint", {
 
 test_that("fields",{
   u = UnionSet$new(list(Set$new(1,2,3), Set$new(letters[1:5])))
-  expect_equal(u$lower, NaN)
-  expect_equal(u$upper, NaN)
+  expect_equal(u$lower, "1")
+  expect_equal(u$upper, "e")
   expect_equal(u$elements, c(1,2,3,letters[1:5]))
   expect_equal(UnionSet$new(list(Set$new(1), Set$new(2)))$elements, 1:2)
   expect_equal(UnionSet$new(list(Interval$new(1,2), Set$new(letters[1:5])))$elements,

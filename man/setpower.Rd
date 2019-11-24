@@ -15,7 +15,7 @@ setpower(x, power, simplify = FALSE, nest = FALSE)
 \item{power}{power to raise set to}
 
 \item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set},
-otherwise a \code{ExponentSet}.}
+otherwise an \code{ExponentSet}.}
 
 \item{nest}{logical, if \code{FALSE} (default) returns the n-ary cartesian product, otherwise returns
 the cartesian product applied n times.
