@@ -39,3 +39,13 @@ test_that("isSubset Interval",{
   expect_true(ps$isSubset(Set$new(Interval$new(2, 4))))
   expect_false(ps$isSubset(Set$new(Interval$new(2, 8))))
 })
+
+test_that("cardinality",{
+  expect_equal(powerset(Set$new(1,2,3))$properties$cardinality, 8)
+  expect_equal(powerset(Integers$new())$properties$cardinality, "Beth1")
+  expect_equal(powerset(Reals$new())$properties$cardinality, "Beth2")
+  expect_equal(powerset(powerset(Integers$new()))$properties$cardinality, "Beth2")
+  expect_equal(powerset(powerset(powerset(Integers$new())))$properties$cardinality, "Beth3")
+})
+
+

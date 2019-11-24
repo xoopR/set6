@@ -30,13 +30,13 @@ reference:
     - elements
     - equals
     - inclusion
+    - isSubinterval
     - isSubset
     - length
     - lower
     - max
     - membership
     - min
-    - powerset
     - properties
     - range
     - strprint
@@ -69,16 +69,18 @@ reference:
   contents:
     - UnionSet
     - setunion
+    - ComplementSet
+    - setcomplement
+    - addedSet
+    - subtractedSet
+    - setsymdiff
+    - powerset
+    - PowersetSet
     - ProductSet
     - setproduct
     - ExponentSet
     - setpower
-    - ComplementSet
-    - setcomplement
     - setintersect
-    - addedSet
-    - subtractedSet
-    - setsymdiff
 - title: Assertions
   desc: Validation checks for Sets
   contents:

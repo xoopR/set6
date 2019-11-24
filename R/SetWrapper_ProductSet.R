@@ -20,18 +20,20 @@ ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = N
   if(is.null(upper)) upper = Tuple$new(rsapply(setlist, upper, active = TRUE))
   if(is.null(type)) type = "{}"
 
-  cardinality = sapply(setlist, function(x) x$properties$cardinality)
-  if(any(grepl("Beth", cardinality))){
-    cardinality = paste0("Beth",
-                         max(as.numeric(sapply(cardinality[grepl("Beth", cardinality)],
-                                               substr, start = 5, stop = 100))))
-  } else if(any(grepl("Aleph", cardinality))) {
-    cardinality = "Aleph0"
-  } else {
-    if(any(unlist(sapply(cardinality, is.null))))
-      cardinality = NULL
-    else
-      cardinality = prod(cardinality)
+  if(is.null(cardinality)){
+    cardinality = sapply(setlist, function(x) x$properties$cardinality)
+    if(any(grepl("Beth", cardinality))){
+      cardinality = paste0("Beth",
+                           max(as.numeric(sapply(cardinality[grepl("Beth", cardinality)],
+                                                 substr, start = 5, stop = 100))))
+    } else if(any(grepl("Aleph", cardinality))) {
+      cardinality = "Aleph0"
+    } else {
+      if(any(unlist(sapply(cardinality, is.null))))
+        cardinality = NULL
+      else
+        cardinality = prod(cardinality)
+    }
   }
 
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type,
