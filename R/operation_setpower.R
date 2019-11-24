@@ -7,7 +7,6 @@
 #' @param nest logical, if `FALSE` (default) returns the n-ary cartesian product, otherwise returns
 #' the cartesian product applied n times.
 #' [Set]s. See details and examples.
-#' @param ... additional arguments
 #' @title Power of a Set
 #' @return An R6 object of class `Set` or ExponentSet` inheriting from `ProductSet`.
 #' @description A convenience wrapper for the n-ary cartesian product of a `Set` by itself, possibly multiple times.
@@ -35,7 +34,7 @@
 #' FuzzySet$new(1,0.1,2,0.5)^2
 #'
 #' @export
-setpower <- function(x, power, simplify = FALSE, nest = FALSE, ...){
+setpower <- function(x, power, simplify = FALSE, nest = FALSE){
   if(power == 1)
     return(x)
 

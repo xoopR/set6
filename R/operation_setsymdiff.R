@@ -1,5 +1,7 @@
 #' @name setsymdiff
 #' @param x,y Set
+#' @param simplify logical, if `TRUE` (default) returns the result in its simplest form, usually a `Set` or
+#' [UnionSet], otherwise a `ComplementSet`.
 #' @title Symmetric Difference of Two Sets
 #' @return An object inheriting from `Set` containing the symmetric difference of elements in both `x` and `y`.
 #' @description Returns the symmetric difference of two objects inheriting from class `Set`.
@@ -22,13 +24,13 @@
 #'   ConditionalSet$new(function(y) y == 0)
 #'
 #' @export
-setsymdiff <- function(x, y){
+setsymdiff <- function(x, y, simplify = TRUE){
   if(x <= y)
-    return(y - x)
+    return(setcomplement(y, x, simplify = simplify))
   else if(y <= x)
-    return(x - y)
+    return(setcomplement(x, y, simplify = simplify))
   else
-    return((x + y) - (x & y))
+    return(setcomplement(setunion(x, y, simplify = simplify), setintersect(x, y), simplify = simplify))
 }
 #' @rdname setsymdiff
 #' @export

@@ -1,7 +1,7 @@
 #' @name setcomplement
 #' @param x,y Set
 #' @param simplify logical, if `TRUE` (default) returns the result in its simplest form, usually a `Set` or
-#' [UnionSet], otherwise a `ProductSet`.
+#' [UnionSet], otherwise a `ComplementSet`.
 #' @title (Relative) Complement of Two Sets
 #' @return An object inheriting from `Set` containing the set difference of elements in `x` and `y`.
 #' @description Returns the set difference of two objects inheriting from class `Set`.

@@ -5,7 +5,7 @@
 \alias{^.Set}
 \title{Power of a Set}
 \usage{
-setpower(x, power, simplify = FALSE, nest = FALSE, ...)
+setpower(x, power, simplify = FALSE, nest = FALSE)
 
 \method{^}{Set}(x, power)
 }
@@ -20,8 +20,6 @@ otherwise a \code{ExponentSet}.}
 \item{nest}{logical, if \code{FALSE} (default) returns the n-ary cartesian product, otherwise returns
 the cartesian product applied n times.
 \link{Set}s. See details and examples.}
-
-\item{...}{additional arguments}
 }
 \value{
 An R6 object of class \code{Set} or ExponentSet\code{inheriting from}ProductSet`.

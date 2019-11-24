@@ -40,7 +40,7 @@ setcomplement(x, y, simplify = TRUE)
 \item{x, y}{Set}
 
 \item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set} or
-\link{UnionSet}, otherwise a \code{ProductSet}.}
+\link{UnionSet}, otherwise a \code{ComplementSet}.}
 }
 \value{
 An object inheriting from \code{Set} containing the set difference of elements in \code{x} and \code{y}.

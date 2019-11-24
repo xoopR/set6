@@ -5,12 +5,15 @@
 \alias{\%-\%}
 \title{Symmetric Difference of Two Sets}
 \usage{
-setsymdiff(x, y)
+setsymdiff(x, y, simplify = TRUE)
 
 x \%-\% y
 }
 \arguments{
 \item{x, y}{Set}
+
+\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set} or
+\link{UnionSet}, otherwise a \code{ComplementSet}.}
 }
 \value{
 An object inheriting from \code{Set} containing the symmetric difference of elements in both \code{x} and \code{y}.
