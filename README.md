@@ -115,12 +115,20 @@ The primary use-cases of `set6` are:
 
 ## Short-term development plans
 
-Whilst the `set6` API is stable and there are no plans for any major updates, there are a few features we plan on implementing before we consider the package to be in its first complete version. These mainly focus on wrappers and include
+Whilst the `set6` API is stable, it is considered 'maturing', and therefore whilst there are no plans for major updates, these may still pccur. There are a few features and reactoring we plan on implementing before we consider the package to be in its first complete version. These mainly include
 
-* Extending `union` and `intersection` to allow an arbitrary number of inputs (currently only two allowed)
-* Adding a `simplify` method to wrappers to reduce unnecessarily complicated classes to simpler ones, this would also favour the `UnionSet` class and where possible, reduce to this
+* Finalising all methods and fields - some are missing or possibly inaccurate for some wrappers. For example the cardinality of `ComplementSet`s is imprecise at the moment.
+* We are considering adding a `simplify` method to wrappers to reduce classes inheriting from `SetWrapper` to simpler sets. This allows users to perform operations with `simplify = FALSE` and then to change their mind.
+* There are some inefficient loops implemented that will need refactoring for more efficient code.
+* Adding more tutorials to make the interface easier for beginners, especially people new to R6
 
-We may later consider adding Venn diagrams for visualisation of sets and intervals, but this is very low priority.
+
+At a later stage we may consider adding Venn diagrams for visualisation of sets and intervals, but this is very low priority.
+
+## Contributing
+
+As `set6` is in its early stages, contributions are very welcome. If you have any ideas for good features please open an issue or create a pull request. Otherwise bug reports are very appreciated if you stumble across any broken code, these can be posted to the [issue tracker](https://github.com/RaphaelS1/set6/issues). For updates on `set6` follow/star this repo.
+
 
 ## Installation
 
