@@ -7,7 +7,7 @@
 An R6 object of class Reals.
 }
 \description{
-The mathematical set of real numbers, defined as the union of the set of rationals and irrationals. i.e. \deqn{I \cup Q}{I ∪ Q} where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
+The mathematical set of real numbers, defined as the union of the set of rationals and irrationals. i.e. \deqn{I \cup Q}{I U Q} where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 }
 \section{Constructor}{
  Reals$new(...)

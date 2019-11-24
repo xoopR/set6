@@ -7,7 +7,7 @@
 An R6 object of class PosReals.
 }
 \description{
-The mathematical set of positive real numbers, defined as the union of the set of positive rationals and positive irrationals. i.e. \deqn{I^+ \cup Q^+}{I+ ∪ Q+} where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
+The mathematical set of positive real numbers, defined as the union of the set of positive rationals and positive irrationals. i.e. \deqn{I^+ \cup Q^+}{I+ U Q+} where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
 }
 \section{Constructor}{
  PosReals$new(zero = FALSE)

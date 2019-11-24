@@ -7,7 +7,7 @@
 An R6 object of class NegReals.
 }
 \description{
-The mathematical set of negative real numbers, defined as the union of the set of negative rationals and negative irrationals. i.e. \deqn{I^- \cup Q^-}{I- ∪ Q-} where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the set of negative rationals.
+The mathematical set of negative real numbers, defined as the union of the set of negative rationals and negative irrationals. i.e. \deqn{I^- \cup Q^-}{I- U Q-} where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the set of negative rationals.
 }
 \section{Constructor}{
  NegReals$new(zero = FALSE)

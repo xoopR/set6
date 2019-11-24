@@ -175,7 +175,7 @@ NegRationals$set("public", "initialize", function(zero = FALSE){
 #' @templateVar set real numbers
 #' @templateVar def the union of the set of rationals and irrationals
 #' @templateVar latexeqn  I \cup Q
-#' @templateVar roxeqn I ∪ Q
+#' @templateVar roxeqn I U Q
 #' @templateVar support where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 #' @templateVar conargs ...
 #' @templateVar arg1 \code{...} \tab ANY \tab Additional arguments.
@@ -193,7 +193,7 @@ Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()
 #' @templateVar set positive real numbers
 #' @templateVar def the union of the set of positive rationals and positive irrationals
 #' @templateVar latexeqn I^+ \cup Q^+
-#' @templateVar roxeqn I+ ∪ Q+
+#' @templateVar roxeqn I+ U Q+
 #' @templateVar support where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
 #' @templateVar conargs zero = FALSE
 #' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
@@ -210,7 +210,7 @@ PosReals$set("public", "initialize", function(zero = FALSE){
 #' @templateVar set negative real numbers
 #' @templateVar def the union of the set of negative rationals and negative irrationals
 #' @templateVar latexeqn I^- \cup Q^-
-#' @templateVar roxeqn I- ∪ Q-
+#' @templateVar roxeqn I- U Q-
 #' @templateVar support where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the set of negative rationals.
 #' @templateVar conargs zero = FALSE
 #' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
@@ -227,7 +227,7 @@ NegReals$set("public", "initialize", function(zero = FALSE){
 #' @templateVar set extended real numbers
 #' @templateVar def the union of the set of reals with \eqn{\pm\infty}{±\infty}
 #' @templateVar latexeqn R \cup \\{-\infty, \infty\\}
-#' @templateVar roxeqn R ∪ {-\infty, \infty}
+#' @templateVar roxeqn R U {-\infty, \infty}
 #' @templateVar conargs ...
 #' @templateVar arg1 \code{...} \tab ANY \tab Ignored, added for consistency.
 #' @templateVar support where \eqn{R} is the set of reals.
