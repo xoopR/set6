@@ -8,6 +8,7 @@
 \alias{as.Interval.data.frame}
 \alias{as.Interval.matrix}
 \alias{as.Interval.numeric}
+\alias{as.Interval.ConditionalSet}
 \title{Coercion to R6 \code{Interval}}
 \usage{
 as.Interval(object)
@@ -23,6 +24,8 @@ as.Interval(object)
 \method{as.Interval}{matrix}(object)
 
 \method{as.Interval}{numeric}(object)
+
+\method{as.Interval}{ConditionalSet}(object)
 }
 \arguments{
 \item{object}{object to coerce}
@@ -37,8 +40,8 @@ Coerces object to an R6 \link{Interval}.
 \item \code{as.Interval.numeric} - If the \code{numeric} vector is a continuous interval with no breaks then coerces to an \link{Interval}
 with \code{lower = min(object), upper = max(object), class = "integer"}, ignoring ordering.
 \item \code{as.Interval.matrix} - Tries coercion via \link{as.Interval.numeric} on the first column of the matrix.
-\item \code{as.Interval.FuzzyInterval} - Creates a \link{Interval} from the \link{support} of the \link{FuzzyInterval}.
 \item \code{as.Interval.Set} - First tries coercion via \link{as.Interval.numeric}, if possible wraps result in a \link{Set}.
+\item \code{as.Interval.FuzzySet} - Tries coecion via \link{as.Interval.Set} on the \link{support} of the \link{FuzzySet}.
 }
 }
 \seealso{

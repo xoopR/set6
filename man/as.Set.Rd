@@ -9,6 +9,7 @@
 \alias{as.Set.Set}
 \alias{as.Set.FuzzySet}
 \alias{as.Set.Interval}
+\alias{as.Set.ConditionalSet}
 \alias{as.Tuple}
 \alias{as.Tuple.numeric}
 \alias{as.Tuple.list}
@@ -17,6 +18,7 @@
 \alias{as.Tuple.FuzzySet}
 \alias{as.Tuple.Set}
 \alias{as.Tuple.Interval}
+\alias{as.Tuple.ConditionalSet}
 \title{Coercion to R6 \code{Set}/\code{Tuple}}
 \usage{
 as.Set(object)
@@ -35,6 +37,8 @@ as.Set(object)
 
 \method{as.Set}{Interval}(object)
 
+\method{as.Set}{ConditionalSet}(object)
+
 as.Tuple(object)
 
 \method{as.Tuple}{numeric}(object)
@@ -50,6 +54,8 @@ as.Tuple(object)
 \method{as.Tuple}{Set}(object)
 
 \method{as.Tuple}{Interval}(object)
+
+\method{as.Tuple}{ConditionalSet}(object)
 }
 \arguments{
 \item{object}{object to coerce}

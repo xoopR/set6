@@ -9,6 +9,7 @@
 \alias{as.FuzzySet.Set}
 \alias{as.FuzzySet.FuzzySet}
 \alias{as.FuzzySet.Interval}
+\alias{as.FuzzySet.ConditionalSet}
 \alias{as.FuzzyTuple}
 \alias{as.FuzzyTuple.numeric}
 \alias{as.FuzzyTuple.list}
@@ -17,6 +18,7 @@
 \alias{as.FuzzyTuple.Set}
 \alias{as.FuzzyTuple.FuzzySet}
 \alias{as.FuzzyTuple.Interval}
+\alias{as.FuzzyTuple.ConditionalSet}
 \title{Coercion to R6 \code{FuzzySet}/\code{FuzzyTuple}}
 \usage{
 as.FuzzySet(object)
@@ -35,6 +37,8 @@ as.FuzzySet(object)
 
 \method{as.FuzzySet}{Interval}(object)
 
+\method{as.FuzzySet}{ConditionalSet}(object)
+
 as.FuzzyTuple(object)
 
 \method{as.FuzzyTuple}{numeric}(object)
@@ -50,6 +54,8 @@ as.FuzzyTuple(object)
 \method{as.FuzzyTuple}{FuzzySet}(object)
 
 \method{as.FuzzyTuple}{Interval}(object)
+
+\method{as.FuzzyTuple}{ConditionalSet}(object)
 }
 \arguments{
 \item{object}{object to coerce}
@@ -63,8 +69,8 @@ Coerces object to an R6 \link{FuzzySet}/\link{FuzzyTuple}
 and that they are ordered to be corresponding.
 \item \code{as.FuzzySet.matrix} - Assumes first column corresponds to \code{elements} and second column corresponds
 to their respective \code{membership}.
-\item \code{as.FuzzySet.data.frame} - Assumes one column is called \code{elements} the other is called \code{membership},
-and that they are ordered to be corresponding.
+\item \code{as.FuzzySet.data.frame} - First checks to see if one column is called \code{elements} and the other is called \code{membership}.
+If not then uses \code{as.FuzzySet.matrix}.
 \item \code{as.FuzzySet.Set} - Creates a \link{FuzzySet} by assuming \link{Set} elements all have \code{membership} equal to \eqn{1}.
 \item \code{as.FuzzySet.Interval} - First tries coercion via \link{as.Set.Interval} then uses \link{as.FuzzySet.Set}.
 }
