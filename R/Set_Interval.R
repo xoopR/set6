@@ -11,7 +11,7 @@
 #' @templateVar constructor Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())
 #' @templateVar arg1 `lower` \tab numeric \tab Lower limit of the interval. \cr
 #' @templateVar arg2 `upper` \tab numeric \tab Upper limit of the interval. \cr
-#' @templateVar arg3 `type` \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if inteval is open, left-open, right-open, or closed. \cr
+#' @templateVar arg3 `type` \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed. \cr
 #' @templateVar arg4 `class` \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
 #' @templateVar arg5 `universe` \tab Set \tab Optional universe that the interval lives in.
 #' @templateVar constructorDets If defaults are used then the Real number line is constructed. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
@@ -293,7 +293,7 @@ Interval$set("active", "elements", function(){
 #' with `lower = min(object), upper = max(object), class = "integer"`, ignoring ordering.
 #' * `as.Interval.matrix` - Tries coercion via [as.Interval.numeric] on the first column of the matrix.
 #' * `as.Interval.Set` - First tries coercion via [as.Interval.numeric], if possible wraps result in a [Set].
-#' * `as.Interval.FuzzySet` - Tries coecion via [as.Interval.Set] on the [support] of the [FuzzySet].
+#' * `as.Interval.FuzzySet` - Tries coercion via [as.Interval.Set] on the [support] of the [FuzzySet].
 #' @export
 as.Interval <- function(object){
   UseMethod("as.Interval",object)

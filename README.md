@@ -13,7 +13,7 @@
 ## What is set6?
 
 `set6` is an R6 upgrade to the `sets` package in R that includes:
-* Mutli-dimensional sets
+* Multi-dimensional sets
 * Tuples
 * Finite and infinite intervals
 * Fuzzy sets and tuples
@@ -115,7 +115,7 @@ The primary use-cases of `set6` are:
 
 ## Short-term development plans
 
-Whilst the `set6` API is stable, it is considered 'maturing', and therefore whilst there are no plans for major updates, these may still pccur. There are a few features and reactoring we plan on implementing before we consider the package to be in its first complete version. These mainly include
+Whilst the `set6` API is stable, it is considered 'maturing', and therefore whilst there are no plans for major updates, these may still occur. There are a few features and refactoring we plan on implementing before we consider the package to be in its first complete version. These mainly include
 
 * Finalising all methods and fields - some are missing or possibly inaccurate for some wrappers. For example the cardinality of `ComplementSet`s is imprecise at the moment.
 * We are considering adding a `simplify` method to wrappers to reduce classes inheriting from `SetWrapper` to simpler sets. This allows users to perform operations with `simplify = FALSE` and then to change their mind.

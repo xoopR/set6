@@ -24,7 +24,7 @@ integer intervals over a continuous range.
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{lower} \tab numeric \tab Lower limit of the interval. \cr
 \code{upper} \tab numeric \tab Upper limit of the interval. \cr
-\code{type} \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if inteval is open, left-open, right-open, or closed. \cr
+\code{type} \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed. \cr
 \code{class} \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
 \code{universe} \tab Set \tab Optional universe that the interval lives in.
 

@@ -41,7 +41,7 @@ Coerces object to an R6 \link{Interval}.
 with \code{lower = min(object), upper = max(object), class = "integer"}, ignoring ordering.
 \item \code{as.Interval.matrix} - Tries coercion via \link{as.Interval.numeric} on the first column of the matrix.
 \item \code{as.Interval.Set} - First tries coercion via \link{as.Interval.numeric}, if possible wraps result in a \link{Set}.
-\item \code{as.Interval.FuzzySet} - Tries coecion via \link{as.Interval.Set} on the \link{support} of the \link{FuzzySet}.
+\item \code{as.Interval.FuzzySet} - Tries coercion via \link{as.Interval.Set} on the \link{support} of the \link{FuzzySet}.
 }
 }
 \seealso{
