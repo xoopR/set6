@@ -329,7 +329,7 @@ as.Interval.data.frame <- function(object){
 #' @rdname as.Interval
 #' @export
 as.Interval.matrix <- function(object){
-  return(as.Interval.numeric(matrix[,1]))
+  return(as.Interval.numeric(object[,1]))
 }
 #' @rdname as.Interval
 #' @export

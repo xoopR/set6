@@ -123,7 +123,16 @@ test_that("isSubinterval",{
 test_that("coercions",{
   expect_equal(as.double(Interval$new(1,5,class="integer")), 1:5)
   expect_message(expect_equal(as.Interval(Set$new(1,5)), Set$new(1,5)), "Set cannot be")
+  expect_message(expect_equal(as.Interval(ConditionalSet$new(function(x) TRUE)),ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
+  expect_message(expect_equal(as.Interval(c(1,5)), c(1,5)), "Numeric cannot be")
   expect_equal(as.Interval(Set$new(1)), Interval$new(1,1))
+  expect_equal(as.Interval(FuzzySet$new(1,0.1,2,0.3,3,0.4,4,0)), Interval$new(1,3,class="integer"))
+  expect_equal(as.Interval(list(lower = 1, upper = 2, type = "[]", class = "numeric")), Interval$new(1,2))
+  expect_equal(as.Interval(data.frame(lower = 1, upper = 2, type = "[]", class = "numeric", stringsAsFactors = FALSE)),
+               Interval$new(1,2))
+  expect_equal(as.Interval(1:10), Interval$new(lower=1,upper=10,class="integer"))
+  expect_equal(as.Interval(matrix(1:10)), Interval$new(lower=1,upper=10,class="integer"))
+
 })
 
 

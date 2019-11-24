@@ -81,4 +81,5 @@ test_that("as.Tuple",{
   expect_equal(as.Tuple(FuzzySet$new(1, 0.1, 2, 0.2)), Tuple$new(1, 2))
   expect_equal(as.Tuple(Set$new(1:5)), Tuple$new(1:5))
   expect_message(expect_equal(as.Tuple(Interval$new()), Interval$new()),"Interval cannot")
+  expect_message(expect_equal(as.Tuple(ConditionalSet$new(function(x) TRUE)), ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
 })

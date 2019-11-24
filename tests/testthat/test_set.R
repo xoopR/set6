@@ -126,3 +126,8 @@ test_that("as.Set",{
   expect_message(expect_equal(as.Set(Interval$new()), Interval$new()), "Interval cannot be")
   expect_message(expect_equal(as.Set(ConditionalSet$new(function(x) TRUE)), ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
 })
+
+test_that("as.double",{
+  expect_equal(as.numeric(Set$new(1:10)), 1:10)
+  expect_equal(as.numeric(FuzzySet$new(1,0,2,0.1,3,1)), 2:3)
+})
