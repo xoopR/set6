@@ -506,7 +506,7 @@ summary.Set <- function(object, n = 2, ...){
 # as.double
 #---------------------------------------------
 #' @export
-as.double.Set <- function(x) {
+as.double.Set <- function(x,...) {
   if(testFuzzy(x))
     return(x$support())
   else
