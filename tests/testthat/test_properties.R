@@ -17,11 +17,11 @@ test_that("strprint/print",{
   expect_equal(class(Properties$new("closed", 5)$strprint()), "list")
   expect_output(print(Properties$new("closed", 5)))
 
-  use_unicode(TRUE)
+  useUnicode(TRUE)
   expect_equal(Properties$new("closed", 5)$strprint()$cardinality, 5)
   expect_equal(Properties$new("closed", "a0")$strprint()$cardinality, "\u2135\u2080")
   expect_equal(Properties$new("closed", "b15")$strprint()$cardinality, "\u2136\u2081\u2085")
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal(Properties$new("closed", 5)$strprint()$cardinality, 5)
   expect_equal(Properties$new("closed", "a0")$strprint()$cardinality, "Aleph0")
   expect_equal(Properties$new("closed", "b15")$strprint()$cardinality, "Beth15")

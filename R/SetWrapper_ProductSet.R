@@ -50,7 +50,7 @@ ProductSet$set("public","strprint",function(n = 2){
       x$strprint(n)
   })
 
-  if(use_unicode())
+  if(useUnicode())
     collapse = " \u00D7 "
   else
     collapse = " X "

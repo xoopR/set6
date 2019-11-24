@@ -41,15 +41,15 @@ test_that("membership",{
   expect_equal(f$membership(c(1,5)), c(0.1,0))
 })
 test_that("strprint",{
-  use_unicode(TRUE)
+  useUnicode(TRUE)
   expect_equal(FuzzySet$new()$strprint(), "\u2205")
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal(FuzzySet$new()$strprint(), "{}")
   expect_equal(f$strprint(),"{1(0.1), 2(0.2), 3(0.3)}")
   expect_equal(f$strprint(1),"{1(0.1),...,3(0.3)}")
   expect_equal(FuzzySet$new(Set$new(1), 0.2, 2, 0.5)$strprint(),
                "{{1}(0.2), 2(0.5)}")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })
 test_that("alphaCut",{
   expect_equal(f$alphaCut(0.15), 2:3)

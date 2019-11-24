@@ -14,9 +14,9 @@ test_that("special sets",{
   expect_equal(NegRationals$new() + PosRationals$new(), Rationals$new())
   expect_equal(PosIntegers$new() + NegIntegers$new(), Integers$new())
   expect_equal(NegIntegers$new() + PosIntegers$new(), Integers$new())
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal((Reals$new() + Set$new("a"))$strprint(), "{a} U R")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })
 
 test_that("set",{
@@ -24,7 +24,7 @@ test_that("set",{
   expect_true((Set$new(1, 2) + Set$new(1, 2))$equals(Set$new(1,2)))
   expect_true((Set$new(1,2) | Interval$new(3, 4, class = "integer"))$equals(Set$new(1:4)))
   expect_equal(getR6Class(Set$new(1,2) + Interval$new(3, 4)), "UnionSet")
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal((Set$new(1,2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {TRUE : x in R}")
   expect_true(setunion(Set$new(1,2,3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
   expect_equal(Set$new(1,2) + Set$new(5,7) + Set$new(1,10), Set$new(1,2,5,7,10))
@@ -33,7 +33,7 @@ test_that("set",{
   expect_true((Set$new(1, 2, 3) + Set$new(4, 5))$equals(Set$new(1:5)))
   expect_true(setunion(Set$new(1, 2, 3), Set$new(4, 5))$equals(Set$new(1:5)))
   expect_equal(setunion(Set$new(1, 2, 3), Set$new(4, 5), simplify = FALSE)$strprint(), "{1, 2, 3} U {4, 5}")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })
 
 test_that("interval",{

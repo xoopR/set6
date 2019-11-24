@@ -104,8 +104,8 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
 #---------------------------------------------
 Interval$set("public","strprint",function(...){
 
-inf <- ifelse(self$lower==-Inf & use_unicode(), "-\u221E", self$lower)
-sup <- ifelse(self$upper==Inf & use_unicode(), "+\u221E", self$upper)
+inf <- ifelse(self$lower==-Inf & useUnicode(), "-\u221E", self$lower)
+sup <- ifelse(self$upper==Inf & useUnicode(), "+\u221E", self$upper)
 
 if(self$class == "integer")
   return(paste0("{", inf, ",...,", sup, "}"))

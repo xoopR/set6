@@ -15,8 +15,8 @@ test_that("simplify",{
 })
 
 test_that("!simplify",{
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal(setsymdiff(Interval$new(1,3,class="integer"), Interval$new(3,4,class="integer"),
                           simplify = FALSE)$strprint(), "({1, 2, 3} U {3, 4}) \\ {3}")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })

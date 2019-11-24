@@ -93,5 +93,5 @@ reference:
     - starts_with("as.")
 - title: Miscellaneous Functions
   contents:
-    - use_unicode
+    - useUnicode
     - set6News

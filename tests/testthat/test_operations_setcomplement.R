@@ -63,10 +63,10 @@ test_that("fuzzy",{
 test_that("conditional",{
   expect_equal(ConditionalSet$new(function(x) x == 0) - ConditionalSet$new(function(y) y > 0),
                ConditionalSet$new(function(x, y) x == 0 & !(y > 0)))
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal((ConditionalSet$new(function(x) TRUE) - Set$new(1))$strprint(),
                "{TRUE : x in R} \\ {1}")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 
 })
 
@@ -82,8 +82,8 @@ test_that("contains",{
 
 test_that("wrappers",{
   expect_equal((Reals$new() - Integers$new()) - Set$new(1,2), Reals$new() - Integers$new())
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal(((Reals$new() * Integers$new()) - Set$new(1,2))$strprint(),
                "(R X Z) \\ {1, 2}")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })

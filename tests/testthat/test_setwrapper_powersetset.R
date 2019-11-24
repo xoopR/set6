@@ -5,9 +5,9 @@ context("PowersetSet")
 test_that("Set",{
   expect_equal(getR6Class(powerset(Set$new(1,2),FALSE)), "PowersetSet")
   expect_equal(powerset(Set$new(1,2), FALSE)$strprint(), paste0("\U2118(", "{1, 2}", ")"))
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal(powerset(Set$new(1,2), FALSE)$strprint(), "2^{1, 2}")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })
 
 test_that("contains Set",{

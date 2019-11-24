@@ -1,11 +1,11 @@
 library(testthat)
 
-context("use_unicode")
+context("useUnicode")
 
-test_that("use_unicode",{
-  expect_error(use_unicode("a"), "Assertion on")
-  expect_silent(use_unicode(TRUE))
-  expect_true(use_unicode())
-  expect_silent(use_unicode(FALSE))
-  expect_false(use_unicode())
+test_that("useUnicode",{
+  expect_error(useUnicode("a"), "Assertion on")
+  expect_silent(useUnicode(TRUE))
+  expect_true(useUnicode())
+  expect_silent(useUnicode(FALSE))
+  expect_false(useUnicode())
 })

@@ -40,7 +40,7 @@ Properties$set("public","print",function(){
   print(self$strprint())
 })
 Properties$set("public","strprint",function(){
-  if(use_unicode() & length(self$cardinality) != 0){
+  if(useUnicode() & length(self$cardinality) != 0){
     if(self$cardinality == "Aleph0")
       cardinality = "\u2135\u2080"
     else if(class(self$cardinality) != "character")

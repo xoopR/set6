@@ -10,9 +10,9 @@ test_that("constructor", {
 
 test_that("strprint", {
   u = UnionSet$new(list(Set$new(1,2,3), Set$new(letters[1:5])))
-  use_unicode(TRUE)
+  useUnicode(TRUE)
   expect_equal(u$strprint(), "{1, 2, 3} \u222A {a, b,...,d, e}")
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal(u$strprint(), "{1, 2, 3} U {a, b,...,d, e}")
   expect_equal(UnionSet$new(list(Set$new(1)*Interval$new(1,2),
                                  Set$new(letters[1:2])))$strprint(),

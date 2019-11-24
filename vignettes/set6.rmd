@@ -13,7 +13,7 @@ set6 is an object-oriented interface for constructing and manipulating mathemati
 Before we get started note that by default `set6` uses unicode for printing representations of sets. Whilst this is preferred for neater printing, some machines, operating systems, or R versions may not behave as expected when printing unicode and therefore we allow the option to turn this off.
 
 ```{r, eval = FALSE}
-use_unicode(FALSE)
+useUnicode(FALSE)
 ```
 
 This vignette does use the unicode representations.

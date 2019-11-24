@@ -9,9 +9,9 @@ test_that("Set",{
   })
 
 test_that("conditionalset",{
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal((ConditionalSet$new(function(x) x == 1)^2)$strprint(), "{x == 1 : x in R}^2")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })
 
 test_that("interval",{
@@ -25,9 +25,9 @@ test_that("exponent",{
 })
 
 test_that("setwrapper",{
-  use_unicode(FALSE)
+  useUnicode(FALSE)
   expect_equal(((Interval$new(1,2) + Interval$new(3,4))^2)$strprint(),
                "([1, 2] U [3, 4])^2")
-  use_unicode(TRUE)
+  useUnicode(TRUE)
 })
 

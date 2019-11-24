@@ -2,7 +2,7 @@ setSymbol <- function(set){
  if(!inherits(set,"character"))
     set = paste0(substitute(set))
   set = tolower(set)
-  if (use_unicode()) {
+  if (useUnicode()) {
     return(switch(set,
                   naturals = "\u21150",
                   posnaturals = "\u2115+",

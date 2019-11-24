@@ -33,7 +33,7 @@ PowersetSet$set("public", "initialize", function(set){
 # Public Methods
 #---------------------------------------------
 PowersetSet$set("public", "strprint", function(n = 2){
-  if(use_unicode())
+  if(useUnicode())
     paste0("\U2118(", self$wrappedSets[[1]]$strprint(n),")")
   else
     paste0("2^", self$wrappedSets[[1]]$strprint(n))

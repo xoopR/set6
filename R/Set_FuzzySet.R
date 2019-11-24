@@ -84,7 +84,7 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
 #---------------------------------------------
 FuzzySet$set("public","strprint",function(n = 2){
   if(self$properties$empty) {
-    if(use_unicode())
+    if(useUnicode())
       return("\u2205")
     else
       return("{}")

@@ -51,7 +51,7 @@ UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NUL
 # Public Methods
 #---------------------------------------------
 UnionSet$set("public","strprint",function(n = 2){
-  if(use_unicode())
+  if(useUnicode())
     collapse = " \u222A "
   else
     collapse = " U "
