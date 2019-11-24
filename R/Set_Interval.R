@@ -51,12 +51,22 @@ Interval <- R6::R6Class("Interval", inherit = Set)
 Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]", class = "numeric",
                                             universe = Reals$new()){
 
-  checkmate::assert(type %in% c("()","(]","[]","[)"))
-  checkmate::assert(lower <= upper)
-  checkmate::assert(class %in% c("numeric","integer"))
-  if(getR6Class(self) != "SpecialSet"){
-    assertSet(universe)
-    private$.universe <- universe
+  checkmate::assertChoice(type, c("()","(]","[]","[)"))
+  if(checkmate::testComplex(lower) | checkmate::testComplex(upper)){
+    lower = as.complex(lower)
+    upper = as.complex(upper)
+    checkmate::assert(Re(upper) > Re(lower) | (Re(upper) == Re(lower) & Im(upper) > Im(lower)),
+                      .var.name = sprintf("Assertion on '%s' failed. '%s' must be less than '%s'.",
+                                          lower, lower, upper))
+  } else {
+    checkmate::assert(lower <= upper)
+  }
+  checkmate::assertChoice(class, c("numeric","integer"))
+  if(!is.null(universe)){
+    if(getR6Class(self) != "SpecialSet"){
+      assertSet(universe)
+      private$.universe <- universe
+    }
   }
 
   if(lower == upper){
@@ -70,37 +80,22 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
   private$.lower <- lower
   private$.upper <- upper
 
-  private$.properties$bounded = ifelse(lower == -Inf | upper == Inf, FALSE, TRUE)
   if(private$.class == "numeric"){
-    private$.properties$countability = "uncountable"
-    if(use_unicode())
-      private$.properties$cardinality = "\u2136\u2081"
-    else
-      private$.properties$cardinality = "Beth1"
+    cardinality = "b1"
   } else {
-    if(private$.properties$bounded){
-      private$.properties$countability = "countably finite"
-      private$.properties$cardinality = self$length
-    } else {
-      private$.properties$countability = "countably infinite"
-      if(use_unicode())
-        private$.properties$cardinality = "\u2135\u2080"
-      else
-        private$.properties$cardinality = "Aleph0"
-    }
+    if (lower == -Inf | upper == Inf)
+      cardinality = "a0"
+    else
+      cardinality = length(seq.int(lower, upper, 1))
   }
 
-  private$.properties$singleton = ifelse(self$length == 1, TRUE, FALSE)
-  private$.properties$empty = ifelse(self$length == 0, TRUE, FALSE)
-  private$.properties$closure = switch(type,
-                                       "[]" = "closed",
-                                       "()" = "open",
-                                       "half-open"
-                                       )
+  closure = switch(type,
+                   "[]" = "closed",
+                   "()" = "open",
+                   "half-open"
+                   )
 
-  private$.properties = private$.properties[match(c("empty","singleton","cardinality",
-                                                    "countability","closure"),
-                                                  names(private$.properties))]
+  private$.properties = Properties$new(closure, cardinality)
 
   invisible(self)
 })
@@ -274,10 +269,10 @@ Interval$set("public", "isSubinterval", function(x, proper = FALSE, all = FALSE)
 # Public Fields
 #---------------------------------------------
 Interval$set("active","length",function(){
-  if(self$lower == -Inf | self$upper == Inf | (self$class == "numeric" & self$lower != self$upper))
-    return(Inf)
-  else
+  if(self$properties$countability == "countably finite")
     return(length(self$elements))
+  else
+    return(Inf)
 })
 Interval$set("active", "elements", function(){
   if(self$properties$countability == "countably finite")

@@ -15,7 +15,7 @@ setunion(..., simplify = TRUE)
 \arguments{
 \item{...}{\link{Set}s}
 
-\item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set}
+\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest (unwrapped) form, usually a \code{Set}
 otherwise a \code{UnionSet}.}
 
 \item{x, y}{\link{Set}}
@@ -70,8 +70,8 @@ Set$new(-Inf, Inf) + Reals$new()
 }
 \seealso{
 Other operators: \code{\link{powerset}},
-  \code{\link{power}}, \code{\link{setcomplement}},
-  \code{\link{setintersect}}, \code{\link{setproduct}},
-  \code{\link{symdiff}}
+  \code{\link{setcomplement}}, \code{\link{setintersect}},
+  \code{\link{setpower}}, \code{\link{setproduct}},
+  \code{\link{setsymdiff}}
 }
 \concept{operators}

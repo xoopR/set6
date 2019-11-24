@@ -126,7 +126,6 @@ Tuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 # Private Fields
 #---------------------------------------------
 Tuple$set("private",".type","()")
-Tuple$set("private",".properties",list(crisp = TRUE))
 
 #---------------------------------------------
 # Coercions

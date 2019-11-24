@@ -23,9 +23,9 @@ A powerset of a set, S, is defined as the set of all subsets of S, including S i
 the empty set.
 }
 \seealso{
-Other operators: \code{\link{power}},
-  \code{\link{setcomplement}}, \code{\link{setintersect}},
-  \code{\link{setproduct}}, \code{\link{setunion}},
-  \code{\link{symdiff}}
+Other operators: \code{\link{setcomplement}},
+  \code{\link{setintersect}}, \code{\link{setpower}},
+  \code{\link{setproduct}}, \code{\link{setsymdiff}},
+  \code{\link{setunion}}
 }
 \concept{operators}

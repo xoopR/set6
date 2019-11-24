@@ -22,6 +22,7 @@ Encoding: UTF-8
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Collate: 
+    'Properties.R'
     'Set.R'
     'SetWrapper.R'
     'SetWrapper_ComplementSet.R'
@@ -40,13 +41,13 @@ Collate:
     'assertions.R'
     'listSpecialSets.R'
     'operation_cleaner.R'
-    'operation_power.R'
     'operation_powerset.R'
     'operation_setcomplement.R'
     'operation_setintersect.R'
+    'operation_setpower.R'
     'operation_setproduct.R'
+    'operation_setsymdiff.R'
     'operation_setunion.R'
-    'operation_symdiff.R'
     'set6.R'
     'set6.news.R'
     'use-unicode.R'

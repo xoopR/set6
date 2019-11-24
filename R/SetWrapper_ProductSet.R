@@ -14,16 +14,28 @@ ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
+ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL,
+                                                cardinality = NULL){
   if(is.null(lower)) lower = Tuple$new(rsapply(setlist, lower, active = TRUE))
   if(is.null(upper)) upper = Tuple$new(rsapply(setlist, upper, active = TRUE))
   if(is.null(type)) type = "{}"
 
-  private$.properties$cardinality = Tuple$new(sapply(setlist, function(x) x$properties$cardinality))
-  private$.properties$countability = Tuple$new(sapply(setlist, function(x) x$properties$countability))
-  private$.properties$closure = Tuple$new(sapply(setlist, function(x) x$properties$closure))
+  cardinality = sapply(setlist, function(x) x$properties$cardinality)
+  if(any(grepl("Beth", cardinality))){
+    cardinality = paste0("Beth",
+                         max(as.numeric(sapply(cardinality[grepl("Beth", cardinality)],
+                                               substr, start = 5, stop = 100))))
+  } else if(any(grepl("Aleph", cardinality))) {
+    cardinality = "Aleph0"
+  } else {
+    if(any(unlist(sapply(cardinality, is.null))))
+      cardinality = NULL
+    else
+      cardinality = prod(cardinality)
+  }
 
-  super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
+  super$initialize(setlist = setlist, lower = lower, upper = upper, type = type,
+                   cardinality = cardinality)
 })
 #---------------------------------------------
 # Public Methods

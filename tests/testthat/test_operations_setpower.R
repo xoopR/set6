@@ -1,10 +1,10 @@
 library(testthat)
 
-context("power")
+context("setpower")
 
 test_that("Set",{
-  expect_equal(power(Set$new(1, 2), 2, simplify = FALSE)$strprint(), "{1, 2}^2")
-  expect_true(power(Set$new(1, 2), 2, simplify = TRUE)$equals(Set$new(Tuple$new(1,1),Tuple$new(2,1),Tuple$new(1,2),Tuple$new(2,2))))
+  expect_equal(setpower(Set$new(1, 2), 2, simplify = FALSE)$strprint(), "{1, 2}^2")
+  expect_true(setpower(Set$new(1, 2), 2, simplify = TRUE)$equals(Set$new(Tuple$new(1,1),Tuple$new(2,1),Tuple$new(1,2),Tuple$new(2,2))))
   expect_equal(Set$new(1,2)^1, Set$new(1,2))
   })
 

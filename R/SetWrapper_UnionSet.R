@@ -30,7 +30,22 @@ UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NUL
 
   if(is.null(type)) type = "{}"
 
-  super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
+  cardinality = sapply(setlist, function(x) x$properties$cardinality)
+  if(any(grepl("Beth", cardinality))){
+    cardinality = paste0("Beth",
+                         max(as.numeric(sapply(cardinality[grepl("Beth", cardinality)],
+                                               substr, start = 5, stop = 100))))
+  } else if(any(grepl("Aleph", cardinality))) {
+    cardinality = "Aleph0"
+  } else {
+    if(any(unlist(sapply(cardinality, is.null))))
+      cardinality = NULL
+    else
+      cardinality = sum(cardinality)
+  }
+
+  super$initialize(setlist = setlist, lower = lower, upper = upper, type = type,
+                   cardinality = cardinality)
 })
 #---------------------------------------------
 # Public Methods

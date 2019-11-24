@@ -15,12 +15,19 @@ NULL
 #---------------------------------------------
 PowersetSet <- R6::R6Class("PowersetSet", inherit = ProductSet)
 PowersetSet$set("public", "initialize", function(set){
-  #
-  # private$.properties$cardinality = Tuple$new(rep(set$properties$cardinality, power))
-  # private$.properties$countability = Tuple$new(rep(set$properties$countability, power))
-  # private$.properties$closure = Tuple$new(rep(set$properties$closure, power))
 
-  super$initialize(setlist = list(set), lower = Set$new(), upper = set, type = "{}")
+  cardinality = set$properties$cardinality
+
+  if(class(cardinality) != "character")
+    cardinality = 2^cardinality
+  else if(cardinality == "Aleph0")
+    cardinality = "Beth1"
+  else {
+    cardinality = paste0("Beth", as.numeric(substr(cardinality, 5, 100)) + 1)
+  }
+
+  super$initialize(setlist = list(set), lower = Set$new(), upper = set, type = "{}",
+                   cardinality = cardinality)
 })
 #---------------------------------------------
 # Public Methods

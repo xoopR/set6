@@ -60,7 +60,7 @@ Interval$new(1, 5) + FuzzyTuple$new(1, 0.6)
 # Power
 Set$new(1:5)^2
 # A symbolic representation is also possible
-power(Set$new(1:5), power = 2, simplify = FALSE)
+setpower(Set$new(1:5), power = 2, simplify = FALSE)
 Reals$new()^5
 
 # Product

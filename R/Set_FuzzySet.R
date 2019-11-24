@@ -76,6 +76,7 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
   private$.membership <- membership
 
   super$initialize(elements)
+
   invisible(self)
 })
 #---------------------------------------------
@@ -312,7 +313,6 @@ FuzzySet$set("public","absComplement",function(){
 #---------------------------------------------
 FuzzySet$set("private",".type","{}")
 FuzzySet$set("private",".membership", 0)
-FuzzySet$set("private",".properties",list())
 FuzzySet$set("private",".traits",list(crisp = FALSE))
 
 #---------------------------------------------

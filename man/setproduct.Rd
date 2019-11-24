@@ -77,8 +77,8 @@ PosReals$new() * NegReals$new()
 }
 \seealso{
 Other operators: \code{\link{powerset}},
-  \code{\link{power}}, \code{\link{setcomplement}},
-  \code{\link{setintersect}}, \code{\link{setunion}},
-  \code{\link{symdiff}}
+  \code{\link{setcomplement}}, \code{\link{setintersect}},
+  \code{\link{setpower}}, \code{\link{setsymdiff}},
+  \code{\link{setunion}}
 }
 \concept{operators}

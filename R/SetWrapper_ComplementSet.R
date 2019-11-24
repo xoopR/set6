@@ -45,9 +45,11 @@ ComplementSet$set("public", "initialize", function(addset, subtractset, lower = 
   }
 
   if(is.null(type)) type = "{}"
+
   private$.addedSet = addset
   private$.subtractedSet = subtractset
-  super$initialize(setlist = c(addset, subtractset), lower = lower, upper = upper, type = type)
+  super$initialize(setlist = c(addset, subtractset), lower = lower, upper = upper, type = type,
+                   cardinality = addset$properties$cardinality)
 })
 #---------------------------------------------
 # Public Methods

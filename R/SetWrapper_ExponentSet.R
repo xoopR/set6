@@ -21,10 +21,6 @@ ExponentSet$set("public", "initialize", function(set, power){
   setlist = rep(list(set), power)
   private$.power = power
 
-  private$.properties$cardinality = Tuple$new(rep(set$properties$cardinality, power))
-  private$.properties$countability = Tuple$new(rep(set$properties$countability, power))
-  private$.properties$closure = Tuple$new(rep(set$properties$closure, power))
-
   super$initialize(setlist = setlist, lower = lower, upper = upper, type = type)
 })
 #---------------------------------------------

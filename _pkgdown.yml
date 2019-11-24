@@ -72,13 +72,13 @@ reference:
     - ProductSet
     - setproduct
     - ExponentSet
-    - power
+    - setpower
     - ComplementSet
     - setcomplement
     - setintersect
     - addedSet
     - subtractedSet
-    - symdiff
+    - setsymdiff
 - title: Assertions
   desc: Validation checks for Sets
   contents:

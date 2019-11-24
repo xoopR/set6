@@ -1,5 +1,5 @@
-#' @name power
-#' @rdname power
+#' @name setpower
+#' @rdname setpower
 #' @param x Set
 #' @param power power to raise set to
 #' @param simplify logical, if `TRUE` returns the result in its simplest (unwrapped) form, usually a `Set`
@@ -17,8 +17,8 @@
 #' @family operators
 #' @examples
 #' # Power of a Set
-#' power(Set$new(1, 2), 3, simplify = FALSE)
-#' power(Set$new(1, 2), 3, simplify = TRUE)
+#' setpower(Set$new(1, 2), 3, simplify = FALSE)
+#' setpower(Set$new(1, 2), 3, simplify = TRUE)
 #' Set$new(1,2)^3
 #'
 #' # Power of an interval
@@ -35,7 +35,7 @@
 #' FuzzySet$new(1,0.1,2,0.5)^2
 #'
 #' @export
-power <- function(x, power, simplify = FALSE, nest = FALSE, ...){
+setpower <- function(x, power, simplify = FALSE, nest = FALSE, ...){
   if(power == 1)
     return(x)
 
@@ -48,8 +48,8 @@ power <- function(x, power, simplify = FALSE, nest = FALSE, ...){
     return(ExponentSet$new(x, power))
 }
 
-#' @rdname power
+#' @rdname setpower
 #' @export
 `^.Set` <- function(x, power){
-  power(x, power)
+  setpower(x, power)
 }

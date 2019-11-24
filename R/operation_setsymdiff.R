@@ -1,4 +1,4 @@
-#' @name symdiff
+#' @name setsymdiff
 #' @param x,y Set
 #' @title Symmetric Difference of Two Sets
 #' @return An object inheriting from `Set` containing the symmetric difference of elements in both `x` and `y`.
@@ -8,12 +8,12 @@
 #' \deqn{\{z : (z \epsilon X \cup z \epsilon Y) \cap !(z \epsilon X \cap z \epsilon Y)\}}{\{z : (z \epsilon X or z \epsilon Y) and !(z \epsilon X and z \epsilon Y)\}}
 #'
 #' The symmetric difference can also be expressed as the union of two sets minus the intersection.
-#' Therefore `symdiff` is written as a thin wrapper over these operations, so for two sets, `A,B`: \cr
+#' Therefore `setsymdiff` is written as a thin wrapper over these operations, so for two sets, `A,B`: \cr
 #' `A %-% B = (A | B) - (A & B)`
 #'
 #' @family operators
 #' @examples
-#' # symdiff compared to union and intersection
+#' # symmetrical difference compared to union and intersection
 #' Set$new(1,2,3) %-% Set$new(3, 4)
 #' (Set$new(1,2,3) | Set$new(3, 4)) - (Set$new(1,2,3) & Set$new(3, 4))
 #'
@@ -22,7 +22,7 @@
 #'   ConditionalSet$new(function(y) y == 0)
 #'
 #' @export
-symdiff <- function(x, y){
+setsymdiff <- function(x, y){
   if(x <= y)
     return(y - x)
   else if(y <= x)
@@ -30,8 +30,8 @@ symdiff <- function(x, y){
   else
     return((x + y) - (x & y))
 }
-#' @rdname symdiff
+#' @rdname setsymdiff
 #' @export
 `%-%` <- function(x, y){
-  symdiff(x, y)
+  setsymdiff(x, y)
 }

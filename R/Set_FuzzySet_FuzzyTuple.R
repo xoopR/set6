@@ -149,8 +149,6 @@ FuzzyTuple$set("public","absComplement",function(){
 # Private Fields
 #---------------------------------------------
 FuzzyTuple$set("private",".type","()")
-FuzzyTuple$set("private",".membership", 0)
-FuzzyTuple$set("private",".properties",list(crisp = FALSE))
 
 #---------------------------------------------
 # Coercions

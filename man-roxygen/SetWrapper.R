@@ -81,7 +81,7 @@
 #' this class directly but via the set operation methods.
 #'
 #' @family wrappers
-#' @seealso Set operations: [setunion], [setproduct], [power], [setcomplement], [symdiff],  [powerset], [setintersect]
+#' @seealso Set operations: [setunion], [setproduct], [setpower], [setcomplement], [setsymdiff],  [powerset], [setintersect]
 #'
 #' @return R6 object of class <%=(class)%>, inheriting from SetWrapper.
 #'

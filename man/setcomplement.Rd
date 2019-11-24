@@ -94,8 +94,8 @@ Integers$new() - PosIntegers$new()
 \link{absComplement}
 
 Other operators: \code{\link{powerset}},
-  \code{\link{power}}, \code{\link{setintersect}},
-  \code{\link{setproduct}}, \code{\link{setunion}},
-  \code{\link{symdiff}}
+  \code{\link{setintersect}}, \code{\link{setpower}},
+  \code{\link{setproduct}}, \code{\link{setsymdiff}},
+  \code{\link{setunion}}
 }
 \concept{operators}

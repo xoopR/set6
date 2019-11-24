@@ -4,7 +4,7 @@
 \alias{properties}
 \title{Set Properties}
 \description{
-List the properties of the Set.
+Returns an object of class \code{Properties}, which lists the properties of the Set.
 }
 \details{
 Set properties include:
@@ -15,6 +15,9 @@ Set properties include:
 \item \code{countability} - One of countably finite, countably infinite, uncountable
 \item \code{closure} - One of closed, open, half-open
 }
+
+The \code{Properties} class is essentially a read-only \code{list}, with \code{$} and \code{[} for accessing elements
+but without a \code{[[} method. It is not exported and therefore can be considered abstract.
 }
 \section{R6 Usage}{
  $properties

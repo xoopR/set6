@@ -31,16 +31,13 @@ test_that("inherited_methods",{
 test_that("properties",{
   use_unicode(TRUE)
   expect_equal(Interval$new()$properties$countability, "uncountable")
-  expect_equal(Interval$new()$properties$cardinality, "\u2136\u2081")
-  use_unicode(FALSE)
   expect_equal(Interval$new()$properties$cardinality, "Beth1")
   use_unicode(TRUE)
   expect_equal(Interval$new(1,5,class="integer")$properties$countability, "countably finite")
   expect_equal(Interval$new(1,5,class="integer")$properties$cardinality, 5)
   expect_equal(Interval$new(class="integer")$properties$countability, "countably infinite")
-  expect_equal(Interval$new(class="integer")$properties$cardinality, "\u2135\u2080")
-  use_unicode(FALSE)
   expect_equal(Interval$new(class="integer")$properties$cardinality, "Aleph0")
+  expect_equal(Interval$new(class="integer")$properties$strprint()$cardinality, "\u2135\u2080")
   use_unicode(TRUE)
 })
 

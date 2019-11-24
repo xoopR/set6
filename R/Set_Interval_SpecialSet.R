@@ -18,35 +18,11 @@
 #' @export
 NULL
 SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
-SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()",
-                                              class = "numeric",
-                                              countability = "uncountable",
-                                              cardinality = "Beth1",
-                                              empty = empty){
+SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()", class = "numeric"){
   if(getR6Class(self, pos = environment()) == "SpecialSet")
     stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  if(use_unicode()){
-    if(cardinality == "Beth1")
-      cardinality = "\u2136\u2081"
-    else if(cardinality == "Aleph0")
-      cardinality = "\u2135\u2080"
-  }
-
-  private$.lower <- lower
-  private$.upper <- upper
-  private$.type <- type
-  private$.class <- class
-
-  private$.properties$closure = switch(type,
-                                       "[]" = "closed",
-                                       "()" = "open",
-                                       "half-open"
-  )
-  private$.properties$countability = countability
-  private$.properties$cardinality = cardinality
-  private$.properties$singleton = FALSE
-  private$.properties$empty = empty
+  super$initialize(lower = lower, upper = upper, type = type, class = class, universe = NULL)
 
   invisible(self)
 })
@@ -68,9 +44,7 @@ SpecialSet$set("public","strprint",function(...){
 NULL
 Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
 Naturals$set("public", "initialize", function(lower = 0){
-  super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer",
-                   countability = "countably infinite",
-                   cardinality = "Aleph0", empty = FALSE)
+  super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer")
 })
 
 #' @name PosNaturals
@@ -103,9 +77,7 @@ PosNaturals$set("public", "initialize", function(){
 NULL
 Integers <- R6::R6Class("Integers",inherit = SpecialSet)
 Integers$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
-  super$initialize(lower = lower, upper = upper, type = type, class = "integer",
-                   countability = "countably infinite",
-                   cardinality = "Aleph0", empty = FALSE)
+  super$initialize(lower = lower, upper = upper, type = type, class = "integer")
 })
 
 #' @name PosIntegers
@@ -156,9 +128,7 @@ NegIntegers$set("public", "initialize", function(zero = FALSE){
 NULL
 Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
 Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
-  super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
-                   countability = "countably infinite",
-                   cardinality = "Aleph0", empty = FALSE)
+  super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
 })
 
 #' @name PosRationals
@@ -214,9 +184,7 @@ NegRationals$set("public", "initialize", function(zero = FALSE){
 NULL
 Reals <- R6::R6Class("Reals",inherit = SpecialSet)
 Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
-  super$initialize(lower = lower, upper = upper, type = type, class = "numeric",
-                   countability = "uncountable",
-                   cardinality = "Beth1", empty = FALSE)
+  super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
 })
 
 #' @name PosReals
@@ -285,9 +253,7 @@ ExtendedReals$set("public", "initialize", function(){
 NULL
 Complex <- R6::R6Class("Complex",inherit = SpecialSet)
 Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i){
-  super$initialize(lower = lower, upper = upper, type = "()", class = "complex",
-                   countability = "uncountable",
-                   cardinality = "Beth1", empty = FALSE)
+  super$initialize(lower = as.complex(lower), upper = as.complex(upper), type = "()", class = "numeric")
 })
 Complex$set("public","contains",function(x, all = FALSE, bound = NULL){
   ret <- sapply(x, function(y) inherits(y, "complex"))

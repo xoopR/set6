@@ -83,14 +83,7 @@ Set$set("public","initialize",function(..., universe = NULL){
     }
   }
 
-  private$.properties$singleton = ifelse(self$length == 1, TRUE, FALSE)
-  private$.properties$empty = ifelse(self$length == 0, TRUE, FALSE)
-  private$.properties$cardinality = self$length
-  private$.properties$countability = "countably finite"
-  private$.properties$closure = "closed"
-  private$.properties = private$.properties[match(c("empty","singleton","cardinality",
-                                                          "countability","closure"),
-                                            names(private$.properties))]
+  private$.properties = Properties$new(closure = "closed", cardinality = self$length)
 
   invisible(self)
 })
@@ -351,7 +344,7 @@ Set$set("public","absComplement",function(){
 #' @title Set Properties
 #' @rdname properties
 #' @section R6 Usage: $properties
-#' @description List the properties of the Set.
+#' @description Returns an object of class `Properties`, which lists the properties of the Set.
 #' @details Set properties include:
 #' \itemize{
 #'  \item \code{empty} - is the Set empty or does it contain elements?
@@ -360,6 +353,9 @@ Set$set("public","absComplement",function(){
 #'  \item \code{countability} - One of countably finite, countably infinite, uncountable
 #'  \item \code{closure} - One of closed, open, half-open
 #' }
+#'
+#' The `Properties` class is essentially a read-only `list`, with `$` and `[` for accessing elements
+#' but without a `[[` method. It is not exported and therefore can be considered abstract.
 Set$set("active","properties",function(){
   return(private$.properties)
 })
@@ -496,9 +492,7 @@ Set$set("private",".lower", NaN)
 Set$set("private",".upper", NaN)
 Set$set("private",".universe",NULL)
 Set$set("private",".elements",list())
-Set$set("private",".properties",list(empty = logical(0), singleton = logical(0),
-                                     cardinality = character(0), countability = character(0),
-                                     closure = character(0)))
+Set$set("private",".properties",NULL)
 Set$set("private",".traits",list(crisp = TRUE))
 Set$set("private",".dimension", numeric(0))
 #---------------------------------------------

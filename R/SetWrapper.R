@@ -3,7 +3,7 @@
 #---------------------------------------------
 SetWrapper <- R6::R6Class("SetWrapper", inherit = Set, lock_objects = FALSE)
 SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NULL, type = NULL,
-                                              class = NULL){
+                                              class = NULL, cardinality){
   if(getR6Class(self) == "SetWrapper")
     stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
@@ -21,9 +21,7 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
   else
     private$.class <- "multiple"
 
-  private$.properties$empty <- FALSE
-  private$.properties$singleton <- FALSE
-
+  private$.properties <- Properties$new(closure = "closed", cardinality)
 
   invisible(self)
 })

@@ -80,8 +80,8 @@ ConditionalSet$new(function(x) x == 2) &
 }
 \seealso{
 Other operators: \code{\link{powerset}},
-  \code{\link{power}}, \code{\link{setcomplement}},
-  \code{\link{setproduct}}, \code{\link{setunion}},
-  \code{\link{symdiff}}
+  \code{\link{setcomplement}}, \code{\link{setpower}},
+  \code{\link{setproduct}}, \code{\link{setsymdiff}},
+  \code{\link{setunion}}
 }
 \concept{operators}

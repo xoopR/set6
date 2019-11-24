@@ -51,8 +51,10 @@
 setunion <- function(..., simplify = TRUE){
   sets = list(...)
 
+  # clean-up sets, ensure fuzzy/crisp consistency
   sets = operation_cleaner(sets, "UnionSet", nest = FALSE)
 
+  # deal with special cases first
   classes = sapply(sets, getR6Class)
   if ("PosReals" %in% classes & "NegReals" %in% classes){
     sets = c(sets, Reals$new())
@@ -72,14 +74,14 @@ setunion <- function(..., simplify = TRUE){
     sets = sets[-c(match("Reals", classes), match("{-Inf, Inf}", rsapply(sets, strprint)))]
   }
 
+  # if no sets are left after cleaning return Empty, otherwise if all are the same return the set
   if(length(sets) == 0)
     return(Set$new())
-  else if(length(sets) == 1)
+  else if(length(sets) == 1 |
+          length(unique(rsapply(sets, strprint))) == 1)
     return(sets[[1]])
 
-  if(length(unique(rsapply(sets, strprint))) == 1)
-    return(sets[[1]])
-
+  # remove subsets
   rm_ind = c()
   for(i in 1:length(sets)){
     for(j in 1:length(sets)){
@@ -93,9 +95,11 @@ setunion <- function(..., simplify = TRUE){
   if(!is.null(rm_ind))
     sets = sets[-rm_ind]
 
+  # if only one set left, return
   if(length(sets) == 1)
     return(sets[[1]])
 
+  # after cleaning, if not simplifying then returnthe UnionSet
   if(!simplify)
     return(UnionSet$new(sets))
 
@@ -105,6 +109,7 @@ setunion <- function(..., simplify = TRUE){
 
   conditionals = fuzzies = intervals = crisps = NULL
 
+  # group set types and find the union
   if(any(grepl("ConditionalSet", classes)))
     conditionals = .union_conditionalset(sets[grepl("ConditionalSet", classes)])
   if(any(grepl("Fuzzy", classes)))
@@ -117,6 +122,7 @@ setunion <- function(..., simplify = TRUE){
 
   sets = c(crisps, intervals, conditionals, fuzzies)
 
+  # if all sets were simplified into one type then return, otherwise return UnionSet
   if(length(sets) == 1)
     return(sets[[1]])
   else
