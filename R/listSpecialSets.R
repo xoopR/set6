@@ -1,7 +1,6 @@
 #' @title Lists Implemented R6 Special Sets
 #' @description Lists special sets that can be used in Set.
 #' @param simplify logical. If `FALSE` (default) returns data.frame of set name and symbol, otherwise set names as characters.
-#' @seealso [SpecialSet]
 #' @return Either a list of characters (if `simplify` is `TRUE`) or a `data.frame` of `SpecialSet`s and their traits.
 #' @examples
 #' listSpecialSets()
