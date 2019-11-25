@@ -11,7 +11,7 @@ Authors@R:
              family = "Kiraly",
              role = "aut",
              email = "f.kiraly@ucl.ac.uk"))
-Description: This package upgrades the {sets} package to R6. Many forms of mathematical sets are implemented, including (countably finite) sets, tuples, intervals (countably infinite or uncountable), and fuzzy variants. Wrappers extend functionality by allowing symbolic representations of complex operations on sets, including unions, (cartesian) products, exponentiation, and differences (asymmetric and symmetric).
+Description: An object-oriented package for mathematical sets, upgrading the current gold-standard {sets}. Many forms of mathematical sets are implemented, including (countably finite) sets, tuples, intervals (countably infinite or uncountable), and fuzzy variants. Wrappers extend functionality by allowing symbolic representations of complex operations on sets, including unions, (cartesian) products, exponentiation, and differences (asymmetric and symmetric).
 Imports: checkmate, R6, utils
 Suggests: knitr, testthat, devtools, rmarkdown
 License: MIT + file LICENSE
