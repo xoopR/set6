@@ -13,7 +13,7 @@ SpecialSet$set("public","strprint",function(...){
 })
 
 #' @name Naturals
-#' @template SpecialSet
+#' @template SpecialSetcon
 #' @templateVar class Naturals
 #' @templateVar set natural numbers
 #' @templateVar def the counting numbers
@@ -46,7 +46,7 @@ PosNaturals$set("public", "initialize", function(){
 })
 
 #' @name Integers
-#' @template SpecialSet
+#' @template SpecialSetcon
 #' @templateVar class Integers
 #' @templateVar set integers
 #' @templateVar def the set of whole numbers
@@ -95,7 +95,7 @@ NegIntegers$set("public", "initialize", function(zero = FALSE){
 })
 
 #' @name Rationals
-#' @template SpecialSet
+#' @template SpecialSetcon
 #' @templateVar class Rationals
 #' @templateVar set rational numbers
 #' @templateVar def the set of numbers that can be written as a fraction of two integers
@@ -114,7 +114,7 @@ Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type =
 })
 
 #' @name PosRationals
-#' @template SpecialSet
+#' @template SpecialSetcon
 #' @templateVar class PosRationals
 #' @templateVar set positive rational numbers
 #' @templateVar def the set of numbers that can be written as a fraction of two integers and are non-negative
@@ -133,7 +133,7 @@ PosRationals$set("public", "initialize", function(zero = FALSE){
 })
 
 #' @name NegRationals
-#' @template SpecialSet
+#' @template SpecialSetcon
 #' @templateVar class NegRationals
 #' @templateVar set negative rational numbers
 #' @templateVar def the set of numbers that can be written as a fraction of two integers and are non-positive
@@ -152,7 +152,7 @@ NegRationals$set("public", "initialize", function(zero = FALSE){
 })
 
 #' @name Reals
-#' @template SpecialSet
+#' @template SpecialSetcon
 #' @templateVar class Reals
 #' @templateVar set real numbers
 #' @templateVar def the union of the set of rationals and irrationals

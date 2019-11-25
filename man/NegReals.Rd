@@ -22,10 +22,6 @@ The mathematical set of negative real numbers, defined as the union of the set o
 }
 }
 
-\section{Constructor Details}{
-
-}
-
 \section{Public Fields}{
 
 \tabular{ll}{

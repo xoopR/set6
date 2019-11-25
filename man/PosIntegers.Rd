@@ -22,10 +22,6 @@ The mathematical set of positive integers, defined as the set of positive whole 
 }
 }
 
-\section{Constructor Details}{
-
-}
-
 \section{Public Fields}{
 
 \tabular{ll}{

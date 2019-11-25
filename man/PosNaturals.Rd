@@ -22,10 +22,6 @@ The mathematical set of positive natural numbers, defined as the positive counti
 }
 }
 
-\section{Constructor Details}{
-
-}
-
 \section{Public Fields}{
 
 \tabular{ll}{

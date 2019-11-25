@@ -16,8 +16,8 @@ ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
 #---------------------------------------------
 ProductSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL,
                                                 cardinality = NULL){
-  if(is.null(lower)) lower = Tuple$new(rsapply(setlist, lower, active = TRUE))
-  if(is.null(upper)) upper = Tuple$new(rsapply(setlist, upper, active = TRUE))
+  if(is.null(lower)) lower = Tuple$new(rsapply(setlist, "lower", active = TRUE))
+  if(is.null(upper)) upper = Tuple$new(rsapply(setlist, "upper", active = TRUE))
   if(is.null(type)) type = "{}"
 
   if(is.null(cardinality)){
@@ -83,5 +83,5 @@ ProductSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
 # Public Fields
 #---------------------------------------------
 ProductSet$set("active", "length", function(){
-  return(Tuple$new(rsapply(self$wrappedSets, length, active = TRUE)))
+  return(Tuple$new(rsapply(self$wrappedSets, "length", active = TRUE)))
 })

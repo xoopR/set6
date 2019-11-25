@@ -98,7 +98,7 @@ ConditionalSet$set("public","equals",function(x, all = FALSE){
       return(TRUE)
 
 
-    if(!all(rsapply(self$class, strprint) == rsapply(el$class, strprint)))
+    if(!all(rsapply(self$class, "strprint") == rsapply(el$class, "strprint")))
       return(FALSE)
     else{
       sclass = self$class

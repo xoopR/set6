@@ -74,14 +74,14 @@ UnionSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
 # Public Fields
 #---------------------------------------------
 UnionSet$set("active","elements",function(){
-  els = unlist(unique(as.vector(rsapply(self$wrappedSets, elements, active = TRUE))))
+  els = unlist(unique(as.vector(rsapply(self$wrappedSets, "elements", active = TRUE))))
   if("NaN" %in% els | any(is.nan(els)))
     return(NaN)
   else
     return(els)
 })
 UnionSet$set("active","length",function(){
-  len = rsapply(self$wrappedSets, length, active = TRUE)
+  len = rsapply(self$wrappedSets, "length", active = TRUE)
 
   sum(unlist(len))
 })

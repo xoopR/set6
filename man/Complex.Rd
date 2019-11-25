@@ -23,10 +23,6 @@ The mathematical set of complex numbers, defined as the set of reals with possib
 }
 }
 
-\section{Constructor Details}{
-
-}
-
 \section{Public Fields}{
 
 \tabular{ll}{

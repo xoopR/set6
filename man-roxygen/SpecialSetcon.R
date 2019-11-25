@@ -16,6 +16,7 @@
 #'   <%= if(exists("arg9")) arg9%>
 #'   <%= if(exists("arg10")) arg10%>
 #'   }
+#' @section Constructor Details: <%=constructorDets%>
 #' @inheritSection Interval Public Fields
 #' @inheritSection Interval Public Methods
 #' @seealso [listSpecialSets]

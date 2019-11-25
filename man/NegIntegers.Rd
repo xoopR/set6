@@ -22,10 +22,6 @@ The mathematical set of negative integers, defined as the set of negative whole 
 }
 }
 
-\section{Constructor Details}{
-
-}
-
 \section{Public Fields}{
 
 \tabular{ll}{
