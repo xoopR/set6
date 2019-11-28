@@ -2,6 +2,10 @@
   options(set6.unicode = TRUE)
 }
 
+.onUnload = function(libname, pkgname) {
+  options(set6.unicode = NULL)
+}
+
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("\n-----------------------------")
   packageStartupMessage("\tset6 v",utils::packageVersion("set6"),
