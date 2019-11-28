@@ -31,7 +31,7 @@ And for more advanced usage see the complete tutorials at
 \href{https://raphaels1.github.io/set6/}{https://raphaels1.github.io/set6/}
 }
 \author{
-\strong{Maintainer}: Raphael Sonabend \email{raphael.sonabend.15@ucl.ac.uk} (0000-0001-9225-4654)
+\strong{Maintainer}: Raphael Sonabend \email{raphael.sonabend.15@ucl.ac.uk} (\href{https://orcid.org/0000-0001-9225-4654}{ORCID})
 
 Authors:
 \itemize{

@@ -17,11 +17,17 @@ Set traits include:
 }
 
 \seealso{
-Other set accessors: \code{\link{class}},
-  \code{\link{elements}}, \code{\link{length}},
-  \code{\link{lower}}, \code{\link{max}},
-  \code{\link{min}}, \code{\link{properties}},
-  \code{\link{range}}, \code{\link{type}},
-  \code{\link{universe}}, \code{\link{upper}}
+Other set accessors: 
+\code{\link{class}()},
+\code{\link{elements}},
+\code{\link{length}()},
+\code{\link{lower}},
+\code{\link{max}()},
+\code{\link{min}()},
+\code{\link{properties}},
+\code{\link{range}()},
+\code{\link{type}},
+\code{\link{universe}},
+\code{\link{upper}}
 }
 \concept{set accessors}

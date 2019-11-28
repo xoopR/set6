@@ -16,11 +16,17 @@ open or half-open sets, then the maximum is defined by
 }
 
 \seealso{
-Other set accessors: \code{\link{class}},
-  \code{\link{elements}}, \code{\link{length}},
-  \code{\link{lower}}, \code{\link{min}},
-  \code{\link{properties}}, \code{\link{range}},
-  \code{\link{traits}}, \code{\link{type}},
-  \code{\link{universe}}, \code{\link{upper}}
+Other set accessors: 
+\code{\link{class}()},
+\code{\link{elements}},
+\code{\link{length}()},
+\code{\link{lower}},
+\code{\link{min}()},
+\code{\link{properties}},
+\code{\link{range}()},
+\code{\link{traits}},
+\code{\link{type}},
+\code{\link{universe}},
+\code{\link{upper}}
 }
 \concept{set accessors}

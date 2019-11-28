@@ -7,7 +7,7 @@
 An R6 object of class ExtendedReals.
 }
 \description{
-The mathematical set of extended real numbers, defined as the union of the set of reals with \eqn{\pm\infty}{±\infty}. i.e. \deqn{R \cup \{-\infty, \infty\}}{R U {-\infty, \infty}} where \eqn{R} is the set of reals.
+The mathematical set of extended real numbers, defined as the union of the set of reals with \eqn{\pm\infty}{±\infty}. i.e. \deqn{R \cup \\{-\infty, \infty\\}}{R U {-\infty, \infty}} where \eqn{R} is the set of reals.
 }
 \section{Constructor}{
  ExtendedReals$new(...)
@@ -70,12 +70,18 @@ ExtendedReals$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{Integers}}, \code{\link{Naturals}},
-  \code{\link{NegIntegers}}, \code{\link{NegRationals}},
-  \code{\link{NegReals}}, \code{\link{PosIntegers}},
-  \code{\link{PosNaturals}}, \code{\link{PosRationals}},
-  \code{\link{PosReals}}, \code{\link{Rationals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{Integers}},
+\code{\link{Naturals}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

@@ -10,8 +10,7 @@ testFuzzyTuple(object, errormsg = "This is not an R6 FuzzyTuple object")
 
 checkFuzzyTuple(object, errormsg = "This is not an R6 FuzzyTuple object")
 
-assertFuzzyTuple(object,
-  errormsg = "This is not an R6 FuzzyTuple object")
+assertFuzzyTuple(object, errormsg = "This is not an R6 FuzzyTuple object")
 }
 \arguments{
 \item{object}{object to test}

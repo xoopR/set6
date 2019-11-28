@@ -54,7 +54,7 @@ in set \eqn{X} and not \eqn{Y},
 \deqn{X-Y = \{z : z \epsilon X \quad and \quad \neg(z \epsilon Y)\}}{X-Y = {z : z \epsilon X and !(z \epsilon Y)}}
 
 The set difference of two \link{ConditionalSet}s is defined by combining their defining functions by a negated
-'and', \code{!&}, operator. See examples.
+'and', \verb{!&}, operator. See examples.
 
 The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
 }
@@ -94,9 +94,12 @@ Integers$new() - PosIntegers$new()
 \seealso{
 \link{absComplement}
 
-Other operators: \code{\link{powerset}},
-  \code{\link{setintersect}}, \code{\link{setpower}},
-  \code{\link{setproduct}}, \code{\link{setsymdiff}},
-  \code{\link{setunion}}
+Other operators: 
+\code{\link{powerset}()},
+\code{\link{setintersect}()},
+\code{\link{setpower}()},
+\code{\link{setproduct}()},
+\code{\link{setsymdiff}()},
+\code{\link{setunion}()}
 }
 \concept{operators}

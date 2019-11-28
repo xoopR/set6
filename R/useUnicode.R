@@ -8,8 +8,10 @@
 #' By default `set6` starts with unicode printing turned on.
 #'
 #' @examples
+#' current = useUnicode()
 #' useUnicode(TRUE)
 #' useUnicode()
+#' useUnicode(current)
 #' @export
 useUnicode <- function(use){
   if(missing(use))

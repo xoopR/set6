@@ -110,8 +110,11 @@ FuzzySet$new(1, 0.1, 2, 0.2) == FuzzySet$new(2, 0.2, 1, 0.1)
 
 }
 \seealso{
-Other sets: \code{\link{ConditionalSet}},
-  \code{\link{FuzzySet}}, \code{\link{Interval}},
-  \code{\link{Set}}, \code{\link{Tuple}}
+Other sets: 
+\code{\link{ConditionalSet}},
+\code{\link{FuzzySet}},
+\code{\link{Interval}},
+\code{\link{Set}},
+\code{\link{Tuple}}
 }
 \concept{sets}

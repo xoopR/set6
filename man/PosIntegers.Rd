@@ -7,7 +7,7 @@
 An R6 object of class PosIntegers.
 }
 \description{
-The mathematical set of positive integers, defined as the set of positive whole numbers. i.e. \deqn{\{0, 1, 2, 3,...\}}{{0, 1, 2, 3,...}}
+The mathematical set of positive integers, defined as the set of positive whole numbers. i.e. \deqn{\\{0, 1, 2, 3,...\\}}{{0, 1, 2, 3,...}}
 }
 \section{Constructor}{
  PosIntegers$new(zero = FALSE)
@@ -70,12 +70,18 @@ PosIntegers$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{ExtendedReals}}, \code{\link{Integers}},
-  \code{\link{Naturals}}, \code{\link{NegIntegers}},
-  \code{\link{NegRationals}}, \code{\link{NegReals}},
-  \code{\link{PosNaturals}}, \code{\link{PosRationals}},
-  \code{\link{PosReals}}, \code{\link{Rationals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{ExtendedReals}},
+\code{\link{Integers}},
+\code{\link{Naturals}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

@@ -6,14 +6,11 @@
 \alias{assertSetList}
 \title{assert/check/test/SetList}
 \usage{
-testSetList(object,
-  errormsg = "One or more items in the list are not Sets")
+testSetList(object, errormsg = "One or more items in the list are not Sets")
 
-checkSetList(object,
-  errormsg = "One or more items in the list are not Sets")
+checkSetList(object, errormsg = "One or more items in the list are not Sets")
 
-assertSetList(object,
-  errormsg = "One or more items in the list are not Sets")
+assertSetList(object, errormsg = "One or more items in the list are not Sets")
 }
 \arguments{
 \item{object}{object to test}

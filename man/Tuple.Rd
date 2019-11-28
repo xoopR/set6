@@ -91,8 +91,11 @@ Tuple$new(1, 2) != Tuple$new(2, 1)
 
 }
 \seealso{
-Other sets: \code{\link{ConditionalSet}},
-  \code{\link{FuzzySet}}, \code{\link{FuzzyTuple}},
-  \code{\link{Interval}}, \code{\link{Set}}
+Other sets: 
+\code{\link{ConditionalSet}},
+\code{\link{FuzzySet}},
+\code{\link{FuzzyTuple}},
+\code{\link{Interval}},
+\code{\link{Set}}
 }
 \concept{sets}

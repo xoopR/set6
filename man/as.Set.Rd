@@ -74,7 +74,8 @@ Coerces object to an R6 \link{Set}/\link{Tuple}
 \seealso{
 \link{Set} \link{Tuple}
 
-Other coercions: \code{\link{as.FuzzySet}},
-  \code{\link{as.Interval}}
+Other coercions: 
+\code{\link{as.FuzzySet}()},
+\code{\link{as.Interval}()}
 }
 \concept{coercions}

@@ -6,14 +6,20 @@
 \alias{assertConditionalSet}
 \title{assert/check/test/ConditionalSet}
 \usage{
-testConditionalSet(object,
-  errormsg = "This is not an R6 ConditionalSet object")
+testConditionalSet(
+  object,
+  errormsg = "This is not an R6 ConditionalSet object"
+)
 
-checkConditionalSet(object,
-  errormsg = "This is not an R6 ConditionalSet object")
+checkConditionalSet(
+  object,
+  errormsg = "This is not an R6 ConditionalSet object"
+)
 
-assertConditionalSet(object,
-  errormsg = "This is not an R6 ConditionalSet object")
+assertConditionalSet(
+  object,
+  errormsg = "This is not an R6 ConditionalSet object"
+)
 }
 \arguments{
 \item{object}{object to test}

@@ -36,9 +36,9 @@ Coerces object to an R6 \link{Interval}.
 \details{
 \itemize{
 \item \code{as.Interval.list/as.Interval.data.frame} - Assumes the \code{list}/\code{data.frame} has named items/columns:
-\code{lower, upper, type, class}.
+\verb{lower, upper, type, class}.
 \item \code{as.Interval.numeric} - If the \code{numeric} vector is a continuous interval with no breaks then coerces to an \link{Interval}
-with: \code{lower = min(object), upper = max(object), class = "integer"}. Ordering is ignored.
+with: \verb{lower = min(object), upper = max(object), class = "integer"}. Ordering is ignored.
 \item \code{as.Interval.matrix} - Tries coercion via \link{as.Interval.numeric} on the first column of the matrix.
 \item \code{as.Interval.Set} - First tries coercion via \link{as.Interval.numeric}, if possible wraps result in a \link{Set}.
 \item \code{as.Interval.FuzzySet} - Tries coercion via \link{as.Interval.Set} on the \link{support} of the \link{FuzzySet}.
@@ -47,7 +47,8 @@ with: \code{lower = min(object), upper = max(object), class = "integer"}. Orderi
 \seealso{
 \link{Interval}
 
-Other coercions: \code{\link{as.FuzzySet}},
-  \code{\link{as.Set}}
+Other coercions: 
+\code{\link{as.FuzzySet}()},
+\code{\link{as.Set}()}
 }
 \concept{coercions}

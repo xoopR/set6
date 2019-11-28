@@ -98,8 +98,11 @@ Interval$new(class = "integer", type = "()") == Integers$new()
 
 }
 \seealso{
-Other sets: \code{\link{ConditionalSet}},
-  \code{\link{FuzzySet}}, \code{\link{FuzzyTuple}},
-  \code{\link{Set}}, \code{\link{Tuple}}
+Other sets: 
+\code{\link{ConditionalSet}},
+\code{\link{FuzzySet}},
+\code{\link{FuzzyTuple}},
+\code{\link{Set}},
+\code{\link{Tuple}}
 }
 \concept{sets}

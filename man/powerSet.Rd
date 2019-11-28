@@ -35,9 +35,12 @@ powerset(powerset(Reals$new()))
 powerset(powerset(Reals$new()))$properties$cardinality
 }
 \seealso{
-Other operators: \code{\link{setcomplement}},
-  \code{\link{setintersect}}, \code{\link{setpower}},
-  \code{\link{setproduct}}, \code{\link{setsymdiff}},
-  \code{\link{setunion}}
+Other operators: 
+\code{\link{setcomplement}()},
+\code{\link{setintersect}()},
+\code{\link{setpower}()},
+\code{\link{setproduct}()},
+\code{\link{setsymdiff}()},
+\code{\link{setunion}()}
 }
 \concept{operators}

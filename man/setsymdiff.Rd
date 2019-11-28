@@ -27,7 +27,7 @@ of elements that exist in set \eqn{X} or in \eqn{Y} but not both,
 \deqn{\{z : (z \epsilon X \cup z \epsilon Y) \\ \cap \\ \neg(z \epsilon X \cap z \epsilon Y)\}}{\{z : (z \epsilon X or z \epsilon Y) and !(z \epsilon X and z \epsilon Y)\}}
 
 The symmetric difference can also be expressed as the union of two sets minus the intersection.
-Therefore \code{setsymdiff} is written as a thin wrapper over these operations, so for two sets, \code{A,B}: \cr
+Therefore \code{setsymdiff} is written as a thin wrapper over these operations, so for two sets, \verb{A,B}: \cr
 \code{A \%-\% B = (A | B) - (A & B)}.
 
 The symmetric difference of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
@@ -43,9 +43,12 @@ ConditionalSet$new(function(x) x > 0) \%-\%
 
 }
 \seealso{
-Other operators: \code{\link{powerset}},
-  \code{\link{setcomplement}}, \code{\link{setintersect}},
-  \code{\link{setpower}}, \code{\link{setproduct}},
-  \code{\link{setunion}}
+Other operators: 
+\code{\link{powerset}()},
+\code{\link{setcomplement}()},
+\code{\link{setintersect}()},
+\code{\link{setpower}()},
+\code{\link{setproduct}()},
+\code{\link{setunion}()}
 }
 \concept{operators}

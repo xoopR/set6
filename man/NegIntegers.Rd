@@ -7,7 +7,7 @@
 An R6 object of class NegIntegers.
 }
 \description{
-The mathematical set of negative integers, defined as the set of negative whole numbers. i.e. \deqn{\{...,-3, -2, -1, 0\}}{{...,-3, -2, -1, 0}}
+The mathematical set of negative integers, defined as the set of negative whole numbers. i.e. \deqn{\\{...,-3, -2, -1, 0\\}}{{...,-3, -2, -1, 0}}
 }
 \section{Constructor}{
  NegIntegers$new(zero = FALSE)
@@ -70,12 +70,18 @@ NegIntegers$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{ExtendedReals}}, \code{\link{Integers}},
-  \code{\link{Naturals}}, \code{\link{NegRationals}},
-  \code{\link{NegReals}}, \code{\link{PosIntegers}},
-  \code{\link{PosNaturals}}, \code{\link{PosRationals}},
-  \code{\link{PosReals}}, \code{\link{Rationals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{ExtendedReals}},
+\code{\link{Integers}},
+\code{\link{Naturals}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

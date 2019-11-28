@@ -7,7 +7,7 @@
 An R6 object of class Rationals.
 }
 \description{
-The mathematical set of rational numbers, defined as the set of numbers that can be written as a fraction of two integers. i.e. \deqn{\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ q \ne 0 \}}{{p/q : p,q \epsilon Z, q != 0}} where \eqn{Z} is the set of integers.
+The mathematical set of rational numbers, defined as the set of numbers that can be written as a fraction of two integers. i.e. \deqn{\\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ q \ne 0 \\}}{{p/q : p,q \epsilon Z, q != 0}} where \eqn{Z} is the set of integers.
 }
 \details{
 The \link{contains} method does not work for the set of Rationals as it is notoriously difficult/impossible to find an algorithm for determining if any given number is rational or not. Furthermore, computers must truncate all irrational numbers to rational numbers.
@@ -77,12 +77,18 @@ Rationals$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{ExtendedReals}}, \code{\link{Integers}},
-  \code{\link{Naturals}}, \code{\link{NegIntegers}},
-  \code{\link{NegRationals}}, \code{\link{NegReals}},
-  \code{\link{PosIntegers}}, \code{\link{PosNaturals}},
-  \code{\link{PosRationals}}, \code{\link{PosReals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{ExtendedReals}},
+\code{\link{Integers}},
+\code{\link{Naturals}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

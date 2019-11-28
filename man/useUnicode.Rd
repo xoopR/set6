@@ -20,6 +20,8 @@ unicode representations should be used, or standard alpha-numeric and special ch
 By default \code{set6} starts with unicode printing turned on.
 }
 \examples{
+current = useUnicode()
 useUnicode(TRUE)
 useUnicode()
+useUnicode(current)
 }

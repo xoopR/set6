@@ -7,7 +7,7 @@
 An R6 object of class Complex.
 }
 \description{
-The mathematical set of complex numbers, defined as the set of reals with possibly imaginary components. i.e. \deqn{\{a + bi \ : \ a,b \in R\}}{{a + bi : a,b \epsilon R}} where \eqn{R} is the set of reals.
+The mathematical set of complex numbers, defined as the set of reals with possibly imaginary components. i.e. \deqn{\\{a + bi \\ : \\ a,b \in R\\}}{{a + bi : a,b \epsilon R}} where \eqn{R} is the set of reals.
 }
 \section{Constructor}{
  Complex$new(lower = -Inf+0i, upper = Inf+0i)
@@ -71,12 +71,18 @@ Complex$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{ExtendedReals}},
-  \code{\link{Integers}}, \code{\link{Naturals}},
-  \code{\link{NegIntegers}}, \code{\link{NegRationals}},
-  \code{\link{NegReals}}, \code{\link{PosIntegers}},
-  \code{\link{PosNaturals}}, \code{\link{PosRationals}},
-  \code{\link{PosReals}}, \code{\link{Rationals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{ExtendedReals}},
+\code{\link{Integers}},
+\code{\link{Naturals}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

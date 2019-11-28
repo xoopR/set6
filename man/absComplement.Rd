@@ -21,7 +21,9 @@ between sets use \link{setcomplement}.
 \seealso{
 \link{setcomplement}
 
-Other set methods: \code{\link{contains}},
-  \code{\link{equals}}, \code{\link{isSubset}}
+Other set methods: 
+\code{\link{contains}},
+\code{\link{equals}()},
+\code{\link{isSubset}}
 }
 \concept{set methods}

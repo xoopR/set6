@@ -102,8 +102,11 @@ f$membership(1)
 
 }
 \seealso{
-Other sets: \code{\link{ConditionalSet}},
-  \code{\link{FuzzyTuple}}, \code{\link{Interval}},
-  \code{\link{Set}}, \code{\link{Tuple}}
+Other sets: 
+\code{\link{ConditionalSet}},
+\code{\link{FuzzyTuple}},
+\code{\link{Interval}},
+\code{\link{Set}},
+\code{\link{Tuple}}
 }
 \concept{sets}

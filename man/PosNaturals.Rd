@@ -7,7 +7,7 @@
 An R6 object of class PosNaturals.
 }
 \description{
-The mathematical set of positive natural numbers, defined as the positive counting numbers. i.e. \deqn{\{1, 2, 3,...\}}{{1, 2, 3,...}}
+The mathematical set of positive natural numbers, defined as the positive counting numbers. i.e. \deqn{\\{1, 2, 3,...\\}}{{1, 2, 3,...}}
 }
 \section{Constructor}{
  PosNaturals$new(...)
@@ -70,12 +70,18 @@ PosNaturals$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{ExtendedReals}}, \code{\link{Integers}},
-  \code{\link{Naturals}}, \code{\link{NegIntegers}},
-  \code{\link{NegRationals}}, \code{\link{NegReals}},
-  \code{\link{PosIntegers}}, \code{\link{PosRationals}},
-  \code{\link{PosReals}}, \code{\link{Rationals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{ExtendedReals}},
+\code{\link{Integers}},
+\code{\link{Naturals}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

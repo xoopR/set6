@@ -74,12 +74,18 @@ Reals$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{ExtendedReals}}, \code{\link{Integers}},
-  \code{\link{Naturals}}, \code{\link{NegIntegers}},
-  \code{\link{NegRationals}}, \code{\link{NegReals}},
-  \code{\link{PosIntegers}}, \code{\link{PosNaturals}},
-  \code{\link{PosRationals}}, \code{\link{PosReals}},
-  \code{\link{Rationals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{ExtendedReals}},
+\code{\link{Integers}},
+\code{\link{Naturals}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}}
 }
 \concept{SpecialSets}

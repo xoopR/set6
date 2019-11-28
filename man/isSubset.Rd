@@ -51,7 +51,9 @@ Set$new(1,2,3) <= Set$new(1,2,3) # proper
 \seealso{
 \link{isSubinterval}
 
-Other set methods: \code{\link{absComplement}},
-  \code{\link{contains}}, \code{\link{equals}}
+Other set methods: 
+\code{\link{absComplement}},
+\code{\link{contains}},
+\code{\link{equals}()}
 }
 \concept{set methods}

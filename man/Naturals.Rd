@@ -7,7 +7,7 @@
 An R6 object of class Naturals.
 }
 \description{
-The mathematical set of natural numbers, defined as the counting numbers. i.e. \deqn{\{0, 1, 2,...\}}{{0, 1, 2,...}}
+The mathematical set of natural numbers, defined as the counting numbers. i.e. \deqn{\\{0, 1, 2,...\\}}{{0, 1, 2,...}}
 }
 \section{Constructor}{
  Naturals$new(lower = 0)
@@ -74,12 +74,18 @@ Naturals$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{ExtendedReals}}, \code{\link{Integers}},
-  \code{\link{NegIntegers}}, \code{\link{NegRationals}},
-  \code{\link{NegReals}}, \code{\link{PosIntegers}},
-  \code{\link{PosNaturals}}, \code{\link{PosRationals}},
-  \code{\link{PosReals}}, \code{\link{Rationals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{ExtendedReals}},
+\code{\link{Integers}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

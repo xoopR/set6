@@ -12,15 +12,21 @@ Otherwise assumes that the elements were supplied in a particular order and retu
 element.
 }
 \section{R6 Usage}{
- \code{$upper}
+ \verb{$upper}
 }
 
 \seealso{
-Other set accessors: \code{\link{class}},
-  \code{\link{elements}}, \code{\link{length}},
-  \code{\link{lower}}, \code{\link{max}},
-  \code{\link{min}}, \code{\link{properties}},
-  \code{\link{range}}, \code{\link{traits}},
-  \code{\link{type}}, \code{\link{universe}}
+Other set accessors: 
+\code{\link{class}()},
+\code{\link{elements}},
+\code{\link{length}()},
+\code{\link{lower}},
+\code{\link{max}()},
+\code{\link{min}()},
+\code{\link{properties}},
+\code{\link{range}()},
+\code{\link{traits}},
+\code{\link{type}},
+\code{\link{universe}}
 }
 \concept{set accessors}

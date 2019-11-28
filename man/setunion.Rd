@@ -71,9 +71,12 @@ Set$new(-Inf, Inf) + Reals$new()
 
 }
 \seealso{
-Other operators: \code{\link{powerset}},
-  \code{\link{setcomplement}}, \code{\link{setintersect}},
-  \code{\link{setpower}}, \code{\link{setproduct}},
-  \code{\link{setsymdiff}}
+Other operators: 
+\code{\link{powerset}()},
+\code{\link{setcomplement}()},
+\code{\link{setintersect}()},
+\code{\link{setpower}()},
+\code{\link{setproduct}()},
+\code{\link{setsymdiff}()}
 }
 \concept{operators}

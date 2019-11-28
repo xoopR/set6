@@ -52,9 +52,12 @@ FuzzySet$new(1,0.1,2,0.5)^2
 
 }
 \seealso{
-Other operators: \code{\link{powerset}},
-  \code{\link{setcomplement}}, \code{\link{setintersect}},
-  \code{\link{setproduct}}, \code{\link{setsymdiff}},
-  \code{\link{setunion}}
+Other operators: 
+\code{\link{powerset}()},
+\code{\link{setcomplement}()},
+\code{\link{setintersect}()},
+\code{\link{setproduct}()},
+\code{\link{setsymdiff}()},
+\code{\link{setunion}()}
 }
 \concept{operators}

@@ -7,7 +7,7 @@
 An R6 object of class Integers.
 }
 \description{
-The mathematical set of integers, defined as the set of whole numbers. i.e. \deqn{\{...,-3, -2, -1, 0, 1, 2, 3,...\}}{{...,-3, -2, -1, 0, 1, 2, 3,...}}
+The mathematical set of integers, defined as the set of whole numbers. i.e. \deqn{\\{...,-3, -2, -1, 0, 1, 2, 3,...\\}}{{...,-3, -2, -1, 0, 1, 2, 3,...}}
 }
 \section{Constructor}{
  Integers$new(...)
@@ -74,12 +74,18 @@ Integers$new()
 \seealso{
 \link{listSpecialSets}
 
-Other SpecialSets: \code{\link{Complex}},
-  \code{\link{ExtendedReals}}, \code{\link{Naturals}},
-  \code{\link{NegIntegers}}, \code{\link{NegRationals}},
-  \code{\link{NegReals}}, \code{\link{PosIntegers}},
-  \code{\link{PosNaturals}}, \code{\link{PosRationals}},
-  \code{\link{PosReals}}, \code{\link{Rationals}},
-  \code{\link{Reals}}
+Other SpecialSets: 
+\code{\link{Complex}},
+\code{\link{ExtendedReals}},
+\code{\link{Naturals}},
+\code{\link{NegIntegers}},
+\code{\link{NegRationals}},
+\code{\link{NegReals}},
+\code{\link{PosIntegers}},
+\code{\link{PosNaturals}},
+\code{\link{PosRationals}},
+\code{\link{PosReals}},
+\code{\link{Rationals}},
+\code{\link{Reals}}
 }
 \concept{SpecialSets}

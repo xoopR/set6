@@ -78,7 +78,8 @@ If not then uses \code{as.FuzzySet.matrix}.
 \seealso{
 \link{FuzzySet} \link{FuzzyTuple}
 
-Other coercions: \code{\link{as.Interval}},
-  \code{\link{as.Set}}
+Other coercions: 
+\code{\link{as.Interval}()},
+\code{\link{as.Set}()}
 }
 \concept{coercions}

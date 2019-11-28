@@ -93,8 +93,11 @@ s$contains(list(-2, 2))
 
 }
 \seealso{
-Other sets: \code{\link{FuzzySet}},
-  \code{\link{FuzzyTuple}}, \code{\link{Interval}},
-  \code{\link{Set}}, \code{\link{Tuple}}
+Other sets: 
+\code{\link{FuzzySet}},
+\code{\link{FuzzyTuple}},
+\code{\link{Interval}},
+\code{\link{Set}},
+\code{\link{Tuple}}
 }
 \concept{sets}
