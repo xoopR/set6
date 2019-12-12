@@ -87,8 +87,8 @@ test_that("equals",{
   expect_true(FuzzySet$new(2, 0.1, 1, 0.2, "a", 0.3) ==
                 FuzzySet$new(elements = list(1,2,"a"), membership = c(0.2,0.1,0.3)))
 })
-test_that("absComplement",{
-  expect_equal(FuzzySet$new(1,0.1,2,0.8)$absComplement(),FuzzySet$new(1,0.9,2,0.2))
+test_that("absolute complement",{
+  expect_equal(setcomplement(FuzzySet$new(1,0.1,2,0.8)),FuzzySet$new(1,0.9,2,0.2))
 })
 
 test_that("isSubset",{

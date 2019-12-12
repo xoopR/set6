@@ -307,9 +307,6 @@ FuzzySet$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 
   returner(ret, all)
 })
-FuzzySet$set("public","absComplement",function(){
-  FuzzySet$new(elements = self$elements, membership = 1 - self$membership())
-})
 
 #---------------------------------------------
 # Private Fields

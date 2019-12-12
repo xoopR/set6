@@ -39,7 +39,6 @@ Set$new(1,2) != Set$new(1,5)
 }
 \seealso{
 Other set methods: 
-\code{\link{absComplement}},
 \code{\link{contains}},
 \code{\link{isSubset}}
 }

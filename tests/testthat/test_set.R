@@ -33,8 +33,8 @@ test_that("inherited_methods",{
   expect_equal(Set$new(1, "a")$class, "multiple")
   expect_equal(Set$new(1,2,3)$range,2)
   expect_equal(Set$new(1,"a")$range, numeric(0))
-  expect_message(Set$new(1,"a")$absComplement())
-  expect_equal(Set$new(1,2,universe = Set$new(1,2,3))$absComplement(),Set$new(3))
+  expect_error(setcomplement(Set$new(1,"a")),"Set y is missing")
+  expect_equal(setcomplement(Set$new(1,2,universe = Set$new(1,2,3))),Set$new(3))
 })
 
 test_that("elements",{

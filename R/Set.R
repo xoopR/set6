@@ -318,9 +318,9 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 #---------------------------------------------
 # Public methods - absComplement
 #---------------------------------------------
-#' @name absComplement
-#' @rdname absComplement
-#' @family set methods
+#' @include set6-deprecated.R
+#' @name absComplement-deprecated
+#' @rdname absComplement-deprecated
 #' @title Absolute Complement of a Set
 #' @description Calculates and returns the absolute complement of a Set, which is the relative
 #' complement of a set from its universe.
@@ -329,13 +329,19 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 #' @section R6 Usage: $absComplement()
 #' @seealso [setcomplement]
 #' @return Set
+#' @seealso \code{\link{set6-deprecated}}
+#' @keywords internal
+NULL
+#' @name absComplement
+#' @rdname set6-deprecated
+#' @section Deprecated Functions:
+#' \tabular{ll}{
+#' \strong{Deprecated} \tab \strong{Replacement} \cr
+#' \code{absComplement} \tab \code{\link{setcomplement}} \cr
+#' }
 Set$set("public","absComplement",function(){
-  if(!is.null(self$universe))
-    return(setcomplement(self$universe, self))
-  else{
-    message("Universe not provided, returning self.")
-    invisible(self)
-  }
+  .Deprecated("absComplement", "set6", "The absComplement method is now deprecated and the
+  setcomplement function without the 'y' argument should be used instead.")
 })
 #---------------------------------------------
 # Accessors

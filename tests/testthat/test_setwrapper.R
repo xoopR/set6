@@ -22,5 +22,5 @@ test_that("equals",{
 test_that("subset/complement",{
   u = Set$new(1) + Interval$new(3, 4)
   expect_message(u$isSubset(Set$new(1)))
-  expect_message(u$absComplement())
+  expect_error(setcomplement(u), "y is missing")
 })

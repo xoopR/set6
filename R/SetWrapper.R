@@ -54,9 +54,7 @@ SetWrapper$set("public", "equals", function(x, all = FALSE){
 SetWrapper$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
   message("isSubset currently not implemented for this wrapper.")
 })
-SetWrapper$set("public","absComplement",function(){
-  message("absComplement currently not implemented for this wrapper.")
-})
+
 #---------------------------------------------
 # Public Fields
 #---------------------------------------------

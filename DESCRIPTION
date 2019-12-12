@@ -23,6 +23,7 @@ RoxygenNote: 7.0.1
 Roxygen: list(markdown = TRUE)
 Collate: 
     'Properties.R'
+    'set6-deprecated.R'
     'Set.R'
     'SetWrapper.R'
     'SetWrapper_ComplementSet.R'

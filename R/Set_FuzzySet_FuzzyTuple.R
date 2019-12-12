@@ -141,9 +141,6 @@ FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALS
       return(els)
   }
 })
-FuzzyTuple$set("public","absComplement",function(){
-  FuzzyTuple$new(elements = self$elements, membership = 1 - self$membership())
-})
 
 #---------------------------------------------
 # Private Fields

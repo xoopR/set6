@@ -2,9 +2,10 @@
 #' @param x,y Set
 #' @param simplify logical, if `TRUE` (default) returns the result in its simplest form, usually a `Set` or
 #' [UnionSet], otherwise a `ComplementSet`.
-#' @title (Relative) Complement of Two Sets
+#' @title Complement of Two Sets
 #' @return An object inheriting from `Set` containing the set difference of elements in `x` and `y`.
-#' @description Returns the set difference of two objects inheriting from class `Set`.
+#' @description Returns the set difference of two objects inheriting from class `Set`. If `y` is missing
+#' then the complement of `x` from its universe is returned.
 #' @details The difference of two sets, \eqn{X, Y}, is defined as the set of elements that exist
 #' in set \eqn{X} and not \eqn{Y},
 #' \deqn{X-Y = \{z : z \epsilon X \quad and \quad \neg(z \epsilon Y)\}}{X-Y = {z : z \epsilon X and !(z \epsilon Y)}}
@@ -15,8 +16,11 @@
 #' The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
 #'
 #' @family operators
-#' @seealso [absComplement]
 #' @examples
+#' # absolute complement
+#' setcomplement(Set$new(1,2,3, universe = Reals$new()))
+#' setcomplement(Set$new(1,2, universe = Set$new(1,2,3,4,5)))
+#'
 #' # complement of two sets
 #'
 #' Set$new(-2:4) - Set$new(2:5)
@@ -50,6 +54,17 @@
 #'
 #' @export
 setcomplement <- function(x, y, simplify = TRUE){
+
+  if (missing(y)) {
+    if(getR6Class(x) == "FuzzySet")
+      return(FuzzySet$new(elements = x$elements, membership = 1 - x$membership()))
+    else if(getR6Class(x) == "FuzzyTuple")
+      return(FuzzyTuple$new(elements = x$elements, membership = 1 - x$membership()))
+    else if (is.null(x$universe))
+      stop("Set y is missing and x does not have a universe for absolute complement.")
+    else
+      return(setcomplement(x$universe, x))
+  }
 
   if((testConditionalSet(x) & !testConditionalSet(y)) |
      (testConditionalSet(y) & !testConditionalSet(x)) |
