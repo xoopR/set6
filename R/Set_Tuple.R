@@ -7,10 +7,10 @@
 #' @description A general Tuple object for mathematical tuples, inheriting from `Set`.
 #' @return R6 object of class Tuple inheriting from [Set].
 #' @template Set
-#' @templateVar constructor Tuple$new(..., universe = NULL)
+#' @templateVar constructor Tuple$new(..., universe = UniversalSet$new())
 #' @templateVar arg1 `...` \tab ANY \tab Elements in the tuple. \cr
-#' @templateVar arg2 `universe` \tab Set \tab Optional universe that the Tuple lives in.
-#' @templateVar constructorDets Tuples are constructed by elements of any types (including R6 classes). The optional `universe` argument is useful for taking the absolute complement of the `Tuple`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar arg2 `universe` \tab Set \tab Universe that the Tuple lives in, default [UniversalSet].
+#' @templateVar constructorDets Tuples are constructed by elements of any types (including R6 classes). The `universe` argument is useful for taking the absolute complement of the `Tuple`. If a universe isn't given then [UniversalSet] is assumed.
 #'
 #' @details
 #' Tuples are similar to sets, except that they drop the constraint for elements to be unique, and

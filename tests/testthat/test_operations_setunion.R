@@ -25,7 +25,7 @@ test_that("set",{
   expect_true((Set$new(1,2) | Interval$new(3, 4, class = "integer"))$equals(Set$new(1:4)))
   expect_equal(getR6Class(Set$new(1,2) + Interval$new(3, 4)), "UnionSet")
   useUnicode(FALSE)
-  expect_equal((Set$new(1,2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {TRUE : x in R}")
+  expect_equal((Set$new(1,2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {TRUE : x in V}")
   expect_true(setunion(Set$new(1,2,3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
   expect_equal(Set$new(1,2) + Set$new(5,7) + Set$new(1,10), Set$new(1,2,5,7,10))
   expect_equal(setunion(Set$new()), Set$new())

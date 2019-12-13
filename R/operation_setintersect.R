@@ -53,6 +53,9 @@
 #' @export
 setintersect <- function(x, y){
 
+  if(getR6Class(y) == "UniversalSet")
+    return(x)
+
   if(x$length == 0 | y$length == 0)
     return(Set$new())
 

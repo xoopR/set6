@@ -112,6 +112,7 @@ Other sets:
 \code{\link{FuzzySet}},
 \code{\link{Interval}},
 \code{\link{Set}},
-\code{\link{Tuple}}
+\code{\link{Tuple}},
+\code{\link{UniversalSet}}
 }
 \concept{sets}

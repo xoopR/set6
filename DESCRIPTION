@@ -38,6 +38,7 @@ Collate:
     'setSymbol.R'
     'Set_Interval_SpecialSet.R'
     'Set_Tuple.R'
+    'Set_UniversalSet.R'
     'helpers.R'
     'assertions.R'
     'listSpecialSets.R'

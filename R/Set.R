@@ -8,10 +8,10 @@
 #' intervals, tuples, and fuzzy variants.
 #' @return R6 object of class Set.
 #' @template Set
-#' @templateVar constructor Set$new(..., universe = NULL)
+#' @templateVar constructor Set$new(..., universe = UniversalSet$new())
 #' @templateVar arg1 `...` \tab ANY \tab Elements in the set. \cr
-#' @templateVar arg2 `universe` \tab Set \tab Optional universe that the Set lives in.
-#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The optional `universe` argument is useful for taking the absolute complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar arg2 `universe` \tab Set \tab Universe that the Set lives in, default is the [UniversalSet].
+#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The `universe` argument is useful for taking the absolute complement of the `Set`. If a universe isn't given then [UniversalSet] is assumed.
 #'
 #' @details
 #' Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
@@ -43,7 +43,7 @@ NULL
 # Definition and Construction
 #---------------------------------------------
 Set <- R6::R6Class("Set")
-Set$set("public","initialize",function(..., universe = NULL){
+Set$set("public","initialize",function(..., universe = UniversalSet$new()){
 
   dots = list(...)
   if(any(grepl("list", lapply(dots, class))))
@@ -77,10 +77,8 @@ Set$set("public","initialize",function(..., universe = NULL){
       private$.upper <- max(unlist(dots))
     }
 
-    if(!is.null(universe)){
-      assertSet(universe)
-      private$.universe <- universe
-    }
+    assertSet(universe)
+    private$.universe <- universe
   }
 
   private$.properties = Properties$new(closure = "closed", cardinality = self$length)
@@ -492,8 +490,8 @@ Set$set("active","elements",function(){
 #' @family set accessors
 #' @section R6 Usage: $universe
 #' @description Returns the universe of the Set.
-#' @details The universe is an optional Set that specifies where the given Set lives. This is useful
-#' for taking the absolute complement of a Set.
+#' @details The universe is a Set that specifies where the given Set lives, by default this is
+#' the [UniversalSet]. This is useful for taking the absolute complement of a Set.
 Set$set("active","universe",function(){
   return(private$.universe)
 })

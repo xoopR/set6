@@ -66,9 +66,12 @@ setcomplement <- function(x, y, simplify = TRUE){
       return(setcomplement(x$universe, x))
   }
 
+  if(getR6Class(y) == "UniversalSet")
+    return(Set$new())
+
   if((testConditionalSet(x) & !testConditionalSet(y)) |
      (testConditionalSet(y) & !testConditionalSet(x)) |
-     !simplify)
+     !simplify | getR6Class(x) == "UniversalSet")
     return(ComplementSet$new(x, y))
 
   if(testCrisp(x) & testFuzzyTuple(y))

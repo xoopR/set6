@@ -22,6 +22,9 @@
 #' powerset(powerset(Reals$new()))$properties$cardinality
 #' @export
 powerset <- function(x, simplify = FALSE){
+  if(getR6Class(x) == "UniversalSet")
+    return(x)
+
   if(x$properties$empty)
     return(Set$new(Set$new()))
 

@@ -13,8 +13,8 @@
 #' @templateVar arg2 `upper` \tab numeric \tab Upper limit of the interval. \cr
 #' @templateVar arg3 `type` \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed. \cr
 #' @templateVar arg4 `class` \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
-#' @templateVar arg5 `universe` \tab Set \tab Optional universe that the interval lives in.
-#' @templateVar constructorDets If defaults are used then the Real number line is constructed. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar arg5 `universe` \tab Set \tab Universe that the interval lives in, default [Reals].
+#' @templateVar constructorDets If defaults are used then the Real number line is constructed. The `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
 #' @templateVar meth1 **Interval Methods** \tab **Link** \cr
 #' @templateVar meth2 isSubinterval(x, proper = FALSE, all = FALSE) \tab [isSubinterval] \cr
 #' @templateVar meth3  \tab \cr \tab \cr \tab \cr
@@ -62,12 +62,12 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
     checkmate::assert(lower <= upper)
   }
   checkmate::assertChoice(class, c("numeric","integer"))
-  if(!is.null(universe)){
-    if(getR6Class(self) != "SpecialSet"){
-      assertSet(universe)
-      private$.universe <- universe
-    }
+
+  if(getR6Class(self) != "SpecialSet"){
+    assertSet(universe)
+    private$.universe <- universe
   }
+
 
   if(lower == upper){
     private$.class <- "integer"

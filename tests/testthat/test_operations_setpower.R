@@ -10,7 +10,7 @@ test_that("Set",{
 
 test_that("conditionalset",{
   useUnicode(FALSE)
-  expect_equal((ConditionalSet$new(function(x) x == 1)^2)$strprint(), "{x == 1 : x in R}^2")
+  expect_equal((ConditionalSet$new(function(x) x == 1)^2)$strprint(), "{x == 1 : x in V}^2")
   useUnicode(TRUE)
 })
 

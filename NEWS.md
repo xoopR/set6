@@ -4,6 +4,8 @@
 - `absComplement` method is now deprecated, instead use `setcomplement` and omit the `y` argument
 - Fixed error in `contains` default caused by `%inset%`
 - Improved printing of `SpecialSet`s when `zero == TRUE`
+- Added `UniversalSet` for the set containing all elements
+- Changed default `universe` of sets to `UniversalSet`
 
 # set6 0.1.0
 

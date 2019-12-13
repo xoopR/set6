@@ -53,6 +53,9 @@
 setunion <- function(..., simplify = TRUE){
   sets = list(...)
 
+  if("UniversalSet" %in% sapply(sets, getR6Class))
+    return(UniversalSet$new())
+
   # clean-up sets, ensure fuzzy/crisp consistency
   sets = operation_cleaner(sets, "UnionSet", nest = FALSE)
 

@@ -65,7 +65,7 @@ test_that("conditional",{
                ConditionalSet$new(function(x, y) x == 0 & !(y > 0)))
   useUnicode(FALSE)
   expect_equal((ConditionalSet$new(function(x) TRUE) - Set$new(1))$strprint(),
-               "{TRUE : x in R} \\ {1}")
+               "{TRUE : x in V} \\ {1}")
   useUnicode(TRUE)
 
 })

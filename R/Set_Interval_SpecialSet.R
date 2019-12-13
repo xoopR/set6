@@ -4,7 +4,7 @@ SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = 
   if(getR6Class(self, pos = environment()) == "SpecialSet")
     stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  super$initialize(lower = lower, upper = upper, type = type, class = class, universe = NULL)
+  super$initialize(lower = lower, upper = upper, type = type, class = class, universe = UniversalSet$new())
 
   invisible(self)
 })
