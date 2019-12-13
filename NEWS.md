@@ -1,6 +1,9 @@
 # set6 0.1.1
 
+### Patches
 - `absComplement` method is now deprecated, instead use `setcomplement` and omit the `y` argument
+- Fixed error in `contains` default caused by `%inset%`
+- Improved printing of `SpecialSet`s when `zero == TRUE`
 
 # set6 0.1.0
 

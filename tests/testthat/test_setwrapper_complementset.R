@@ -5,7 +5,7 @@ context("ComplementSet")
 test_that("SpecialSets",{
   useUnicode(FALSE)
   x = Reals$new() - Naturals$new()
-  expect_equal(x$strprint(), "R \\ N")
+  expect_equal(x$strprint(), "R \\ N0")
   expect_true(x$contains(1.1))
   expect_false(x$contains(1))
   expect_equal(x$elements, NaN)

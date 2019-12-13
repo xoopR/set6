@@ -646,5 +646,5 @@ as.Set.ConditionalSet <- function(object){
 #' @rdname contains
 #' @export
 '%inset%' <- function(x, y){
-  return(y$contains(x, bound = TRUE))
+  return(y$contains(x))
 }
