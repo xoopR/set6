@@ -113,7 +113,7 @@ else
   return(paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2)))
 })
 Interval$set("public","equals",function(x, all = FALSE){
-  if(!testMessage(as.Set(self)))
+  if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
     return(super$equals(x, all))
 
   x <- listify(x)
@@ -131,7 +131,7 @@ Interval$set("public","equals",function(x, all = FALSE){
   returner(ret, all)
 })
 Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
-  if(!testMessage(as.Set(self)))
+  if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
     return(super$contains(x, all, bound))
 
   x <- listify(x)
@@ -162,7 +162,7 @@ Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
   returner(ret, all)
 })
 Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
-  if(!testMessage(as.Set(self)))
+  if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
     return(super$isSubset(x, proper, all))
 
   x <- listify(x)
@@ -226,7 +226,7 @@ Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
 #' Reals$new()$isSubset(Integers$new()) # TRUE
 #' Reals$new()$isSubinterval(Integers$new()) # FALSE
 Interval$set("public", "isSubinterval", function(x, proper = FALSE, all = FALSE){
-  if(!testMessage(as.Tuple(self)))
+  if(class(try(as.Tuple(self), silent = TRUE))[1] != "try-error")
     return(as.Tuple(self)$isSubset(x, proper, all))
 
   x <- listify(x)
@@ -241,10 +241,10 @@ Interval$set("public", "isSubinterval", function(x, proper = FALSE, all = FALSE)
     if(testFuzzy(el) | testConditionalSet(el))
       return(FALSE)
 
-    if(testMessage(as.Interval(el)))
+    el = try(as.Interval(el), silent = TRUE)
+
+    if(class(el)[1] == "try-error")
       return(FALSE)
-    else
-      el = as.Interval(el)
 
     if(el$class != self$class)
       return(FALSE)
@@ -304,12 +304,7 @@ as.Interval.Set <- function(object){
   if(testFuzzy(object))
     object = object$support(create = TRUE)
 
-  if(testMessage(as.Interval.numeric(object$elements))){
-    message("Set cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
-    return(object)
-  } else {
-    return(as.Interval.numeric(object$elements))
-  }
+  as.Interval.numeric(unlist(object$elements))
 }
 #' @rdname as.Interval
 #' @export
@@ -339,15 +334,13 @@ as.Interval.numeric <- function(object){
   else if (all(diff(object) == 1))
     return(Interval$new(min(object), max(object), class = "integer"))
   else {
-    message("Numeric cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
-    return(object)
+    stop("Cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
   }
 }
 #' @rdname as.Interval
 #' @export
 as.Interval.ConditionalSet <- function(object){
-  message("ConditionalSet cannot be coerced to Interval.")
-  return(object)
+  stop("ConditionalSet cannot be coerced to Interval.")
 }
 
 

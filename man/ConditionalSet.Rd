@@ -28,7 +28,7 @@ using standard 'and', \code{&}, and 'or', \code{|}, operators.
 }
 
 \section{Constructor Details}{
- The \code{condition} should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the universe of the function arguments as \link{Set}s, if these are not given then the \link{Reals} is assumed. See examples.
+ The \code{condition} should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the universe of the function arguments as \link{Set}s, if these are not given then the \link{UniversalSet} is assumed. See examples.
 }
 
 \section{Public Fields}{

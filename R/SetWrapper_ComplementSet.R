@@ -81,11 +81,11 @@ ComplementSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
 #---------------------------------------------
 ComplementSet$set("active","elements",function(){
   add_els = self$addedSet$elements
-  if(any(is.nan(add_els)))
+  if(any(is.na(add_els)))
     return(NaN)
 
   sub_els = self$subtractedSet$elements
-  if(any(is.nan(sub_els)))
+  if(any(is.na(sub_els)))
     return(NaN)
 
   add_els[!(add_els %in% sub_els)]

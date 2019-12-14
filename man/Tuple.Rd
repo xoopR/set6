@@ -15,7 +15,7 @@ ordering in a tuple does matter. Tuples are useful for methods including \link{c
 require non-unique elements. They are also the return type of the product of sets. See examples.
 }
 \section{Constructor}{
- \code{Tuple$new(..., universe = NULL)}
+ \code{Tuple$new(..., universe = UniversalSet$new())}
 }
 
 \section{Constructor Arguments}{
@@ -23,13 +23,15 @@ require non-unique elements. They are also the return type of the product of set
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{...} \tab ANY \tab Elements in the tuple. \cr
-\code{universe} \tab Set \tab Optional universe that the Tuple lives in.
+\code{universe} \tab Set \tab Universe that the Tuple lives in, default \link{UniversalSet}. \cr
+\code{elements} \tab list \tab Alternative constructor that may be more efficienct if passing objects of multiple classes. \cr
+\code{class} \tab character \tab Optional string naming a class that if supplied gives the set the \code{typed} property. \cr
 
 }
 }
 
 \section{Constructor Details}{
- Tuples are constructed by elements of any types (including R6 classes). The optional \code{universe} argument is useful for taking the absolute complement of the \code{Tuple}. If a universe isn't given then \link{Reals} is assumed.
+ Tuples are constructed by elements of any types (including R6 classes). The \code{universe} argument is useful for taking the absolute complement of the \code{Tuple}. If a universe isn't given then \link{UniversalSet} is assumed. If the \code{class} argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
 }
 
 \section{Public Fields}{

@@ -52,25 +52,27 @@ getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1){
   else
     return(get(class(object)[[n.par+1]], pos = pos))
 }
-ifnerror <- function(expr, noerror, error = NULL, silent = T){
+ifnerror <- function(expr, noerror = NULL, error = NULL, silent = T, errormsg = "Error not Nerror!"){
   x = try(expr, silent)
   if(inherits(x, "try-error")){
     if(is.null(error) | error == "warn")
-      stopwarn("warn", "Error not Nerror!")
+      stopwarn("warn", errormsg)
     else if(error == "stop")
-      stopwarn("stop", "Error not Nerror!")
+      stopwarn("stop", errormsg)
     else
-      error
+      return(error)
   } else {
-    noerror
+    if(is.null(noerror))
+      noerror = x
+    return(noerror)
   }
 }
 
-stopwarn <- function(error = "warn", error.msg){
-  checkmate::assert(error == "warn", error == "stop",
-                    .var.name = "'error' should be one of 'warn' or 'stop'.")
+stopwarn <- function(error = c("warn", "stop"), error.msg){
+  error = match.arg(error)
+
   if(error == "stop")
-    stop(error.msg)
+    stop(error.msg, call. = FALSE)
   else{
     warning(error.msg, call. = F)
     return(NULL)

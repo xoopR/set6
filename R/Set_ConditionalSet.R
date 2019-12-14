@@ -128,7 +128,7 @@ ConditionalSet$set("public","strprint",function(n = NULL){
   else
     sep = " in "
 
-  return(paste0("{",paste0(deparse(body(self$condition))," : ",
+  return(paste0("{",paste0(paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), " : ",
                            paste(names(self$class), sapply(self$class, function(x) x$strprint()),
                                  sep = sep, collapse = ", "),"}")))
 })

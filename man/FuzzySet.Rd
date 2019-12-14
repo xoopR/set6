@@ -19,7 +19,7 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 \link{FuzzyTuple}s can be used.
 }
 \section{Constructor}{
- \code{FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)))}
+ \code{FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)), class = NULL)}
 }
 
 \section{Constructor Arguments}{
@@ -29,12 +29,13 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 \code{...} \tab ANY \tab Alternating elements and membership, see constructor details. \cr
 \code{elements} \tab ANY \tab Elements in the set, see constructor details. \cr
 \code{membership} \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
+\code{class} \tab character \tab Optional string naming a class that if supplied gives the set the \code{typed} property. \cr
 
 }
 }
 
 \section{Constructor Details}{
- \code{FuzzySet}s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to \code{elements} and a list of respective memberships to \code{membership}, see examples.
+ \code{FuzzySet}s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to \code{elements} and a list of respective memberships to \code{membership}, see examples. If the \code{class} argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
 }
 
 \section{Public Fields}{

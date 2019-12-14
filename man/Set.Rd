@@ -17,7 +17,7 @@ expanded for fuzzy logic by using \link{FuzzySet}s. Elements in a set cannot be 
 of elements does not matter, \link{Tuple}s can be used if duplicates or ordering are required.
 }
 \section{Constructor}{
- \code{Set$new(..., universe = NULL)}
+ \code{Set$new(..., universe = UniversalSet$new(), elements = NULL, class = NULL)}
 }
 
 \section{Constructor Arguments}{
@@ -25,13 +25,15 @@ of elements does not matter, \link{Tuple}s can be used if duplicates or ordering
 \tabular{lll}{
 \strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
 \code{...} \tab ANY \tab Elements in the set. \cr
-\code{universe} \tab Set \tab Optional universe that the Set lives in.
+\code{universe} \tab Set \tab Universe that the Set lives in, default is the \link{UniversalSet}. \cr
+\code{elements} \tab list \tab Alternative constructor that may be more efficienct if passing objects of multiple classes. \cr
+\code{class} \tab character \tab Optional string naming a class that if supplied gives the set the \code{typed} property. \cr
 
 }
 }
 
 \section{Constructor Details}{
- Sets are constructed by elements of any types (including R6 classes), excluding lists. \code{Set}s should be used within \code{Set}s instead of lists. The optional \code{universe} argument is useful for taking the absolute complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+ Sets are constructed by elements of any types (including R6 classes), excluding lists. \code{Set}s should be used within \code{Set}s instead of lists. The \code{universe} argument is useful for taking the absolute complement of the \code{Set}. If a universe isn't given then \link{UniversalSet} is assumed. If the \code{class} argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
 }
 
 \section{Public Fields}{

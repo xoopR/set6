@@ -119,10 +119,9 @@ setcomplement.Set <- function(x, y, simplify = TRUE){
 #' @export
 setcomplement.Interval <- function(x, y, simplify = TRUE){
   # if possible convert Interval to Set
-  if(!testMessage(as.Set(x)))
+  if(class(try(as.Set(x), silent = TRUE))[1] != "try-error")
     return(setcomplement.Set(as.Set(x), y))
-  if(!testMessage(as.Set(y)))
-    y = as.Set(y)
+  y = ifnerror(as.Set(y), error = y)
 
   # difference of interval from interval
   if(testInterval(y)){
@@ -141,15 +140,16 @@ setcomplement.Interval <- function(x, y, simplify = TRUE){
       return(setunion(Interval$new(x$lower,y$lower,type=paste0(substr(x$type,1,1),")"),class = x$class),
                        Interval$new(y$upper,x$upper,type=paste0("(",substr(x$type,2,2)),class = x$class)))
   } else if (getR6Class(y) == "Set") {
-    y = Set$new(y$elements[x$contains(y$elements)])
+    y = Set$new(elements = y$elements[x$contains(y$elements)])
     if(y$length == 1){
-      if(y$elements == x$lower)
+      yels = unlist(y$elements)
+      if(yels == x$lower)
         return(Interval$new(x$lower, x$upper, type = paste0("(",substr(x$type,2,2))))
-      else if(y$elements == x$upper)
+      else if(yels == x$upper)
         return(Interval$new(x$lower, x$upper, type = paste0(substr(x$type,1,1),")")))
       else
-        return(Interval$new(x$lower, y$elements, type = paste0(substr(x$type,1,1),")")) +
-                 Interval$new(y$elements, x$upper, type = paste0("(", substr(x$type,2,2))))
+        return(Interval$new(x$lower, yels, type = paste0(substr(x$type,1,1),")")) +
+                 Interval$new(yels, x$upper, type = paste0("(", substr(x$type,2,2))))
     }
     u = Set$new()
     for(i in 1:y$length){

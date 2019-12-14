@@ -14,7 +14,7 @@ The Universal set is the default universe to all sets, and is the largest possib
 The Universal set contains every single possible element. We denote the Universal set with \code{V}
 instead of \code{U} to avoid confusion with the union symbol. The Universal set is also responsible
 for a few set paradoxes, to resolve these we use the following results:
-Let \eqn{V} be the universal set and \eqn{S} be any non-universal set, then
+Let \eqn{V} be the universal set, \eqn{S} be any non-universal set, and \eqn{0} the empty set, then
 
 \deqn{V \cup S = V}{V or S = V}
 \deqn{V \cap S = S}{V and S = S}

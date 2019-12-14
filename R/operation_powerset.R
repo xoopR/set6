@@ -48,25 +48,25 @@ powerset <- function(x, simplify = FALSE){
   #   y = apply(y, 1, function(el){
   #     FuzzyTuple$new(elements = el, membership = x$membership(el))
   #   })
-  return(Set$new(Set$new(), y, x))
+  return(Set$new(elements = c(Set$new(), y, x)))
 }
 .powerset_fuzzyset <- function(x){
   y = Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),vectorize.args = c("m"))(1:(x$length-1))
   # if(class(y[1,1]) == "list")
-    y = lapply(unlist(y), function(el) FuzzySet$new(elements = el, membership = x$membership(el)))
+    y = sapply(unlist(y), function(el) FuzzySet$new(elements = el, membership = x$membership(el)))
   # else
   #   y = apply(y, 1, function(el){
   #     FuzzySet$new(elements = el, membership = x$membership(el))
   #   })
-  return(Set$new(Set$new(), y, x))
+  return(Set$new(elements = c(Set$new(), y, x)))
 }
 .powerset_tuple <- function(x){
   elements <- x$elements
   y = Vectorize(function(m) utils::combn(elements, m, simplify = FALSE),vectorize.args = c("m"))(1:(x$length-1))
-  return(Set$new(Set$new(), unlist(lapply(y, as.Tuple)), x))
+  return(Set$new(elements = c(Set$new(), sapply(y, as.Tuple), x)))
 }
 .powerset_set <- function(x){
   elements <- x$elements
   y = Vectorize(function(m) utils::combn(elements, m, simplify = FALSE),vectorize.args = c("m"))(1:(x$length-1))
-  return(Set$new(Set$new(), unlist(lapply(y, as.Set)), x))
+  return(Set$new(elements = c(Set$new(), sapply(y, as.Set), x)))
 }
