@@ -16,7 +16,7 @@ test_that("strprint", {
   expect_equal(u$strprint(), "{1, 2, 3} U {a, b,...,d, e}")
   expect_equal(UnionSet$new(list(Set$new(1)*Interval$new(1,2),
                                  Set$new(letters[1:2])))$strprint(),
-               "({1} X [1, 2]) U {a, b}")
+               "({1} X [1,2]) U {a, b}")
 })
 
 test_that("fields",{

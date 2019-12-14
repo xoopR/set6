@@ -16,7 +16,7 @@ test_that("conditionalset",{
 
 test_that("interval",{
   i = Interval$new(1,2)^3
-  expect_equal(i$strprint(),"[1, 2]^3")
+  expect_equal(i$strprint(),"[1,2]^3")
   expect_equal(i$power, 3)
 })
 
@@ -27,7 +27,7 @@ test_that("exponent",{
 test_that("setwrapper",{
   useUnicode(FALSE)
   expect_equal(((Interval$new(1,2) + Interval$new(3,4))^2)$strprint(),
-               "([1, 2] U [3, 4])^2")
+               "([1,2] U [3,4])^2")
   useUnicode(TRUE)
 })
 

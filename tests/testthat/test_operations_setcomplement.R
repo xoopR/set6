@@ -40,7 +40,7 @@ test_that("interval",{
                  Interval$new(5,10, type = "(]"))
   expect_equal(setcomplement(Interval$new(1,10), Set$new(1,3,5),
                              simplify = FALSE)$strprint(),
-               "[1, 10] \\ {1, 3, 5}")
+               "[1,10] \\ {1, 3, 5}")
   expect_equal(Interval$new(1,10) - Set$new(2,3,4),
                Interval$new(1,2, type = "[)") + Interval$new(2,3,type="()") +
                  Interval$new(3,4,type="()") + Interval$new(4,10,type="(]"))
@@ -49,7 +49,7 @@ test_that("interval",{
                  Interval$new(3,4,type="()") + Interval$new(4,10,type="(]"))
   expect_equal(setcomplement(Interval$new(1,10), Interval$new(2,4,class="integer"),
                              simplify = FALSE)$strprint(),
-               "[1, 10] \\ {2,...,4}")
+               "[1,10] \\ {2,...,4}")
   expect_equal(Interval$new(1,5)-Set$new(3,5), Interval$new(1,3,type="[)") + Interval$new(3,5,type='()'))
 })
 

@@ -11,6 +11,10 @@
 - The internal `Set` structure is slightly changed so that set elements are now stored in lists by default, which is only changed if the set is `typed`
 - Added `element` argument to `Set` constructor, which takes a `list`. This is more efficient if passing lists of lists or lists of multiple types, and in line with the `FuzzySet` constructor
 - Improved printing of `ConditionalSet`s
+- Updated `powerset` to always return a `Set` of `Set`s (even if input is `Tuple`)
+- Fixed bug in `Properties` causing an error if cardinality was too large
+- Updated documentation
+- Reduced `Set` constructor bottleneck by adding 'typed' sets
 
 # set6 0.1.0
 

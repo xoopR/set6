@@ -41,5 +41,5 @@ test_that("fields",{
 
 test_that("strprint",{
   d = ComplementSet$new(Set$new(1,2,3,4,5) + Interval$new(5,7), Set$new(5, 10) + Interval$new(10,15))
-  expect_equal(d$strprint(n = 1), "({1,...,5} ∪ [5, 7]) \\ ({5, 10} ∪ [10, 15])")
+  expect_equal(d$strprint(n = 1), "({1,...,5} ∪ [5,7]) \\ ({5, 10} ∪ [10,15])")
 })

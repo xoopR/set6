@@ -79,14 +79,19 @@ Set$set("public","initialize",function(..., universe = UniversalSet$new(), eleme
     #   }
     # }
 
-    if(!testTuple(self) & !testFuzzyTuple(self))
-      private$.elements <- elements[!duplicated(lapply(elements, function(x){
-        y = try(x$strprint(), silent = TRUE)
-        if(inherits(y, "try-error"))
-          return(x)
-        else
-          return(y)
-      }))]
+    if(!testTuple(self) & !testFuzzyTuple(self)) {
+      if(private$.class != "ANY") {
+        private$.elements <- unique(elements)
+      } else {
+        private$.elements <- elements[!duplicated(lapply(elements, function(x){
+          y = try(x$strprint(), silent = TRUE)
+          if(inherits(y, "try-error"))
+            return(x)
+          else
+            return(y)
+        }))]
+      }
+    }
 
     assertSet(universe)
     private$.universe <- universe

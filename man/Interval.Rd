@@ -15,7 +15,7 @@ The Interval class can be used for finite or infinite intervals, but often Sets 
 integer intervals over a finite continuous range. Use \link{Complex} to define an interval with complex values.
 }
 \section{Constructor}{
- \code{Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())}
+ \code{Interval$new(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"), class = "numeric", universe = Reals$new())}
 }
 
 \section{Constructor Arguments}{

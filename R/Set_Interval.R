@@ -8,7 +8,7 @@
 #' may be open, closed, or half-open; as well as bounded above, below, or not at all.
 #' @return R6 object of class Interval inheriting from [Set].
 #' @template Set
-#' @templateVar constructor Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())
+#' @templateVar constructor Interval$new(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"), class = "numeric", universe = Reals$new())
 #' @templateVar arg1 `lower` \tab numeric \tab Lower limit of the interval. \cr
 #' @templateVar arg2 `upper` \tab numeric \tab Upper limit of the interval. \cr
 #' @templateVar arg3 `type` \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed. \cr
@@ -48,10 +48,10 @@ NULL
 # Definition and Construction
 #---------------------------------------------
 Interval <- R6::R6Class("Interval", inherit = Set)
-Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]", class = "numeric",
-                                            universe = Reals$new()){
+Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"),
+                                            class = "numeric", universe = Reals$new()){
 
-  checkmate::assertChoice(type, c("()","(]","[]","[)"))
+  type = match.arg(type)
   if(checkmate::testComplex(lower) | checkmate::testComplex(upper)){
     lower = as.complex(lower)
     upper = as.complex(upper)
@@ -110,7 +110,7 @@ sup <- ifelse(self$upper==Inf & useUnicode(), "+\u221E", self$upper)
 if(self$class == "integer")
   return(paste0("{", inf, ",...,", sup, "}"))
 else
-  return(paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2)))
+  return(paste0(substr(self$type,1,1),inf,",",sup,substr(self$type,2,2)))
 })
 Interval$set("public","equals",function(x, all = FALSE){
   if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")

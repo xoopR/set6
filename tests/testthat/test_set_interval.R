@@ -64,9 +64,9 @@ test_that("equals",{
 })
 
 test_that("strprint",{
-  expect_equal(Interval$new()$strprint(),"[-\u221E, +\u221E]")
-  expect_equal(Interval$new(1,10,type="(]")$strprint(),"(1, 10]")
-  expect_equal(Interval$new(1,3)$strprint(),"[1, 3]")
+  expect_equal(Interval$new()$strprint(),"[-\u221E,+\u221E]")
+  expect_equal(Interval$new(1,10,type="(]")$strprint(),"(1,10]")
+  expect_equal(Interval$new(1,3)$strprint(),"[1,3]")
   expect_equal(Interval$new(1,3,class="integer")$strprint(),"{1,...,3}")
 })
 
