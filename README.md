@@ -21,6 +21,18 @@
 * Symbolic representation of infinite sets including common special sets such as the Reals and Integers
 * ConditionalSets for defining sets according to logical conditions
 
+## Installation
+
+The current CRAN release can be installed with
+```R
+install.packages("set6")
+````
+Or for the latest stable build 
+
+```R
+remotes::install_github("RaphaelS1/set6")
+```
+
 ## Main Features
 
 ### A Clear Inheritance Structure
@@ -128,12 +140,3 @@ At a later stage we may consider adding Venn diagrams for visualisation of sets 
 ## Contributing
 
 As `set6` is in its early stages, contributions are very welcome. If you have any ideas for good features please open an issue or create a pull request. Otherwise bug reports are very appreciated if you stumble across any broken code, these can be posted to the [issue tracker](https://github.com/RaphaelS1/set6/issues). For updates on `set6` follow/star this repo.
-
-
-## Installation
-
-A CRAN release is expected by the end of November. Until then the latest stable build can be installed via
-
-```R
-remotes::install_github("RaphaelS1/set6")
-```
