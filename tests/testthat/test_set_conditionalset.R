@@ -46,7 +46,7 @@ test_that("equals",{
 
 test_that("strprint",{
   useUnicode(TRUE)
-  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x", " \u03B5 ", setSymbol(Reals), "}"))
+  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x", " \u2208 ", setSymbol(Reals), "}"))
   useUnicode(FALSE)
   expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x in ", setSymbol(Reals), "}"))
   useUnicode(TRUE)

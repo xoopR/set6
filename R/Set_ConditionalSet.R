@@ -124,7 +124,7 @@ ConditionalSet$set("public","equals",function(x, all = FALSE){
 })
 ConditionalSet$set("public","strprint",function(n = NULL){
   if(useUnicode())
-    sep = " \u03B5 "
+    sep = " \u2208 "
   else
     sep = " in "
 
