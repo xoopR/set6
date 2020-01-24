@@ -134,3 +134,9 @@ test_that("as.double",{
   expect_equal(as.numeric(Set$new(1:10)), 1:10)
   expect_equal(as.numeric(FuzzySet$new(1,0,2,0.1,3,1)), 2:3)
 })
+
+test_that("typed set",{
+  expect_equal(Set$new(1.5, class = "integer")$elements, 1L)
+  expect_equal(Set$new(1.5, class = "integer")$class, "integer")
+})
+

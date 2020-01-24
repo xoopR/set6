@@ -76,3 +76,9 @@ test_that("fuzzify",{
   expect_equal(fuzzify(Tuple$new(1)), FuzzyTuple$new(1, 1))
   expect_error(fuzzify(Interval$new(1,4)), "cannot be fuzzified")
 })
+
+test_that("setSymbol",{
+  useUnicode(FALSE)
+  expect_equal(setSymbol("Reals"), "R")
+  useUnicode(TRUE)
+})
