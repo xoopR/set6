@@ -1,5 +1,5 @@
 do_package_checks(error_on = "warning")
 
-if (ci_has_env("BUILD_PKGDOWN")) {
+if (ci_on_travis()) {
   do_pkgdown()
 }
