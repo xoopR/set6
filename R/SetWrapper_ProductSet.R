@@ -10,7 +10,7 @@
 #'
 #' @export
 NULL
-ProductSet <- R6::R6Class("ProductSet", inherit = SetWrapper)
+ProductSet <- R6Class("ProductSet", inherit = SetWrapper)
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------

@@ -1,7 +1,7 @@
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-Properties <- R6::R6Class("Properties")
+Properties <- R6Class("Properties")
 Properties$set("public","initialize",function(closure = character(0), cardinality = NULL){
 
   if(length(closure) != 0){

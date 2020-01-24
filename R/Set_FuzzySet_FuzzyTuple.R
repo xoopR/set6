@@ -59,7 +59,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-FuzzyTuple <- R6::R6Class("FuzzyTuple", inherit = FuzzySet)
+FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet)
 
 #---------------------------------------------
 # Public Methods

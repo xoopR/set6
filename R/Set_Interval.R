@@ -47,7 +47,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-Interval <- R6::R6Class("Interval", inherit = Set)
+Interval <- R6Class("Interval", inherit = Set)
 Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"),
                                             class = "numeric", universe = Reals$new()){
 

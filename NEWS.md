@@ -15,6 +15,7 @@
 - Fixed bug in `Properties` causing an error if cardinality was too large
 - Updated documentation
 - Reduced `Set` constructor bottleneck by adding 'typed' sets
+- Changed `use_unicode` default to `l10n_info()$UTF-8`
 
 # set6 0.1.0
 

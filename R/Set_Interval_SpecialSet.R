@@ -1,5 +1,5 @@
 #' @include Set.R setSymbol.R
-SpecialSet <- R6::R6Class("SpecialSet", inherit = Interval)
+SpecialSet <- R6Class("SpecialSet", inherit = Interval)
 SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()", class = "numeric"){
   if(getR6Class(self, pos = environment()) == "SpecialSet")
     stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
@@ -25,7 +25,7 @@ SpecialSet$set("private",".zero",FALSE)
 #' @templateVar constructorDets Generally the `lower` argument should be ignored, its primary use-case is for the `PosNaturals` child-class.
 #' @export
 NULL
-Naturals <- R6::R6Class("Naturals",inherit = SpecialSet)
+Naturals <- R6Class("Naturals",inherit = SpecialSet)
 Naturals$set("public", "initialize", function(lower = 0){
   super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer")
 })
@@ -41,7 +41,7 @@ Naturals$set("public", "initialize", function(lower = 0){
 #' @templateVar arg1 \code{...} \tab ANY \tab Ignored, added for consistency.
 #' @export
 NULL
-PosNaturals <- R6::R6Class("PosNaturals",inherit = Naturals)
+PosNaturals <- R6Class("PosNaturals",inherit = Naturals)
 PosNaturals$set("public", "initialize", function(){
   super$initialize(lower = 1)
 })
@@ -58,7 +58,7 @@ PosNaturals$set("public", "initialize", function(){
 #' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
 #' @export
 NULL
-Integers <- R6::R6Class("Integers",inherit = SpecialSet)
+Integers <- R6Class("Integers",inherit = SpecialSet)
 Integers$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
   super$initialize(lower = lower, upper = upper, type = type, class = "integer")
 })
@@ -74,7 +74,7 @@ Integers$set("public", "initialize", function(lower = -Inf, upper = Inf, type = 
 #' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set.
 #' @export
 NULL
-PosIntegers <- R6::R6Class("PosIntegers",inherit = Integers)
+PosIntegers <- R6Class("PosIntegers",inherit = Integers)
 PosIntegers$set("public", "initialize", function(zero = FALSE){
   if(zero) private$.zero = TRUE
   super$initialize(lower = ifelse(zero, 0, 1), type = "[)")
@@ -91,7 +91,7 @@ PosIntegers$set("public", "initialize", function(zero = FALSE){
 #' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set.
 #' @export
 NULL
-NegIntegers <- R6::R6Class("NegIntegers",inherit = Integers)
+NegIntegers <- R6Class("NegIntegers",inherit = Integers)
 NegIntegers$set("public", "initialize", function(zero = FALSE){
   if(zero) private$.zero = TRUE
   super$initialize(upper = ifelse(zero, 0, -1), type = "(]")
@@ -111,7 +111,7 @@ NegIntegers$set("public", "initialize", function(zero = FALSE){
 #' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
 #' @export
 NULL
-Rationals <- R6::R6Class("Rationals",inherit = SpecialSet)
+Rationals <- R6Class("Rationals",inherit = SpecialSet)
 Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
   super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
 })
@@ -130,7 +130,7 @@ Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type =
 #' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
 #' @export
 NULL
-PosRationals <- R6::R6Class("PosRationals",inherit = Rationals)
+PosRationals <- R6Class("PosRationals",inherit = Rationals)
 PosRationals$set("public", "initialize", function(zero = FALSE){
   if(zero) private$.zero = TRUE
   super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
@@ -150,7 +150,7 @@ PosRationals$set("public", "initialize", function(zero = FALSE){
 #' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
 #' @export
 NULL
-NegRationals <- R6::R6Class("NegRationals",inherit = Rationals)
+NegRationals <- R6Class("NegRationals",inherit = Rationals)
 NegRationals$set("public", "initialize", function(zero = FALSE){
   if(zero) private$.zero = TRUE
   super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
@@ -169,7 +169,7 @@ NegRationals$set("public", "initialize", function(zero = FALSE){
 #' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
 #' @export
 NULL
-Reals <- R6::R6Class("Reals",inherit = SpecialSet)
+Reals <- R6Class("Reals",inherit = SpecialSet)
 Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
   super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
 })
@@ -186,7 +186,7 @@ Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()
 #' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' @export
 NULL
-PosReals <- R6::R6Class("PosReals",inherit = Reals)
+PosReals <- R6Class("PosReals",inherit = Reals)
 PosReals$set("public", "initialize", function(zero = FALSE){
   if(zero) private$.zero = TRUE
   super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
@@ -204,7 +204,7 @@ PosReals$set("public", "initialize", function(zero = FALSE){
 #' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
 #' @export
 NULL
-NegReals <- R6::R6Class("NegReals",inherit = Reals)
+NegReals <- R6Class("NegReals",inherit = Reals)
 NegReals$set("public", "initialize", function(zero = FALSE){
   if(zero) private$.zero = TRUE
   super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
@@ -222,7 +222,7 @@ NegReals$set("public", "initialize", function(zero = FALSE){
 #' @templateVar support where \eqn{R} is the set of reals.
 #' @export
 NULL
-ExtendedReals <- R6::R6Class("ExtendedReals",inherit = Reals)
+ExtendedReals <- R6Class("ExtendedReals",inherit = Reals)
 ExtendedReals$set("public", "initialize", function(){
   super$initialize(type = "[]")
 })
@@ -240,7 +240,7 @@ ExtendedReals$set("public", "initialize", function(){
 #' @templateVar support where \eqn{R} is the set of reals.
 #' @export
 NULL
-Complex <- R6::R6Class("Complex",inherit = SpecialSet)
+Complex <- R6Class("Complex",inherit = SpecialSet)
 Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i){
   super$initialize(lower = as.complex(lower), upper = as.complex(upper), type = "()", class = "numeric")
 })

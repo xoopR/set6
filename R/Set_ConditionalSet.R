@@ -42,7 +42,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-ConditionalSet <- R6::R6Class("ConditionalSet", inherit = Set)
+ConditionalSet <- R6Class("ConditionalSet", inherit = Set)
 ConditionalSet$set("public","initialize",function(condition, argclass = NULL){
   if(!is.function(condition))
     stop("'condition' must be a function.")
@@ -124,7 +124,7 @@ ConditionalSet$set("public","equals",function(x, all = FALSE){
 })
 ConditionalSet$set("public","strprint",function(n = NULL){
   if(useUnicode())
-    sep = " \u03B5 "
+    sep = " \u2208 "
   else
     sep = " in "
 
