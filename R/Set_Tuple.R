@@ -40,7 +40,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-Tuple <- R6::R6Class("Tuple", inherit = Set)
+Tuple <- R6Class("Tuple", inherit = Set)
 
 #---------------------------------------------
 # Public Methods

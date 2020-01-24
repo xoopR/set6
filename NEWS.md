@@ -1,6 +1,7 @@
 # set6 0.1.1
 
 - Changed `ConditionalSet` 'element in' symbol to U+2208 from U+03B5
+- Changed `use_unicode` default to `l10n_info()$UTF-8`
 
 # set6 0.1.0
 

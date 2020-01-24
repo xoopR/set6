@@ -42,7 +42,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-Set <- R6::R6Class("Set")
+Set <- R6Class("Set")
 Set$set("public","initialize",function(..., universe = NULL){
 
   dots = list(...)

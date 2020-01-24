@@ -13,7 +13,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-UnionSet <- R6::R6Class("UnionSet", inherit = SetWrapper)
+UnionSet <- R6Class("UnionSet", inherit = SetWrapper)
 UnionSet$set("public", "initialize", function(setlist, lower = NULL, upper = NULL, type = NULL){
   checkmate::assertList(setlist)
 

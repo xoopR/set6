@@ -16,7 +16,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-ComplementSet <- R6::R6Class("ComplementSet", inherit = SetWrapper)
+ComplementSet <- R6Class("ComplementSet", inherit = SetWrapper)
 ComplementSet$set("public", "initialize", function(addset, subtractset, lower = NULL, upper = NULL, type = NULL){
   assertSet(addset)
   assertSet(subtractset)
