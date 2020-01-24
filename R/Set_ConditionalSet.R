@@ -42,7 +42,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-ConditionalSet <- R6::R6Class("ConditionalSet", inherit = Set)
+ConditionalSet <- R6Class("ConditionalSet", inherit = Set)
 ConditionalSet$set("public","initialize",function(condition, argclass = NULL){
   if(!is.function(condition))
     stop("'condition' must be a function.")

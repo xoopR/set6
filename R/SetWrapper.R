@@ -1,7 +1,7 @@
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-SetWrapper <- R6::R6Class("SetWrapper", inherit = Set, lock_objects = FALSE)
+SetWrapper <- R6Class("SetWrapper", inherit = Set, lock_objects = FALSE)
 SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NULL, type = NULL,
                                               class = NULL, cardinality){
   if(getR6Class(self) == "SetWrapper")

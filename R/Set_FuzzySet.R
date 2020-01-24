@@ -51,7 +51,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-FuzzySet <- R6::R6Class("FuzzySet", inherit = Set)
+FuzzySet <- R6Class("FuzzySet", inherit = Set)
 FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements))){
   if(!is.null(elements) & !is.null(membership)){
     elements <- listify(elements)
