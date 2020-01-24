@@ -7,11 +7,12 @@
 #' @description A general FuzzySet object for mathematical fuzzy sets, inheriting from `Set`.
 #' @return R6 object of class FuzzySet inheriting from [Set].
 #' @template Set
-#' @templateVar constructor FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)))
+#' @templateVar constructor FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)), class = NULL)
 #' @templateVar arg1 `...` \tab ANY \tab Alternating elements and membership, see constructor details. \cr
 #' @templateVar arg2 `elements` \tab ANY \tab Elements in the set, see constructor details. \cr
 #' @templateVar arg3 `membership` \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
-#' @templateVar constructorDets `FuzzySet`s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to `elements` and a list of respective memberships to `membership`, see examples.
+#' @templateVar arg4 `class` \tab character \tab Optional string naming a class that if supplied gives the set the `typed` property. \cr
+#' @templateVar constructorDets `FuzzySet`s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to `elements` and a list of respective memberships to `membership`, see examples. If the `class` argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
 #' @templateVar meth1 **Fuzzy Methods** \tab **Link** \cr
 #' @templateVar meth2 `membership(element = NULL)` \tab [membership] \cr
 #' @templateVar meth3 `alphaCut(alpha, strong = FALSE, create = FALSE)` \tab [alphaCut] \cr
@@ -52,7 +53,7 @@ NULL
 # Definition and Construction
 #---------------------------------------------
 FuzzySet <- R6Class("FuzzySet", inherit = Set)
-FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements))){
+FuzzySet$set("public","initialize",function(..., elements = NULL, membership = rep(1, length(elements)), class = NULL){
   if(!is.null(elements) & !is.null(membership)){
     elements <- listify(elements)
     membership <- as.numeric(membership)
@@ -75,7 +76,7 @@ FuzzySet$set("public","initialize",function(..., elements = NULL, membership = r
   checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
   private$.membership <- membership
 
-  super$initialize(elements)
+  super$initialize(elements = elements, class = class)
 
   invisible(self)
 })
@@ -171,7 +172,7 @@ FuzzySet$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE)
     if(length(els) == 0)
       return(Set$new())
     else
-      return(Set$new(els))
+      return(Set$new(elements = els))
   } else{
     if(length(els) == 0)
       return(NULL)
@@ -307,9 +308,6 @@ FuzzySet$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 
   returner(ret, all)
 })
-FuzzySet$set("public","absComplement",function(){
-  FuzzySet$new(elements = self$elements, membership = 1 - self$membership())
-})
 
 #---------------------------------------------
 # Private Fields
@@ -374,16 +372,11 @@ as.FuzzySet.FuzzySet <- function(object){
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzySet.Interval <- function(object){
-  if(testMessage(as.Set.Interval(object))) {
-    message("Interval cannot be coerced to FuzzySet.")
-    return(object)
-  } else
-    return(as.FuzzySet.Set(as.Set.Interval(object)))
+  ifnerror(as.Set.Interval(object), error = "stop", errormsg = "Interval cannot be coerced to FuzzySet.")
 }
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzySet.ConditionalSet <- function(object){
-  message("ConditionalSet cannot be coerced to FuzzySet.")
-  return(object)
+  stop("ConditionalSet cannot be coerced to FuzzySet.")
 }
 

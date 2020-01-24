@@ -8,10 +8,12 @@
 #' intervals, tuples, and fuzzy variants.
 #' @return R6 object of class Set.
 #' @template Set
-#' @templateVar constructor Set$new(..., universe = NULL)
+#' @templateVar constructor Set$new(..., universe = UniversalSet$new(), elements = NULL, class = NULL)
 #' @templateVar arg1 `...` \tab ANY \tab Elements in the set. \cr
-#' @templateVar arg2 `universe` \tab Set \tab Optional universe that the Set lives in.
-#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The optional `universe` argument is useful for taking the absolute complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar arg2 `universe` \tab Set \tab Universe that the Set lives in, default is the [UniversalSet]. \cr
+#' @templateVar arg3 `elements` \tab list \tab Alternative constructor that may be more efficienct if passing objects of multiple classes. \cr
+#' @templateVar arg4 `class` \tab character \tab Optional string naming a class that if supplied gives the set the `typed` property. \cr
+#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The `universe` argument is useful for taking the absolute complement of the `Set`. If a universe isn't given then [UniversalSet] is assumed. If the `class` argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
 #'
 #' @details
 #' Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
@@ -43,44 +45,56 @@ NULL
 # Definition and Construction
 #---------------------------------------------
 Set <- R6Class("Set")
-Set$set("public","initialize",function(..., universe = NULL){
+Set$set("public","initialize",function(..., universe = UniversalSet$new(), elements = NULL, class = NULL){
 
-  dots = list(...)
-  if(any(grepl("list", lapply(dots, class))))
-    dots <- unlist(dots, recursive = FALSE)
+  if(is.null(elements)) {
+    elements = list(...)
+    if(length(elements) > 0) {
+      if(length(elements) == 1 & checkmate::testVector(elements[[1]]))
+        elements = as.list(elements[[1]])
+    }
+  }
 
-  if(length(dots) != 0 & length(unlist(dots))!=0){
-    class <- unique(sapply(dots,function(x) class(x)[[1]]))
-    if(length(class)==1)
+  if(length(elements) != 0 & length(unlist(elements))!=0){
+
+    if (!is.null(class)){
       private$.class <- class
-    else
-      private$.class <- "multiple"
-
-    if(private$.class == "multiple")
-      elements = dots
-    else
-      elements = unlist(dots)
-
-    if(testTuple(self) | testFuzzyTuple(self))
-      private$.elements <- elements
-    else
-      private$.elements <- elements[!duplicated(lapply(elements, function(x){
-        y = try(x$strprint(), silent = TRUE)
-        if(inherits(y, "try-error"))
-          return(x)
-        else
-          return(y)
-      }))]
-
-    if(private$.class %in% c("numeric", "integer")){
-      private$.lower <- min(unlist(dots))
-      private$.upper <- max(unlist(dots))
+      elements <- as(elements, class)
+      if(class %in% c("complex", "numeric", "integer")) {
+        private$.lower <- min(unlist(elements))
+        private$.upper <- max(unlist(elements))
+      }
     }
 
-    if(!is.null(universe)){
-      assertSet(universe)
-      private$.universe <- universe
+    private$.elements <- elements
+
+    # } else {
+    #   class <- unique(sapply(dots,function(x) class(x)[[1]]))
+    #   if(length(class)==1) {
+    #     private$.class <- class
+    #     elements = unlist(dots)
+    #   } else {
+    #     private$.class <- "multiple"
+    #     elements = dots
+    #   }
+    # }
+
+    if(!testTuple(self) & !testFuzzyTuple(self)) {
+      if(private$.class != "ANY") {
+        private$.elements <- unique(elements)
+      } else {
+        private$.elements <- elements[!duplicated(lapply(elements, function(x){
+          y = try(x$strprint(), silent = TRUE)
+          if(inherits(y, "try-error"))
+            return(x)
+          else
+            return(y)
+        }))]
+      }
     }
+
+    assertSet(universe)
+    private$.universe <- universe
   }
 
   private$.properties = Properties$new(closure = "closed", cardinality = self$length)
@@ -318,9 +332,9 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 #---------------------------------------------
 # Public methods - absComplement
 #---------------------------------------------
-#' @name absComplement
-#' @rdname absComplement
-#' @family set methods
+#' @include set6-deprecated.R
+#' @name absComplement-deprecated
+#' @rdname absComplement-deprecated
 #' @title Absolute Complement of a Set
 #' @description Calculates and returns the absolute complement of a Set, which is the relative
 #' complement of a set from its universe.
@@ -329,13 +343,19 @@ Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
 #' @section R6 Usage: $absComplement()
 #' @seealso [setcomplement]
 #' @return Set
+#' @seealso \code{\link{set6-deprecated}}
+#' @keywords internal
+NULL
+#' @name absComplement
+#' @rdname set6-deprecated
+#' @section Deprecated Functions:
+#' \tabular{ll}{
+#' \strong{Deprecated} \tab \strong{Replacement} \cr
+#' \code{absComplement} \tab \code{\link{setcomplement}} \cr
+#' }
 Set$set("public","absComplement",function(){
-  if(!is.null(self$universe))
-    return(setcomplement(self$universe, self))
-  else{
-    message("Universe not provided, returning self.")
-    invisible(self)
-  }
+  .Deprecated("absComplement", "set6", "The absComplement method is now deprecated and the
+  setcomplement function without the 'y' argument should be used instead.")
 })
 #---------------------------------------------
 # Accessors
@@ -486,8 +506,8 @@ Set$set("active","elements",function(){
 #' @family set accessors
 #' @section R6 Usage: $universe
 #' @description Returns the universe of the Set.
-#' @details The universe is an optional Set that specifies where the given Set lives. This is useful
-#' for taking the absolute complement of a Set.
+#' @details The universe is a Set that specifies where the given Set lives, by default this is
+#' the [UniversalSet]. This is useful for taking the absolute complement of a Set.
 Set$set("active","universe",function(){
   return(private$.universe)
 })
@@ -519,7 +539,7 @@ Set$set("active","length",function(){
 #---------------------------------------------
 # Private variables
 #---------------------------------------------
-Set$set("private",".class","multiple")
+Set$set("private",".class", "ANY")
 Set$set("private",".type","{}")
 Set$set("private",".lower", NaN)
 Set$set("private",".upper", NaN)
@@ -541,9 +561,9 @@ summary.Set <- function(object, n = 2, ...){
 #' @export
 as.double.Set <- function(x,...) {
   if(testFuzzy(x))
-    return(x$support())
+    return(unlist(x$support()))
   else
-    return(x$elements)
+    return(unlist(x$elements))
 }
 #---------------------------------------------
 # as.Set
@@ -581,7 +601,10 @@ as.Set.data.frame <- as.Set.matrix
 #' @rdname as.Set
 #' @export
 as.Set.Set <- function(object){
-  return(Set$new(object$elements))
+  if(class(object$elements) == "list")
+    return(Set$new(elements = object$elements))
+  else
+    return(Set$new(elements = object$elements))
 }
 #' @rdname as.Set
 #' @export
@@ -592,8 +615,7 @@ as.Set.FuzzySet <- function(object){
 #' @export
 as.Set.Interval <- function(object){
   if(any(is.nan(object$elements))){
-    message("Interval cannot be coerced to Set.")
-    return(object)
+    stop("Interval cannot be coerced to Set.")
   } else {
     return(Set$new(object$elements))
   }
@@ -601,8 +623,7 @@ as.Set.Interval <- function(object){
 #' @rdname as.Set
 #' @export
 as.Set.ConditionalSet <- function(object){
-  message("ConditionalSet cannot be coerced to Set.")
-  return(object)
+  stop("ConditionalSet cannot be coerced to Set.")
 }
 #---------------------------------------------
 # Overloaded operators
@@ -640,5 +661,5 @@ as.Set.ConditionalSet <- function(object){
 #' @rdname contains
 #' @export
 '%inset%' <- function(x, y){
-  return(y$contains(x, bound = TRUE))
+  return(y$contains(x))
 }

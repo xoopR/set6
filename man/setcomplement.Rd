@@ -12,7 +12,7 @@
 \alias{setcomplement.Integers}
 \alias{setcomplement.ComplementSet}
 \alias{-.Set}
-\title{(Relative) Complement of Two Sets}
+\title{Complement of Two Sets}
 \usage{
 setcomplement(x, y, simplify = TRUE)
 
@@ -46,7 +46,8 @@ setcomplement(x, y, simplify = TRUE)
 An object inheriting from \code{Set} containing the set difference of elements in \code{x} and \code{y}.
 }
 \description{
-Returns the set difference of two objects inheriting from class \code{Set}.
+Returns the set difference of two objects inheriting from class \code{Set}. If \code{y} is missing
+then the complement of \code{x} from its universe is returned.
 }
 \details{
 The difference of two sets, \eqn{X, Y}, is defined as the set of elements that exist
@@ -59,6 +60,10 @@ The set difference of two \link{ConditionalSet}s is defined by combining their d
 The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
 }
 \examples{
+# absolute complement
+setcomplement(Set$new(1,2,3, universe = Reals$new()))
+setcomplement(Set$new(1,2, universe = Set$new(1,2,3,4,5)))
+
 # complement of two sets
 
 Set$new(-2:4) - Set$new(2:5)
@@ -92,8 +97,6 @@ Integers$new() - PosIntegers$new()
 
 }
 \seealso{
-\link{absComplement}
-
 Other operators: 
 \code{\link{powerset}()},
 \code{\link{setintersect}()},

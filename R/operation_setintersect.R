@@ -53,6 +53,9 @@
 #' @export
 setintersect <- function(x, y){
 
+  if(getR6Class(y) == "UniversalSet")
+    return(x)
+
   if(x$length == 0 | y$length == 0)
     return(Set$new())
 
@@ -71,20 +74,13 @@ setintersect <- function(x, y){
   else if (x$isSubset(y, proper = FALSE))
     return(y)
 
-  if(testMessage(as.Set(x)))
-    x = suppressMessages(as.Interval(x))
-  else
-    x = as.Set(x)
-
-  if(testMessage(as.Set(y)))
-    y = suppressMessages(as.Interval(y))
-  else
-    y = as.Set(y)
+  x = ifnerror(as.Set(x), error = as.Interval(x))
+  y = ifnerror(as.Set(y), error = as.Interval(y))
 
   if(testInterval(x))
     UseMethod("setintersect")
 
-  return(Set$new(x$elements[y$contains(x$elements)]))
+  return(Set$new(elements = listify(x$elements[y$contains(x$elements)])))
 }
 # #' rdname setintersect
 # #' export
@@ -107,7 +103,7 @@ setintersect.Interval <- function(x, y){
       return(Interval$new(x$lower, y$upper,
                           type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
   } else
-    return(Set$new(y$elements[x$contains(y$elements)]))
+    return(Set$new(elements = listify(y$elements[x$contains(y$elements)])))
 }
 #' @rdname setintersect
 #' @export

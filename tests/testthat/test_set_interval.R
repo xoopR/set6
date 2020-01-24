@@ -23,8 +23,8 @@ test_that("inherited_methods",{
   expect_equal(Interval$new(1,2)$lower,1)
   expect_equal(Interval$new(1,2)$class, "numeric")
   expect_equal(Interval$new(1,3)$range,2)
-  expect_silent(Interval$new(1,10)$absComplement())
-  expect_equal(Interval$new(1,10,universe = Interval$new(1,15))$absComplement(),
+  expect_silent(setcomplement(Interval$new(1,10)))
+  expect_equal(setcomplement(Interval$new(1,10,universe = Interval$new(1,15))),
                Interval$new(10,15, type = "(]"))
 })
 
@@ -64,9 +64,9 @@ test_that("equals",{
 })
 
 test_that("strprint",{
-  expect_equal(Interval$new()$strprint(),"[-\u221E, +\u221E]")
-  expect_equal(Interval$new(1,10,type="(]")$strprint(),"(1, 10]")
-  expect_equal(Interval$new(1,3)$strprint(),"[1, 3]")
+  expect_equal(Interval$new()$strprint(),"[-\u221E,+\u221E]")
+  expect_equal(Interval$new(1,10,type="(]")$strprint(),"(1,10]")
+  expect_equal(Interval$new(1,3)$strprint(),"[1,3]")
   expect_equal(Interval$new(1,3,class="integer")$strprint(),"{1,...,3}")
 })
 
@@ -122,9 +122,9 @@ test_that("isSubinterval",{
 
 test_that("coercions",{
   expect_equal(as.double(Interval$new(1,5,class="integer")), 1:5)
-  expect_message(expect_equal(as.Interval(Set$new(1,5)), Set$new(1,5)), "Set cannot be")
-  expect_message(expect_equal(as.Interval(ConditionalSet$new(function(x) TRUE)),ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
-  expect_message(expect_equal(as.Interval(c(1,5)), c(1,5)), "Numeric cannot be")
+  expect_error(expect_equal(as.Interval(Set$new(1,5)), Set$new(1,5)), "Cannot be")
+  expect_error(expect_equal(as.Interval(ConditionalSet$new(function(x) TRUE)),ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
+  expect_error(expect_equal(as.Interval(c(1,5)), c(1,5)), "Cannot be")
   expect_equal(as.Interval(Set$new(1)), Interval$new(1,1))
   expect_equal(as.Interval(FuzzySet$new(1,0.1,2,0.3,3,0.4,4,0)), Interval$new(1,3,class="integer"))
   expect_equal(as.Interval(list(lower = 1, upper = 2, type = "[]", class = "numeric")), Interval$new(1,2))

@@ -6,11 +6,12 @@
 #' @description A general FuzzyTuple object for mathematical fuzzy tuples, inheriting from `FuzzySet`.
 #' @return R6 object of class FuzzyTuple inheriting from [FuzzySet].
 #' @template Set
-#' @templateVar constructor FuzzyTuple$new(..., elements = NULL, membership = rep(1, length(elements)))
+#' @templateVar constructor FuzzyTuple$new(..., elements = NULL, membership = rep(1, length(elements)), class = NULL)
 #' @templateVar arg1 `...` \tab ANY \tab Alternating elements and membership, see constructor details. \cr
 #' @templateVar arg2 `elements` \tab ANY \tab Elements in the set, see constructor details. \cr
 #' @templateVar arg3 `membership` \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
-#' @templateVar constructorDets `FuzzyTuple`s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to `elements` and a list of respective memberships to `membership`, see examples.
+#' @templateVar arg4 `class` \tab character \tab Optional string naming a class that if supplied gives the set the `typed` property. \cr
+#' @templateVar constructorDets `FuzzyTuple`s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to `elements` and a list of respective memberships to `membership`, see examples. If the `class` argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
 #' @templateVar meth1 **Fuzzy Methods** \tab **Link** \cr
 #' @templateVar meth2 `membership(element = NULL)` \tab [membership] \cr
 #' @templateVar meth3 `alphaCut(alpha, strong = FALSE, create = FALSE)` \tab [alphaCut] \cr
@@ -141,9 +142,6 @@ FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALS
       return(els)
   }
 })
-FuzzyTuple$set("public","absComplement",function(){
-  FuzzyTuple$new(elements = self$elements, membership = 1 - self$membership())
-})
 
 #---------------------------------------------
 # Private Fields
@@ -196,15 +194,10 @@ as.FuzzyTuple.FuzzySet <- function(object){
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.Interval <- function(object){
-  if(testMessage(as.Set.Interval(object))) {
-    message("Interval cannot be coerced to FuzzyTuple.")
-    return(object)
-  } else
-    return(as.FuzzyTuple.Set(as.Set.Interval(object)))
+  ifnerror(as.Set.Interval(object), error = "stop", errormsg = "Interval cannot be coerced to FuzzyTuple.")
 }
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.ConditionalSet <- function(object){
-  message("ConditionalSet cannot be coerced to FuzzyTuple.")
-  return(object)
+  stop("ConditionalSet cannot be coerced to FuzzyTuple.")
 }

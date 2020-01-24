@@ -64,9 +64,6 @@ this class directly but via the set operation methods.
 \code{equals(x, all = FALSE)} \tab \link{equals} \cr
 \code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr
-\strong{Mathematical Methods} \tab \strong{Link} \cr
-\code{absComplement()} \tab \link{absComplement} \cr
-\tab \cr \tab \cr \tab \cr
 \strong{Representation Methods} \tab \strong{Link} \cr
 \code{strprint(n = 2)} \tab \link{strprint} \cr
 \code{print(n = 2)} \tab \link{print} \cr

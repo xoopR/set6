@@ -51,7 +51,18 @@
 #'
 #' @export
 setunion <- function(..., simplify = TRUE){
+  if(...length() == 0)
+    return(Set$new())
+
   sets = list(...)
+
+  classes = sapply(sets, getR6Class)
+
+  if(all(classes %in% c("Set", "Tuple")) & simplify)
+    return(.union_set(sets))
+
+  if("UniversalSet" %in% classes)
+    return(UniversalSet$new())
 
   # clean-up sets, ensure fuzzy/crisp consistency
   sets = operation_cleaner(sets, "UnionSet", nest = FALSE)
@@ -135,10 +146,14 @@ setunion <- function(..., simplify = TRUE){
   if(length(sets) == 1)
     return(sets[[1]])
 
+  class = unique(rsapply(sets, class, active = TRUE))
+  if(length(class) != 1 | any(class == "ANY"))
+    class = NULL
+
   if(any(grepl("Set", sapply(sets, getR6Class))))
-    return(Set$new(unlist(rsapply(sets, "elements", active = TRUE))))
+    return(Set$new(unlist(rsapply(sets, "elements", active = TRUE)), class = class))
   else
-    return(Tuple$new(unlist(rsapply(sets, "elements", active = TRUE))))
+    return(Tuple$new(unlist(rsapply(sets, "elements", active = TRUE)), class = class))
 }
 .union_interval <- function(sets){
   if(length(sets) == 1)

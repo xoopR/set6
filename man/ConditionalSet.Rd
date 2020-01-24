@@ -28,7 +28,7 @@ using standard 'and', \code{&}, and 'or', \code{|}, operators.
 }
 
 \section{Constructor Details}{
- The \code{condition} should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the universe of the function arguments as \link{Set}s, if these are not given then the \link{Reals} is assumed. See examples.
+ The \code{condition} should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the universe of the function arguments as \link{Set}s, if these are not given then the \link{UniversalSet} is assumed. See examples.
 }
 
 \section{Public Fields}{
@@ -60,9 +60,6 @@ using standard 'and', \code{&}, and 'or', \code{|}, operators.
 \code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
 \code{equals(x, all = FALSE)} \tab \link{equals} \cr
 \code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Mathematical Methods} \tab \strong{Link} \cr
-\code{absComplement()} \tab \link{absComplement} \cr
 \tab \cr \tab \cr \tab \cr
 \strong{Representation Methods} \tab \strong{Link} \cr
 \code{strprint(n = 2)} \tab \link{strprint} \cr
@@ -98,6 +95,7 @@ Other sets:
 \code{\link{FuzzyTuple}},
 \code{\link{Interval}},
 \code{\link{Set}},
-\code{\link{Tuple}}
+\code{\link{Tuple}},
+\code{\link{UniversalSet}}
 }
 \concept{sets}

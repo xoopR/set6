@@ -6,10 +6,10 @@ test_that("construction",{
   expect_error(SetWrapper$new(), "SetWrapper is an abstract")
 })
 
-test_that("accessors",{
-  u = Set$new(1) + Interval$new(3, 4)
-  expect_equal(u$class, "numeric")
-})
+# test_that("accessors",{
+#   u = Set$new(1) + Interval$new(3, 4)
+#   # expect_equal(u$class, "numeric")
+# })
 
 test_that("equals",{
   u = Set$new(1) + Interval$new(3, 4)
@@ -22,5 +22,5 @@ test_that("equals",{
 test_that("subset/complement",{
   u = Set$new(1) + Interval$new(3, 4)
   expect_message(u$isSubset(Set$new(1)))
-  expect_message(u$absComplement())
+  expect_error(setcomplement(u), "y is missing")
 })

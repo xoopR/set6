@@ -18,10 +18,7 @@ operation_cleaner <- function(sets, operation_class, nest){
   interval = grepl("Interval", classes)
   if(any(interval))
     sets[interval] = lapply(sets[interval], function(x){
-      if(testMessage(as.Set(x)))
-        return(x)
-      else
-        return(as.Set(x))
+      return(ifnerror(as.Set(x), error = x))
     })
 
   fuzzy = grepl("Fuzzy", classes)

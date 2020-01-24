@@ -35,6 +35,9 @@
 #'
 #' @export
 setpower <- function(x, power, simplify = FALSE, nest = FALSE){
+  if(getR6Class(x) == "UniversalSet")
+    return(x)
+
   if(power == 1)
     return(x)
 

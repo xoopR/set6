@@ -7,10 +7,12 @@
 #' @description A general Tuple object for mathematical tuples, inheriting from `Set`.
 #' @return R6 object of class Tuple inheriting from [Set].
 #' @template Set
-#' @templateVar constructor Tuple$new(..., universe = NULL)
+#' @templateVar constructor Tuple$new(..., universe = UniversalSet$new())
 #' @templateVar arg1 `...` \tab ANY \tab Elements in the tuple. \cr
-#' @templateVar arg2 `universe` \tab Set \tab Optional universe that the Tuple lives in.
-#' @templateVar constructorDets Tuples are constructed by elements of any types (including R6 classes). The optional `universe` argument is useful for taking the absolute complement of the `Tuple`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar arg2 `universe` \tab Set \tab Universe that the Tuple lives in, default [UniversalSet]. \cr
+#' @templateVar arg3 `elements` \tab list \tab Alternative constructor that may be more efficienct if passing objects of multiple classes. \cr
+#' @templateVar arg4 `class` \tab character \tab Optional string naming a class that if supplied gives the set the `typed` property. \cr
+#' @templateVar constructorDets Tuples are constructed by elements of any types (including R6 classes). The `universe` argument is useful for taking the absolute complement of the `Tuple`. If a universe isn't given then [UniversalSet] is assumed. If the `class` argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
 #'
 #' @details
 #' Tuples are similar to sets, except that they drop the constraint for elements to be unique, and
@@ -57,7 +59,7 @@ Tuple$set("public","equals",function(x, all = FALSE){
         el = as.Tuple(el)
     }
 
-    if(testInterval(el) & !testMessage(as.Tuple(el)))
+    if(testInterval(el) & class(try(as.Tuple(el), silent = TRUE))[1] != "try-error")
       el = as.Tuple(el)
     else if(testConditionalSet(el))
       return(FALSE)
@@ -67,8 +69,16 @@ Tuple$set("public","equals",function(x, all = FALSE){
 
     if(class(el$elements) == "list" | class(self$elements) == "list"){
       ret = TRUE
-      for(i in el$length){
-        if(el$elements[[i]] != self$elements[[i]]){
+      for(i in 1:el$length){
+        elel = el$elements[[i]]
+        selel = self$elements[[i]]
+
+        if(testSet(elel))
+          elel = elel$strprint()
+        if(testSet(selel))
+          selel = selel$strprint()
+
+        if(elel != selel){
           ret = FALSE
           break()
         }
@@ -94,7 +104,7 @@ Tuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
         el = as.Tuple(el)
     }
 
-    if(testInterval(el) & !testMessage(as.Tuple(el)))
+    if(testInterval(el) & class(try(as.Tuple(el), silent = TRUE))[1] != "try-error")
       el = as.Tuple(el)
 
     if(!testSet(el) | testFuzzy(el) | testConditionalSet(el) | testInterval(el))
@@ -157,19 +167,18 @@ as.Tuple.data.frame <- as.Tuple.matrix
 #' @rdname as.Set
 #' @export
 as.Tuple.FuzzySet <- function(object){
-  return(Tuple$new(object$support()))
+  return(Tuple$new(elements = object$support()))
 }
 #' @rdname as.Set
 #' @export
 as.Tuple.Set <- function(object){
-  return(Tuple$new(object$elements))
+  return(Tuple$new(elements = object$elements))
 }
 #' @rdname as.Set
 #' @export
 as.Tuple.Interval <- function(object){
   if(any(is.nan(object$elements))){
-    message("Interval cannot be coerced to Tuple.")
-    return(object)
+    stop("Interval cannot be coerced to Tuple.")
   } else {
     return(Tuple$new(object$elements))
   }
@@ -177,6 +186,5 @@ as.Tuple.Interval <- function(object){
 #' @rdname as.Set
 #' @export
 as.Tuple.ConditionalSet <- function(object){
-  message("ConditionalSet cannot be coerced to Tuple.")
-  return(object)
+  stop("ConditionalSet cannot be coerced to Tuple.")
 }

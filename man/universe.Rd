@@ -7,8 +7,8 @@
 Returns the universe of the Set.
 }
 \details{
-The universe is an optional Set that specifies where the given Set lives. This is useful
-for taking the absolute complement of a Set.
+The universe is a Set that specifies where the given Set lives, by default this is
+the \link{UniversalSet}. This is useful for taking the absolute complement of a Set.
 }
 \section{R6 Usage}{
  $universe

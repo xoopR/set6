@@ -8,13 +8,13 @@
 #' may be open, closed, or half-open; as well as bounded above, below, or not at all.
 #' @return R6 object of class Interval inheriting from [Set].
 #' @template Set
-#' @templateVar constructor Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())
+#' @templateVar constructor Interval$new(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"), class = "numeric", universe = Reals$new())
 #' @templateVar arg1 `lower` \tab numeric \tab Lower limit of the interval. \cr
 #' @templateVar arg2 `upper` \tab numeric \tab Upper limit of the interval. \cr
 #' @templateVar arg3 `type` \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed. \cr
 #' @templateVar arg4 `class` \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
-#' @templateVar arg5 `universe` \tab Set \tab Optional universe that the interval lives in.
-#' @templateVar constructorDets If defaults are used then the Real number line is constructed. The optional `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
+#' @templateVar arg5 `universe` \tab Set \tab Universe that the interval lives in, default [Reals].
+#' @templateVar constructorDets If defaults are used then the Real number line is constructed. The `universe` argument is useful for taking the complement of the `Set`. If a universe isn't given then [Reals] is assumed.
 #' @templateVar meth1 **Interval Methods** \tab **Link** \cr
 #' @templateVar meth2 isSubinterval(x, proper = FALSE, all = FALSE) \tab [isSubinterval] \cr
 #' @templateVar meth3  \tab \cr \tab \cr \tab \cr
@@ -48,10 +48,10 @@ NULL
 # Definition and Construction
 #---------------------------------------------
 Interval <- R6Class("Interval", inherit = Set)
-Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[]", class = "numeric",
-                                            universe = Reals$new()){
+Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"),
+                                            class = "numeric", universe = Reals$new()){
 
-  checkmate::assertChoice(type, c("()","(]","[]","[)"))
+  type = match.arg(type)
   if(checkmate::testComplex(lower) | checkmate::testComplex(upper)){
     lower = as.complex(lower)
     upper = as.complex(upper)
@@ -62,12 +62,12 @@ Interval$set("public","initialize",function(lower = -Inf, upper = Inf, type = "[
     checkmate::assert(lower <= upper)
   }
   checkmate::assertChoice(class, c("numeric","integer"))
-  if(!is.null(universe)){
-    if(getR6Class(self) != "SpecialSet"){
-      assertSet(universe)
-      private$.universe <- universe
-    }
+
+  if(getR6Class(self) != "SpecialSet"){
+    assertSet(universe)
+    private$.universe <- universe
   }
+
 
   if(lower == upper){
     private$.class <- "integer"
@@ -110,10 +110,10 @@ sup <- ifelse(self$upper==Inf & useUnicode(), "+\u221E", self$upper)
 if(self$class == "integer")
   return(paste0("{", inf, ",...,", sup, "}"))
 else
-  return(paste0(substr(self$type,1,1),inf,", ",sup,substr(self$type,2,2)))
+  return(paste0(substr(self$type,1,1),inf,",",sup,substr(self$type,2,2)))
 })
 Interval$set("public","equals",function(x, all = FALSE){
-  if(!testMessage(as.Set(self)))
+  if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
     return(super$equals(x, all))
 
   x <- listify(x)
@@ -131,7 +131,7 @@ Interval$set("public","equals",function(x, all = FALSE){
   returner(ret, all)
 })
 Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
-  if(!testMessage(as.Set(self)))
+  if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
     return(super$contains(x, all, bound))
 
   x <- listify(x)
@@ -162,7 +162,7 @@ Interval$set("public","contains",function(x, all = FALSE, bound = FALSE){
   returner(ret, all)
 })
 Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
-  if(!testMessage(as.Set(self)))
+  if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
     return(super$isSubset(x, proper, all))
 
   x <- listify(x)
@@ -226,7 +226,7 @@ Interval$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
 #' Reals$new()$isSubset(Integers$new()) # TRUE
 #' Reals$new()$isSubinterval(Integers$new()) # FALSE
 Interval$set("public", "isSubinterval", function(x, proper = FALSE, all = FALSE){
-  if(!testMessage(as.Tuple(self)))
+  if(class(try(as.Tuple(self), silent = TRUE))[1] != "try-error")
     return(as.Tuple(self)$isSubset(x, proper, all))
 
   x <- listify(x)
@@ -241,10 +241,10 @@ Interval$set("public", "isSubinterval", function(x, proper = FALSE, all = FALSE)
     if(testFuzzy(el) | testConditionalSet(el))
       return(FALSE)
 
-    if(testMessage(as.Interval(el)))
+    el = try(as.Interval(el), silent = TRUE)
+
+    if(class(el)[1] == "try-error")
       return(FALSE)
-    else
-      el = as.Interval(el)
 
     if(el$class != self$class)
       return(FALSE)
@@ -304,12 +304,7 @@ as.Interval.Set <- function(object){
   if(testFuzzy(object))
     object = object$support(create = TRUE)
 
-  if(testMessage(as.Interval.numeric(object$elements))){
-    message("Set cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
-    return(object)
-  } else {
-    return(as.Interval.numeric(object$elements))
-  }
+  as.Interval.numeric(unlist(object$elements))
 }
 #' @rdname as.Interval
 #' @export
@@ -339,15 +334,13 @@ as.Interval.numeric <- function(object){
   else if (all(diff(object) == 1))
     return(Interval$new(min(object), max(object), class = "integer"))
   else {
-    message("Numeric cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
-    return(object)
+    stop("Cannot be coerced to Interval. Elements must be equally spaced with unit difference.")
   }
 }
 #' @rdname as.Interval
 #' @export
 as.Interval.ConditionalSet <- function(object){
-  message("ConditionalSet cannot be coerced to Interval.")
-  return(object)
+  stop("ConditionalSet cannot be coerced to Interval.")
 }
 
 

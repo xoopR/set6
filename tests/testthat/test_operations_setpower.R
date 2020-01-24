@@ -10,13 +10,13 @@ test_that("Set",{
 
 test_that("conditionalset",{
   useUnicode(FALSE)
-  expect_equal((ConditionalSet$new(function(x) x == 1)^2)$strprint(), "{x == 1 : x in R}^2")
+  expect_equal((ConditionalSet$new(function(x) x == 1)^2)$strprint(), "{x == 1 : x in V}^2")
   useUnicode(TRUE)
 })
 
 test_that("interval",{
   i = Interval$new(1,2)^3
-  expect_equal(i$strprint(),"[1, 2]^3")
+  expect_equal(i$strprint(),"[1,2]^3")
   expect_equal(i$power, 3)
 })
 
@@ -27,7 +27,7 @@ test_that("exponent",{
 test_that("setwrapper",{
   useUnicode(FALSE)
   expect_equal(((Interval$new(1,2) + Interval$new(3,4))^2)$strprint(),
-               "([1, 2] U [3, 4])^2")
+               "([1,2] U [3,4])^2")
   useUnicode(TRUE)
 })
 

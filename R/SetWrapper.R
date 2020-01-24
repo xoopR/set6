@@ -14,12 +14,12 @@ SetWrapper$set("public","initialize",function(setlist, lower = NULL, upper = NUL
   if(!is.null(lower)) private$.lower <- lower
   if(!is.null(upper)) private$.upper <- upper
   if(!is.null(type)) private$.type <- type
-
-  class <- sapply(setlist, function(x) x$class)
-  if(length(unique(class)) == 1)
-    private$.class <- unique(class)
-  else
-    private$.class <- "multiple"
+#
+#   class <- sapply(setlist, function(x) x$class)
+#   if(length(unique(class)) == 1)
+#     private$.class <- unique(class)
+#   else
+#     private$.class <- "multiple"
 
   private$.properties <- Properties$new(closure = "closed", cardinality)
 
@@ -54,9 +54,7 @@ SetWrapper$set("public", "equals", function(x, all = FALSE){
 SetWrapper$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
   message("isSubset currently not implemented for this wrapper.")
 })
-SetWrapper$set("public","absComplement",function(){
-  message("absComplement currently not implemented for this wrapper.")
-})
+
 #---------------------------------------------
 # Public Fields
 #---------------------------------------------

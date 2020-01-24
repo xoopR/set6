@@ -66,9 +66,6 @@
 #' `equals(x, all = FALSE)` \tab [equals] \cr
 #' `isSubset(x, proper = FALSE, all = FALSE)` \tab [isSubset] \cr
 #' \tab \cr \tab \cr \tab \cr
-#' **Mathematical Methods** \tab \strong{Link} \cr
-#' `absComplement()` \tab [absComplement] \cr
-#' \tab \cr \tab \cr \tab \cr
 #' **Representation Methods** \tab **Link** \cr
 #' `strprint(n = 2)` \tab [strprint] \cr
 #' `print(n = 2)` \tab [print] \cr

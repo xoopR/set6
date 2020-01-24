@@ -15,7 +15,7 @@ The Interval class can be used for finite or infinite intervals, but often Sets 
 integer intervals over a finite continuous range. Use \link{Complex} to define an interval with complex values.
 }
 \section{Constructor}{
- \code{Interval$new(lower = -Inf, upper = Inf, type = "[]", class = "numeric", universe = Reals$new())}
+ \code{Interval$new(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"), class = "numeric", universe = Reals$new())}
 }
 
 \section{Constructor Arguments}{
@@ -26,13 +26,13 @@ integer intervals over a finite continuous range. Use \link{Complex} to define a
 \code{upper} \tab numeric \tab Upper limit of the interval. \cr
 \code{type} \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed. \cr
 \code{class} \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
-\code{universe} \tab Set \tab Optional universe that the interval lives in.
+\code{universe} \tab Set \tab Universe that the interval lives in, default \link{Reals}.
 
 }
 }
 
 \section{Constructor Details}{
- If defaults are used then the Real number line is constructed. The optional \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
+ If defaults are used then the Real number line is constructed. The \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
 }
 
 \section{Public Fields}{
@@ -67,9 +67,6 @@ isSubinterval(x, proper = FALSE, all = FALSE) \tab \link{isSubinterval} \cr
 \code{equals(x, all = FALSE)} \tab \link{equals} \cr
 \code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
 \tab \cr \tab \cr \tab \cr
-\strong{Mathematical Methods} \tab \strong{Link} \cr
-\code{absComplement()} \tab \link{absComplement} \cr
-\tab \cr \tab \cr \tab \cr
 \strong{Representation Methods} \tab \strong{Link} \cr
 \code{strprint(n = 2)} \tab \link{strprint} \cr
 \code{print(n = 2)} \tab \link{print} \cr
@@ -103,6 +100,7 @@ Other sets:
 \code{\link{FuzzySet}},
 \code{\link{FuzzyTuple}},
 \code{\link{Set}},
-\code{\link{Tuple}}
+\code{\link{Tuple}},
+\code{\link{UniversalSet}}
 }
 \concept{sets}

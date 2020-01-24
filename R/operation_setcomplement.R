@@ -2,9 +2,10 @@
 #' @param x,y Set
 #' @param simplify logical, if `TRUE` (default) returns the result in its simplest form, usually a `Set` or
 #' [UnionSet], otherwise a `ComplementSet`.
-#' @title (Relative) Complement of Two Sets
+#' @title Complement of Two Sets
 #' @return An object inheriting from `Set` containing the set difference of elements in `x` and `y`.
-#' @description Returns the set difference of two objects inheriting from class `Set`.
+#' @description Returns the set difference of two objects inheriting from class `Set`. If `y` is missing
+#' then the complement of `x` from its universe is returned.
 #' @details The difference of two sets, \eqn{X, Y}, is defined as the set of elements that exist
 #' in set \eqn{X} and not \eqn{Y},
 #' \deqn{X-Y = \{z : z \epsilon X \quad and \quad \neg(z \epsilon Y)\}}{X-Y = {z : z \epsilon X and !(z \epsilon Y)}}
@@ -15,8 +16,11 @@
 #' The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
 #'
 #' @family operators
-#' @seealso [absComplement]
 #' @examples
+#' # absolute complement
+#' setcomplement(Set$new(1,2,3, universe = Reals$new()))
+#' setcomplement(Set$new(1,2, universe = Set$new(1,2,3,4,5)))
+#'
 #' # complement of two sets
 #'
 #' Set$new(-2:4) - Set$new(2:5)
@@ -51,9 +55,23 @@
 #' @export
 setcomplement <- function(x, y, simplify = TRUE){
 
+  if (missing(y)) {
+    if(getR6Class(x) == "FuzzySet")
+      return(FuzzySet$new(elements = x$elements, membership = 1 - x$membership()))
+    else if(getR6Class(x) == "FuzzyTuple")
+      return(FuzzyTuple$new(elements = x$elements, membership = 1 - x$membership()))
+    else if (is.null(x$universe))
+      stop("Set y is missing and x does not have a universe for absolute complement.")
+    else
+      return(setcomplement(x$universe, x))
+  }
+
+  if(getR6Class(y) == "UniversalSet")
+    return(Set$new())
+
   if((testConditionalSet(x) & !testConditionalSet(y)) |
      (testConditionalSet(y) & !testConditionalSet(x)) |
-     !simplify)
+     !simplify | getR6Class(x) == "UniversalSet")
     return(ComplementSet$new(x, y))
 
   if(testCrisp(x) & testFuzzyTuple(y))
@@ -101,10 +119,9 @@ setcomplement.Set <- function(x, y, simplify = TRUE){
 #' @export
 setcomplement.Interval <- function(x, y, simplify = TRUE){
   # if possible convert Interval to Set
-  if(!testMessage(as.Set(x)))
+  if(class(try(as.Set(x), silent = TRUE))[1] != "try-error")
     return(setcomplement.Set(as.Set(x), y))
-  if(!testMessage(as.Set(y)))
-    y = as.Set(y)
+  y = ifnerror(as.Set(y), error = y)
 
   # difference of interval from interval
   if(testInterval(y)){
@@ -123,15 +140,16 @@ setcomplement.Interval <- function(x, y, simplify = TRUE){
       return(setunion(Interval$new(x$lower,y$lower,type=paste0(substr(x$type,1,1),")"),class = x$class),
                        Interval$new(y$upper,x$upper,type=paste0("(",substr(x$type,2,2)),class = x$class)))
   } else if (getR6Class(y) == "Set") {
-    y = Set$new(y$elements[x$contains(y$elements)])
+    y = Set$new(elements = y$elements[x$contains(y$elements)])
     if(y$length == 1){
-      if(y$elements == x$lower)
+      yels = unlist(y$elements)
+      if(yels == x$lower)
         return(Interval$new(x$lower, x$upper, type = paste0("(",substr(x$type,2,2))))
-      else if(y$elements == x$upper)
+      else if(yels == x$upper)
         return(Interval$new(x$lower, x$upper, type = paste0(substr(x$type,1,1),")")))
       else
-        return(Interval$new(x$lower, y$elements, type = paste0(substr(x$type,1,1),")")) +
-                 Interval$new(y$elements, x$upper, type = paste0("(", substr(x$type,2,2))))
+        return(Interval$new(x$lower, yels, type = paste0(substr(x$type,1,1),")")) +
+                 Interval$new(yels, x$upper, type = paste0("(", substr(x$type,2,2))))
     }
     u = Set$new()
     for(i in 1:y$length){

@@ -4,13 +4,14 @@ SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = 
   if(getR6Class(self, pos = environment()) == "SpecialSet")
     stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  super$initialize(lower = lower, upper = upper, type = type, class = class, universe = NULL)
+  super$initialize(lower = lower, upper = upper, type = type, class = class, universe = UniversalSet$new())
 
   invisible(self)
 })
 SpecialSet$set("public","strprint",function(...){
-  setSymbol(getR6Class(self))
+  setSymbol(getR6Class(self), private$.zero)
 })
+SpecialSet$set("private",".zero",FALSE)
 
 #' @name Naturals
 #' @template SpecialSetcon
@@ -75,6 +76,7 @@ Integers$set("public", "initialize", function(lower = -Inf, upper = Inf, type = 
 NULL
 PosIntegers <- R6Class("PosIntegers",inherit = Integers)
 PosIntegers$set("public", "initialize", function(zero = FALSE){
+  if(zero) private$.zero = TRUE
   super$initialize(lower = ifelse(zero, 0, 1), type = "[)")
 })
 
@@ -91,6 +93,7 @@ PosIntegers$set("public", "initialize", function(zero = FALSE){
 NULL
 NegIntegers <- R6Class("NegIntegers",inherit = Integers)
 NegIntegers$set("public", "initialize", function(zero = FALSE){
+  if(zero) private$.zero = TRUE
   super$initialize(upper = ifelse(zero, 0, -1), type = "(]")
 })
 
@@ -129,6 +132,7 @@ Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type =
 NULL
 PosRationals <- R6Class("PosRationals",inherit = Rationals)
 PosRationals$set("public", "initialize", function(zero = FALSE){
+  if(zero) private$.zero = TRUE
   super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
 })
 
@@ -148,6 +152,7 @@ PosRationals$set("public", "initialize", function(zero = FALSE){
 NULL
 NegRationals <- R6Class("NegRationals",inherit = Rationals)
 NegRationals$set("public", "initialize", function(zero = FALSE){
+  if(zero) private$.zero = TRUE
   super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
 })
 
@@ -183,6 +188,7 @@ Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()
 NULL
 PosReals <- R6Class("PosReals",inherit = Reals)
 PosReals$set("public", "initialize", function(zero = FALSE){
+  if(zero) private$.zero = TRUE
   super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
 })
 
@@ -200,6 +206,7 @@ PosReals$set("public", "initialize", function(zero = FALSE){
 NULL
 NegReals <- R6Class("NegReals",inherit = Reals)
 NegReals$set("public", "initialize", function(zero = FALSE){
+  if(zero) private$.zero = TRUE
   super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
 })
 

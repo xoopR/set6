@@ -10,7 +10,7 @@ Properties$set("public","initialize",function(closure = character(0), cardinalit
   }
 
   if(!is.null(cardinality)){
-    if (!checkmate::testIntegerish(cardinality)){
+    if (!(class(cardinality) %in% c("integer","numeric"))){
       if (grepl("^a(leph){0,1}0$", cardinality, ignore.case = TRUE)) {
         private$.cardinality = "Aleph0"
         private$.countability = "countably infinite"

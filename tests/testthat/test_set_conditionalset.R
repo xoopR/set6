@@ -46,9 +46,9 @@ test_that("equals",{
 
 test_that("strprint",{
   useUnicode(TRUE)
-  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x", " \u2208 ", setSymbol(Reals), "}"))
+  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x", " \u2208 V}"))
   useUnicode(FALSE)
-  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x in ", setSymbol(Reals), "}"))
+  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), paste0("{TRUE : x in V}"))
   useUnicode(TRUE)
 })
 
@@ -64,6 +64,6 @@ test_that("isSubset",{
 test_that("fields",{
   c = ConditionalSet$new(function(x) TRUE)
   expect_equal(c$condition, function(x) TRUE)
-  expect_equal(c$class, list(x = Reals$new()))
+  expect_equal(c$class, list(x = UniversalSet$new()))
   expect_equal(c$elements, NaN)
 })

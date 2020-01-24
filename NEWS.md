@@ -1,6 +1,20 @@
 # set6 0.1.1
 
-- Changed `ConditionalSet` 'element in' symbol to U+2208 from U+03B5
+### Patches
+- `absComplement` method is now deprecated, instead use `setcomplement` and omit the `y` argument
+- Fixed error in `contains` default caused by `%inset%`
+- Improved printing of `SpecialSet`s when `zero == TRUE`
+- Added `UniversalSet` for the set containing all elements
+- Changed default `universe` of sets to `UniversalSet`
+- Coercions now error instead of producing a message when they fail
+- On construction, `Set`s no longer guess the set class, instead an extra `class` argument is added to give a set the `typed` property
+- The internal `Set` structure is slightly changed so that set elements are now stored in lists by default, which is only changed if the set is `typed`
+- Added `element` argument to `Set` constructor, which takes a `list`. This is more efficient if passing lists of lists or lists of multiple types, and in line with the `FuzzySet` constructor
+- Improved printing of `ConditionalSet`s
+- Updated `powerset` to always return a `Set` of `Set`s (even if input is `Tuple`)
+- Fixed bug in `Properties` causing an error if cardinality was too large
+- Updated documentation
+- Reduced `Set` constructor bottleneck by adding 'typed' sets
 - Changed `use_unicode` default to `l10n_info()$UTF-8`
 
 # set6 0.1.0
