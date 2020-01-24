@@ -13,7 +13,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-PowersetSet <- R6::R6Class("PowersetSet", inherit = ProductSet)
+PowersetSet <- R6Class("PowersetSet", inherit = ProductSet)
 PowersetSet$set("public", "initialize", function(set){
 
   cardinality = set$properties$cardinality

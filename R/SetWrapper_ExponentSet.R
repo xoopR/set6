@@ -14,7 +14,7 @@ NULL
 #---------------------------------------------
 # Definition and Construction
 #---------------------------------------------
-ExponentSet <- R6::R6Class("ExponentSet", inherit = ProductSet)
+ExponentSet <- R6Class("ExponentSet", inherit = ProductSet)
 ExponentSet$set("public", "initialize", function(set, power){
   lower = Tuple$new(rep(set$lower, power))
   upper = Tuple$new(rep(set$upper, power))

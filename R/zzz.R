@@ -1,3 +1,5 @@
+#' @importFrom R6 R6Class
+
 .onLoad = function(libname, pkgname) {
   options(set6.unicode = TRUE)
 }
