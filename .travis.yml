@@ -1,14 +1,7 @@
 language: r
-  
-  
-matrix:
-    include:
-        - os: linux
-          r: release
-        - os: osx
-          r: release
-    
-sudo: false
+
+os:
+ - linux
 
 dist: xenial
 
@@ -23,14 +16,15 @@ r_packages:
   - covr
      
 after_success:
+  - Rscript -e 'devtools::install()'
   - Rscript -e 'pkgdown::build_site()'
   - Rscript -e 'library(covr); codecov()'
       
 deploy:
   provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: false
-  local-dir: docs
+  token: $GITHUB_TOKEN
+  skip_cleanup: true
+  keep_history: false
+  local_dir: docs
   on:
     branch: master
