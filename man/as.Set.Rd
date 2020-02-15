@@ -67,7 +67,7 @@ Coerces object to an R6 \link{Set}/\link{Tuple}
 \itemize{
 \item \code{as.Set.list} - Creates a \link{Set} for each element in \code{list}.
 \item \code{as.Set.matrix/as.Set.data.frame} - Creates a \link{Set} for each column in \code{matrix/data.frame}.
-\item \code{as.Set.FuzzySet} - Creates a \link{Set} from the \link{support} of the \link{FuzzySet}.
+\item \code{as.Set.FuzzySet} - Creates a \link{Set} from the support of the \link{FuzzySet}.
 \item \code{as.Set.Interval} - If the interval has finite cardinality then creates a \link{Set} from the \link{Interval} elements.
 }
 }

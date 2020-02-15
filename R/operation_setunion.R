@@ -13,7 +13,7 @@
 #' The union of multiple [ConditionalSet]s is given by combining their defining functions by an
 #' 'or', `|`, operator. See examples.
 #'
-#' The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
+#' The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 #'
 #' @family operators
 #' @examples

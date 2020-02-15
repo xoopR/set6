@@ -7,7 +7,7 @@
 #' with: `lower = min(object), upper = max(object), class = "integer"`. Ordering is ignored.
 #' * `as.Interval.matrix` - Tries coercion via [as.Interval.numeric] on the first column of the matrix.
 #' * `as.Interval.Set` - First tries coercion via [as.Interval.numeric], if possible wraps result in a [Set].
-#' * `as.Interval.FuzzySet` - Tries coercion via [as.Interval.Set] on the [support] of the [FuzzySet].
+#' * `as.Interval.FuzzySet` - Tries coercion via [as.Interval.Set] on the support of the [FuzzySet].
 #' @export
 as.Interval <- function(object){
   UseMethod("as.Interval",object)

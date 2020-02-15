@@ -189,8 +189,8 @@ argument \code{proper} can be used to specify testing of subsets or proper subse
 subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
 (non-proper) subset if it is fully contained by, or equal to, the other Set.
 
-When calling \link{isSubset} on objects inheriting from \link{Interval}, the method treats the interval as if
-it is a \link{Set}, i.e. ordering and class are ignored. Use \link{isSubinterval} to test if one interval
+When calling \verb{$isSubset} on objects inheriting from \link{Interval}, the method treats the interval as if
+it is a \link{Set}, i.e. ordering and class are ignored. Use \verb{$isSubinterval} to test if one interval
 is a subinterval of another.
 
 Infix operators can be used for:

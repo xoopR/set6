@@ -4,7 +4,7 @@
 #' @details
 #' * `as.Set.list` - Creates a [Set] for each element in `list`.
 #' * `as.Set.matrix/as.Set.data.frame` - Creates a [Set] for each column in `matrix/data.frame`.
-#' * `as.Set.FuzzySet` - Creates a [Set] from the [support] of the [FuzzySet].
+#' * `as.Set.FuzzySet` - Creates a [Set] from the support of the [FuzzySet].
 #' * `as.Set.Interval` - If the interval has finite cardinality then creates a [Set] from the [Interval] elements.
 #' @export
 as.Set <- function(object){

@@ -12,7 +12,7 @@
 #' The intersection of two [ConditionalSet]s is defined by combining their defining functions by an
 #' 'and', `&`, operator. See examples.
 #'
-#' The intersection of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
+#' The intersection of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 #'
 #' @family operators
 #' @examples

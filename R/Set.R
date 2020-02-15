@@ -3,7 +3,6 @@
 #' @description A general Set object for mathematical sets. This also serves as the parent class to
 #' intervals, tuples, and fuzzy variants.
 #' @family sets
-#' @param x,y `Set`
 #'
 #' @details
 #' Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class

@@ -10,7 +10,7 @@ defined as the set of numbers that can be written as a fraction of two integers.
 where \eqn{Z} is the set of integers.
 }
 \details{
-The \link{contains} method does not work for the set of Rationals as it is notoriously
+The \verb{$contains} method does not work for the set of Rationals as it is notoriously
 difficult/impossible to find an algorithm for determining if any given number is rational or not.
 Furthermore, computers must truncate all irrational numbers to rational numbers.
 }

@@ -13,7 +13,7 @@
 #' Therefore `setsymdiff` is written as a thin wrapper over these operations, so for two sets, `A,B`: \cr
 #' `A %-% B = (A | B) - (A & B)`.
 #'
-#' The symmetric difference of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
+#' The symmetric difference of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 #'
 #' @family operators
 #' @examples

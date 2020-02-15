@@ -353,8 +353,8 @@ of \code{self}, otherwise \code{FALSE} tests if \code{x} is a (non-proper) subin
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-If \code{x} is a \link{Set} then will be coerced to an \link{Interval} if possible. \link{isSubinterval} differs
-from \link{isSubset} in that ordering and class are respected in \link{isSubinterval}. See examples for
+If \code{x} is a \link{Set} then will be coerced to an \link{Interval} if possible. \verb{$isSubinterval} differs
+from \verb{$isSubset} in that ordering and class are respected in \verb{$isSubinterval}. See examples for
 a clearer illustration of the difference.
 }
 

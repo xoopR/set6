@@ -13,7 +13,7 @@
 #' The set difference of two [ConditionalSet]s is defined by combining their defining functions by a negated
 #' 'and', `!&`, operator. See examples.
 #'
-#' The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
+#' The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 #'
 #' @family operators
 #' @examples

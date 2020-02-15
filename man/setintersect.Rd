@@ -42,7 +42,7 @@ In the case where no elements are common to either set, then the empty set is re
 The intersection of two \link{ConditionalSet}s is defined by combining their defining functions by an
 'and', \code{&}, operator. See examples.
 
-The intersection of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
+The intersection of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 }
 \examples{
 # intersection of two sets

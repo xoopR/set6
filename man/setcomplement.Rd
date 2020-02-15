@@ -57,7 +57,7 @@ in set \eqn{X} and not \eqn{Y},
 The set difference of two \link{ConditionalSet}s is defined by combining their defining functions by a negated
 'and', \verb{!&}, operator. See examples.
 
-The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
+The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 }
 \examples{
 # absolute complement

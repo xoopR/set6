@@ -72,8 +72,8 @@ UniversalSet <- R6::R6Class("UniversalSet", inherit = Set,
     #' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
     #' (non-proper) subset if it is fully contained by, or equal to, the other Set.
     #'
-    #' When calling [isSubset] on objects inheriting from [Interval], the method treats the interval as if
-    #' it is a [Set], i.e. ordering and class are ignored. Use [isSubinterval] to test if one interval
+    #' When calling `$isSubset` on objects inheriting from [Interval], the method treats the interval as if
+    #' it is a [Set], i.e. ordering and class are ignored. Use `$isSubinterval` to test if one interval
     #' is a subinterval of another.
     #'
     #' Infix operators can be used for:
