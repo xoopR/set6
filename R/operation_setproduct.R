@@ -20,7 +20,7 @@
 #' \deqn{X1 × ... × XN = \\{(x1,...,xN) : x1 \epsilon X1 \cap ... \cap xN \epsilon XN\\}}{X1 × ... × XN = {(x1,...,xN) : x1 \epsilon X1 and ... and xN \epsilon xN}}
 #' where \eqn{(x1,...,xN)} is a tuple.
 #'
-#' The product of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their [support].
+#' The product of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 #'
 #' @family operators
 #' @examples

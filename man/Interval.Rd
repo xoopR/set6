@@ -3,9 +3,6 @@
 \name{Interval}
 \alias{Interval}
 \title{Mathematical Finite or Infinite Interval}
-\value{
-R6 object of class Interval inheriting from \link{Set}.
-}
 \description{
 A general Interval object for mathematical intervals, inheriting from \link{Set}. Intervals
 may be open, closed, or half-open; as well as bounded above, below, or not at all.
@@ -14,66 +11,6 @@ may be open, closed, or half-open; as well as bounded above, below, or not at al
 The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
 integer intervals over a finite continuous range. Use \link{Complex} to define an interval with complex values.
 }
-\section{Constructor}{
- \code{Interval$new(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"), class = "numeric", universe = Reals$new())}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{lower} \tab numeric \tab Lower limit of the interval. \cr
-\code{upper} \tab numeric \tab Upper limit of the interval. \cr
-\code{type} \tab character \tab One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed. \cr
-\code{class} \tab character \tab One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers. \cr
-\code{universe} \tab Set \tab Universe that the interval lives in, default \link{Reals}.
-
-}
-}
-
-\section{Constructor Details}{
- If defaults are used then the Real number line is constructed. The \code{universe} argument is useful for taking the complement of the \code{Set}. If a universe isn't given then \link{Reals} is assumed.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Interval Methods} \tab \strong{Link} \cr
-isSubinterval(x, proper = FALSE, all = FALSE) \tab \link{isSubinterval} \cr
-\tab \cr \tab \cr \tab \cr
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \examples{
 # Set of Reals
 Interval$new()
@@ -93,6 +30,52 @@ Set$new(1:5) == Interval$new(1,5,class="integer")
 Interval$new() == ExtendedReals$new()
 Interval$new(class = "integer", type = "()") == Integers$new()
 
+
+## ------------------------------------------------
+## Method `Interval$equals`
+## ------------------------------------------------
+
+Interval$new(1,5) == Interval$new(1,5)
+Interval$new(1,5, class = "integer") != Interval$new(1,5,class="numeric")
+
+## ------------------------------------------------
+## Method `Interval$contains`
+## ------------------------------------------------
+
+s = Set$new(1:5)
+
+# Simplest case
+s$contains(4)
+8 \%inset\% s
+
+# Test if multiple elements lie in the set
+s$contains(4:6, all = FALSE)
+s$contains(4:6, all = TRUE)
+
+# Check if a tuple lies in a Set of higher dimension
+s2 = s * s
+s2$contains(Tuple$new(2,1))
+c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
+
+## ------------------------------------------------
+## Method `Interval$isSubset`
+## ------------------------------------------------
+
+Interval$new(1,3) < Interval$new(1,5)
+Set$new(1,3) < Interval$new(0,5)
+
+## ------------------------------------------------
+## Method `Interval$isSubinterval`
+## ------------------------------------------------
+
+Interval$new(1,3)$isSubset(Set$new(1,2)) # TRUE
+Interval$new(1,3)$isSubset(Set$new(2, 1)) # TRUE
+Interval$new(1,3, class = "integer")$isSubinterval(Set$new(1, 2)) # TRUE
+Interval$new(1,3)$isSubinterval(Set$new(1, 2)) # FALSE
+Interval$new(1,3)$isSubinterval(Set$new(2, 1)) # FALSE
+
+Reals$new()$isSubset(Integers$new()) # TRUE
+Reals$new()$isSubinterval(Integers$new()) # FALSE
 }
 \seealso{
 Other sets: 
@@ -104,3 +87,312 @@ Other sets:
 \code{\link{UniversalSet}}
 }
 \concept{sets}
+\section{Super class}{
+\code{\link[set6:Set]{set6::Set}} -> \code{Interval}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{length}}{If the \code{Interval} is countably finite then returns the number of elements in the \code{Interval},
+otherwise \code{Inf}. See the cardinality property for the type of infinity.}
+
+\item{\code{elements}}{If the \code{Interval} is finite then returns all elements in the \code{Interval}, otherwise \code{NA}.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Interval$new()}}
+\item \href{#method-strprint}{\code{Interval$strprint()}}
+\item \href{#method-equals}{\code{Interval$equals()}}
+\item \href{#method-contains}{\code{Interval$contains()}}
+\item \href{#method-isSubset}{\code{Interval$isSubset()}}
+\item \href{#method-isSubinterval}{\code{Interval$isSubinterval()}}
+\item \href{#method-clone}{\code{Interval$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{Interval} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Interval$new(
+  lower = -Inf,
+  upper = Inf,
+  type = c("[]", "(]", "[)", "()"),
+  class = "numeric",
+  universe = Reals$new()
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{lower}}{numeric. Lower limit of the interval.}
+
+\item{\code{upper}}{numeric. Upper limit of the interval.}
+
+\item{\code{type}}{character. One of: '()', '(]', '[)', '[]', which specifies if interval is open, left-open, right-open, or closed.}
+
+\item{\code{class}}{character. One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers.}
+
+\item{\code{universe}}{Set. Universe that the interval lives in, default \link{Reals}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\code{Interval}s are constructed by specifying the \code{Interval} limits, the boundary type,
+the class, and the possible universe. The \code{universe} differs from \code{class} as it is primarily used
+for the \link{setcomplement} method. Whereas \code{class} specifies if the interval takes integers or
+numerics, the \code{universe} specifies what range the interval could take.
+}
+
+\subsection{Returns}{
+A new \code{Interval} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\subsection{Method \code{strprint()}}{
+Creates a printable representation of the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Interval$strprint(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{ignored, added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A character string representing the object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\subsection{Method \code{equals()}}{
+Tests if two sets are equal.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Interval$equals(x, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Two \code{Interval}s are equal if they have the same: class, type, and bounds.
+Infix operators can be used for:
+\tabular{ll}{
+Equal \tab \code{==} \cr
+Not equal \tab \code{!=} \cr
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Interval$new(1,5) == Interval$new(1,5)
+Interval$new(1,5, class = "integer") != Interval$new(1,5,class="numeric")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-contains"></a>}}
+\subsection{Method \code{contains()}}{
+Tests to see if \code{x} is contained in the Set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Interval$contains(x, all = FALSE, bound = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{bound}}{logical.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+at the same time, then provide these as a list.
+
+If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set}, otherwise
+returns a vector of logicals. For \link{Interval}s, \code{bound} is used to specify if elements lying on the
+(possibly open) boundary of the interval are considered contained (\code{bound = TRUE}) or not (\code{bound = FALSE}).
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all elements of \code{x} are contained in the \code{Set}, otherwise
+\code{FALSE.} If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+
+The infix operator \verb{\%inset\%} is available to test if \code{x} is an element in the \code{Set},
+see examples.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{s = Set$new(1:5)
+
+# Simplest case
+s$contains(4)
+8 \%inset\% s
+
+# Test if multiple elements lie in the set
+s$contains(4:6, all = FALSE)
+s$contains(4:6, all = TRUE)
+
+# Check if a tuple lies in a Set of higher dimension
+s2 = s * s
+s2$contains(Tuple$new(2,1))
+c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Test if one set is a (proper) subset of another
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Interval$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{proper}}{logical. If \code{TRUE} tests for proper subsets.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If using the method directly, and not via one of the operators then the additional boolean
+argument \code{proper} can be used to specify testing of subsets or proper subsets. A Set is a proper
+subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+(non-proper) subset if it is fully contained by, or equal to, the other Set.
+
+When calling \code{isSubset} on objects inheriting from \code{Interval}, the method treats the interval as if
+it is a \link{Set}, i.e. ordering and class are ignored. Use \code{isSubinterval} to test if one interval
+is a subinterval of another.
+
+Infix operators can be used for:
+\tabular{ll}{
+Subset \tab \code{<} \cr
+Proper Subset \tab \code{<=} \cr
+Superset \tab \code{>} \cr
+Proper Superset \tab \code{>=}
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Interval$new(1,3) < Interval$new(1,5)
+Set$new(1,3) < Interval$new(0,5)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubinterval"></a>}}
+\subsection{Method \code{isSubinterval()}}{
+Test if one interval is a (proper) subinterval of another
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Interval$isSubinterval(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\code{Set} or \code{list}}
+
+\item{\code{proper}}{If \code{TRUE} then tests if \code{x} is a proper subinterval (i.e. subinterval and not equal to)
+of \code{self}, otherwise \code{FALSE} tests if \code{x} is a (non-proper) subinterval.}
+
+\item{\code{all}}{If \code{TRUE} then returns \code{TRUE} if all \code{x} are subintervals, otherwise returns a vector of logicals.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If \code{x} is a \link{Set} then will be coerced to an \link{Interval} if possible. \verb{$isSubinterval} differs
+from \verb{$isSubset} in that ordering and class are respected in \verb{$isSubinterval}. See examples for
+a clearer illustration of the difference.
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Interval$new(1,3)$isSubset(Set$new(1,2)) # TRUE
+Interval$new(1,3)$isSubset(Set$new(2, 1)) # TRUE
+Interval$new(1,3, class = "integer")$isSubinterval(Set$new(1, 2)) # TRUE
+Interval$new(1,3)$isSubinterval(Set$new(1, 2)) # FALSE
+Interval$new(1,3)$isSubinterval(Set$new(2, 1)) # FALSE
+
+Reals$new()$isSubset(Integers$new()) # TRUE
+Reals$new()$isSubinterval(Integers$new()) # FALSE
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Interval$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

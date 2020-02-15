@@ -1,250 +1,309 @@
 #' @include Set.R setSymbol.R
-SpecialSet <- R6Class("SpecialSet", inherit = Interval)
-SpecialSet$set("public","initialize",function(lower = -Inf, upper = Inf, type = "()", class = "numeric"){
-  if(getR6Class(self, pos = environment()) == "SpecialSet")
-    stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  super$initialize(lower = lower, upper = upper, type = type, class = class, universe = UniversalSet$new())
+#' @name SpecialSet
+#' @rdname SpecialSet
+#' @title Abstract Class for Special Sets
+#' @description The 'special sets' are the group of sets that are commonly used in mathematics
+#' and are thus given their own names.
+#' @details This is an abstract class and should not be constructed directly. Use [listSpecialSets]
+#' to see the list of implemented special sets.
+SpecialSet <- R6Class("SpecialSet", inherit = Interval,
+  public = list(
+    #' @description `SpecialSet` is an abstract class, the constructor cannot be used directly.
+    #' @param lower defines the lower bound of the interval.
+    #' @param upper defines the upper bound of the interval.
+    #' @param type defines the interval closure type.
+    #' @param class defines the interval class.
+    initialize = function(lower = -Inf, upper = Inf, type = "()", class = "numeric"){
+      if(getR6Class(self, pos = environment()) == "SpecialSet")
+        stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
 
-  invisible(self)
-})
-SpecialSet$set("public","strprint",function(...){
-  setSymbol(getR6Class(self), private$.zero)
-})
-SpecialSet$set("private",".zero",FALSE)
+      super$initialize(lower = lower, upper = upper, type = type, class = class, universe = UniversalSet$new())
+
+      invisible(self)
+    },
+
+    #' @description Creates a printable representation of the object.
+    #' @param n ignored, added for consistency.
+    #' @return A character string representing the object.
+    strprint = function(n = NULL){
+      setSymbol(getR6Class(self), private$.zero)
+    }
+  ),
+
+  private = list(
+    .zero = FALSE
+  ))
 
 #' @name Naturals
-#' @template SpecialSetcon
-#' @templateVar class Naturals
-#' @templateVar set natural numbers
-#' @templateVar def the counting numbers
-#' @templateVar latexeqn  \\{0, 1, 2,...\\}
-#' @templateVar roxeqn {0, 1, 2,...}
-#' @templateVar conargs lower = 0
-#' @templateVar arg1 \code{lower} \tab integer \tab Where to start the set.
-#' @templateVar constructorDets Generally the `lower` argument should be ignored, its primary use-case is for the `PosNaturals` child-class.
+#' @title Set of Natural Numbers
+#' @description The mathematical set of natural numbers, defined as the counting numbers. i.e.
+#' \deqn{\\{0, 1, 2,...\\}}{0, 1, 2,...}
+#' @family special sets
 #' @export
-NULL
-Naturals <- R6Class("Naturals",inherit = SpecialSet)
-Naturals$set("public", "initialize", function(lower = 0){
-  super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer")
-})
+Naturals <- R6Class("Naturals",inherit = SpecialSet,
+  public = list(
+    #' @description Create a new `Naturals` object.
+    #' @return A new `Naturals` object.
+    #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
+    initialize = function(lower = 0){
+      super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer")
+    }
+  ))
 
 #' @name PosNaturals
-#' @template SpecialSet
-#' @templateVar class PosNaturals
-#' @templateVar set positive natural numbers
-#' @templateVar def the positive counting numbers
-#' @templateVar latexeqn \\{1, 2, 3,...\\}
-#' @templateVar roxeqn {1, 2, 3,...}
-#' @templateVar conargs ...
-#' @templateVar arg1 \code{...} \tab ANY \tab Ignored, added for consistency.
+#' @title Set of Positive Natural Numbers
+#' @description The mathematical set of positive natural numbers, defined as the positive counting numbers. i.e.
+#' \deqn{\\{1, 2, 3,...\\}}{0, 1, 2, 3,...}
+#' @family special sets
 #' @export
-NULL
-PosNaturals <- R6Class("PosNaturals",inherit = Naturals)
-PosNaturals$set("public", "initialize", function(){
-  super$initialize(lower = 1)
-})
+PosNaturals <- R6Class("PosNaturals",inherit = Naturals,
+  public = list(
+    #' @description Create a new `PosNaturals` object.
+    #' @return A new `PosNaturals` object.
+    initialize = function(){
+      super$initialize(lower = 1)
+    }
+  ))
+
 
 #' @name Integers
-#' @template SpecialSetcon
-#' @templateVar class Integers
-#' @templateVar set integers
-#' @templateVar def the set of whole numbers
-#' @templateVar latexeqn  \\{...,-3, -2, -1, 0, 1, 2, 3,...\\}
-#' @templateVar roxeqn {...,-3, -2, -1, 0, 1, 2, 3,...}
-#' @templateVar conargs ...
-#' @templateVar arg1 \code{...} \tab ANY \tab Additional arguments.
-#' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
+#' @title Set of Integers
+#' @description The mathematical set of integers, defined as the set of whole numbers. i.e.
+#' \deqn{\\{...,-3, -2, -1, 0, 1, 2, 3,...\\}}{...,-3, -2, -1, 0, 1, 2, 3,...}
+#' @family special sets
 #' @export
-NULL
-Integers <- R6Class("Integers",inherit = SpecialSet)
-Integers$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
-  super$initialize(lower = lower, upper = upper, type = type, class = "integer")
-})
+Integers <- R6Class("Integers",inherit = SpecialSet,
+  public = list(
+    #' @description Create a new `Integers` object.
+    #' @return A new `Integers` object.
+    #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
+    #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
+    #' @param type character Set closure type. Advised to ignore, used by child-classes.
+    initialize = function(lower = -Inf, upper = Inf, type = "()"){
+      super$initialize(lower = lower, upper = upper, type = type, class = "integer")
+    }
+  ))
 
 #' @name PosIntegers
-#' @template SpecialSet
-#' @templateVar class PosIntegers
-#' @templateVar set positive integers
-#' @templateVar def the set of positive whole numbers
-#' @templateVar latexeqn  \\{0, 1, 2, 3,...\\}
-#' @templateVar roxeqn {0, 1, 2, 3,...}
-#' @templateVar conargs zero = FALSE
-#' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set.
+#' @title Set of Positive Integers
+#' @description The mathematical set of positive integers, defined as the set of positive whole numbers. i.e.
+#' \deqn{\\{0, 1, 2, 3,...\\}}{0, 1, 2, 3,...}
+#' @family special sets
 #' @export
-NULL
-PosIntegers <- R6Class("PosIntegers",inherit = Integers)
-PosIntegers$set("public", "initialize", function(zero = FALSE){
-  if(zero) private$.zero = TRUE
-  super$initialize(lower = ifelse(zero, 0, 1), type = "[)")
-})
+PosIntegers <- R6Class("PosIntegers",inherit = Integers,
+                       public = list(
+                         #' @description Create a new `PosIntegers` object.
+                         #' @return A new `PosIntegers` object.
+                         #' @param zero logical. If TRUE, zero is included in the set.
+                         initialize = function(zero = FALSE){
+                           if(zero) private$.zero = TRUE
+                           super$initialize(lower = ifelse(zero, 0, 1), type = "[)")
+                         }
+                       ))
 
 #' @name NegIntegers
-#' @template SpecialSet
-#' @templateVar class NegIntegers
-#' @templateVar set negative integers
-#' @templateVar def the set of negative whole numbers
-#' @templateVar latexeqn  \\{...,-3, -2, -1, 0\\}
-#' @templateVar roxeqn {...,-3, -2, -1, 0}
-#' @templateVar conargs zero = FALSE
-#' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set.
+#' @title Set of Negative Integers
+#' @description The mathematical set of negative integers, defined as the set of negative whole numbers. i.e.
+#' \deqn{\\{...,-3, -2, -1, 0\\}}{...,-3, -2, -1, 0}
+#' @family special sets
 #' @export
-NULL
-NegIntegers <- R6Class("NegIntegers",inherit = Integers)
-NegIntegers$set("public", "initialize", function(zero = FALSE){
-  if(zero) private$.zero = TRUE
-  super$initialize(upper = ifelse(zero, 0, -1), type = "(]")
-})
+NegIntegers <- R6Class("NegIntegers",inherit = Integers,
+                       public = list(
+                         #' @description Create a new `NegIntegers` object.
+                         #' @return A new `NegIntegers` object.
+                         #' @param zero logical. If TRUE, zero is included in the set.
+                         initialize = function(zero = FALSE){
+                           if(zero) private$.zero = TRUE
+                           super$initialize(upper = ifelse(zero, 0, -1), type = "(]")
+                         }
+                       ))
 
 #' @name Rationals
-#' @template SpecialSetcon
-#' @templateVar class Rationals
-#' @templateVar set rational numbers
-#' @templateVar def the set of numbers that can be written as a fraction of two integers
-#' @templateVar latexeqn  \\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ q \ne 0 \\}
-#' @templateVar roxeqn {p/q : p,q \epsilon Z, q != 0}
-#' @templateVar support where \eqn{Z} is the set of integers.
-#' @templateVar deets The [contains] method does not work for the set of Rationals as it is notoriously difficult/impossible to find an algorithm for determining if any given number is rational or not. Furthermore, computers must truncate all irrational numbers to rational numbers.
-#' @templateVar conargs ...
-#' @templateVar arg1 \code{...} \tab ANY \tab Additional arguments.
-#' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
+#' @title Set of Rational Numbers
+#' @description The mathematical set of rational numbers,
+#' defined as the set of numbers that can be written as a fraction of two integers. i.e.
+#' \deqn{\\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ q \ne 0 \\}}{p/q : p,q \epsilon Z, q != 0}
+#' where \eqn{Z} is the set of integers.
+#' @details The `$contains` method does not work for the set of Rationals as it is notoriously
+#' difficult/impossible to find an algorithm for determining if any given number is rational or not.
+#' Furthermore, computers must truncate all irrational numbers to rational numbers.
+#' @family special sets
 #' @export
-NULL
-Rationals <- R6Class("Rationals",inherit = SpecialSet)
-Rationals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
-  super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
-})
+Rationals <- R6Class("Rationals",inherit = SpecialSet,
+                     public = list(
+                       #' @description Create a new `Rationals` object.
+                       #' @return A new `Rationals` object.
+                       #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
+                       #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
+                       #' @param type character Set closure type. Advised to ignore, used by child-classes.
+                       initialize = function(lower = -Inf, upper = Inf, type = "()"){
+                         super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
+                       }
+                     ))
 
 #' @name PosRationals
-#' @template SpecialSetcon
-#' @templateVar class PosRationals
-#' @templateVar set positive rational numbers
-#' @templateVar def the set of numbers that can be written as a fraction of two integers and are non-negative
-#' @templateVar latexeqn \\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ p/q \ge 0, \ q \ne 0\\}
-#' @templateVar roxeqn {p/q : p,q \epsilon Z, p/q \ge 0, q != 0}
-#' @templateVar support where \eqn{Z} is the set of integers.
-#' @templateVar deets The [contains] method does not work for the set of Rationals as it is notoriously difficult/impossible to find an algorithm for determining if any given number is rational or not. Furthermore, computers must truncate all irrational numbers to rational numbers.
-#' @templateVar conargs zero = FALSE
-#' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
-#' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
+#' @title Set of Positive Rational Numbers
+#' @description The mathematical set of positive rational numbers,
+#' defined as the set of numbers that can be written as a fraction of two integers and are non-negative. i.e.
+#' \deqn{\\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ p/q \ge 0, \ q \ne 0\\}}{p/q : p,q \epsilon Z, p/q \ge 0, q != 0}
+#' where \eqn{Z} is the set of integers.
+#' @details The `$contains` method does not work for the set of Rationals as it is notoriously
+#' difficult/impossible to find an algorithm for determining if any given number is rational or not.
+#' Furthermore, computers must truncate all irrational numbers to rational numbers.
+#' @family special sets
 #' @export
-NULL
-PosRationals <- R6Class("PosRationals",inherit = Rationals)
-PosRationals$set("public", "initialize", function(zero = FALSE){
-  if(zero) private$.zero = TRUE
-  super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
-})
+PosRationals <- R6Class("PosRationals",inherit = Rationals,
+                        public = list(
+                          #' @description Create a new `PosRationals` object.
+                          #' @return A new `PosRationals` object.
+                          #' @param zero logical. If TRUE, zero is included in the set.
+                          initialize = function(zero = FALSE){
+                            if(zero) private$.zero = TRUE
+                            super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
+                          }
+                        ))
 
 #' @name NegRationals
-#' @template SpecialSetcon
-#' @templateVar class NegRationals
-#' @templateVar set negative rational numbers
-#' @templateVar def the set of numbers that can be written as a fraction of two integers and are non-positive
-#' @templateVar latexeqn \\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ p/q \le 0, \ q \ne 0\\}
-#' @templateVar roxeqn {p/q : p,q \epsilon Z, p/q \le 0, q != 0}
-#' @templateVar support where \eqn{Z} is the set of integers.
-#' @templateVar deets The [contains] method does not work for the set of Rationals as it is notoriously difficult/impossible to find an algorithm for determining if any given number is rational or not. Furthermore, computers must truncate all irrational numbers to rational numbers.
-#' @templateVar conargs zero = FALSE
-#' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
-#' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
+#' @title Set of Negative Rational Numbers
+#' @description The mathematical set of negative rational numbers,
+#' defined as the set of numbers that can be written as a fraction of two integers and are non-positive. i.e.
+#' \deqn{\\{\frac{p}{q} \ : \ p,q \ \in \ Z, \ p/q \le 0, \ q \ne 0\\}}{p/q : p,q \epsilon Z, p/q \le 0, q != 0}
+#' where \eqn{Z} is the set of integers.
+#' @details The `$contains` method does not work for the set of Rationals as it is notoriously
+#' difficult/impossible to find an algorithm for determining if any given number is rational or not.
+#' Furthermore, computers must truncate all irrational numbers to rational numbers.
+#' @family special sets
 #' @export
-NULL
-NegRationals <- R6Class("NegRationals",inherit = Rationals)
-NegRationals$set("public", "initialize", function(zero = FALSE){
-  if(zero) private$.zero = TRUE
-  super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
-})
+NegRationals <- R6Class("NegRationals",inherit = Rationals,
+                        public = list(
+                          #' @description Create a new `NegRationals` object.
+                          #' @return A new `NegRationals` object.
+                          #' @param zero logical. If TRUE, zero is included in the set.
+                          initialize = function(zero = FALSE){
+                            if(zero) private$.zero = TRUE
+                            super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
+                          }
+                        ))
 
 #' @name Reals
-#' @template SpecialSetcon
-#' @templateVar class Reals
-#' @templateVar set real numbers
-#' @templateVar def the union of the set of rationals and irrationals
-#' @templateVar latexeqn  I \cup Q
-#' @templateVar roxeqn I U Q
-#' @templateVar support where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
-#' @templateVar conargs ...
-#' @templateVar arg1 \code{...} \tab ANY \tab Additional arguments.
-#' @templateVar constructorDets Generally the \code{...} argument should be ignored, its primary use-case is for the child-classes.
+#' @title Set of Real Numbers
+#' @description The mathematical set of real numbers,
+#' defined as the union of the set of rationals and irrationals. i.e.
+#' \deqn{I \cup Q}{I U Q}
+#' where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
+#' @family special sets
 #' @export
-NULL
-Reals <- R6Class("Reals",inherit = SpecialSet)
-Reals$set("public", "initialize", function(lower = -Inf, upper = Inf, type = "()"){
-  super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
-})
+Reals <- R6Class("Reals",inherit = SpecialSet,
+                 public = list(
+                   #' @description Create a new `Reals` object.
+                   #' @return A new `Reals` object.
+                   #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
+                   #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
+                   #' @param type character Set closure type. Advised to ignore, used by child-classes.
+                   initialize = function(lower = -Inf, upper = Inf, type = "()"){
+                     super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
+                   }
+                 ))
 
 #' @name PosReals
-#' @template SpecialSet
-#' @templateVar class PosReals
-#' @templateVar set positive real numbers
-#' @templateVar def the union of the set of positive rationals and positive irrationals
-#' @templateVar latexeqn I^+ \cup Q^+
-#' @templateVar roxeqn I+ U Q+
-#' @templateVar support where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
-#' @templateVar conargs zero = FALSE
-#' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+#' @title Set of Positive Real Numbers
+#' @description The mathematical set of positive real numbers,
+#' defined as the union of the set of positive rationals and positive irrationals. i.e.
+#' \deqn{I^+ \cup Q^+}{I+ U Q+}
+#' where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
+#' @family special sets
 #' @export
-NULL
-PosReals <- R6Class("PosReals",inherit = Reals)
-PosReals$set("public", "initialize", function(zero = FALSE){
-  if(zero) private$.zero = TRUE
-  super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
-})
+PosReals <- R6Class("PosReals",inherit = Reals,
+                    public = list(
+                      #' @description Create a new `PosReals` object.
+                      #' @return A new `PosReals` object.
+                      #' @param zero logical. If TRUE, zero is included in the set.
+                      initialize = function(zero = FALSE){
+                        if(zero) private$.zero = TRUE
+                        super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
+                      }
+                    ))
 
 #' @name NegReals
-#' @template SpecialSet
-#' @templateVar class NegReals
-#' @templateVar set negative real numbers
-#' @templateVar def the union of the set of negative rationals and negative irrationals
-#' @templateVar latexeqn I^- \cup Q^-
-#' @templateVar roxeqn I- U Q-
-#' @templateVar support where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the set of negative rationals.
-#' @templateVar conargs zero = FALSE
-#' @templateVar arg1 \code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
+#' @title Set of Negative Real Numbers
+#' @description The mathematical set of negative real numbers,
+#' defined as the union of the set of negative rationals and negative irrationals. i.e.
+#' \deqn{I^- \cup Q^-}{I- U Q-}
+#' where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the set of negative rationals.
+#' @family special sets
 #' @export
-NULL
-NegReals <- R6Class("NegReals",inherit = Reals)
-NegReals$set("public", "initialize", function(zero = FALSE){
-  if(zero) private$.zero = TRUE
-  super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
-})
+NegReals <- R6Class("NegReals",inherit = Reals,
+                    public = list(
+                      #' @description Create a new `NegReals` object.
+                      #' @return A new `NegReals` object.
+                      #' @param zero logical. If TRUE, zero is included in the set.
+                      initialize = function(zero = FALSE){
+                        if(zero) private$.zero = TRUE
+                        super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
+                      }
+                    ))
+
 
 #' @name ExtendedReals
-#' @template SpecialSet
-#' @templateVar class ExtendedReals
-#' @templateVar set extended real numbers
-#' @templateVar def the union of the set of reals with \eqn{\pm\infty}{±\infty}
-#' @templateVar latexeqn R \cup \\{-\infty, \infty\\}
-#' @templateVar roxeqn R U {-\infty, \infty}
-#' @templateVar conargs ...
-#' @templateVar arg1 \code{...} \tab ANY \tab Ignored, added for consistency.
-#' @templateVar support where \eqn{R} is the set of reals.
+#' @title Set of Extended Real Numbers
+#' @description The mathematical set of extended real numbers,
+#' defined as the union of the set of reals with \eqn{\pm\infty}{±\infty}. i.e.
+#' \deqn{R \cup \\{-\infty, \infty\\}}{R U {-\infty, \infty}}
+#' where \eqn{R} is the set of reals.
+#' @family special sets
 #' @export
-NULL
-ExtendedReals <- R6Class("ExtendedReals",inherit = Reals)
-ExtendedReals$set("public", "initialize", function(){
-  super$initialize(type = "[]")
-})
+ExtendedReals <- R6Class("ExtendedReals",inherit = Reals,
+                         public = list(
+                           #' @description Create a new `ExtendedReals` object.
+                           #' @return A new `ExtendedReals` object.
+                           initialize = function(){
+                             super$initialize(type = "[]")
+                           }
+                         ))
 
 #' @name Complex
-#' @template SpecialSet
-#' @templateVar class Complex
-#' @templateVar set complex numbers
-#' @templateVar def the set of reals with possibly imaginary components
-#' @templateVar latexeqn \\{a + bi \\ : \\ a,b \in R\\}
-#' @templateVar roxeqn {a + bi : a,b \epsilon R}
-#' @templateVar conargs lower = -Inf+0i, upper = Inf+0i
-#' @templateVar arg1 `lower` \tab complex \tab Lower limit of interval. \cr
-#' @templateVar arg2 `upper` \tab complex \tab Upper limit of interval.
-#' @templateVar support where \eqn{R} is the set of reals.
+#' @title Set of Complex Numbers
+#' @description The mathematical set of complex numbers,
+#' defined as the the set of reals with possibly imaginary components. i.e.
+#' \deqn{\\{a + bi \\ : \\ a,b \in R\\}}{{a + bi : a,b \epsilon R}}
+#' where \eqn{R} is the set of reals.
+#' @details Unlike the other `SpecialSet`s, `Complex` can be used to define an `Interval`. In this
+#' case where values can be complex, as opposed to reals or integers in [Interval].
+#' @family special sets
 #' @export
-NULL
-Complex <- R6Class("Complex",inherit = SpecialSet)
-Complex$set("public", "initialize", function(lower = -Inf+0i, upper = Inf+0i){
-  super$initialize(lower = as.complex(lower), upper = as.complex(upper), type = "()", class = "numeric")
-})
-Complex$set("public","contains",function(x, all = FALSE, bound = NULL){
-  ret <- sapply(x, function(y) inherits(y, "complex"))
-  returner(ret, all)
-})
+Complex <- R6Class("Complex",inherit = SpecialSet,
+                   public = list(
+                     #' @description Create a new `Complex` object.
+                     #' @return A new `Complex` object.
+                     #' @param lower complex. Where to start the set.
+                     #' @param upper complex. Where to end the set.
+                     initialize = function(lower = -Inf+0i, upper = Inf+0i){
+                       super$initialize(lower = as.complex(lower), upper = as.complex(upper), type = "()", class = "numeric")
+                     },
+
+                     #' @description Tests to see if \code{x} is contained in the Set.
+                     #'
+                     #' @param x any. Object or vector of objects to test.
+                     #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+                     #' @param bound logical.
+                     #'
+                     #' @details \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+                     #' checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+                     #' at the same time, then provide these as a list.
+                     #'
+                     #' If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set`, otherwise
+                     #' returns a vector of logicals. For [Interval]s, `bound` is used to specify if elements lying on the
+                     #' (possibly open) boundary of the interval are considered contained (`bound = TRUE`) or not (`bound = FALSE`).
+                     #'
+                     #' @return If \code{all} is `TRUE` then returns `TRUE` if all elements of \code{x} are contained in the `Set`, otherwise
+                     #' `FALSE.` If \code{all} is `FALSE` then returns a vector of logicals corresponding to each individual
+                     #' element of \code{x}.
+                     #'
+                     #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
+                     #' see examples.
+                     contains = function(x, all = FALSE, bound = NULL){
+                       ret <- sapply(x, function(y) inherits(y, "complex"))
+                       returner(ret, all)
+                     }
+                   ))

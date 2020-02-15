@@ -1,19 +1,8 @@
-#---------------------------------------------
-# Documentation
-#---------------------------------------------
 #' @name Set
 #' @title Mathematical Set
-#'
 #' @description A general Set object for mathematical sets. This also serves as the parent class to
 #' intervals, tuples, and fuzzy variants.
-#' @return R6 object of class Set.
-#' @template Set
-#' @templateVar constructor Set$new(..., universe = UniversalSet$new(), elements = NULL, class = NULL)
-#' @templateVar arg1 `...` \tab ANY \tab Elements in the set. \cr
-#' @templateVar arg2 `universe` \tab Set \tab Universe that the Set lives in, default is the [UniversalSet]. \cr
-#' @templateVar arg3 `elements` \tab list \tab Alternative constructor that may be more efficienct if passing objects of multiple classes. \cr
-#' @templateVar arg4 `class` \tab character \tab Optional string naming a class that if supplied gives the set the `typed` property. \cr
-#' @templateVar constructorDets Sets are constructed by elements of any types (including R6 classes), excluding lists. `Set`s should be used within `Set`s instead of lists. The `universe` argument is useful for taking the absolute complement of the `Set`. If a universe isn't given then [UniversalSet] is assumed. If the `class` argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
+#' @family sets
 #'
 #' @details
 #' Mathematical sets can loosely be thought of as a collection of objects of any kind. The Set class
@@ -40,626 +29,440 @@
 #' Set$new(1, 2) == Set$new(2, 1)
 #'
 #' @export
-NULL
-#---------------------------------------------
-# Definition and Construction
-#---------------------------------------------
-Set <- R6Class("Set")
-Set$set("public","initialize",function(..., universe = UniversalSet$new(), elements = NULL, class = NULL){
+Set <- R6Class("Set",
+  public = list(
+    #' @description Create a new `Set` object.
+    #' @details Sets are constructed by elements of any types (including R6 classes), excluding lists.
+    #' `Set`s should be used within `Set`s instead of lists. The `universe` argument is useful for taking the absolute complement
+    #' of the `Set`. If a universe isn't given then [UniversalSet] is assumed. If the `class` argument is non-NULL, then all elements
+    #' will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
+    #' or coerced.
+    #' @param ... any. Elements in the set.
+    #' @param universe Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the [UniversalSet].
+    #' @param elements list. Alternative constructor that may be more efficient if passing objects of multiple classes.
+    #' @param class character. Optional string naming a class that if supplied gives the set the `typed` property.
+    #' @return A new `Set` object.
+    initialize = function(..., universe = UniversalSet$new(), elements = NULL, class = NULL){
 
-  if(is.null(elements)) {
-    elements = list(...)
-    if(length(elements) > 0) {
-      if(length(elements) == 1 & checkmate::testVector(elements[[1]]))
-        elements = as.list(elements[[1]])
-    }
-  }
-
-  if(length(elements) != 0 & length(unlist(elements))!=0){
-
-    if (!is.null(class)){
-      private$.class <- class
-      elements <- as(elements, class)
-      if(class %in% c("complex", "numeric", "integer")) {
-        private$.lower <- min(unlist(elements))
-        private$.upper <- max(unlist(elements))
+      if(is.null(elements)) {
+        elements = list(...)
+        if(length(elements) > 0) {
+          if(length(elements) == 1 & checkmate::testVector(elements[[1]]))
+            elements = as.list(elements[[1]])
+        }
       }
-    }
 
-    private$.elements <- elements
+      if(length(elements) != 0 & length(unlist(elements))!=0){
 
-    # } else {
-    #   class <- unique(sapply(dots,function(x) class(x)[[1]]))
-    #   if(length(class)==1) {
-    #     private$.class <- class
-    #     elements = unlist(dots)
-    #   } else {
-    #     private$.class <- "multiple"
-    #     elements = dots
-    #   }
-    # }
+        if (!is.null(class)){
+          private$.class <- class
+          elements <- as(elements, class)
+          if(class %in% c("complex", "numeric", "integer")) {
+            private$.lower <- min(unlist(elements))
+            private$.upper <- max(unlist(elements))
+          }
+        }
 
-    if(!testTuple(self) & !testFuzzyTuple(self)) {
-      if(private$.class != "ANY") {
-        private$.elements <- unique(elements)
+        private$.elements <- elements
+
+        # } else {
+        #   class <- unique(sapply(dots,function(x) class(x)[[1]]))
+        #   if(length(class)==1) {
+        #     private$.class <- class
+        #     elements = unlist(dots)
+        #   } else {
+        #     private$.class <- "multiple"
+        #     elements = dots
+        #   }
+        # }
+
+        if(!testTuple(self) & !testFuzzyTuple(self)) {
+          if(private$.class != "ANY") {
+            private$.elements <- unique(elements)
+          } else {
+            private$.elements <- elements[!duplicated(lapply(elements, function(x){
+              y = try(x$strprint(), silent = TRUE)
+              if(inherits(y, "try-error"))
+                return(x)
+              else
+                return(y)
+            }))]
+          }
+        }
+
+        assertSet(universe)
+        private$.universe <- universe
+      }
+
+      private$.properties = Properties$new(closure = "closed", cardinality = self$length)
+
+      invisible(self)
+    },
+
+    #' @description Prints a symbolic representation of the `Set`.
+    #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
+    #' @details The function [useUnicode()] can be used to determine if unicode should be used when
+    #' printing the `Set`. Internally `print` first calls `strprint` to create a printable representation
+    #' of the Set.
+    print = function(n = 2){
+      cat(self$strprint(n),"\n")
+      invisible(self)
+    },
+
+    #' @description
+    #' Creates a printable representation of the object.
+    #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
+    #' @return A character string representing the object.
+    strprint = function(n = 2){
+      if (self$properties$empty) {
+        if(useUnicode())
+          return("\u2205")
+        else
+          return("{}")
       } else {
-        private$.elements <- elements[!duplicated(lapply(elements, function(x){
-          y = try(x$strprint(), silent = TRUE)
-          if(inherits(y, "try-error"))
+        type <- private$.type
+        elements <- sapply(self$elements, function(x){
+          y = try(x$strprint(), silent = T)
+          if(inherits(y,"try-error"))
             return(x)
           else
             return(y)
-        }))]
+        })
+        if(self$length <= n * 2)
+          return(paste0(substr(type,1,1),paste0(elements, collapse = ", "), substr(type,2,2)))
+        else
+          return(paste0(substr(type,1,1),paste0(elements[1:n], collapse = ", "), ",...,",
+                        paste0(elements[(self$length-n+1):self$length],collapse=", "),
+                        substr(type,2,2), collapse = ", "))
+      }
+    },
+
+    #' @description Summarises the `Set`.
+    #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
+    #' @details The function [useUnicode()] can be used to determine if unicode should be used when
+    #' printing the `Set`. Summarised details include the `Set` class, properties, and traits.
+    summary = function(n = 2){
+      prop = self$properties
+      cat(getR6Class(self),"\n\t",self$strprint(n),"\n",sep="")
+      cat("Traits:\n\t")
+      cat(ifelse(testCrisp(self), "Crisp", "Fuzzy"),"\n")
+      cat("Properties:\n")
+      if(prop$empty) cat("\tEmpty\n")
+      if(prop$singleton) cat("\tSingleton\n")
+      cat("\tCardinality =",prop$cardinality," - ",prop$countability,"\n")
+      cat("\t",toproper(prop$closure),"\n",sep="")
+    },
+
+    #' @description Tests to see if \code{x} is contained in the Set.
+    #'
+    #' @param x any. Object or vector of objects to test.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @param bound ignored, added for consistency.
+    #'
+    #' @details \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+    #' checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+    #' at the same time, then provide these as a list.
+    #'
+    #' If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set`, otherwise
+    #' returns a vector of logicals.
+    #'
+    #' @return If \code{all} is `TRUE` then returns `TRUE` if all elements of \code{x} are contained in the `Set`, otherwise
+    #' `FALSE.` If \code{all} is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of \code{x}.
+    #'
+    #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
+    #' see examples.
+    #'
+    #' @examples
+    #' s = Set$new(1:5)
+    #'
+    #' # Simplest case
+    #' s$contains(4)
+    #' 8 %inset% s
+    #'
+    #' # Test if multiple elements lie in the set
+    #' s$contains(4:6, all = FALSE)
+    #' s$contains(4:6, all = TRUE)
+    #'
+    #' # Check if a tuple lies in a Set of higher dimension
+    #' s2 = s * s
+    #' s2$contains(Tuple$new(2,1))
+    #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
+    contains = function(x, all = FALSE, bound = NULL){
+      x = listify(x)
+
+      ret = rep(FALSE, length(x))
+
+      # determine which elements are R6 and need a special equals method
+      r6.fil <- sapply(x, function(y) ifelse(inherits(y, "R6"), TRUE, FALSE))
+      r6.match <- x[r6.fil]
+      atom.match <- x[!r6.fil]
+
+      # for base classes simply use %in% for containedness
+      if(length(atom.match) > 0)
+        ret[!r6.fil][atom.match %in% self$elements] = TRUE
+
+      # for R6 classes a
+      if(length(r6.match) > 0){
+        r6.tr <- sapply(r6.match, function(y){
+          if(Set$new()$equals(y))
+            y <- Set$new()
+          cl <- getR6Class(y)
+          # first check to see if they are same class
+          fil <- sapply(self$elements, function(z) ifelse(inherits(z, cl), TRUE, FALSE))
+          # if they are then check if any of elements of self are equal to x
+          any(sapply(self$elements[fil], function(z) y$equals(z)))
+        })
+        ret[r6.fil][r6.tr] = TRUE
+      }
+
+      returner(ret, all)
+    },
+
+    #' @description Tests if two sets are equal.
+    #' @details Two sets are equal if they contain the same elements. Infix operators can be used for:
+    #' \tabular{ll}{
+    #' Equal \tab `==` \cr
+    #' Not equal \tab `!=` \cr
+    #' }
+    #' @param x [Set] or vector of [Set]s.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
+    #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of `x`.
+    #'
+    #' @examples
+    #' # Equals
+    #' Set$new(1,2)$equals(Set$new(5,6))
+    #' Set$new(1,2)$equals(Interval$new(1,2))
+    #' Set$new(1,2) == Interval$new(1,2, class = "integer")
+    #'
+    #' # Not equal
+    #' !Set$new(1,2)$equals(Set$new(1,2))
+    #' Set$new(1,2) != Set$new(1,5)
+    equals = function(x, all = FALSE){
+      x <- listify(x)
+
+      ret = sapply(x, function(el){
+        if(testFuzzy(el)){
+          if(all(el$membership() == 1))
+            el = as.Set(el)
+          else
+            return(FALSE)
+        }
+
+        if(!testSet(el))
+          return(FALSE)
+
+        elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+        selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+
+        suppressWarnings(all(elel %in% selel) & all(selel %in% elel))
+      })
+
+      returner(ret, all)
+    },
+
+    #' @description  Test if one set is a (proper) subset of another
+    #' @param x any. Object or vector of objects to test.
+    #' @param proper logical. If `TRUE` tests for proper subsets.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @details If using the method directly, and not via one of the operators then the additional boolean
+    #' argument `proper` can be used to specify testing of subsets or proper subsets. A Set is a proper
+    #' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+    #' (non-proper) subset if it is fully contained by, or equal to, the other Set.
+    #'
+    #' Infix operators can be used for:
+    #' \tabular{ll}{
+    #' Subset \tab `<` \cr
+    #' Proper Subset \tab `<=` \cr
+    #' Superset \tab `>` \cr
+    #' Proper Superset \tab `>=`
+    #' }
+    #'
+    #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
+    #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of `x`.
+    #' @examples
+    #' Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
+    #' Set$new(1,2) < Set$new(1,2,3) # proper subset
+    #'
+    #' c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
+    #' Set$new(1,2,3) <= Set$new(1,2,3) # proper
+    isSubset = function(x, proper = FALSE, all = FALSE){
+      x = listify(x)
+
+      ret = sapply(x, function(el){
+        if(!inherits(el, "R6"))
+          return(FALSE)
+
+        if(testFuzzy(el)){
+          if(all(el$membership() == 1))
+            el = as.Set(el)
+          else
+            return(FALSE)
+        }
+
+        elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+        selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+
+        if(proper){
+          if(all(elel %in% selel) & !all(selel %in% elel))
+            return(TRUE)
+          else
+            return(FALSE)
+        }else{
+          if(all(elel %in% selel))
+            return(TRUE)
+          else
+            return(FALSE)
+        }
+      })
+
+      returner(ret, all)
+    }
+  ),
+
+  active = list(
+    #' @field properties
+    #' Returns an object of class `Properties`, which lists the properties of the Set. Set
+    #' properties include:
+    #' \itemize{
+    #'  \item \code{empty} - is the Set empty or does it contain elements?
+    #'  \item \code{singleton} - is the Set a singleton? i.e. Does it contain only one element?
+    #'  \item \code{cardinality} - number of elements in the Set
+    #'  \item \code{countability} - One of: countably finite, countably infinite, uncountable
+    #'  \item \code{closure} - One of: closed, open, half-open
+    #' }
+    properties = function(){
+      return(private$.properties)
+    },
+
+    #' @field traits
+    #' List the traits of the Set. Set traits include:
+    #' \itemize{
+    #'  \item \code{crisp} - is the Set crisp or fuzzy?
+    #' }
+    traits = function(){
+      return(private$.traits)
+    },
+
+    #' @field type
+    #' Returns the type of the Set. One of: (), (], [), [], \{\}
+    type = function(){
+      return(private$.type)
+    },
+
+    #' @field max
+    #' If the Set consists of numerics only then returns the maximum element in the Set. For open
+    #' or half-open sets, then the maximum is defined by
+    #' \deqn{upper - .Machine\$double.xmin}{upper - .Machine$double.xmin}
+    max = function(){
+      if(private$.type %in% c("()","[)"))
+        return(private$.upper-.Machine$double.xmin)
+      else
+        return(private$.upper)
+    },
+
+    #' @field min
+    #' If the Set consists of numerics only then returns the minimum element in the Set. For open
+    #' or half-open sets, then the minimum is defined by
+    #' \deqn{lower + .Machine\$double.xmin}{lower + .Machine$double.xmin}
+    min = function(){
+      if(private$.type %in% c("()","(]"))
+        return(private$.lower+.Machine$double.xmin)
+      else
+        return(private$.lower)
+    },
+
+    #' @field upper
+    #' If the Set consists of numerics only then returns the upper bound of the Set.
+    upper = function(){
+      if(testSet(private$.upper))
+        return(private$.upper)
+
+      x = private$.upper
+
+      if(is.nan(x))
+        x = try(self$elements[[self$length]], silent = TRUE)
+
+      if (inherits(x, "try-error") | is.nan(x))
+        return(NA)
+      else
+        return(x)
+    },
+
+    #' @field lower
+    #' If the Set consists of numerics only then returns the lower bound of the Set.
+    lower = function(){
+      if(testSet(private$.lower))
+        return(private$.lower)
+
+      x = private$.lower
+
+      if(is.nan(x))
+        x = try(self$elements[[1]], silent = TRUE)
+
+      if (inherits(x, "try-error") | is.nan(x))
+        return(NA)
+      else
+        return(x)
+    },
+
+    #' @field class
+    #' If all elements in the Set are the same class then returns that class, otherwise "ANY".
+    class = function(){
+      return(private$.class)
+    },
+
+    #' @field elements
+    #' If the Set is finite then returns all elements in the Set, otherwise "NA".
+    elements = function(){
+      return(private$.elements)
+    },
+
+    #' @field universe
+    #' Returns the universe of the Set, i.e. the set of values that can be added to the Set.
+    universe = function(){
+      return(private$.universe)
+    },
+
+    #' @field range
+    #' If the Set consists of numerics only then returns the range of the Set defined by
+    #' \deqn{upper - lower}
+    range = function(){
+      if(self$class %in% c("numeric", "integer"))
+        return(self$upper - self$lower)
+      else
+        return(numeric(0))
+    },
+
+    #' @field length
+    #' If the Set is finite then returns the number of elements in the Set, otherwise Inf. See
+    #' the cardinality property for the type of infinity.
+    length = function(){
+      if (class(self$elements) == "logical") {
+        if (is.na(self$elements)) {
+          return(Inf)
+        }
+      } else {
+        return(length(self$elements))
       }
     }
+  ),
 
-    assertSet(universe)
-    private$.universe <- universe
-  }
+  private = list(
+    .class = "ANY",
+    .type = "{}",
+    .lower = NaN,
+    .upper = NaN,
+    .universe = NULL,
+    .elements = list(),
+    .properties = NULL,
+    .traits = list(crisp = TRUE),
+    .dimension = integer()
+  )
+)
 
-  private$.properties = Properties$new(closure = "closed", cardinality = self$length)
-
-  invisible(self)
-})
-
-#---------------------------------------------
-# Public methods - Representation
-#---------------------------------------------
-Set$set("public","print",function(n = 2){
-  cat(self$strprint(n),"\n")
-  invisible(self)
-})
-#' @title String Representation For Print
-#' @name strprint
-#' @description Parsable object to be supplied to \code{print}, \code{data.frame}, etc.
-#' @details `strprint` is a suggested method that should be included in all R6 classes to be passed to
-#' methods such as \code{cat}, \code{summary} and \code{print}.
-#'
-#' It is often not required to call this directly; the print method is recommended for printing
-#' strings to the console.
-#'
-#' @param object R6 object
-#' @param n Number of elements to display before & after ellipsis
-#' @section R6 Usage: $strprint(object, n = 2)
-#' @return String representation of the set.
-#'
-#' @examples
-#' Set$new(1:10)$strprint(n = 2)
-#' Set$new(1:10)$strprint()
-Set$set("public","strprint",function(n = 2){
-  if (self$properties$empty) {
-    if(useUnicode())
-      return("\u2205")
-    else
-      return("{}")
-  } else {
-    type <- private$.type
-    elements <- sapply(self$elements, function(x){
-      y = try(x$strprint(), silent = T)
-      if(inherits(y,"try-error"))
-        return(x)
-      else
-        return(y)
-    })
-    if(self$length <= n * 2)
-      return(paste0(substr(type,1,1),paste0(elements, collapse = ", "), substr(type,2,2)))
-    else
-      return(paste0(substr(type,1,1),paste0(elements[1:n], collapse = ", "), ",...,",
-                    paste0(elements[(self$length-n+1):self$length],collapse=", "),
-                    substr(type,2,2), collapse = ", "))
-  }
-})
-Set$set("public","summary",function(n = 2){
-  prop = self$properties
-  cat(getR6Class(self),"\n\t",self$strprint(n),"\n",sep="")
-  cat("Traits:\n\t")
-  cat(ifelse(testCrisp(self), "Crisp", "Fuzzy"),"\n")
-  cat("Properties:\n")
-  if(prop$empty) cat("\tEmpty\n")
-  if(prop$singleton) cat("\tSingleton\n")
-  cat("\tCardinality =",prop$cardinality," - ",prop$countability,"\n")
-  cat("\t",toproper(prop$closure),"\n",sep="")
-})
-
-#---------------------------------------------
-# Public methods - Comparison
-#---------------------------------------------
-#' @name contains
-#' @rdname contains
-#' @family set methods
-#' @title Are Elements Contained in the Set?
-#' @description Tests to see if \code{x} is contained in the Set.
-#'
-#' @param x ANY
-#' @param y [Set]
-#'
-#' @details \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
-#' checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
-#' at the same time, then provide these as a list.
-#'
-#' If using the method directly, and not via one of the operators then the additional boolean
-#' arguments `all` and `bound`. If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set`, otherwise
-#' returns a vector of logicals. For [Interval]s, `bound` is used to specify if elements lying on the
-#' (possibly open) boundary of the interval are considered contained (`bound = TRUE`) or not (`bound = FALSE`).
-#'
-#' @return If \code{all} is TRUE then returns TRUE if all elements of \code{x} are contained in the Set, otherwise
-#' FALSE. If \code{all} is FALSE then returns a vector of logicals corresponding to each individual
-#' element of \code{x}.
-#' @section R6 Usage: $contains(x, all = FALSE, bound = NULL)
-#' @examples
-#' s = Set$new(1:5)
-#'
-#' # Simplest case
-#' s$contains(4)
-#' 8 %inset% s
-#'
-#' # Test if multiple elements lie in the set
-#' s$contains(4:6, all = FALSE)
-#' s$contains(4:6, all = TRUE)
-#'
-#' # Check if a tuple lies in a Set of higher dimension
-#' s2 = s * s
-#' s2$contains(Tuple$new(2,1))
-#' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
-Set$set("public","contains",function(x, all = FALSE, bound = NULL){
-  x = listify(x)
-
-  ret = rep(FALSE, length(x))
-
-  # determine which elements are R6 and need a special equals method
-  r6.fil <- sapply(x, function(y) ifelse(inherits(y, "R6"), TRUE, FALSE))
-  r6.match <- x[r6.fil]
-  atom.match <- x[!r6.fil]
-
-  # for base classes simply use %in% for containedness
-  if(length(atom.match) > 0)
-    ret[!r6.fil][atom.match %in% self$elements] = TRUE
-
-  # for R6 classes a
-  if(length(r6.match) > 0){
-    r6.tr <- sapply(r6.match, function(y){
-      if(Set$new()$equals(y))
-        y <- Set$new()
-      cl <- getR6Class(y)
-      # first check to see if they are same class
-      fil <- sapply(self$elements, function(z) ifelse(inherits(z, cl), TRUE, FALSE))
-      # if they are then check if any of elements of self are equal to x
-      any(sapply(self$elements[fil], function(z) y$equals(z)))
-    })
-    ret[r6.fil][r6.tr] = TRUE
-  }
-
-  returner(ret, all)
-})
-#' @name equals
-#' @rdname equals
-#' @family set methods
-#' @param x Set
-#' @param y Set
-#' @title Are Two Sets Equal?
-#' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
-#' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
-#' element of `x`.
-#' @section R6 Usage: $equals(x, all = FALSE)
-#' @examples
-#' # Equals
-#' Set$new(1,2)$equals(Set$new(5,6))
-#' Set$new(1,2)$equals(Interval$new(1,2))
-#' Set$new(1,2) == Interval$new(1,2, class = "integer")
-#'
-#' # Not equal
-#' !Set$new(1,2)$equals(Set$new(1,2))
-#' Set$new(1,2) != Set$new(1,5)
-Set$set("public","equals",function(x, all = FALSE){
-  x <- listify(x)
-
-  ret = sapply(x, function(el){
-    if(testFuzzy(el)){
-      if(all(el$membership() == 1))
-        el = as.Set(el)
-      else
-        return(FALSE)
-    }
-
-    if(!testSet(el))
-      return(FALSE)
-
-    elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-    selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-
-    suppressWarnings(all(elel %in% selel) & all(selel %in% elel))
-  })
-
-  returner(ret, all)
-})
-#' @name isSubset
-#' @rdname isSubset
-#' @family set methods
-#' @title Test If Two Sets Are Subsets
-#' @param x,y [Set]
-#' @details If using the method directly, and not via one of the operators then the additional boolean
-#' argument `proper` can be used to specify testing of subsets or proper subsets. A Set is a proper
-#' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
-#' (non-proper) subset if it is fully contained by, or equal to, the other Set.
-#'
-#' When calling [isSubset] on objects inheriting from [Interval], the method treats the interval as if
-#' it is a [Set], i.e. ordering and class are ignored. Use [isSubinterval] to test if one interval
-#' is a subinterval of another.
-#'
-#' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
-#' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
-#' element of `x`.
-#' @section R6 Usage: $isSubset(x, proper = FALSE, all = FALSE)
-#' @seealso [isSubinterval]
-#' @examples
-#' Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
-#' Set$new(1,2) < Set$new(1,2,3) # proper subset
-#'
-#' c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
-#' Set$new(1,2,3) <= Set$new(1,2,3) # proper
-Set$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
-  x = listify(x)
-
-  ret = sapply(x, function(el){
-    if(!inherits(el, "R6"))
-      return(FALSE)
-
-    if(testFuzzy(el)){
-      if(all(el$membership() == 1))
-        el = as.Set(el)
-      else
-        return(FALSE)
-    }
-
-    elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-    selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-
-    if(proper){
-      if(all(elel %in% selel) & !all(selel %in% elel))
-        return(TRUE)
-      else
-        return(FALSE)
-    }else{
-      if(all(elel %in% selel))
-        return(TRUE)
-      else
-        return(FALSE)
-    }
-  })
-
-  returner(ret, all)
-})
-#---------------------------------------------
-# Public methods - absComplement
-#---------------------------------------------
-#' @include set6-deprecated.R
-#' @name absComplement-deprecated
-#' @rdname absComplement-deprecated
-#' @title Absolute Complement of a Set
-#' @description Calculates and returns the absolute complement of a Set, which is the relative
-#' complement of a set from its universe.
-#' @details If a universe is not provided then the method has no effect. To find the relative difference
-#' between sets use [setcomplement].
-#' @section R6 Usage: $absComplement()
-#' @seealso [setcomplement]
-#' @return Set
-#' @seealso \code{\link{set6-deprecated}}
-#' @keywords internal
-NULL
-#' @name absComplement
-#' @rdname set6-deprecated
-#' @section Deprecated Functions:
-#' \tabular{ll}{
-#' \strong{Deprecated} \tab \strong{Replacement} \cr
-#' \code{absComplement} \tab \code{\link{setcomplement}} \cr
-#' }
-Set$set("public","absComplement",function(){
-  .Deprecated("absComplement", "set6", "The absComplement method is now deprecated and the
-  setcomplement function without the 'y' argument should be used instead.")
-})
-#---------------------------------------------
-# Accessors
-#---------------------------------------------
-#' @name properties
-#' @title Set Properties
-#' @rdname properties
-#' @family set accessors
-#' @section R6 Usage: $properties
-#' @description Returns an object of class `Properties`, which lists the properties of the Set.
-#' @details Set properties include:
-#' \itemize{
-#'  \item \code{empty} - is the Set empty or does it contain elements?
-#'  \item \code{singleton} - is the Set a singleton? i.e. Does it contain only one element?
-#'  \item \code{cardinality} - number of elements in the Set
-#'  \item \code{countability} - One of: countably finite, countably infinite, uncountable
-#'  \item \code{closure} - One of: closed, open, half-open
-#' }
-#'
-#' The `Properties` class is essentially a read-only `list`, with `'$'` and `'['` for accessing elements
-#' but without a `'[['` method. It is not exported and therefore can be considered abstract.
-Set$set("active","properties",function(){
-  return(private$.properties)
-})
-#' @name traits
-#' @title Set Traits
-#' @rdname traits
-#' @family set accessors
-#' @section R6 Usage: $traits
-#' @description List the traits of the Set.
-#' @details Set traits include:
-#' \itemize{
-#'  \item \code{crisp} - is the Set crisp or fuzzy?
-#' }
-Set$set("active","traits",function(){
-  return(private$.traits)
-})
-#' @name type
-#' @title Set Type
-#' @rdname type
-#' @family set accessors
-#' @section R6 Usage: $type
-#' @description Returns the type of the Set.
-#' @details Set type is one of: (), (], [), [], \{\}
-Set$set("active","type",function(){
-  return(private$.type)
-})
-#' @name max
-#' @title Set Maximum
-#' @rdname max
-#' @family set accessors
-#' @section R6 Usage: $max
-#' @description Returns the maximum of the Set.
-#' @details If the Set consists of numerics only then returns the maximum element in the Set. For
-#' open or half-open sets, then the maximum is defined by
-#' \deqn{upper - .Machine\$double.xmin}
-Set$set("active","max",function(){
-  if(private$.type %in% c("()","[)"))
-    return(private$.upper-.Machine$double.xmin)
-  else
-    return(private$.upper)
-})
-#' @name min
-#' @title Set Minimum
-#' @rdname min
-#' @family set accessors
-#' @section R6 Usage: $min
-#' @description Returns the minimum of the Set.
-#' @details If the Set consists of numerics only, then returns the minimum element in the Set. For
-#' open or half-open sets, then the minimum is defined by
-#' \deqn{lower + .Machine\$double.xmin}
-Set$set("active","min",function(){
-  if(private$.type %in% c("()","(]"))
-    return(private$.lower+.Machine$double.xmin)
-  else
-    return(private$.lower)
-})
-#' @name upper
-#' @title Upper Limit of Set
-#' @rdname upper
-#' @family set accessors
-#' @section R6 Usage: `$upper`
-#' @description Returns the upper limit or last element in the [Set].
-#' @details If the Set consists of numerics only then returns the upper limit, or supremum, of the Set.
-#' Otherwise assumes that the elements were supplied in a particular order and returns the last
-#' element.
-Set$set("active","upper",function(){
-  if(testSet(private$.upper))
-    return(private$.upper)
-
-  x = private$.upper
-
-  if(is.nan(x))
-    x = try(self$elements[[self$length]], silent = TRUE)
-
-  if (inherits(x, "try-error") | is.nan(x))
-    return(NA)
-  else
-    return(x)
-})
-#' @name lower
-#' @title Lower Limit of Set
-#' @rdname lower
-#' @family set accessors
-#' @section R6 Usage: `$lower`
-#' @description Returns the lower limit or first element in the [Set].
-#' @details If the [Set] consists of numerics only then returns the lower limit, or infimum, of the `Set`.
-#' Otherwise assumes that the elements were supplied in a particular order and returns the first
-#' element.
-Set$set("active","lower",function(){
-  if(testSet(private$.lower))
-    return(private$.lower)
-
-  x = private$.lower
-
-  if(is.nan(x))
-    x = try(self$elements[[1]], silent = TRUE)
-
-  if (inherits(x, "try-error") | is.nan(x))
-    return(NA)
-  else
-    return(x)
-})
-#' @name class
-#' @title Class of Set
-#' @rdname class
-#' @family set accessors
-#' @section R6 Usage: $class
-#' @description Returns the class of the Set.
-#' @details If all elements in the Set are of the same class, then returns the class. Otherwise
-#' returns "multiple".
-Set$set("active","class",function(){
-  return(private$.class)
-})
-#' @name elements
-#' @title Set Elements
-#' @rdname elements
-#' @family set accessors
-#' @section R6 Usage: $elements
-#' @description Returns the elements in the Set.
-#' @details If the Set is countably finite then the elements in the Set are returned, otherwise NaN.
-Set$set("active","elements",function(){
-  return(private$.elements)
-})
-#' @name universe
-#' @title Universe of a Set
-#' @rdname universe
-#' @family set accessors
-#' @section R6 Usage: $universe
-#' @description Returns the universe of the Set.
-#' @details The universe is a Set that specifies where the given Set lives, by default this is
-#' the [UniversalSet]. This is useful for taking the absolute complement of a Set.
-Set$set("active","universe",function(){
-  return(private$.universe)
-})
-#' @name range
-#' @title Numeric Range of Set
-#' @rdname range
-#' @family set accessors
-#' @section R6 Usage: $range
-#' @description Returns the range of the Set.
-#' @details If the Set consists of numerics only then returns \deqn{max - min}
-Set$set("active","range",function(){
-  if(self$class %in% c("numeric", "integer"))
-    return(self$upper - self$lower)
-  else
-    return(numeric(0))
-})
-#' @name length
-#' @title Number of Elements in the Set
-#' @rdname length
-#' @family set accessors
-#' @section R6 Usage: $length
-#' @description Returns the number of elements in the Set.
-#' @details Returns either the number of elements in the Set, or \code{Inf} for infinite intervals.
-#' See \code{cardinality} in \code{\link{properties}} for the type of infinity.
-Set$set("active","length",function(){
-  return(length(self$elements))
-})
-
-#---------------------------------------------
-# Private variables
-#---------------------------------------------
-Set$set("private",".class", "ANY")
-Set$set("private",".type","{}")
-Set$set("private",".lower", NaN)
-Set$set("private",".upper", NaN)
-Set$set("private",".universe",NULL)
-Set$set("private",".elements",list())
-Set$set("private",".properties",NULL)
-Set$set("private",".traits",list(crisp = TRUE))
-Set$set("private",".dimension", numeric(0))
-#---------------------------------------------
-# summary
-#---------------------------------------------
 #' @export
-summary.Set <- function(object, n = 2, ...){
-  object$summary(n)
-}
-#---------------------------------------------
-# as.double
-#---------------------------------------------
-#' @export
-as.double.Set <- function(x,...) {
-  if(testFuzzy(x))
-    return(unlist(x$support()))
-  else
-    return(unlist(x$elements))
-}
-#---------------------------------------------
-# as.Set
-#---------------------------------------------
-#' @template coercion2
-#' @templateVar class1 Set
-#' @templateVar class2 Tuple
-#' @details
-#' * `as.Set.list` - Creates a [Set] for each element in `list`.
-#' * `as.Set.matrix/as.Set.data.frame` - Creates a [Set] for each column in `matrix/data.frame`.
-#' * `as.Set.FuzzySet` - Creates a [Set] from the [support] of the [FuzzySet].
-#' * `as.Set.Interval` - If the interval has finite cardinality then creates a [Set] from the [Interval] elements.
-#' @export
-as.Set <- function(object){
-  UseMethod("as.Set",object)
-}
-#' @rdname as.Set
-#' @export
-as.Set.numeric <- function(object){
-  Set$new(object)
-}
-#' @rdname as.Set
-#' @export
-as.Set.list <- function(object){
-  return(lapply(object, function(x) Set$new(x)))
-}
-#' @rdname as.Set
-#' @export
-as.Set.matrix <- function(object){
-  return(apply(object,2,function(x) Set$new(x)))
-}
-#' @rdname as.Set
-#' @export
-as.Set.data.frame <- as.Set.matrix
-#' @rdname as.Set
-#' @export
-as.Set.Set <- function(object){
-  if(class(object$elements) == "list")
-    return(Set$new(elements = object$elements))
-  else
-    return(Set$new(elements = object$elements))
-}
-#' @rdname as.Set
-#' @export
-as.Set.FuzzySet <- function(object){
-  return(object$support(create = TRUE))
-}
-#' @rdname as.Set
-#' @export
-as.Set.Interval <- function(object){
-  if(any(is.nan(object$elements))){
-    stop("Interval cannot be coerced to Set.")
-  } else {
-    return(Set$new(object$elements))
-  }
-}
-#' @rdname as.Set
-#' @export
-as.Set.ConditionalSet <- function(object){
-  stop("ConditionalSet cannot be coerced to Set.")
-}
-#---------------------------------------------
-# Overloaded operators
-#---------------------------------------------
-#' @rdname isSubset
-#' @export
-'<.Set' <- function(x, y){
-  return(y$isSubset(x, proper = TRUE))
-}
-#' @rdname isSubset
-#' @export
-'<=.Set' <- function(x, y){
-  return(y$isSubset(x, proper = FALSE))
-}
-#' @rdname isSubset
-#' @export
-'>.Set' <- function(x, y){
-  return(x$isSubset(y, proper = TRUE))
-}
-#' @rdname isSubset
-#' @export
-'>=.Set' <- function(x, y){
-  return(x$isSubset(y, proper = FALSE))
-}
-#' @rdname equals
-#' @export
-'==.Set' <- function(x, y){
-  return(x$equals(y))
-}
-#' @rdname equals
-#' @export
-'!=.Set' <- function(x, y){
-  return(!x$equals(y))
-}
-#' @rdname contains
-#' @export
-'%inset%' <- function(x, y){
-  return(y$contains(x))
-}
+summary.Set = function(object, n, ...) object$summary(n = 2)

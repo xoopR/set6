@@ -3,9 +3,6 @@
 \name{PowersetSet}
 \alias{PowersetSet}
 \title{Set of Powersets}
-\value{
-R6 object of class PowersetSet, inheriting from SetWrapper.
-}
 \description{
 PowersetSet class for symbolic powerset of mathematical sets.
 }
@@ -14,63 +11,6 @@ The purpose of this class is to provide a symbolic representation for the powers
 cannot be represented in a simpler class. Whilst this is not an abstract class, it is not recommended to construct
 this class directly but via the set operation methods.
 }
-\section{Constructor}{
- \code{PowersetSet$new(set)}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{set} \tab list \tab Set to wrap. \cr
-
-\code{lower} \tab Set \tab Lower limit of set. \cr
-\code{upper} \tab Set \tab Upper limit of set. \cr
-\code{type} \tab character \tab Type of set braces. \cr
-}
-}
-
-\section{Constructor Details}{
- It is not recommended to construct this class directly.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{wrappedSets} \tab \link{wrappedSets} \cr
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \seealso{
 Set operations: \link{setunion}, \link{setproduct}, \link{setpower}, \link{setcomplement}, \link{setsymdiff},  \link{powerset}, \link{setintersect}
 
@@ -81,3 +21,140 @@ Other wrappers:
 \code{\link{UnionSet}}
 }
 \concept{wrappers}
+\section{Super classes}{
+\code{\link[set6:Set]{set6::Set}} -> \code{\link[set6:SetWrapper]{set6::SetWrapper}} -> \code{\link[set6:ProductSet]{set6::ProductSet}} -> \code{PowersetSet}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{PowersetSet$new()}}
+\item \href{#method-strprint}{\code{PowersetSet$strprint()}}
+\item \href{#method-contains}{\code{PowersetSet$contains()}}
+\item \href{#method-isSubset}{\code{PowersetSet$isSubset()}}
+\item \href{#method-clone}{\code{PowersetSet$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="SetWrapper" data-id="equals">}\href{../../set6/html/SetWrapper.html#method-equals}{\code{set6::SetWrapper$equals()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{PowersetSet} object. It is not recommended to construct this class directly.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PowersetSet$new(set)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{set}}{\link{Set} to wrap.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{PowersetSet} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\subsection{Method \code{strprint()}}{
+Creates a printable representation of the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PowersetSet$strprint(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{numeric. Number of elements to display on either side of ellipsis when printing.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A character string representing the object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-contains"></a>}}
+\subsection{Method \code{contains()}}{
+Tests if elements \code{x} are contained in \code{self}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PowersetSet$contains(x, all = FALSE, bound = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{bound}}{logical}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+If \code{all == TRUE} then returns \code{TRUE} if all \code{x} are contained in \code{self}, otherwise \code{FALSE}.
+If \code{all == FALSE} returns a vector of logicals corresponding to the length of \code{x}, representing
+if each is contained in \code{self}. If \code{bound == TRUE} then an element is contained in \code{self} if it
+is on or within the (possibly-open) bounds of \code{self}, otherwise \code{TRUE} only if the element is within
+\code{self} or the bounds are closed.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Tests if \code{x} is a (proper) subset of \code{self}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PowersetSet$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{proper}}{logical. If \code{TRUE} tests for proper subsets.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+If \code{all == TRUE} then returns \code{TRUE} if all \code{x} are (proper) subsets of \code{self}, otherwise \code{FALSE}.
+If \code{all == FALSE} returns a vector of logicals corresponding to the length of \code{x}, representing
+if each is a (proper) subset of \code{self}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PowersetSet$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

@@ -1,6 +1,6 @@
 Package: set6
 Title: R6 Mathematical Sets Interface
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -21,10 +21,9 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 RoxygenNote: 7.0.2
-Roxygen: list(markdown = TRUE)
+Roxygen: list(markdown = TRUE, r6 = TRUE)
 Collate: 
     'Properties.R'
-    'set6-deprecated.R'
     'Set.R'
     'SetWrapper.R'
     'SetWrapper_ComplementSet.R'
@@ -40,6 +39,10 @@ Collate:
     'Set_Interval_SpecialSet.R'
     'Set_Tuple.R'
     'Set_UniversalSet.R'
+    'asFuzzySet.R'
+    'asInterval.R'
+    'asSet.R'
+    'asdouble.R'
     'helpers.R'
     'assertions.R'
     'listSpecialSets.R'
@@ -51,6 +54,8 @@ Collate:
     'operation_setproduct.R'
     'operation_setsymdiff.R'
     'operation_setunion.R'
+    'operators.R'
+    'set6-deprecated.R'
     'set6.R'
     'set6.news.R'
     'useUnicode.R'

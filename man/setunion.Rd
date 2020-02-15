@@ -34,7 +34,7 @@ in one or more sets,
 The union of multiple \link{ConditionalSet}s is given by combining their defining functions by an
 'or', \code{|}, operator. See examples.
 
-The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
+The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 }
 \examples{
 # union of Sets

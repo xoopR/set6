@@ -3,9 +3,6 @@
 \name{Set}
 \alias{Set}
 \title{Mathematical Set}
-\value{
-R6 object of class Set.
-}
 \description{
 A general Set object for mathematical sets. This also serves as the parent class to
 intervals, tuples, and fuzzy variants.
@@ -16,62 +13,6 @@ is used for sets of finite elements, for infinite sets use \link{Interval}. Thes
 expanded for fuzzy logic by using \link{FuzzySet}s. Elements in a set cannot be duplicated and ordering
 of elements does not matter, \link{Tuple}s can be used if duplicates or ordering are required.
 }
-\section{Constructor}{
- \code{Set$new(..., universe = UniversalSet$new(), elements = NULL, class = NULL)}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{...} \tab ANY \tab Elements in the set. \cr
-\code{universe} \tab Set \tab Universe that the Set lives in, default is the \link{UniversalSet}. \cr
-\code{elements} \tab list \tab Alternative constructor that may be more efficienct if passing objects of multiple classes. \cr
-\code{class} \tab character \tab Optional string naming a class that if supplied gives the set the \code{typed} property. \cr
-
-}
-}
-
-\section{Constructor Details}{
- Sets are constructed by elements of any types (including R6 classes), excluding lists. \code{Set}s should be used within \code{Set}s instead of lists. The \code{universe} argument is useful for taking the absolute complement of the \code{Set}. If a universe isn't given then \link{UniversalSet} is assumed. If the \code{class} argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \examples{
 # Set of integers
 Set$new(1:5)
@@ -90,6 +31,48 @@ Set$new(2, 2) == Set$new(2)
 # Ordering does not matter
 Set$new(1, 2) == Set$new(2, 1)
 
+
+## ------------------------------------------------
+## Method `Set$contains`
+## ------------------------------------------------
+
+s = Set$new(1:5)
+
+# Simplest case
+s$contains(4)
+8 \%inset\% s
+
+# Test if multiple elements lie in the set
+s$contains(4:6, all = FALSE)
+s$contains(4:6, all = TRUE)
+
+# Check if a tuple lies in a Set of higher dimension
+s2 = s * s
+s2$contains(Tuple$new(2,1))
+c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
+
+## ------------------------------------------------
+## Method `Set$equals`
+## ------------------------------------------------
+
+# Equals
+Set$new(1,2)$equals(Set$new(5,6))
+Set$new(1,2)$equals(Interval$new(1,2))
+Set$new(1,2) == Interval$new(1,2, class = "integer")
+
+# Not equal
+!Set$new(1,2)$equals(Set$new(1,2))
+Set$new(1,2) != Set$new(1,5)
+
+## ------------------------------------------------
+## Method `Set$isSubset`
+## ------------------------------------------------
+
+Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
+Set$new(1,2) < Set$new(1,2,3) # proper subset
+
+c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
+Set$new(1,2,3) <= Set$new(1,2,3) # proper
 }
 \seealso{
 Other sets: 
@@ -101,3 +84,330 @@ Other sets:
 \code{\link{UniversalSet}}
 }
 \concept{sets}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{properties}}{Returns an object of class \code{Properties}, which lists the properties of the Set. Set
+properties include:
+\itemize{
+\item \code{empty} - is the Set empty or does it contain elements?
+\item \code{singleton} - is the Set a singleton? i.e. Does it contain only one element?
+\item \code{cardinality} - number of elements in the Set
+\item \code{countability} - One of: countably finite, countably infinite, uncountable
+\item \code{closure} - One of: closed, open, half-open
+}}
+
+\item{\code{traits}}{List the traits of the Set. Set traits include:
+\itemize{
+\item \code{crisp} - is the Set crisp or fuzzy?
+}}
+
+\item{\code{type}}{Returns the type of the Set. One of: (), (], [), [], \{\}}
+
+\item{\code{max}}{If the Set consists of numerics only then returns the maximum element in the Set. For open
+or half-open sets, then the maximum is defined by
+\deqn{upper - .Machine\$double.xmin}{upper - .Machine$double.xmin}}
+
+\item{\code{min}}{If the Set consists of numerics only then returns the minimum element in the Set. For open
+or half-open sets, then the minimum is defined by
+\deqn{lower + .Machine\$double.xmin}{lower + .Machine$double.xmin}}
+
+\item{\code{upper}}{If the Set consists of numerics only then returns the upper bound of the Set.}
+
+\item{\code{lower}}{If the Set consists of numerics only then returns the lower bound of the Set.}
+
+\item{\code{class}}{If all elements in the Set are the same class then returns that class, otherwise "ANY".}
+
+\item{\code{elements}}{If the Set is finite then returns all elements in the Set, otherwise "NA".}
+
+\item{\code{universe}}{Returns the universe of the Set, i.e. the set of values that can be added to the Set.}
+
+\item{\code{range}}{If the Set consists of numerics only then returns the range of the Set defined by
+\deqn{upper - lower}}
+
+\item{\code{length}}{If the Set is finite then returns the number of elements in the Set, otherwise Inf. See
+the cardinality property for the type of infinity.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Set$new()}}
+\item \href{#method-print}{\code{Set$print()}}
+\item \href{#method-strprint}{\code{Set$strprint()}}
+\item \href{#method-summary}{\code{Set$summary()}}
+\item \href{#method-contains}{\code{Set$contains()}}
+\item \href{#method-equals}{\code{Set$equals()}}
+\item \href{#method-isSubset}{\code{Set$isSubset()}}
+\item \href{#method-clone}{\code{Set$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{Set} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$new(..., universe = UniversalSet$new(), elements = NULL, class = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{any. Elements in the set.}
+
+\item{\code{universe}}{Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the \link{UniversalSet}.}
+
+\item{\code{elements}}{list. Alternative constructor that may be more efficient if passing objects of multiple classes.}
+
+\item{\code{class}}{character. Optional string naming a class that if supplied gives the set the \code{typed} property.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Sets are constructed by elements of any types (including R6 classes), excluding lists.
+\code{Set}s should be used within \code{Set}s instead of lists. The \code{universe} argument is useful for taking the absolute complement
+of the \code{Set}. If a universe isn't given then \link{UniversalSet} is assumed. If the \code{class} argument is non-NULL, then all elements
+will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
+or coerced.
+}
+
+\subsection{Returns}{
+A new \code{Set} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Prints a symbolic representation of the \code{Set}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$print(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{numeric. Number of elements to display on either side of ellipsis when printing.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+The function \code{\link[=useUnicode]{useUnicode()}} can be used to determine if unicode should be used when
+printing the \code{Set}. Internally \code{print} first calls \code{strprint} to create a printable representation
+of the Set.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\subsection{Method \code{strprint()}}{
+Creates a printable representation of the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$strprint(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{numeric. Number of elements to display on either side of ellipsis when printing.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A character string representing the object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-summary"></a>}}
+\subsection{Method \code{summary()}}{
+Summarises the \code{Set}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$summary(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{numeric. Number of elements to display on either side of ellipsis when printing.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+The function \code{\link[=useUnicode]{useUnicode()}} can be used to determine if unicode should be used when
+printing the \code{Set}. Summarised details include the \code{Set} class, properties, and traits.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-contains"></a>}}
+\subsection{Method \code{contains()}}{
+Tests to see if \code{x} is contained in the Set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$contains(x, all = FALSE, bound = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{bound}}{ignored, added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+at the same time, then provide these as a list.
+
+If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set}, otherwise
+returns a vector of logicals.
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all elements of \code{x} are contained in the \code{Set}, otherwise
+\code{FALSE.} If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+
+The infix operator \verb{\%inset\%} is available to test if \code{x} is an element in the \code{Set},
+see examples.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{s = Set$new(1:5)
+
+# Simplest case
+s$contains(4)
+8 \%inset\% s
+
+# Test if multiple elements lie in the set
+s$contains(4:6, all = FALSE)
+s$contains(4:6, all = TRUE)
+
+# Check if a tuple lies in a Set of higher dimension
+s2 = s * s
+s2$contains(Tuple$new(2,1))
+c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\subsection{Method \code{equals()}}{
+Tests if two sets are equal.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$equals(x, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Two sets are equal if they contain the same elements. Infix operators can be used for:
+\tabular{ll}{
+Equal \tab \code{==} \cr
+Not equal \tab \code{!=} \cr
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# Equals
+Set$new(1,2)$equals(Set$new(5,6))
+Set$new(1,2)$equals(Interval$new(1,2))
+Set$new(1,2) == Interval$new(1,2, class = "integer")
+
+# Not equal
+!Set$new(1,2)$equals(Set$new(1,2))
+Set$new(1,2) != Set$new(1,5)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Test if one set is a (proper) subset of another
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{proper}}{logical. If \code{TRUE} tests for proper subsets.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If using the method directly, and not via one of the operators then the additional boolean
+argument \code{proper} can be used to specify testing of subsets or proper subsets. A Set is a proper
+subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+(non-proper) subset if it is fully contained by, or equal to, the other Set.
+
+Infix operators can be used for:
+\tabular{ll}{
+Subset \tab \code{<} \cr
+Proper Subset \tab \code{<=} \cr
+Superset \tab \code{>} \cr
+Proper Superset \tab \code{>=}
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
+Set$new(1,2) < Set$new(1,2,3) # proper subset
+
+c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
+Set$new(1,2,3) <= Set$new(1,2,3) # proper
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

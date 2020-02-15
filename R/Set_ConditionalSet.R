@@ -1,17 +1,7 @@
-#---------------------------------------------
-# Documentation
-#---------------------------------------------
 #' @name ConditionalSet
 #' @title Mathematical Set of Conditions
-#'
 #' @description A mathematical set defined by one or more logical conditions.
-#' @return R6 object of class ConditionalSet inheriting from [Set].
-#' @template Set
-#' @templateVar constructor ConditionalSet$new(condition, argclass = NULL)
-#' @templateVar arg1 `condition` \tab function \tab Function for defining the set. See constructor details. \cr
-#' @templateVar arg2 `argclass` \tab list \tab Optional list of sets that the function arguments live in. See constructor details.
-#' @templateVar constructorDets The `condition` should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the universe of the function arguments as [Set]s, if these are not given then the [UniversalSet] is assumed. See examples.
-#' @templateVar field1 `condition` \tab [condition] \cr
+#' @family sets
 #'
 #' @details
 #' Conditional sets are a useful tool for symbolically defining possibly infinite sets. They can be combined
@@ -38,130 +28,184 @@
 #' s$contains(list(-2, 2))
 #'
 #' @export
-NULL
-#---------------------------------------------
-# Definition and Construction
-#---------------------------------------------
-ConditionalSet <- R6Class("ConditionalSet", inherit = Set)
-ConditionalSet$set("public","initialize",function(condition, argclass = NULL){
-  if(!is.function(condition))
-    stop("'condition' must be a function.")
-  else{
-    lst <- as.list(1:length(formals(condition)))
-    names(lst) <- names(formals(condition))
-    if(!checkmate::testLogical(do.call(condition, lst)))
-      stop("'condition' should result in a logical.")
-  }
-
-  private$.condition <- condition
-  private$.dimension <- length(formals(condition))
-
-  if (!is.null(argclass))
-    assertSetList(argclass)
-  else {
-    argclass <- rep(list(UniversalSet$new()), private$.dimension)
-    names(argclass) <- names(formals(condition))
-  }
-
-  private$.argclass <- argclass
-
-  private$.properties <- Properties$new()
-
-  invisible(self)
-})
-#---------------------------------------------
-# Public Methods
-#---------------------------------------------
-ConditionalSet$set("public","contains",function(x, all = FALSE, bound = NULL){
-  x <- lapply(listify(x), function(y) ifelse(testSet(y), return(y), return(Set$new(y))))
-
-  ret <- sapply(1:length(x), function(i){
-    els <- as.list(x[[i]]$elements)
-    if(length(els) != length(self$class))
-      stop(sprintf("Set is of length %s, length %s expected.", length(els), length(self$class)))
-    names(els) <- names(self$class)
-    do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
-  })
-
-  returner(ret, all)
-})
-ConditionalSet$set("public","equals",function(x, all = FALSE){
-  x <- listify(x)
-
-  ret = sapply(x, function(el){
-    if(!testConditionalSet(el))
-      return(FALSE)
-
-    if(all(names(formals(el$condition)) == names(formals(self$condition))) &
-       all(body(el$condition) == body(self$condition)) &
-       all(unlist(lapply(el$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
-      return(TRUE)
-
-
-    if(!all(rsapply(self$class, "strprint") == rsapply(el$class, "strprint")))
-      return(FALSE)
-    else{
-      sclass = self$class
-      elclass = el$class
-      if(length(sclass) < length(elclass))
-        sclass = rep(sclass, length(elclass))[1:length(elclass)]
-      if(length(elclass) < length(sclass))
-        elclass = rep(elclass, length(sclass))[1:length(sclass)]
-
-      elcond = body(el$condition)
-      if(!all(names(sclass) == names(elclass))){
-        for(i in 1:length(names(elclass)))
-          elcond = gsub(names(elclass)[[i]], names(sclass)[[i]], elcond, fixed = TRUE)
+ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
+  public = list(
+    #' @description Create a new `ConditionalSet` object.
+    #' @return A new `ConditionalSet` object.
+    #' @param condition function. Defines the set, see details.
+    #' @param argclass list. Optional list of sets that the function arguments live in, see details.
+    #' @details The `condition` should be given as a function that when evaluated returns
+    #' either `TRUE` or `FALSE`. Further constraints can be given by providing the universe of the
+    #' function arguments as [Set]s, if these are not given then the [UniversalSet] is assumed.
+    #' See examples.
+    initialize = function(condition, argclass = NULL){
+      if(!is.function(condition))
+        stop("'condition' must be a function.")
+      else{
+        lst <- as.list(1:length(formals(condition)))
+        names(lst) <- names(formals(condition))
+        if(!checkmate::testLogical(do.call(condition, lst)))
+          stop("'condition' should result in a logical.")
       }
-      if(all(elcond == as.character(body(self$condition))))
-        return(TRUE)
+
+      private$.condition <- condition
+      private$.dimension <- length(formals(condition))
+
+      if (!is.null(argclass))
+        assertSetList(argclass)
+      else {
+        argclass <- rep(list(UniversalSet$new()), private$.dimension)
+        names(argclass) <- names(formals(condition))
+      }
+
+      private$.argclass <- argclass
+
+      private$.properties <- Properties$new()
+
+      invisible(self)
+    },
+
+    #' @description Tests to see if \code{x} is contained in the Set.
+    #'
+    #' @param x any. Object or vector of objects to test.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @param bound ignored, added for consistency.
+    #'
+    #' @details \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+    #' checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+    #' at the same time, then provide these as a list.
+    #'
+    #' If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set`, otherwise
+    #' returns a vector of logicals.
+    #'
+    #' An element is contained in a `ConditionalSet` if it returns `TRUE` as an argument in the defining function.
+    #' For sets that are defined with a function that takes multiple arguments, a [Tuple] should be
+    #' passed to `x`.
+    #'
+    #' @return If \code{all} is `TRUE` then returns `TRUE` if all elements of \code{x} are contained in the `Set`, otherwise
+    #' `FALSE.` If \code{all} is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of \code{x}.
+    #'
+    #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
+    #' see examples.
+    contains = function(x, all = FALSE, bound = NULL){
+      x <- lapply(listify(x), function(y) ifelse(testSet(y), return(y), return(Set$new(y))))
+
+      ret <- sapply(1:length(x), function(i){
+        els <- as.list(x[[i]]$elements)
+        if(length(els) != length(self$class))
+          stop(sprintf("Set is of length %s, length %s expected.", length(els), length(self$class)))
+        names(els) <- names(self$class)
+        do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
+      })
+
+      returner(ret, all)
+    },
+
+    #' @description Tests if two sets are equal.
+    #' @details Two sets are equal if they contain the same elements. Infix operators can be used for:
+    #' \tabular{ll}{
+    #' Equal \tab `==` \cr
+    #' Not equal \tab `!=` \cr
+    #' }
+    #' @param x [Set] or vector of [Set]s.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
+    #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of `x`.
+    equals = function(x, all = FALSE){
+      x <- listify(x)
+
+      ret = sapply(x, function(el){
+        if(!testConditionalSet(el))
+          return(FALSE)
+
+        if(all(names(formals(el$condition)) == names(formals(self$condition))) &
+           all(body(el$condition) == body(self$condition)) &
+           all(unlist(lapply(el$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
+          return(TRUE)
+
+
+        if(!all(rsapply(self$class, "strprint") == rsapply(el$class, "strprint")))
+          return(FALSE)
+        else{
+          sclass = self$class
+          elclass = el$class
+          if(length(sclass) < length(elclass))
+            sclass = rep(sclass, length(elclass))[1:length(elclass)]
+          if(length(elclass) < length(sclass))
+            elclass = rep(elclass, length(sclass))[1:length(sclass)]
+
+          elcond = body(el$condition)
+          if(!all(names(sclass) == names(elclass))){
+            for(i in 1:length(names(elclass)))
+              elcond = gsub(names(elclass)[[i]], names(sclass)[[i]], elcond, fixed = TRUE)
+          }
+          if(all(elcond == as.character(body(self$condition))))
+            return(TRUE)
+          else
+            return(FALSE)
+        }
+      })
+
+      returner(ret, all)
+    },
+
+    #' @description
+    #' Creates a printable representation of the object.
+    #' @param n ignored, added for consistency.
+    #' @return A character string representing the object.
+    strprint = function(n = NULL){
+      if(useUnicode())
+        sep = " \u2208 "
       else
-        return(FALSE)
+        sep = " in "
+
+      return(paste0("{",paste0(paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), " : ",
+                               paste(names(self$class), sapply(self$class, function(x) x$strprint()),
+                                     sep = sep, collapse = ", "),"}")))
+    },
+
+    #' @description See `strprint`.
+    #' @param n ignored, added for consistency.
+    summary = function(n = NULL){
+      self$print()
+    },
+
+    #' @description Currently undefined for `ConditionalSet`s.
+    #' @param x ignored, added for consistency.
+    #' @param proper ignored, added for consistency.
+    #' @param all ignored, added for consistency.
+    isSubset = function(x, proper = FALSE, all = FALSE){
+      message("isSubset is currently undefined for conditional sets.")
+      return(FALSE)
     }
-  })
+  ),
 
-  returner(ret, all)
-})
-ConditionalSet$set("public","strprint",function(n = NULL){
-  if(useUnicode())
-    sep = " \u2208 "
-  else
-    sep = " in "
+  active = list(
+    #' @field condition
+    #' Returns the condition defining the ConditionalSet.
+    condition = function(){
+      return(private$.condition)
+    },
 
-  return(paste0("{",paste0(paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), " : ",
-                           paste(names(self$class), sapply(self$class, function(x) x$strprint()),
-                                 sep = sep, collapse = ", "),"}")))
-})
-ConditionalSet$set("public","summary",function(n = NULL){
-  self$print()
-})
-ConditionalSet$set("public", "isSubset", function(x, proper = FALSE, all = FALSE){
-  message("isSubset is currently undefined for conditional sets.")
-  return(FALSE)
-})
+    #' @field class
+    #' Returns `argclass`, see `$new`.
+    class = function(){
+      return(private$.argclass)
+    },
 
-#---------------------------------------------
-# Public Fields
-#---------------------------------------------
-#' @name condition
-#' @title ConditionalSet Condition
-#' @rdname condition
-#' @section R6 Usage: $condition
-#' @description Return the condition defining the ConditionalSet.
-#' @return A function that evaluates to `TRUE` or `FALSE`.
-#' @seealso [ConditionalSet]
-ConditionalSet$set("active","condition", function(){
-  return(private$.condition)
-})
-ConditionalSet$set("active","class", function(){
-  return(private$.argclass)
-})
-ConditionalSet$set("active","elements", function(){
-  return(NaN)
-})
+    #' @field elements
+    #' Returns `NA`.
+    elements = function(){
+      return(NA)
+    }
+  ),
 
-#---------------------------------------------
-# Private Fields
-#---------------------------------------------
-ConditionalSet$set("private",".condition", NULL)
-ConditionalSet$set("private",".argclass", NULL)
+  private = list(
+    .condition = NULL,
+    .argclass = NULL
+  )
+)
+
+

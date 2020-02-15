@@ -1,71 +1,71 @@
-#---------------------------------------------
-# Documentation
-#---------------------------------------------
 #' @name ExponentSet
 #' @template SetWrapper
 #' @templateVar operation exponentiation
 #' @templateVar class ExponentSet
-#' @templateVar constructor ExponentSet$new(set, power)
-#' @templateVar arg1 `set` \tab list \tab Set to wrap. \cr
-#' @templateVar field1 `power` \tab [power] \cr
-#'
-#' @export
-NULL
-#---------------------------------------------
-# Definition and Construction
-#---------------------------------------------
-ExponentSet <- R6Class("ExponentSet", inherit = ProductSet)
-ExponentSet$set("public", "initialize", function(set, power){
-  lower = Tuple$new(rep(set$lower, power))
-  upper = Tuple$new(rep(set$upper, power))
-  type = "{}"
-  setlist = rep(list(set), power)
-  private$.power = power
+ExponentSet <- R6Class("ExponentSet", inherit = ProductSet,
+  public = list(
+    #' @description Create a new `ExponentSet` object. It is not recommended to construct this class directly.
+    #' @param set [Set] to wrap.
+    #' @param power numeric. Power to raise Set to.
+    #' @return A new `ExponentSet` object.
+    initialize =  function(set, power){
+      lower = Tuple$new(rep(set$lower, power))
+      upper = Tuple$new(rep(set$upper, power))
+      type = "{}"
+      setlist = rep(list(set), power)
+      private$.power = as.integer(power)
 
-  if(is.null(set$properties$cardinality))
-    cardinality = NULL
-  else if(grepl("Beth|Aleph", set$properties$cardinality))
-    cardinality = set$properties$cardinality
-  else
-    cardinality = set$properties$cardinality^power
+      if(is.null(set$properties$cardinality))
+        cardinality = NULL
+      else if(grepl("Beth|Aleph", set$properties$cardinality))
+        cardinality = set$properties$cardinality
+      else
+        cardinality = set$properties$cardinality^power
 
-  super$initialize(setlist = setlist, lower = lower, upper = upper, type = type, cardinality = cardinality)
-})
-#---------------------------------------------
-# Public Methods
-#---------------------------------------------
-ExponentSet$set("public", "strprint", function(n = 2){
-  if(inherits(self$wrappedSets[[1]], "SetWrapper"))
-    paste0("(",self$wrappedSets[[1]]$strprint(n=n),")^",self$power)
-  else
-    paste(self$wrappedSets[[1]]$strprint(n=n), self$power, sep = "^")
-})
-ExponentSet$set("public","contains",function(x, all = FALSE, bound = FALSE){
-  x <- listify(x)
+      super$initialize(setlist = setlist, lower = lower, upper = upper, type = type, cardinality = cardinality)
+    },
 
-  ret = sapply(x, function(el){
-    if(!testSet(el))
-      el = as.Set(el)
+    #' @template param_strprint
+    #' @description Creates a printable representation of the object.
+    #' @return A character string representing the object.
+    strprint = function(n = 2){
+      if(inherits(self$wrappedSets[[1]], "SetWrapper"))
+        paste0("(",self$wrappedSets[[1]]$strprint(n=n),")^",self$power)
+      else
+        paste(self$wrappedSets[[1]]$strprint(n=n), self$power, sep = "^")
+    },
 
-    if(el$length != self$power)
-      return(FALSE)
+    #' @description Tests if elements `x` are contained in `self`.
+    #' @template param_xall
+    #' @param bound logical
+    #' @return If `all == TRUE` then returns `TRUE` if all `x` are contained in `self`, otherwise `FALSE`.
+    #' If `all == FALSE` returns a vector of logicals corresponding to the length of `x`, representing
+    #' if each is contained in `self`. If `bound == TRUE` then an element is contained in `self` if it
+    #' is on or within the (possibly-open) bounds of `self`, otherwise `TRUE` only if the element is within
+    #' `self` or the bounds are closed.
+    contains = function(x, all = FALSE, bound = FALSE){
+      x <- listify(x)
 
-    all(self$wrappedSets[[1]]$contains(el$elements, bound = bound))
-  })
+      ret = sapply(x, function(el){
+        if(!testSet(el))
+          el = as.Set(el)
 
-  returner(ret, all)
-})
-#---------------------------------------------
-# Public Fields
-#---------------------------------------------
-#' @name power
-#' @rdname power
-#' @title Get The Power of ExponentSet
-#' @description For the `ExponentSet` wrapper, gets the power the [Set] is raised to.
-#' @return `numeric`
-#' @seealso [ExponentSet]
-ExponentSet$set("active", "power", function() return(private$.power))
-#---------------------------------------------
-# Private Fields
-#---------------------------------------------
-ExponentSet$set("private", ".power", 1)
+        if(el$length != self$power)
+          return(FALSE)
+
+        all(self$wrappedSets[[1]]$contains(el$elements, bound = bound))
+      })
+
+      returner(ret, all)
+    }
+  ),
+
+  active = list(
+    #' @field power
+    #' Returns the power that the wrapped set is raised to.
+    power = function() return(private$.power)
+  ),
+
+  private = list(
+    .power = 1L
+  ))

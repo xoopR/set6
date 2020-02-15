@@ -26,7 +26,7 @@ test_that("fields",{
   expect_equal(u$elements, c(1,2,3,letters[1:5]))
   expect_equal(UnionSet$new(list(Set$new(1), Set$new(2)))$elements, 1:2)
   expect_equal(UnionSet$new(list(Interval$new(1,2), Set$new(letters[1:5])))$elements,
-               NaN)
+               NA)
 })
 
 test_that("contains",{

@@ -38,7 +38,7 @@ is the default. The N-ary cartesian product of \eqn{N} sets, \eqn{X1,...,XN}, is
 \deqn{X1 × ... × XN = \\{(x1,...,xN) : x1 \epsilon X1 \cap ... \cap xN \epsilon XN\\}}{X1 × ... × XN = {(x1,...,xN) : x1 \epsilon X1 and ... and xN \epsilon xN}}
 where \eqn{(x1,...,xN)} is a tuple.
 
-The product of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
+The product of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 }
 \examples{
 # difference between nesting

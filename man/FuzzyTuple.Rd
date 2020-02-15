@@ -3,9 +3,6 @@
 \name{FuzzyTuple}
 \alias{FuzzyTuple}
 \title{Mathematical Fuzzy Tuple}
-\value{
-R6 object of class FuzzyTuple inheriting from \link{FuzzySet}.
-}
 \description{
 A general FuzzyTuple object for mathematical fuzzy tuples, inheriting from \code{FuzzySet}.
 }
@@ -18,69 +15,6 @@ fuzzy tuple where all elements have a membership equal to \eqn{1}. Similarly to 
 do not need to be unique and the ordering does matter, \link{FuzzySet}s are special cases where the ordering
 does not matter and elements must be unique.
 }
-\section{Constructor}{
- \code{FuzzyTuple$new(..., elements = NULL, membership = rep(1, length(elements)), class = NULL)}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{...} \tab ANY \tab Alternating elements and membership, see constructor details. \cr
-\code{elements} \tab ANY \tab Elements in the set, see constructor details. \cr
-\code{membership} \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
-\code{class} \tab character \tab Optional string naming a class that if supplied gives the set the \code{typed} property. \cr
-
-}
-}
-
-\section{Constructor Details}{
- \code{FuzzyTuple}s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to \code{elements} and a list of respective memberships to \code{membership}, see examples. If the \code{class} argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Fuzzy Methods} \tab \strong{Link} \cr
-\code{membership(element = NULL)} \tab \link{membership} \cr
-\code{alphaCut(alpha, strong = FALSE, create = FALSE)} \tab \link{alphaCut} \cr
-\code{support(create = FALSE)} \tab \link{support} \cr
-\code{core(create = FALSE)} \tab \link{core} \cr
-\code{inclusion(element)} \tab \link{inclusion} \cr
-\tab \cr \tab \cr \tab \cr
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \examples{
 # Different constructors
 FuzzyTuple$new(1, 0.5, 2, 1, 3, 0)
@@ -117,3 +51,144 @@ Other sets:
 \code{\link{UniversalSet}}
 }
 \concept{sets}
+\section{Super classes}{
+\code{\link[set6:Set]{set6::Set}} -> \code{\link[set6:FuzzySet]{set6::FuzzySet}} -> \code{FuzzyTuple}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-equals}{\code{FuzzyTuple$equals()}}
+\item \href{#method-isSubset}{\code{FuzzyTuple$isSubset()}}
+\item \href{#method-alphaCut}{\code{FuzzyTuple$alphaCut()}}
+\item \href{#method-clone}{\code{FuzzyTuple$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="contains">}\href{../../set6/html/Set.html#method-contains}{\code{set6::Set$contains()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="FuzzySet" data-id="core">}\href{../../set6/html/FuzzySet.html#method-core}{\code{set6::FuzzySet$core()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="FuzzySet" data-id="inclusion">}\href{../../set6/html/FuzzySet.html#method-inclusion}{\code{set6::FuzzySet$inclusion()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="FuzzySet" data-id="initialize">}\href{../../set6/html/FuzzySet.html#method-initialize}{\code{set6::FuzzySet$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="FuzzySet" data-id="membership">}\href{../../set6/html/FuzzySet.html#method-membership}{\code{set6::FuzzySet$membership()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="FuzzySet" data-id="strprint">}\href{../../set6/html/FuzzySet.html#method-strprint}{\code{set6::FuzzySet$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="FuzzySet" data-id="support">}\href{../../set6/html/FuzzySet.html#method-support}{\code{set6::FuzzySet$support()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\subsection{Method \code{equals()}}{
+Tests if two sets are equal.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzyTuple$equals(x, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Two fuzzy sets are equal if they contain the same elements with the same memberships and
+in the same order. Infix operators can be used for:
+\tabular{ll}{
+Equal \tab \code{==} \cr
+Not equal \tab \code{!=} \cr
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Test if one set is a (proper) subset of another
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzyTuple$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{proper}}{logical. If \code{TRUE} tests for proper subsets.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If using the method directly, and not via one of the operators then the additional boolean
+argument \code{proper} can be used to specify testing of subsets or proper subsets. A Set is a proper
+subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+(non-proper) subset if it is fully contained by, or equal to, the other Set.
+
+Infix operators can be used for:
+\tabular{ll}{
+Subset \tab \code{<} \cr
+Proper Subset \tab \code{<=} \cr
+Superset \tab \code{>} \cr
+Proper Superset \tab \code{>=}
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-alphaCut"></a>}}
+\subsection{Method \code{alphaCut()}}{
+The alpha-cut of a fuzzy set is defined as the set
+\deqn{A_\alpha = \{x \epsilon F | m \ge \alpha\}}{A_\alpha = {x \epsilon F | m \ge \alpha}}
+where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzyTuple$alphaCut(alpha, strong = FALSE, create = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{alpha}}{numeric in [0, 1] to determine which elements to return}
+
+\item{\code{strong}}{logical, if \code{FALSE} (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than}
+
+\item{\code{create}}{logical, if \code{FALSE} (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Elements in \link{FuzzyTuple} or a \link{Set} of the elements.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzyTuple$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

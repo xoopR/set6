@@ -8,7 +8,7 @@ test_that("SpecialSets",{
   expect_equal(x$strprint(), "R \\ N0")
   expect_true(x$contains(1.1))
   expect_false(x$contains(1))
-  expect_equal(x$elements, NaN)
+  expect_equal(x$elements, NA)
   expect_equal(x$length, Inf)
   expect_equal(x$addedSet, Reals$new())
   expect_equal(x$subtractedSet, Naturals$new())
@@ -35,7 +35,7 @@ test_that("fields",{
   # expect_equal(d$lower, 1)
   # expect_equal(d$upper, 9)
   expect_equal(d$elements, as.list(c(1:4, 6:9)))
-  expect_equal(ComplementSet$new(Set$new(1:10), Interval$new(5, 10))$elements, NaN)
+  expect_equal(ComplementSet$new(Set$new(1:10), Interval$new(5, 10))$elements, NA)
   expect_equal(d$type, "{}")
 })
 

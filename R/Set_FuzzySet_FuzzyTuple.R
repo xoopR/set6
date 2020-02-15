@@ -1,24 +1,7 @@
-#---------------------------------------------
-# Documentation
-#---------------------------------------------
 #' @name FuzzyTuple
 #' @title Mathematical Fuzzy Tuple
 #' @description A general FuzzyTuple object for mathematical fuzzy tuples, inheriting from `FuzzySet`.
-#' @return R6 object of class FuzzyTuple inheriting from [FuzzySet].
-#' @template Set
-#' @templateVar constructor FuzzyTuple$new(..., elements = NULL, membership = rep(1, length(elements)), class = NULL)
-#' @templateVar arg1 `...` \tab ANY \tab Alternating elements and membership, see constructor details. \cr
-#' @templateVar arg2 `elements` \tab ANY \tab Elements in the set, see constructor details. \cr
-#' @templateVar arg3 `membership` \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
-#' @templateVar arg4 `class` \tab character \tab Optional string naming a class that if supplied gives the set the `typed` property. \cr
-#' @templateVar constructorDets `FuzzyTuple`s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to `elements` and a list of respective memberships to `membership`, see examples. If the `class` argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
-#' @templateVar meth1 **Fuzzy Methods** \tab **Link** \cr
-#' @templateVar meth2 `membership(element = NULL)` \tab [membership] \cr
-#' @templateVar meth3 `alphaCut(alpha, strong = FALSE, create = FALSE)` \tab [alphaCut] \cr
-#' @templateVar meth4 `support(create = FALSE)` \tab [support] \cr
-#' @templateVar meth5 `core(create = FALSE)` \tab [core] \cr
-#' @templateVar meth6 `inclusion(element)` \tab [inclusion] \cr
-#' @templateVar meth7  \tab \cr \tab \cr \tab \cr
+#' @family sets
 #'
 #' @details
 #' Fuzzy tuples generalise standard mathematical tuples to allow for fuzzy relationships. Whereas a
@@ -55,149 +38,130 @@
 #' FuzzySet$new(1, 0.1, 2, 0.2) == FuzzySet$new(2, 0.2, 1, 0.1)
 #'
 #' @export
-NULL
-#---------------------------------------------
-# Definition and Construction
-#---------------------------------------------
-FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet)
+FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet,
+  public  = list(
+    #' @description Tests if two sets are equal.
+    #' @details Two fuzzy sets are equal if they contain the same elements with the same memberships and
+    #' in the same order. Infix operators can be used for:
+    #' \tabular{ll}{
+    #' Equal \tab `==` \cr
+    #' Not equal \tab `!=` \cr
+    #' }
+    #' @param x [Set] or vector of [Set]s.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
+    #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of `x`.
+    equals = function(x, all = FALSE){
+      if(all(self$membership() == 1))
+        return(self$core(create = T)$equals(x))
 
-#---------------------------------------------
-# Public Methods
-#---------------------------------------------
-FuzzyTuple$set("public","equals",function(x, all = FALSE){
-  if(all(self$membership() == 1))
-    return(self$core(create = T)$equals(x))
+      x <- listify(x)
 
-  x <- listify(x)
+      ret = sapply(x, function(el){
+        if(!testFuzzySet(el))
+          return(FALSE)
 
-  ret = sapply(x, function(el){
-    if(!testFuzzySet(el))
-      return(FALSE)
+        if(el$length != self$length)
+          return(FALSE)
 
-    if(el$length != self$length)
-      return(FALSE)
+        if(class(el$elements) == "list" | class(self$elements) == "list"){
+          elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+          selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        } else {
+          elel = el$elements
+          selel = self$elements
+        }
 
-    if(class(el$elements) == "list" | class(self$elements) == "list"){
-      elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-      selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-    } else {
-      elel = el$elements
-      selel = self$elements
-    }
+        return(suppressWarnings(all(elel == selel) & all(el$membership() == self$membership())))
+      })
 
-    return(suppressWarnings(all(elel == selel) & all(el$membership() == self$membership())))
-  })
+      returner(ret, all)
+    },
 
-  returner(ret, all)
-})
-FuzzyTuple$set("public","isSubset",function(x, proper = FALSE, all = FALSE){
-  if(all(self$membership() == 1))
-    return(self$core(create = T)$isSubset(x, proper = proper, all = all))
+    #' @description  Test if one set is a (proper) subset of another
+    #' @param x any. Object or vector of objects to test.
+    #' @param proper logical. If `TRUE` tests for proper subsets.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @details If using the method directly, and not via one of the operators then the additional boolean
+    #' argument `proper` can be used to specify testing of subsets or proper subsets. A Set is a proper
+    #' subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+    #' (non-proper) subset if it is fully contained by, or equal to, the other Set.
+    #'
+    #' Infix operators can be used for:
+    #' \tabular{ll}{
+    #' Subset \tab `<` \cr
+    #' Proper Subset \tab `<=` \cr
+    #' Superset \tab `>` \cr
+    #' Proper Superset \tab `>=`
+    #' }
+    #'
+    #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
+    #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of `x`.
+    isSubset = function(x, proper = FALSE, all = FALSE){
+      if(all(self$membership() == 1))
+        return(self$core(create = T)$isSubset(x, proper = proper, all = all))
 
-  x <- listify(x)
+      x <- listify(x)
 
-  ret = rep(FALSE, length(x))
-  ind = sapply(x, testFuzzyTuple)
+      ret = rep(FALSE, length(x))
+      ind = sapply(x, testFuzzyTuple)
 
-  ret[ind] = sapply(x[ind], function(el){
-    self_comp <- paste(self$elements, self$membership(), sep=";")
-    el_comp <- paste(el$elements, el$membership(), sep=";")
+      ret[ind] = sapply(x[ind], function(el){
+        self_comp <- paste(self$elements, self$membership(), sep=";")
+        el_comp <- paste(el$elements, el$membership(), sep=";")
 
-    if(el$length > self$length)
-      return(FALSE)
-    else if(el$length == self$length){
-      if(!proper & el$equals(self))
-        return(TRUE)
+        if(el$length > self$length)
+          return(FALSE)
+        else if(el$length == self$length){
+          if(!proper & el$equals(self))
+            return(TRUE)
+          else
+            return(FALSE)
+        } else{
+          mtc <- match(el_comp, self_comp)
+          if(all(is.na(mtc)))
+            return(FALSE)
+
+          if(all(order(mtc) == (1:length(el$elements))))
+            return(TRUE)
+          else
+            return(FALSE)
+        }
+      })
+
+      returner(ret, all)
+    },
+
+    #' @description The alpha-cut of a fuzzy set is defined as the set
+    #' \deqn{A_\alpha = \{x \epsilon F | m \ge \alpha\}}{A_\alpha = {x \epsilon F | m \ge \alpha}}
+    #' where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
+    #' @param alpha numeric in \[0, 1\] to determine which elements to return
+    #' @param strong logical, if `FALSE` (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than
+    #' @param create logical, if `FALSE` (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements
+    #' @return Elements in [FuzzyTuple] or a [Set] of the elements.
+    alphaCut = function(alpha, strong = FALSE, create = FALSE){
+      if(strong)
+        els <- self$elements[self$membership() > alpha]
       else
-        return(FALSE)
-    } else{
-      mtc <- match(el_comp, self_comp)
-      if(all(is.na(mtc)))
-        return(FALSE)
+        els <- self$elements[self$membership() >= alpha]
 
-      if(all(order(mtc) == (1:length(el$elements))))
-        return(TRUE)
-      else
-        return(FALSE)
+      if(create){
+        if(length(els) == 0)
+          return(Set$new())
+        else
+          return(Tuple$new(els))
+      } else{
+        if(length(els) == 0)
+          return(NULL)
+        else
+          return(els)
+      }
     }
-  })
+  ),
 
-  returner(ret, all)
-})
-FuzzyTuple$set("public","alphaCut",function(alpha, strong = FALSE, create = FALSE){
-  if(strong)
-    els <- self$elements[self$membership() > alpha]
-  else
-    els <- self$elements[self$membership() >= alpha]
-
-  if(create){
-    if(length(els) == 0)
-      return(Set$new())
-    else
-      return(Tuple$new(els))
-  } else{
-    if(length(els) == 0)
-      return(NULL)
-    else
-      return(els)
-  }
-})
-
-#---------------------------------------------
-# Private Fields
-#---------------------------------------------
-FuzzyTuple$set("private",".type","()")
-
-#---------------------------------------------
-# Coercions
-#---------------------------------------------
-#' @rdname as.FuzzySet
-#' @aliases as.FuzzyTuple
-#' @export
-as.FuzzyTuple <- function(object){
-  UseMethod("as.FuzzyTuple",object)
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.numeric <- function(object){
-  FuzzyTuple$new(elements = object[seq.int(1,length(object),2)],
-               membership = as.numeric(object[seq.int(2,length(object),2)]))
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.list <- function(object){
-  return(FuzzyTuple$new(elements = object$elements, membership = object$membership))
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.matrix <- function(object){
-  return(FuzzyTuple$new(elements = object[,1], membership = object[,2]))
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.data.frame <- function(object){
-  if(all(c("elements", "membership") %in% colnames(object)))
-    return(FuzzyTuple$new(elements = object$elements, membership = object$membership))
-  else
-    return(FuzzyTuple$new(elements = object[,1], membership = object[,2]))
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.Set <- function(object){
-  return(FuzzyTuple$new(elements = object$elements))
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.FuzzySet <- function(object){
-  return(FuzzyTuple$new(elements = object$elements, membership = object$membership()))
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.Interval <- function(object){
-  ifnerror(as.Set.Interval(object), error = "stop", errormsg = "Interval cannot be coerced to FuzzyTuple.")
-}
-#' @rdname as.FuzzySet
-#' @export
-as.FuzzyTuple.ConditionalSet <- function(object){
-  stop("ConditionalSet cannot be coerced to FuzzyTuple.")
-}
+  private = list(
+    .type = "()"
+  )
+)

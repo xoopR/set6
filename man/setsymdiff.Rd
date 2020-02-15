@@ -30,7 +30,7 @@ The symmetric difference can also be expressed as the union of two sets minus th
 Therefore \code{setsymdiff} is written as a thin wrapper over these operations, so for two sets, \verb{A,B}: \cr
 \code{A \%-\% B = (A | B) - (A & B)}.
 
-The symmetric difference of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their \link{support}.
+The symmetric difference of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.
 }
 \examples{
 # symmetrical difference compared to union and intersection
