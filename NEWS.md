@@ -1,3 +1,7 @@
+# set6 0.1.2
+
+- Updated documentation to be compatible with roxygen2
+
 # set6 0.1.1
 
 ### Patches
