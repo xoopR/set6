@@ -2,18 +2,16 @@
 % Please edit documentation in R/Set_UniversalSet.R
 \name{UniversalSet}
 \alias{UniversalSet}
-\title{Mathematical UniversalSet}
-\value{
-R6 object of class UniversalSet inheriting from \link{Set}.
-}
+\title{Mathematical Universal Set}
 \description{
-The UniversalSet is defined as the \link{Set} containing all possible elements.
+The \code{UniversalSet} is defined as the \link{Set} containing all possible elements.
 }
 \details{
 The Universal set is the default universe to all sets, and is the largest possible set.
 The Universal set contains every single possible element. We denote the Universal set with \code{V}
 instead of \code{U} to avoid confusion with the union symbol. The Universal set is also responsible
 for a few set paradoxes, to resolve these we use the following results:
+
 Let \eqn{V} be the universal set, \eqn{S} be any non-universal set, and \eqn{0} the empty set, then
 
 \deqn{V \cup S = V}{V or S = V}
@@ -22,64 +20,53 @@ Let \eqn{V} be the universal set, \eqn{S} be any non-universal set, and \eqn{0} 
 \deqn{V^n = V}
 \deqn{P(V) = V}
 }
-\section{Constructor}{
- \code{UniversalSet$new(...)}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{...} \tab ANY \tab Added for consistency, ignored.
-
-}
-}
-
-\section{Constructor Details}{
- The UniversalSet takes no arguments in construction.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \examples{
 u = UniversalSet$new()
 print(u)
 u$contains(c(1, letters, TRUE, Set$new()), all = TRUE)
 
+
+## ------------------------------------------------
+## Method `UniversalSet$equals`
+## ------------------------------------------------
+
+# Equals
+Set$new(1,2)$equals(Set$new(5,6))
+Set$new(1,2)$equals(Interval$new(1,2))
+Set$new(1,2) == Interval$new(1,2, class = "integer")
+
+# Not equal
+!Set$new(1,2)$equals(Set$new(1,2))
+Set$new(1,2) != Set$new(1,5)
+
+## ------------------------------------------------
+## Method `UniversalSet$isSubset`
+## ------------------------------------------------
+
+Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
+Set$new(1,2) < Set$new(1,2,3) # proper subset
+
+c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
+Set$new(1,2,3) <= Set$new(1,2,3) # proper
+
+## ------------------------------------------------
+## Method `UniversalSet$contains`
+## ------------------------------------------------
+
+s = Set$new(1:5)
+
+# Simplest case
+s$contains(4)
+8 \%inset\% s
+
+# Test if multiple elements lie in the set
+s$contains(4:6, all = FALSE)
+s$contains(4:6, all = TRUE)
+
+# Check if a tuple lies in a Set of higher dimension
+s2 = s * s
+s2$contains(Tuple$new(2,1))
+c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
 }
 \seealso{
 Other sets: 
@@ -91,3 +78,246 @@ Other sets:
 \code{\link{Tuple}}
 }
 \concept{sets}
+\section{Super class}{
+\code{\link[set6:Set]{set6::Set}} -> \code{UniversalSet}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{UniversalSet$new()}}
+\item \href{#method-equals}{\code{UniversalSet$equals()}}
+\item \href{#method-isSubset}{\code{UniversalSet$isSubset()}}
+\item \href{#method-contains}{\code{UniversalSet$contains()}}
+\item \href{#method-strprint}{\code{UniversalSet$strprint()}}
+\item \href{#method-clone}{\code{UniversalSet$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{UniversalSet} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UniversalSet$new()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+The Universal set is the set containing every possible element.
+}
+
+\subsection{Returns}{
+A new \code{UniversalSet} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\subsection{Method \code{equals()}}{
+Tests if two sets are equal.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UniversalSet$equals(x, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Only the \code{UniversalSet} is equal to itself.
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+
+Infix operators can be used for:
+\tabular{ll}{
+Equal \tab \code{==} \cr
+Not equal \tab \code{!=} \cr
+}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# Equals
+Set$new(1,2)$equals(Set$new(5,6))
+Set$new(1,2)$equals(Interval$new(1,2))
+Set$new(1,2) == Interval$new(1,2, class = "integer")
+
+# Not equal
+!Set$new(1,2)$equals(Set$new(1,2))
+Set$new(1,2) != Set$new(1,5)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Test if one set is a (proper) subset of another
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UniversalSet$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{proper}}{logical. If \code{TRUE} tests for proper subsets.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If using the method directly, and not via one of the operators then the additional boolean
+argument \code{proper} can be used to specify testing of subsets or proper subsets. A Set is a proper
+subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+(non-proper) subset if it is fully contained by, or equal to, the other Set.
+
+When calling \link{isSubset} on objects inheriting from \link{Interval}, the method treats the interval as if
+it is a \link{Set}, i.e. ordering and class are ignored. Use \link{isSubinterval} to test if one interval
+is a subinterval of another.
+
+Infix operators can be used for:
+\tabular{ll}{
+Subset \tab \code{<} \cr
+Proper Subset \tab \code{<=} \cr
+Superset \tab \code{>} \cr
+Proper Superset \tab \code{>=}
+}
+
+Every \code{Set} is a subset of a \code{UniversalSet}. No \code{Set} is a super set of a \code{UniversalSet},
+and only a \code{UniversalSet} is not a proper subset of a \code{UniversalSet}.
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Set$new(1,2,3)$isSubset(Set$new(1,2), proper = TRUE)
+Set$new(1,2) < Set$new(1,2,3) # proper subset
+
+c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
+Set$new(1,2,3) <= Set$new(1,2,3) # proper
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-contains"></a>}}
+\subsection{Method \code{contains()}}{
+Tests to see if \code{x} is contained in the Set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UniversalSet$contains(x, all = FALSE, bound = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{bound}}{ignored.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+at the same time, then provide these as a list.
+
+If using the method directly, and not via one of the operators then the additional boolean
+arguments \code{all} and \code{bound}. If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set}, otherwise
+returns a vector of logicals. For \link{Interval}s, \code{bound} is used to specify if elements lying on the
+(possibly open) boundary of the interval are considered contained (\code{bound = TRUE}) or not (\code{bound = FALSE}).
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all elements of \code{x} are contained in the \code{Set}, otherwise
+\code{FALSE.} If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+
+The infix operator \verb{\%inset\%} is available to test if \code{x} is an element in the \code{Set},
+see examples.
+
+Every element is contained within the Universal set.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{s = Set$new(1:5)
+
+# Simplest case
+s$contains(4)
+8 \%inset\% s
+
+# Test if multiple elements lie in the set
+s$contains(4:6, all = FALSE)
+s$contains(4:6, all = TRUE)
+
+# Check if a tuple lies in a Set of higher dimension
+s2 = s * s
+s2$contains(Tuple$new(2,1))
+c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\subsection{Method \code{strprint()}}{
+Creates a printable representation of the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UniversalSet$strprint(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{numeric. Number of elements to display on either side of ellipsis when printing.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A character string representing the object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UniversalSet$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

@@ -4,7 +4,7 @@ context("UniversalSet")
 
 test_that("construction",{
   expect_silent(UniversalSet$new())
-  expect_silent(UniversalSet$new(12))
+  expect_error(UniversalSet$new(12))
 })
 
 test_that("strprint",{

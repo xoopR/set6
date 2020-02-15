@@ -3,9 +3,6 @@
 \name{ConditionalSet}
 \alias{ConditionalSet}
 \title{Mathematical Set of Conditions}
-\value{
-R6 object of class ConditionalSet inheriting from \link{Set}.
-}
 \description{
 A mathematical set defined by one or more logical conditions.
 }
@@ -13,61 +10,6 @@ A mathematical set defined by one or more logical conditions.
 Conditional sets are a useful tool for symbolically defining possibly infinite sets. They can be combined
 using standard 'and', \code{&}, and 'or', \code{|}, operators.
 }
-\section{Constructor}{
- \code{ConditionalSet$new(condition, argclass = NULL)}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{condition} \tab function \tab Function for defining the set. See constructor details. \cr
-\code{argclass} \tab list \tab Optional list of sets that the function arguments live in. See constructor details.
-
-}
-}
-
-\section{Constructor Details}{
- The \code{condition} should be given as a function that when evaluated returns either TRUE or FALSE. Further constraints can be given by providing the universe of the function arguments as \link{Set}s, if these are not given then the \link{UniversalSet} is assumed. See examples.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-\code{condition} \tab \link{condition} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \examples{
 # Set of positives
 s = ConditionalSet$new(function(x) x > 0)
@@ -99,3 +41,208 @@ Other sets:
 \code{\link{UniversalSet}}
 }
 \concept{sets}
+\section{Super class}{
+\code{\link[set6:Set]{set6::Set}} -> \code{ConditionalSet}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{condition}}{Returns the condition defining the ConditionalSet.}
+
+\item{\code{class}}{Returns \code{argclass}, see \verb{$new}.}
+
+\item{\code{elements}}{Returns \code{NA}.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{ConditionalSet$new()}}
+\item \href{#method-contains}{\code{ConditionalSet$contains()}}
+\item \href{#method-equals}{\code{ConditionalSet$equals()}}
+\item \href{#method-strprint}{\code{ConditionalSet$strprint()}}
+\item \href{#method-summary}{\code{ConditionalSet$summary()}}
+\item \href{#method-isSubset}{\code{ConditionalSet$isSubset()}}
+\item \href{#method-clone}{\code{ConditionalSet$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{ConditionalSet} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$new(condition, argclass = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{condition}}{function. Defines the set, see details.}
+
+\item{\code{argclass}}{list. Optional list of sets that the function arguments live in, see details.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+The \code{condition} should be given as a function that when evaluated returns
+either \code{TRUE} or \code{FALSE}. Further constraints can be given by providing the universe of the
+function arguments as \link{Set}s, if these are not given then the \link{UniversalSet} is assumed.
+See examples.
+}
+
+\subsection{Returns}{
+A new \code{ConditionalSet} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-contains"></a>}}
+\subsection{Method \code{contains()}}{
+Tests to see if \code{x} is contained in the Set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$contains(x, all = FALSE, bound = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{bound}}{ignored, added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+at the same time, then provide these as a list.
+
+If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set}, otherwise
+returns a vector of logicals.
+
+An element is contained in a \code{ConditionalSet} if it returns \code{TRUE} as an argument in the defining function.
+For sets that are defined with a function that takes multiple arguments, a \link{Tuple} should be
+passed to \code{x}.
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all elements of \code{x} are contained in the \code{Set}, otherwise
+\code{FALSE.} If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+
+The infix operator \verb{\%inset\%} is available to test if \code{x} is an element in the \code{Set},
+see examples.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\subsection{Method \code{equals()}}{
+Tests if two sets are equal.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$equals(x, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Two sets are equal if they contain the same elements. Infix operators can be used for:
+\tabular{ll}{
+Equal \tab \code{==} \cr
+Not equal \tab \code{!=} \cr
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\subsection{Method \code{strprint()}}{
+Creates a printable representation of the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$strprint(n = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{ignored, added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A character string representing the object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-summary"></a>}}
+\subsection{Method \code{summary()}}{
+See \code{strprint}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$summary(n = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{ignored, added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Currently undefined for \code{ConditionalSet}s.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{ignored, added for consistency.}
+
+\item{\code{proper}}{ignored, added for consistency.}
+
+\item{\code{all}}{ignored, added for consistency.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

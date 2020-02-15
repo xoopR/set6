@@ -3,9 +3,6 @@
 \name{FuzzySet}
 \alias{FuzzySet}
 \title{Mathematical Fuzzy Set}
-\value{
-R6 object of class FuzzySet inheriting from \link{Set}.
-}
 \description{
 A general FuzzySet object for mathematical fuzzy sets, inheriting from \code{Set}.
 }
@@ -18,69 +15,6 @@ fuzzy set where all elements have a membership equal to \eqn{1}. Similarly to \l
 must be unique and the ordering does not matter, to establish order and non-unique elements,
 \link{FuzzyTuple}s can be used.
 }
-\section{Constructor}{
- \code{FuzzySet$new(..., elements = NULL, membership = rep(1, length(elements)), class = NULL)}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{...} \tab ANY \tab Alternating elements and membership, see constructor details. \cr
-\code{elements} \tab ANY \tab Elements in the set, see constructor details. \cr
-\code{membership} \tab numeric \tab Corresponding membership of the elements, see constructor details. \cr
-\code{class} \tab character \tab Optional string naming a class that if supplied gives the set the \code{typed} property. \cr
-
-}
-}
-
-\section{Constructor Details}{
- \code{FuzzySet}s can be constructed in one of two ways, either by supplying the elements and their membership in alternate order, or by providing a list of elements to \code{elements} and a list of respective memberships to \code{membership}, see examples. If the \code{class} argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Fuzzy Methods} \tab \strong{Link} \cr
-\code{membership(element = NULL)} \tab \link{membership} \cr
-\code{alphaCut(alpha, strong = FALSE, create = FALSE)} \tab \link{alphaCut} \cr
-\code{support(create = FALSE)} \tab \link{support} \cr
-\code{core(create = FALSE)} \tab \link{core} \cr
-\code{inclusion(element)} \tab \link{inclusion} \cr
-\tab \cr \tab \cr \tab \cr
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \examples{
 # Different constructors
 FuzzySet$new(1, 0.5, 2, 1, 3, 0)
@@ -98,6 +32,53 @@ f$inclusion(0)
 f$membership(0)
 f$membership(1)
 
+
+## ------------------------------------------------
+## Method `FuzzySet$membership`
+## ------------------------------------------------
+
+f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
+f$membership()
+f$membership(2)
+
+## ------------------------------------------------
+## Method `FuzzySet$alphaCut`
+## ------------------------------------------------
+
+f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
+# Alpha-cut
+f$alphaCut(0.5)
+
+# Strong alpha-cut
+f$alphaCut(0.5, strong = TRUE)
+
+# Create a set from the alpha-cut
+f$alphaCut(0.5, create = TRUE)
+
+## ------------------------------------------------
+## Method `FuzzySet$support`
+## ------------------------------------------------
+
+f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
+f$support()
+f$support(TRUE)
+
+## ------------------------------------------------
+## Method `FuzzySet$core`
+## ------------------------------------------------
+
+f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
+f$core()
+f$core(TRUE)
+
+## ------------------------------------------------
+## Method `FuzzySet$inclusion`
+## ------------------------------------------------
+
+f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
+f$inclusion(0.1)
+f$inclusion(1)
+f$inclusion(3)
 }
 \seealso{
 Other sets: 
@@ -109,3 +90,359 @@ Other sets:
 \code{\link{UniversalSet}}
 }
 \concept{sets}
+\section{Super class}{
+\code{\link[set6:Set]{set6::Set}} -> \code{FuzzySet}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{FuzzySet$new()}}
+\item \href{#method-strprint}{\code{FuzzySet$strprint()}}
+\item \href{#method-membership}{\code{FuzzySet$membership()}}
+\item \href{#method-alphaCut}{\code{FuzzySet$alphaCut()}}
+\item \href{#method-support}{\code{FuzzySet$support()}}
+\item \href{#method-core}{\code{FuzzySet$core()}}
+\item \href{#method-inclusion}{\code{FuzzySet$inclusion()}}
+\item \href{#method-equals}{\code{FuzzySet$equals()}}
+\item \href{#method-isSubset}{\code{FuzzySet$isSubset()}}
+\item \href{#method-clone}{\code{FuzzySet$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="contains">}\href{../../set6/html/Set.html#method-contains}{\code{set6::Set$contains()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{FuzzySet} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$new(
+  ...,
+  elements = NULL,
+  membership = rep(1, length(elements)),
+  class = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Alternating elements and membership, see details.}
+
+\item{\code{elements}}{Elements in the set, see details.}
+
+\item{\code{membership}}{Corresponding membership of the elements, see details.}
+
+\item{\code{class}}{Optional string naming a class that if supplied gives the set the \code{typed} property.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\code{FuzzySet}s can be constructed in one of two ways, either by supplying the elements and their
+membership in alternate order, or by providing a list of elements to \code{elements} and a list of
+respective memberships to \code{membership}, see examples. If the \code{class} argument is non-\code{NULL},
+then all elements will be coerced to the given class in construction, and if elements of a
+different class are added these will either be rejected or coerced.
+}
+
+\subsection{Returns}{
+A new \code{FuzzySet} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\subsection{Method \code{strprint()}}{
+Creates a printable representation of the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$strprint(n = 2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{numeric. Number of elements to display on either side of ellipsis when printing.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A character string representing the object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-membership"></a>}}
+\subsection{Method \code{membership()}}{
+Returns the membership, i.e. value in [0, 1], of either the given element(s)
+or all elements in the fuzzy set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$membership(element = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{element}}{element or list of element in the \code{set}, if \code{NULL} returns membership of all elements}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+For \code{FuzzySet}s this is straightforward and returns the membership of the given element(s),
+however in \code{FuzzyTuple}s when an element may be duplicated, the function returns the membership of
+all instances of the element.
+}
+
+\subsection{Returns}{
+Value, or vector of values, in [0, 1]
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
+f$membership()
+f$membership(2)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-alphaCut"></a>}}
+\subsection{Method \code{alphaCut()}}{
+The alpha-cut of a fuzzy set is defined as the set
+\deqn{A_\alpha = \{x \epsilon F | m \ge \alpha\}}{A_\alpha = {x \epsilon F | m \ge \alpha}}
+where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$alphaCut(alpha, strong = FALSE, create = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{alpha}}{numeric in [0, 1] to determine which elements to return}
+
+\item{\code{strong}}{logical, if \code{FALSE} (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than}
+
+\item{\code{create}}{logical, if \code{FALSE} (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Elements in \link{FuzzySet} or a \link{Set} of the elements.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
+# Alpha-cut
+f$alphaCut(0.5)
+
+# Strong alpha-cut
+f$alphaCut(0.5, strong = TRUE)
+
+# Create a set from the alpha-cut
+f$alphaCut(0.5, create = TRUE)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-support"></a>}}
+\subsection{Method \code{support()}}{
+The support of a fuzzy set is defined as the set of elements whose membership
+is greater than zero, or the strong alpha-cut with \eqn{\alpha = 0},
+\deqn{A_\alpha = \{x \epsilon F | m > 0\}}{A_\alpha = {x \epsilon F | m > 0}}
+where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding
+membership.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$support(create = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{create}}{logical, if \code{FALSE} (default) returns the support elements, otherwise returns a \link{Set} of the support elements}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Support elements in fuzzy set or a \link{Set} of the support elements.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
+f$support()
+f$support(TRUE)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-core"></a>}}
+\subsection{Method \code{core()}}{
+The core of a fuzzy set is defined as the set of elements whose membership is equal to one,
+or the alpha-cut with \eqn{\alpha = 1},
+\deqn{A_\alpha = \{x \epsilon F \ : \ m \ge 1\}}{A_\alpha = {x \epsilon F : m \ge 1}}
+where \eqn{x} is an element in the fuzzy set, \eqn{F}, and \eqn{m} is the corresponding membership.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$core(create = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{create}}{logical, if \code{FALSE} (default) returns the core elements, otherwise returns a \link{Set} of the core elements}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Core elements in \link{FuzzySet} or a \link{Set} of the core elements.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
+f$core()
+f$core(TRUE)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-inclusion"></a>}}
+\subsection{Method \code{inclusion()}}{
+An element in a fuzzy set, with corresponding membership \eqn{m}, is:
+\itemize{
+\item Included - If \eqn{m = 1}
+\item Partially Included - If \eqn{0 < m < 1}
+\item Not Included - If \eqn{m = 0}
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$inclusion(element)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{element}}{element or list of elements in fuzzy set for which to get the inclusion level}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+For \link{FuzzySet}s this is straightforward and returns the inclusion level of the given element(s),
+however in \link{FuzzyTuple}s when an element may be duplicated, the function returns the inclusion level of
+all instances of the element.
+}
+
+\subsection{Returns}{
+One of: "Included", "Partially Included", "Not Included"
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
+f$inclusion(0.1)
+f$inclusion(1)
+f$inclusion(3)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\subsection{Method \code{equals()}}{
+Tests if two sets are equal.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$equals(x, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Two fuzzy sets are equal if they contain the same elements with the same memberships.
+Infix operators can be used for:
+\tabular{ll}{
+Equal \tab \code{==} \cr
+Not equal \tab \code{!=} \cr
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Test if one set is a (proper) subset of another
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{proper}}{logical. If \code{TRUE} tests for proper subsets.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If using the method directly, and not via one of the operators then the additional boolean
+argument \code{proper} can be used to specify testing of subsets or proper subsets. A Set is a proper
+subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+(non-proper) subset if it is fully contained by, or equal to, the other Set.
+
+Infix operators can be used for:
+\tabular{ll}{
+Subset \tab \code{<} \cr
+Proper Subset \tab \code{<=} \cr
+Superset \tab \code{>} \cr
+Proper Superset \tab \code{>=}
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FuzzySet$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

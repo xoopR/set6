@@ -65,5 +65,5 @@ test_that("fields",{
   c = ConditionalSet$new(function(x) TRUE)
   expect_equal(c$condition, function(x) TRUE)
   expect_equal(c$class, list(x = UniversalSet$new()))
-  expect_equal(c$elements, NaN)
+  expect_equal(c$elements, NA)
 })

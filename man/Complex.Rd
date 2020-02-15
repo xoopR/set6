@@ -3,72 +3,18 @@
 \name{Complex}
 \alias{Complex}
 \title{Set of Complex Numbers}
-\value{
-An R6 object of class Complex.
-}
 \description{
-The mathematical set of complex numbers, defined as the set of reals with possibly imaginary components. i.e. \deqn{\\{a + bi \\ : \\ a,b \in R\\}}{{a + bi : a,b \epsilon R}} where \eqn{R} is the set of reals.
+The mathematical set of complex numbers,
+defined as the the set of reals with possibly imaginary components. i.e.
+\deqn{\\{a + bi \\ : \\ a,b \in R\\}}{{a + bi : a,b \epsilon R}}
+where \eqn{R} is the set of reals.
 }
-\section{Constructor}{
- Complex$new(lower = -Inf+0i, upper = Inf+0i)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{lower} \tab complex \tab Lower limit of interval. \cr
-\code{upper} \tab complex \tab Upper limit of interval.
-
-}
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Interval Methods} \tab \strong{Link} \cr
-isSubinterval(x, proper = FALSE, all = FALSE) \tab \link{isSubinterval} \cr
-\tab \cr \tab \cr \tab \cr
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
-\examples{
-Complex$new()
+\details{
+Unlike the other \code{SpecialSet}s, \code{Complex} can be used to define an \code{Interval}. In this
+case where values can be complex, as opposed to reals or integers in \link{Interval}.
 }
 \seealso{
-\link{listSpecialSets}
-
-Other SpecialSets: 
+Other special sets: 
 \code{\link{ExtendedReals}},
 \code{\link{Integers}},
 \code{\link{Naturals}},
@@ -82,4 +28,103 @@ Other SpecialSets:
 \code{\link{Rationals}},
 \code{\link{Reals}}
 }
-\concept{SpecialSets}
+\concept{special sets}
+\section{Super classes}{
+\code{\link[set6:Set]{set6::Set}} -> \code{\link[set6:Interval]{set6::Interval}} -> \code{\link[set6:SpecialSet]{set6::SpecialSet}} -> \code{Complex}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Complex$new()}}
+\item \href{#method-contains}{\code{Complex$contains()}}
+\item \href{#method-clone}{\code{Complex$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="equals">}\href{../../set6/html/Interval.html#method-equals}{\code{set6::Interval$equals()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="isSubinterval">}\href{../../set6/html/Interval.html#method-isSubinterval}{\code{set6::Interval$isSubinterval()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="isSubset">}\href{../../set6/html/Interval.html#method-isSubset}{\code{set6::Interval$isSubset()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="SpecialSet" data-id="strprint">}\href{../../set6/html/SpecialSet.html#method-strprint}{\code{set6::SpecialSet$strprint()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{Complex} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Complex$new(lower = -Inf + (0+0i), upper = Inf + (0+0i))}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{lower}}{complex. Where to start the set.}
+
+\item{\code{upper}}{complex. Where to end the set.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{Complex} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-contains"></a>}}
+\subsection{Method \code{contains()}}{
+Tests to see if \code{x} is contained in the Set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Complex$contains(x, all = FALSE, bound = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+
+\item{\code{bound}}{logical.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+at the same time, then provide these as a list.
+
+If \code{all = TRUE} then returns \code{TRUE} if all \code{x} are contained in the \code{Set}, otherwise
+returns a vector of logicals. For \link{Interval}s, \code{bound} is used to specify if elements lying on the
+(possibly open) boundary of the interval are considered contained (\code{bound = TRUE}) or not (\code{bound = FALSE}).
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all elements of \code{x} are contained in the \code{Set}, otherwise
+\code{FALSE.} If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+
+The infix operator \verb{\%inset\%} is available to test if \code{x} is an element in the \code{Set},
+see examples.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Complex$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

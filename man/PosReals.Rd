@@ -3,71 +3,14 @@
 \name{PosReals}
 \alias{PosReals}
 \title{Set of Positive Real Numbers}
-\value{
-An R6 object of class PosReals.
-}
 \description{
-The mathematical set of positive real numbers, defined as the union of the set of positive rationals and positive irrationals. i.e. \deqn{I^+ \cup Q^+}{I+ U Q+} where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
-}
-\section{Constructor}{
- PosReals$new(zero = FALSE)
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{zero = FALSE} \tab logical \tab If TRUE, zero is included in the set. \cr
-
-}
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-\strong{Interval Methods} \tab \strong{Link} \cr
-isSubinterval(x, proper = FALSE, all = FALSE) \tab \link{isSubinterval} \cr
-\tab \cr \tab \cr \tab \cr
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
-\examples{
-PosReals$new()
+The mathematical set of positive real numbers,
+defined as the union of the set of positive rationals and positive irrationals. i.e.
+\deqn{I^+ \cup Q^+}{I+ U Q+}
+where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
 }
 \seealso{
-\link{listSpecialSets}
-
-Other SpecialSets: 
+Other special sets: 
 \code{\link{Complex}},
 \code{\link{ExtendedReals}},
 \code{\link{Integers}},
@@ -81,4 +24,63 @@ Other SpecialSets:
 \code{\link{Rationals}},
 \code{\link{Reals}}
 }
-\concept{SpecialSets}
+\concept{special sets}
+\section{Super classes}{
+\code{\link[set6:Set]{set6::Set}} -> \code{\link[set6:Interval]{set6::Interval}} -> \code{\link[set6:SpecialSet]{set6::SpecialSet}} -> \code{\link[set6:Reals]{set6::Reals}} -> \code{PosReals}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{PosReals$new()}}
+\item \href{#method-clone}{\code{PosReals$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="contains">}\href{../../set6/html/Interval.html#method-contains}{\code{set6::Interval$contains()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="equals">}\href{../../set6/html/Interval.html#method-equals}{\code{set6::Interval$equals()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="isSubinterval">}\href{../../set6/html/Interval.html#method-isSubinterval}{\code{set6::Interval$isSubinterval()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="isSubset">}\href{../../set6/html/Interval.html#method-isSubset}{\code{set6::Interval$isSubset()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="SpecialSet" data-id="strprint">}\href{../../set6/html/SpecialSet.html#method-strprint}{\code{set6::SpecialSet$strprint()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new \code{PosReals} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PosReals$new(zero = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{zero}}{logical. If TRUE, zero is included in the set.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{PosReals} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PosReals$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

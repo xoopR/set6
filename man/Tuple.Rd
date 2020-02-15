@@ -3,9 +3,6 @@
 \name{Tuple}
 \alias{Tuple}
 \title{Mathematical Tuple}
-\value{
-R6 object of class Tuple inheriting from \link{Set}.
-}
 \description{
 A general Tuple object for mathematical tuples, inheriting from \code{Set}.
 }
@@ -14,62 +11,6 @@ Tuples are similar to sets, except that they drop the constraint for elements to
 ordering in a tuple does matter. Tuples are useful for methods including \link{contains} that may
 require non-unique elements. They are also the return type of the product of sets. See examples.
 }
-\section{Constructor}{
- \code{Tuple$new(..., universe = UniversalSet$new())}
-}
-
-\section{Constructor Arguments}{
-
-\tabular{lll}{
-\strong{Argument} \tab \strong{Type} \tab \strong{Details} \cr
-\code{...} \tab ANY \tab Elements in the tuple. \cr
-\code{universe} \tab Set \tab Universe that the Tuple lives in, default \link{UniversalSet}. \cr
-\code{elements} \tab list \tab Alternative constructor that may be more efficienct if passing objects of multiple classes. \cr
-\code{class} \tab character \tab Optional string naming a class that if supplied gives the set the \code{typed} property. \cr
-
-}
-}
-
-\section{Constructor Details}{
- Tuples are constructed by elements of any types (including R6 classes). The \code{universe} argument is useful for taking the absolute complement of the \code{Tuple}. If a universe isn't given then \link{UniversalSet} is assumed. If the \code{class} argument is non-NULL, then all elements will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected or coerced.
-}
-
-\section{Public Fields}{
-
-\tabular{ll}{
-\strong{Field} \tab \strong{Link} \cr
-
-\code{class} \tab \link{class} \cr
-\code{elements} \tab \link{elements} \cr
-\code{length} \tab \link{length} \cr
-\code{lower} \tab \link{lower} \cr
-\code{upper} \tab \link{upper} \cr
-\code{max} \tab \link{max} \cr
-\code{min} \tab \link{min} \cr
-\code{range} \tab \link{range} \cr
-\code{properties} \tab \link{properties} \cr
-\code{traits} \tab \link{traits} \cr
-\code{type} \tab \link{type} \cr
-\code{universe} \tab \link{universe}
-}
-}
-
-\section{Public Methods}{
-
-\tabular{ll}{
-
-\strong{Comparison Methods} \tab \strong{Link} \cr
-\code{contains(x, all = FALSE, bound = NULL)} \tab \link{contains} \cr
-\code{equals(x, all = FALSE)} \tab \link{equals} \cr
-\code{isSubset(x, proper = FALSE, all = FALSE)} \tab \link{isSubset} \cr
-\tab \cr \tab \cr \tab \cr
-\strong{Representation Methods} \tab \strong{Link} \cr
-\code{strprint(n = 2)} \tab \link{strprint} \cr
-\code{print(n = 2)} \tab \link{print} \cr
-\code{summary(n = 2)} \tab \link{summary} \cr
-}
-}
-
 \examples{
 # Tuple of integers
 Tuple$new(1:5)
@@ -88,6 +29,21 @@ Tuple$new(2, 2) != Tuple$new(2)
 # Ordering does matter
 Tuple$new(1, 2) != Tuple$new(2, 1)
 
+
+## ------------------------------------------------
+## Method `Tuple$equals`
+## ------------------------------------------------
+
+Tuple$new(1,2) ==  Tuple$new(1,2)
+Tuple$new(1,2) != Tuple$new(1,2)
+Tuple$new(1,1) != Set$new(1,1)
+
+## ------------------------------------------------
+## Method `Tuple$isSubset`
+## ------------------------------------------------
+
+Tuple$new(1,2,3) < Tuple$new(1,2,3,4)
+Tuple$new(1,3,2) < Tuple$new(1,2,3,4)
 }
 \seealso{
 Other sets: 
@@ -99,3 +55,140 @@ Other sets:
 \code{\link{UniversalSet}}
 }
 \concept{sets}
+\section{Super class}{
+\code{\link[set6:Set]{set6::Set}} -> \code{Tuple}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-equals}{\code{Tuple$equals()}}
+\item \href{#method-isSubset}{\code{Tuple$isSubset()}}
+\item \href{#method-clone}{\code{Tuple$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="contains">}\href{../../set6/html/Set.html#method-contains}{\code{set6::Set$contains()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="initialize">}\href{../../set6/html/Set.html#method-initialize}{\code{set6::Set$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="strprint">}\href{../../set6/html/Set.html#method-strprint}{\code{set6::Set$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\subsection{Method \code{equals()}}{
+Tests if two sets are equal.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tuple$equals(x, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{\link{Set} or vector of \link{Set}s.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+An object is equal to a Tuple if it contains all the same elements, and in the same order.
+Infix operators can be used for:
+\tabular{ll}{
+Equal \tab \code{==} \cr
+Not equal \tab \code{!=} \cr
+}
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are equal to the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Tuple$new(1,2) ==  Tuple$new(1,2)
+Tuple$new(1,2) != Tuple$new(1,2)
+Tuple$new(1,1) != Set$new(1,1)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\subsection{Method \code{isSubset()}}{
+Test if one set is a (proper) subset of another
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tuple$isSubset(x, proper = FALSE, all = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{any. Object or vector of objects to test.}
+
+\item{\code{proper}}{logical. If \code{TRUE} tests for proper subsets.}
+
+\item{\code{all}}{logical. If \code{FALSE} tests each \code{x} separately. Otherwise returns \code{TRUE} only if all \code{x} pass test.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If using the method directly, and not via one of the operators then the additional boolean
+argument \code{proper} can be used to specify testing of subsets or proper subsets. A Set is a proper
+subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
+(non-proper) subset if it is fully contained by, or equal to, the other Set.
+
+When calling \link{isSubset} on objects inheriting from \link{Interval}, the method treats the interval as if
+it is a \link{Set}, i.e. ordering and class are ignored. Use \link{isSubinterval} to test if one interval
+is a subinterval of another.
+
+Infix operators can be used for:
+\tabular{ll}{
+Subset \tab \code{<} \cr
+Proper Subset \tab \code{<=} \cr
+Superset \tab \code{>} \cr
+Proper Superset \tab \code{>=}
+}
+
+An object is a (proper) subset of a Tuple if it contains all (some) of the same elements,
+and in the same order.
+}
+
+\subsection{Returns}{
+If \code{all} is \code{TRUE} then returns \code{TRUE} if all \code{x} are subsets of the Set, otherwise
+\code{FALSE}. If \code{all} is \code{FALSE} then returns a vector of logicals corresponding to each individual
+element of \code{x}.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Tuple$new(1,2,3) < Tuple$new(1,2,3,4)
+Tuple$new(1,3,2) < Tuple$new(1,2,3,4)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Tuple$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

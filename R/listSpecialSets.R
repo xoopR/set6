@@ -13,8 +13,11 @@ listSpecialSets <- function(simplify = FALSE){
   if(simplify)
     return(as.character(y))
   else{
-    return(data.frame(Symbol = unname(sapply(y, setSymbol)),
-           Infimum = c("0","0/1","-Inf","0/1","-Inf","-Inf","0/1","-Inf","-Inf","0/1",rep("-Inf",3)),
-           Supremum = c(rep("Inf",4),"-1/0","Inf","Inf","-1/0","Inf","Inf","-1/0","Inf","Inf")))
+    return(data.frame(
+      ClassName = y,
+      Symbol = unname(sapply(y, setSymbol)),
+      Infimum = c("0","0/1","-Inf","0/1","-Inf","-Inf","0/1","-Inf","-Inf","0/1",rep("-Inf",3)),
+      Supremum = c(rep("Inf",4),"-1/0","Inf","Inf","-1/0","Inf","Inf","-1/0","Inf","Inf")
+      ))
   }
 }

@@ -42,8 +42,8 @@ test_that("properties",{
 })
 
 test_that("elements",{
-  expect_equal(Interval$new(1,10,class="numeric")$elements, NaN)
-  expect_equal(Interval$new(1, class = "integer")$elements, NaN)
+  expect_equal(Interval$new(1,10,class="numeric")$elements, NA)
+  expect_equal(Interval$new(1, class = "integer")$elements, NA)
   expect_equal(Interval$new(1,10,class="integer")$elements, 1:10)
 })
 
