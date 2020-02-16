@@ -1,6 +1,15 @@
 # set6 0.1.2
 
+### Patches
 - Updated documentation to be compatible with roxygen2
+- Fixed bug in typed Complex sets
+- Added universe assertion check to `Set` constructor
+
+### Added classes, methods, and functions
+- Add `$add` public method to sets, which mutates sets by adding given elements, and coercing to the typed-set class if appropriate
+- Add `$remove` public method to sets, which mutates sets by removing given elements.
+- Add assertion for checking if elements contained in a set, `test/check/assertContains`.
+- Add assertion for checking if sets are subsets of another, `test/check/assertSubset`.
 
 # set6 0.1.1
 

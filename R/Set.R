@@ -56,25 +56,21 @@ Set <- R6Class("Set",
 
         if (!is.null(class)){
           private$.class <- class
-          elements <- as(elements, class)
-          if(class %in% c("complex", "numeric", "integer")) {
+          elements <- as(unlist(elements), class)
+          if(class %in% c("numeric", "integer")) {
             private$.lower <- min(unlist(elements))
             private$.upper <- max(unlist(elements))
+          } else if (class == "complex") {
+            abs_els = Vectorize(abs)(unlist(elements))
+            private$.lower <- elements[which.min(abs_els)]
+            private$.upper <- elements[which.max(abs_els)]
           }
         }
 
+        assertSet(universe)
+        private$.universe <- universe
+        assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
         private$.elements <- elements
-
-        # } else {
-        #   class <- unique(sapply(dots,function(x) class(x)[[1]]))
-        #   if(length(class)==1) {
-        #     private$.class <- class
-        #     elements = unlist(dots)
-        #   } else {
-        #     private$.class <- "multiple"
-        #     elements = dots
-        #   }
-        # }
 
         if(!testTuple(self) & !testFuzzyTuple(self)) {
           if(private$.class != "ANY") {
@@ -89,9 +85,6 @@ Set <- R6Class("Set",
             }))]
           }
         }
-
-        assertSet(universe)
-        private$.universe <- universe
       }
 
       private$.properties = Properties$new(closure = "closed", cardinality = self$length)
@@ -121,7 +114,7 @@ Set <- R6Class("Set",
           return("{}")
       } else {
         type <- private$.type
-        elements <- sapply(self$elements, function(x){
+        elements <- lapply(self$elements, function(x){
           y = try(x$strprint(), silent = T)
           if(inherits(y,"try-error"))
             return(x)
@@ -320,6 +313,82 @@ Set <- R6Class("Set",
       })
 
       returner(ret, all)
+    },
+
+    #' @description Add elements to a set.
+    #' @param ... elements to add
+    #' @details `$add` is a wrapper around the `setunion` method with
+    #' `setunion(self, Set$new(...))`. However `$add` first coerces `...` to `$class` if `self`
+    #' is a typed-set (i.e. `$class != "ANY"`), and `$add` checks if elements in `...` live in the
+    #' universe of `self`.
+    #' @return If the union cannot be simplified to a `Set` then a [UnionSet] is returned
+    #' otherwise an object inheriting from [Set] is returned.
+    #' @examples
+    #' Set$new(1,2)$add(3)$print()
+    #' Set$new(1,2,universe = Interval$new(1,3))$add(3)$print()
+    #' \dontrun{
+    #' # errors as 4 is not in [1,3]
+    #' Set$new(1,2,universe = Interval$new(1,3))$add(4)$print()
+    #' }
+    #' # coerced to complex
+    #' Set$new(0+1i, 2i, class = "complex")$add(4)$print()
+    add = function(...){
+      if (self$class == "ANY") {
+        els = setunion(self, Set$new(elements = list(...)))
+      } else {
+        els = setunion(self, Set$new(elements = list(...), class = self$class))
+      }
+
+      if(inherits(els, "SetWrapper")) {
+        return(els)
+      } else {
+        assertContains(self$universe, els$elements,
+                       errormsg = sprintf("some added elements are not contained in the set universe: %s",
+                                          self$universe$strprint()))
+
+        private$.elements <- els$elements
+        private$.lower <- els$lower
+        private$.upper <- els$upper
+        private$.properties <- els$properties
+        private$.type <- els$type
+        invisible(self)
+      }
+    },
+
+    #' @description Remove elements from a set.
+    #' @param ... elements to remove
+    #' @details `$remove` is a wrapper around the `setcomplement` method with
+    #' `setcomplement(self, Set$new(...))`.
+    #' @return If the complement cannot be simplified to a `Set` then a [ComplementSet] is returned
+    #' otherwise an object inheriting from [Set] is returned.
+    #' @examples
+    #' Set$new(1,2,3)$remove(1,2)$print()
+    #' Set$new(1,Set$new(1),2)$remove(Set$new(1))$print()
+    #' Interval$new(1,5)$remove(5)$print()
+    #' Interval$new(1,5)$remove(4)$print()
+    remove = function(...){
+      els = setcomplement(self, Set$new(elements = list(...)))
+      if(inherits(els, "SetWrapper")) {
+        return(els)
+      } else {
+        private$.elements <- els$elements
+        private$.lower <- els$lower
+        private$.upper <- els$upper
+        private$.properties <- els$properties
+        private$.type <- els$type
+        invisible(self)
+      }
+
+      #
+      #
+      # if (inherits(self, "SetWrapper")) {
+      #   message("`remove` is not implemented for `SetWrapper`s. Use `setcomplement` instead.")
+      # } else if(!all(is.na(self$elements))) {
+      #   x = list(...)
+      #
+      # }
+
+
     }
   ),
 

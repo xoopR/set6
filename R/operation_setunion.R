@@ -150,10 +150,14 @@ setunion <- function(..., simplify = TRUE){
   if(length(class) != 1 | any(class == "ANY"))
     class = NULL
 
+  elements = unlist(rsapply(sets, "elements", active = TRUE), recursive = FALSE)
+  if(!inherits(elements, "list"))
+    elements = as.list(elements)
+
   if(any(grepl("Set", sapply(sets, getR6Class))))
-    return(Set$new(unlist(rsapply(sets, "elements", active = TRUE)), class = class))
+    return(Set$new(elements = elements, class = class))
   else
-    return(Tuple$new(unlist(rsapply(sets, "elements", active = TRUE)), class = class))
+    return(Tuple$new(elements = elements, class = class))
 }
 .union_interval <- function(sets){
   if(length(sets) == 1)

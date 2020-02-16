@@ -111,8 +111,10 @@ Other sets:
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="add">}\href{../../set6/html/Set.html#method-add}{\code{set6::Set$add()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="contains">}\href{../../set6/html/Set.html#method-contains}{\code{set6::Set$contains()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="remove">}\href{../../set6/html/Set.html#method-remove}{\code{set6::Set$remove()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
 }
 \out{</details>}

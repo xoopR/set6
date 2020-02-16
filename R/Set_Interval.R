@@ -90,6 +90,7 @@ Interval <- R6Class("Interval", inherit = Set,
 
       private$.properties = Properties$new(closure, cardinality)
 
+      assertSubset(universe, self, errormsg = "interval is not contained in the given universe")
       invisible(self)
     },
 
