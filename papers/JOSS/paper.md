@@ -22,7 +22,7 @@ bibliography: paper.bib
 
 # Summary
 
-set6 makes use of the R6 object-oriented paradigm to introduce classes for important mathematical containers, including sets, tuples, and intervals (finite and infinite). Until now, the `R` [@packageR] programming language has traditionally supported mathematical sets in one of two ways: 1. via the five set operation functions: `union`, `intersect`, `setdiff`, `setequal`, `is.element`; and 2. via the `sets` [@packagesets] package. `set6` uses `R6` [@packageR6] and has a clear class interface with minimal dependencies, which makes it the perfect dependency for any package that requires containers for R6 objects. Making use of design patterns [@Gamma1996, such as wrappers and compositors, `set6` allows for symbolic representation of sets to ensure maximum efficiency, and to provide neat and clear print methods.
+set6 makes use of the R6 object-oriented paradigm to introduce classes for important mathematical containers, including sets, tuples, and intervals (finite and infinite). Until now, the `R` [@packageR] programming language has traditionally supported mathematical sets in one of two ways: 1. via the five set operation functions: `union`, `intersect`, `setdiff`, `setequal`, `is.element`; and 2. via the `sets` [@packagesets] package. `set6` uses `R6` [@packageR6] and has a clear class interface with minimal dependencies, which makes it the perfect dependency for any package that requires containers for R6 objects. Making use of design patterns [@Gamma1996], such as wrappers and compositors, `set6` allows for symbolic representation of sets to ensure maximum efficiency, and to provide neat and clear print methods.
 
 `set6` is currently being used in `distr6` [@packagdistr6], which is an object-oriented probability distributions interface, that makes use of `set6` for distribution and parameter support. Additional uses of `set6` include representing infinite sets, and constructing assertions.
 
@@ -41,7 +41,7 @@ Related software includes the `sets` [@packagesets] family of packages.
 1. **Constructing and querying mathematical sets** - Many mathematical Set-like objects can be constructed, including sets, tuple, intervals, and fuzzy variants. Sets and tuples can contain objects of any `R` type (atomic or otherwise). 
 2. **Containedness checks** - Public methods allow all objects inheriting from `Set` to check if elements are contained within them. This provides a powerful mechanism for use with parameter or distribution supports for other packages.
 3. **Representation of infinite sets** - Symbolic representation and lazy evaluation allows infinite (or very large) sets and intervals to be constructed. This also allows operations such as powerset to be used without crashing the system.
-4. **Comparison of, possibly infinite, sets** - Two `Set` objects can be compared for equality of subsets. Infix operators allow quick and neat comparison.
+4. **Comparison of, possibly infinite, sets** - Two `Set` objects can be compared to check if they are equal or (proper) sub/supersets. Infix operators allow quick and neat comparison.
 5. **Creation of multi-dimensional sets from simpler classes** - Common set operations, such as unions and complements are implemented, as well as products and exponents. Using these, sets of any complexity can be constructed.
 
 # Software Availability
