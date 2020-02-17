@@ -72,11 +72,6 @@ Tuple <- R6Class("Tuple", inherit = Set,
           elel = ifnerror(el$elements[[i]]$strprint(), error = el$elements[[i]])
           selel = ifnerror(self$elements[[i]]$strprint(), error = self$elements[[i]])
 
-          if(testSet(elel))
-            elel = elel$strprint()
-          if(testSet(selel))
-            selel = selel$strprint()
-
           if(elel != selel){
             return(FALSE)
           }

@@ -4,6 +4,9 @@
 - Updated documentation to be compatible with roxygen2
 - Fixed bug in typed Complex sets
 - Added universe assertion check to `Set` constructor
+- Bug fix in `setunion` causing some intervals not to be combined correctly
+- `Interval$isSubset` now compares sets using `max` and `min` instead of `upper` and `lower`
+- Calculation of `min` and `max` in `Interval` now uses `1e-15` instead of `.Machine$double.xmin`
 
 ### Added classes, methods, and functions
 - Add `$add` public method to sets, which mutates sets by adding given elements, and coercing to the typed-set class if appropriate

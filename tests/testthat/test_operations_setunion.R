@@ -39,6 +39,7 @@ test_that("set",{
 test_that("interval",{
   expect_equal(Interval$new(1, 5) + Interval$new(4, 10), Interval$new(1, 10))
   expect_equal(Interval$new(4, 10) + Interval$new(1, 5), Interval$new(1, 10))
+  expect_equal(Interval$new(1,5,type = "()") + Interval$new(5,5), Interval$new(1,5,type="(]"))
 })
 
 test_that("fuzzy",{

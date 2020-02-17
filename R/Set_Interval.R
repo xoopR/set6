@@ -264,14 +264,14 @@ Interval <- R6Class("Interval", inherit = Set,
           return(FALSE)
 
         if(proper){
-          if((el$lower > self$lower & el$upper <= self$upper) |
-             (el$lower >= self$lower & el$upper < self$upper) |
-             (el$lower >= self$lower & el$upper <= self$upper & el$class == "integer" & self$class == "numeric"))
+          if((el$min > self$min & el$max <= self$max) |
+             (el$min >= self$min & el$max < self$max) |
+             (el$min >= self$min & el$max <= self$max & el$class == "integer" & self$class == "numeric"))
             return(TRUE)
           else
             return(FALSE)
         } else {
-          if(el$lower >= self$lower & el$upper <= self$upper)
+          if(el$min >= self$min & el$max <= self$max)
             return(TRUE)
           else
             return(FALSE)
@@ -361,5 +361,9 @@ Interval <- R6Class("Interval", inherit = Set,
       else
         return(NA)
     }
+  ),
+
+  private = list(
+    .elements = NA
   )
 )

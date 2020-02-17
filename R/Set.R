@@ -44,6 +44,9 @@ Set <- R6Class("Set",
     #' @return A new `Set` object.
     initialize = function(..., universe = UniversalSet$new(), elements = NULL, class = NULL){
 
+      assertSet(universe)
+      private$.universe <- universe
+
       if(is.null(elements)) {
         elements = list(...)
         if(length(elements) > 0) {
@@ -62,13 +65,11 @@ Set <- R6Class("Set",
             private$.upper <- max(unlist(elements))
           } else if (class == "complex") {
             abs_els = Vectorize(abs)(unlist(elements))
-            private$.lower <- elements[which.min(abs_els)]
-            private$.upper <- elements[which.max(abs_els)]
+            private$.lower <- unlist(elements[which.min(abs_els)])
+            private$.upper <- unlist(elements[which.max(abs_els)])
           }
         }
 
-        assertSet(universe)
-        private$.universe <- universe
         assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
         private$.elements <- elements
 
@@ -322,12 +323,13 @@ Set <- R6Class("Set",
 
     #' @description Add elements to a set.
     #' @param ... elements to add
-    #' @details `$add` is a wrapper around the `setunion` method with
-    #' `setunion(self, Set$new(...))`. However `$add` first coerces `...` to `$class` if `self`
-    #' is a typed-set (i.e. `$class != "ANY"`), and `$add` checks if elements in `...` live in the
-    #' universe of `self`.
-    #' @return If the union cannot be simplified to a `Set` then a [UnionSet] is returned
-    #' otherwise an object inheriting from [Set] is returned.
+    #' @details `$add` is a wrapper around the `setunion` method with `setunion(self, Set$new(...))`.
+    #' Note a key difference is that any elements passed to `...` are first converted to a `Set`, this
+    #' important difference is illustrated in the examples by adding an [Interval] to a `Set`.
+    #'
+    #' Additionally, `$add` first coerces `...` to `$class` if `self` is a typed-set (i.e. `$class != "ANY"`),
+    #' and `$add` checks if elements in `...` live in the universe of `self`.
+    #' @return An object inheriting from [Set].
     #' @examples
     #' Set$new(1,2)$add(3)$print()
     #' Set$new(1,2,universe = Interval$new(1,3))$add(3)$print()
@@ -337,33 +339,36 @@ Set <- R6Class("Set",
     #' }
     #' # coerced to complex
     #' Set$new(0+1i, 2i, class = "complex")$add(4)$print()
+    #'
+    #' # setunion vs. add
+    #' Set$new(1,2)$add(Interval$new(5,6))$print()
+    #' Set$new(1,2) + Interval$new(5,6)
     add = function(...){
+      assertContains(self$universe, list(...),
+                     errormsg = sprintf("some added elements are not contained in the set universe: %s",
+                                        self$universe$strprint()))
+
       if (self$class == "ANY") {
         els = setunion(self, Set$new(elements = list(...)))
       } else {
         els = setunion(self, Set$new(elements = list(...), class = self$class))
       }
 
-      if(inherits(els, "SetWrapper")) {
-        return(els)
-      } else {
-        assertContains(self$universe, els$elements,
-                       errormsg = sprintf("some added elements are not contained in the set universe: %s",
-                                          self$universe$strprint()))
+      private$.elements <- els$elements
+      private$.lower <- els$lower
+      private$.upper <- els$upper
+      private$.properties <- els$properties
+      private$.type <- els$type
 
-        private$.elements <- els$elements
-        private$.lower <- els$lower
-        private$.upper <- els$upper
-        private$.properties <- els$properties
-        private$.type <- els$type
-        invisible(self)
-      }
+      invisible(self)
     },
 
     #' @description Remove elements from a set.
     #' @param ... elements to remove
     #' @details `$remove` is a wrapper around the `setcomplement` method with
-    #' `setcomplement(self, Set$new(...))`.
+    #' `setcomplement(self, Set$new(...))`. Note a key difference is that any elements passed to `...`
+    #' are first converted to a `Set`, this important difference is illustrated in the examples by
+    #' removing an [Interval] from a `Set`.
     #' @return If the complement cannot be simplified to a `Set` then a [ComplementSet] is returned
     #' otherwise an object inheriting from [Set] is returned.
     #' @examples
@@ -371,6 +376,10 @@ Set <- R6Class("Set",
     #' Set$new(1,Set$new(1),2)$remove(Set$new(1))$print()
     #' Interval$new(1,5)$remove(5)$print()
     #' Interval$new(1,5)$remove(4)$print()
+    #'
+    #' # setcomplement vs. remove
+    #' Set$new(1,2,3)$remove(Interval$new(5,7))$print()
+    #' Set$new(1,2,3) - Interval$new(5,7)
     remove = function(...){
       els = setcomplement(self, Set$new(elements = list(...)))
       if(inherits(els, "SetWrapper")) {
@@ -383,17 +392,6 @@ Set <- R6Class("Set",
         private$.type <- els$type
         invisible(self)
       }
-
-      #
-      #
-      # if (inherits(self, "SetWrapper")) {
-      #   message("`remove` is not implemented for `SetWrapper`s. Use `setcomplement` instead.")
-      # } else if(!all(is.na(self$elements))) {
-      #   x = list(...)
-      #
-      # }
-
-
     }
   ),
 
@@ -430,11 +428,11 @@ Set <- R6Class("Set",
     #' @field max
     #' If the Set consists of numerics only then returns the maximum element in the Set. For open
     #' or half-open sets, then the maximum is defined by
-    #' \deqn{upper - .Machine\$double.xmin}{upper - .Machine$double.xmin}
+    #' \deqn{upper - 1e-15}
     max = function(){
       if(self$class %in% c("numeric","integer","complex")) {
         if(self$type %in% c("()","(]"))
-          return(self$upper-.Machine$double.xmin)
+          return(self$upper - 1e-15)
         else
           return(self$upper)
       } else {
@@ -445,11 +443,11 @@ Set <- R6Class("Set",
     #' @field min
     #' If the Set consists of numerics only then returns the minimum element in the Set. For open
     #' or half-open sets, then the minimum is defined by
-    #' \deqn{lower + .Machine\$double.xmin}{lower + .Machine$double.xmin}
+    #' \deqn{lower + 1e-15}
     min = function(){
       if(self$class %in% c("numeric","integer","complex")) {
         if(self$type %in% c("()","(]"))
-          return(self$lower+.Machine$double.xmin)
+          return(self$lower + 1e-15)
         else
           return(self$lower)
       } else {
