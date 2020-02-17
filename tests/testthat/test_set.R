@@ -25,6 +25,14 @@ test_that("elements",{
   expect_equal(Set$new(Set$new(2), Interval$new(1,5))$elements, c(Set$new(2),Interval$new(1,5)))
 })
 
+test_that("numerics",{
+  expect_equal(Set$new(1)$lower, 1)
+  expect_equal(Set$new(1)$min, NaN)
+  expect_equal(Set$new(1)$upper, 1)
+  expect_equal(Set$new(1)$max, NaN)
+  expect_equal(Set$new(1)$range, NaN)
+})
+
 test_that("length",{
   expect_equal(Set$new(1,2,3)$length, 3)
   expect_equal(Set$new(1,2,3,2,1)$length, 3)

@@ -165,7 +165,8 @@ setunion <- function(..., simplify = TRUE){
 
   for(i in 2:length(sets)){
     if(sets[[i]]$lower > sets[[i-1]]$lower & sets[[i]]$lower <= sets[[i-1]]$upper &
-       (sets[[i]]$class == sets[[i-1]]$class | sets[[i]]$length == 1 | sets[[i-1]]$length == 1)){
+       (sets[[i]]$class == sets[[i-1]]$class | sets[[i]]$length == 1 | sets[[i-1]]$length == 1) &
+       (testClosedAbove(sets[[i-1]]) | testClosedBelow(sets[[i]]))){
       sets[[i]] = Interval$new(sets[[i-1]]$lower, sets[[i]]$upper,
                                type = paste0(substr(sets[[i-1]]$type,1,1),
                                              substr(sets[[i]]$type,2,2)))
