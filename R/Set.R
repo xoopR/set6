@@ -56,7 +56,7 @@ Set <- R6Class("Set",
 
         if (!is.null(class)){
           private$.class <- class
-          elements <- as(unlist(elements), class)
+          elements <- as.list(as(unlist(elements), class))
           if(class %in% c("numeric", "integer")) {
             private$.lower <- min(unlist(elements))
             private$.upper <- max(unlist(elements))
@@ -84,6 +84,11 @@ Set <- R6Class("Set",
                 return(y)
             }))]
           }
+        }
+
+        if(!(private$.class %in% c("numeric","integer","complex"))){
+          private$.lower <- private$.elements[[1]]
+          private$.upper <- private$.elements[[length(private$.elements)]]
         }
       }
 
@@ -427,10 +432,14 @@ Set <- R6Class("Set",
     #' or half-open sets, then the maximum is defined by
     #' \deqn{upper - .Machine\$double.xmin}{upper - .Machine$double.xmin}
     max = function(){
-      if(private$.type %in% c("()","[)"))
-        return(private$.upper-.Machine$double.xmin)
-      else
-        return(private$.upper)
+      if(self$class %in% c("numeric","integer","complex")) {
+        if(self$type %in% c("()","(]"))
+          return(self$upper-.Machine$double.xmin)
+        else
+          return(self$upper)
+      } else {
+        return(NaN)
+      }
     },
 
     #' @field min
@@ -438,44 +447,26 @@ Set <- R6Class("Set",
     #' or half-open sets, then the minimum is defined by
     #' \deqn{lower + .Machine\$double.xmin}{lower + .Machine$double.xmin}
     min = function(){
-      if(private$.type %in% c("()","(]"))
-        return(private$.lower+.Machine$double.xmin)
-      else
-        return(private$.lower)
+      if(self$class %in% c("numeric","integer","complex")) {
+        if(self$type %in% c("()","(]"))
+          return(self$lower+.Machine$double.xmin)
+        else
+          return(self$lower)
+      } else {
+        return(NaN)
+      }
     },
 
     #' @field upper
     #' If the Set consists of numerics only then returns the upper bound of the Set.
     upper = function(){
-      if(testSet(private$.upper))
-        return(private$.upper)
-
-      x = private$.upper
-
-      if(is.nan(x))
-        x = try(self$elements[[self$length]], silent = TRUE)
-
-      if (inherits(x, "try-error") | is.nan(x))
-        return(NA)
-      else
-        return(x)
+      return(private$.upper)
     },
 
     #' @field lower
     #' If the Set consists of numerics only then returns the lower bound of the Set.
     lower = function(){
-      if(testSet(private$.lower))
-        return(private$.lower)
-
-      x = private$.lower
-
-      if(is.nan(x))
-        x = try(self$elements[[1]], silent = TRUE)
-
-      if (inherits(x, "try-error") | is.nan(x))
-        return(NA)
-      else
-        return(x)
+      return(private$.lower)
     },
 
     #' @field class
@@ -500,10 +491,10 @@ Set <- R6Class("Set",
     #' If the Set consists of numerics only then returns the range of the Set defined by
     #' \deqn{upper - lower}
     range = function(){
-      if(self$class %in% c("numeric", "integer"))
+      if(self$class %in% c("numeric", "integer","complex"))
         return(self$upper - self$lower)
       else
-        return(numeric(0))
+        return(NaN)
     },
 
     #' @field length
@@ -523,8 +514,8 @@ Set <- R6Class("Set",
   private = list(
     .class = "ANY",
     .type = "{}",
-    .lower = NaN,
-    .upper = NaN,
+    .lower = NA,
+    .upper = NA,
     .universe = NULL,
     .elements = list(),
     .properties = NULL,

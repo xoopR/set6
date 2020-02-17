@@ -68,26 +68,21 @@ Tuple <- R6Class("Tuple", inherit = Set,
         if(el$length != self$length)
           return(FALSE)
 
-        if(class(el$elements) == "list" | class(self$elements) == "list"){
-          ret = TRUE
-          for(i in 1:el$length){
-            elel = el$elements[[i]]
-            selel = self$elements[[i]]
+        for(i in seq_along(el$length)){
+          elel = ifnerror(el$elements[[i]]$strprint(), error = el$elements[[i]])
+          selel = ifnerror(self$elements[[i]]$strprint(), error = self$elements[[i]])
 
-            if(testSet(elel))
-              elel = elel$strprint()
-            if(testSet(selel))
-              selel = selel$strprint()
+          if(testSet(elel))
+            elel = elel$strprint()
+          if(testSet(selel))
+            selel = selel$strprint()
 
-            if(elel != selel){
-              ret = FALSE
-              break()
-            }
+          if(elel != selel){
+            return(FALSE)
           }
-        } else
-          ret = suppressWarnings(all(el$elements == self$elements))
+        }
 
-        return(ret)
+        return(TRUE)
       })
 
       returner(ret, all)

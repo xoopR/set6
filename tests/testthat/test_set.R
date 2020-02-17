@@ -136,7 +136,7 @@ test_that("as.double",{
 })
 
 test_that("typed set",{
-  expect_equal(Set$new(1.5, class = "integer")$elements, 1L)
+  expect_equal(Set$new(1.5, class = "integer")$elements, list(1L))
   expect_equal(Set$new(1.5, class = "integer")$class, "integer")
 })
 
