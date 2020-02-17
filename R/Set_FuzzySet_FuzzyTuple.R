@@ -65,13 +65,8 @@ FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet,
         if(el$length != self$length)
           return(FALSE)
 
-        if(class(el$elements) == "list" | class(self$elements) == "list"){
-          elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-          selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-        } else {
-          elel = el$elements
-          selel = self$elements
-        }
+        elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
 
         return(suppressWarnings(all(elel == selel) & all(el$membership() == self$membership())))
       })

@@ -224,3 +224,46 @@ makeChecks(assertionName = "Empty",
            cond = object$properties$empty,
            errormsg = "This is not an empty set",
            pos = environment())
+
+#' @template assertions_generic
+#' @templateVar property Contains
+#' @templateVar check given elements are contained in a set
+#' @templateVar test1 Set$new(1,2,3), c(1,2)
+#' @templateVar test2 Set$new(1,2,3), c(3,4)
+#' @param elements elements to check
+#' @export
+testContains <- function(){}
+#' @rdname testContains
+#' @export
+checkContains <- function(){}
+#' @rdname testContains
+#' @export
+assertContains <- function(){}
+makeChecks(assertionName = "Contains",
+           cond = object$contains(elements, all = TRUE),
+           errormsg = "elements are not contained in the object",
+           args = c(alist(object = , elements = ,
+                          errormsg = "elements are not contained in the set")),
+           pos = environment())
+
+#' @template assertions_generic
+#' @templateVar property Subset
+#' @templateVar check given sets are subsets of a set
+#' @templateVar test1 Set$new(1,2,3), Set$new(1,2)
+#' @templateVar test2 Set$new(1,2,3), Set$new(3,4)
+#' @param sets sets to check
+#' @param proper logical. If TRUE tests for proper subsets.
+#' @export
+testSubset <- function(){}
+#' @rdname testSubset
+#' @export
+checkSubset <- function(){}
+#' @rdname testSubset
+#' @export
+assertSubset <- function(){}
+makeChecks(assertionName = "Subset",
+           cond = object$isSubset(sets, all = TRUE, proper = proper),
+           errormsg = "sets are not subsets of the object",
+           args = c(alist(object = , sets = , proper = FALSE,
+                          errormsg = "sets are not subsets of the object")),
+           pos = environment())

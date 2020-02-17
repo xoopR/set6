@@ -29,7 +29,8 @@ UniversalSet <- R6::R6Class("UniversalSet", inherit = Set,
     #' @details The Universal set is the set containing every possible element.
     #' @return A new `UniversalSet` object.
     initialize = function(){
-      super$initialize()
+      private$.properties = Properties$new(closure = "open", cardinality = Inf)
+      invisible(self)
     },
 
     #' @description Tests if two sets are equal.

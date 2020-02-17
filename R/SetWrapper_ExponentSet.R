@@ -2,6 +2,7 @@
 #' @template SetWrapper
 #' @templateVar operation exponentiation
 #' @templateVar class ExponentSet
+#' @export
 ExponentSet <- R6Class("ExponentSet", inherit = ProductSet,
   public = list(
     #' @description Create a new `ExponentSet` object. It is not recommended to construct this class directly.

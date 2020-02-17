@@ -62,7 +62,7 @@
 #'
 #' @export
 setproduct <- function(..., simplify = FALSE, nest = FALSE){
-  sets = operation_cleaner(list(...), "ProductSet", nest)
+  sets = operation_cleaner(list(...), "ProductSet", nest, simplify = simplify)
 
   if(length(sets) == 0)
     return(Set$new())

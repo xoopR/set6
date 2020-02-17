@@ -31,10 +31,7 @@ as.Set.data.frame <- as.Set.matrix
 #' @rdname as.Set
 #' @export
 as.Set.Set <- function(object){
-  if(class(object$elements) == "list")
-    return(Set$new(elements = object$elements))
-  else
-    return(Set$new(elements = object$elements))
+  Set$new(elements = object$elements)
 }
 #' @rdname as.Set
 #' @export

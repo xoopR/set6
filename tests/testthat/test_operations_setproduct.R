@@ -42,7 +42,7 @@ test_that("fuzzy",{
   expect_equal(FuzzySet$new(1, 0.1)*FuzzySet$new(), FuzzySet$new(1, 0.1))
   expect_equal(FuzzySet$new()*FuzzySet$new(1, 0.2), FuzzySet$new(1, 0.2))
   expect_equal((FuzzySet$new(1,0.5) * ConditionalSet$new(function(x) TRUE))$strprint(),
-               "{1} X {TRUE : x in V}")
+               "{1(0.5)} X {TRUE : x in V}")
   expect_true(setproduct(FuzzySet$new(1, 0.1), FuzzySet$new(2, 0.2), simplify = TRUE)$equals(Set$new(FuzzyTuple$new(1, 0.1, 2, 0.2))))
   expect_equal(setproduct(FuzzySet$new(1, 0.1), FuzzySet$new(2, 0.2), simplify = FALSE)$strprint(),
               "{1(0.1)} X {2(0.2)}")

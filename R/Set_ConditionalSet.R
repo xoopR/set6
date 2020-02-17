@@ -204,7 +204,9 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
 
   private = list(
     .condition = NULL,
-    .argclass = NULL
+    .argclass = NULL,
+    .lower = NA,
+    .upper = NA
   )
 )
 

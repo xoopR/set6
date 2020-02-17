@@ -44,6 +44,9 @@ Set <- R6Class("Set",
     #' @return A new `Set` object.
     initialize = function(..., universe = UniversalSet$new(), elements = NULL, class = NULL){
 
+      assertSet(universe)
+      private$.universe <- universe
+
       if(is.null(elements)) {
         elements = list(...)
         if(length(elements) > 0) {
@@ -56,25 +59,19 @@ Set <- R6Class("Set",
 
         if (!is.null(class)){
           private$.class <- class
-          elements <- as(elements, class)
-          if(class %in% c("complex", "numeric", "integer")) {
+          elements <- as.list(as(unlist(elements), class))
+          if(class %in% c("numeric", "integer")) {
             private$.lower <- min(unlist(elements))
             private$.upper <- max(unlist(elements))
+          } else if (class == "complex") {
+            abs_els = Vectorize(abs)(unlist(elements))
+            private$.lower <- unlist(elements[which.min(abs_els)])
+            private$.upper <- unlist(elements[which.max(abs_els)])
           }
         }
 
+        assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
         private$.elements <- elements
-
-        # } else {
-        #   class <- unique(sapply(dots,function(x) class(x)[[1]]))
-        #   if(length(class)==1) {
-        #     private$.class <- class
-        #     elements = unlist(dots)
-        #   } else {
-        #     private$.class <- "multiple"
-        #     elements = dots
-        #   }
-        # }
 
         if(!testTuple(self) & !testFuzzyTuple(self)) {
           if(private$.class != "ANY") {
@@ -90,8 +87,10 @@ Set <- R6Class("Set",
           }
         }
 
-        assertSet(universe)
-        private$.universe <- universe
+        if(!(private$.class %in% c("numeric","integer","complex"))){
+          private$.lower <- private$.elements[[1]]
+          private$.upper <- private$.elements[[length(private$.elements)]]
+        }
       }
 
       private$.properties = Properties$new(closure = "closed", cardinality = self$length)
@@ -121,7 +120,7 @@ Set <- R6Class("Set",
           return("{}")
       } else {
         type <- private$.type
-        elements <- sapply(self$elements, function(x){
+        elements <- lapply(self$elements, function(x){
           y = try(x$strprint(), silent = T)
           if(inherits(y,"try-error"))
             return(x)
@@ -320,6 +319,79 @@ Set <- R6Class("Set",
       })
 
       returner(ret, all)
+    },
+
+    #' @description Add elements to a set.
+    #' @param ... elements to add
+    #' @details `$add` is a wrapper around the `setunion` method with `setunion(self, Set$new(...))`.
+    #' Note a key difference is that any elements passed to `...` are first converted to a `Set`, this
+    #' important difference is illustrated in the examples by adding an [Interval] to a `Set`.
+    #'
+    #' Additionally, `$add` first coerces `...` to `$class` if `self` is a typed-set (i.e. `$class != "ANY"`),
+    #' and `$add` checks if elements in `...` live in the universe of `self`.
+    #' @return An object inheriting from [Set].
+    #' @examples
+    #' Set$new(1,2)$add(3)$print()
+    #' Set$new(1,2,universe = Interval$new(1,3))$add(3)$print()
+    #' \dontrun{
+    #' # errors as 4 is not in [1,3]
+    #' Set$new(1,2,universe = Interval$new(1,3))$add(4)$print()
+    #' }
+    #' # coerced to complex
+    #' Set$new(0+1i, 2i, class = "complex")$add(4)$print()
+    #'
+    #' # setunion vs. add
+    #' Set$new(1,2)$add(Interval$new(5,6))$print()
+    #' Set$new(1,2) + Interval$new(5,6)
+    add = function(...){
+      assertContains(self$universe, list(...),
+                     errormsg = sprintf("some added elements are not contained in the set universe: %s",
+                                        self$universe$strprint()))
+
+      if (self$class == "ANY") {
+        els = setunion(self, Set$new(elements = list(...)))
+      } else {
+        els = setunion(self, Set$new(elements = list(...), class = self$class))
+      }
+
+      private$.elements <- els$elements
+      private$.lower <- els$lower
+      private$.upper <- els$upper
+      private$.properties <- els$properties
+      private$.type <- els$type
+
+      invisible(self)
+    },
+
+    #' @description Remove elements from a set.
+    #' @param ... elements to remove
+    #' @details `$remove` is a wrapper around the `setcomplement` method with
+    #' `setcomplement(self, Set$new(...))`. Note a key difference is that any elements passed to `...`
+    #' are first converted to a `Set`, this important difference is illustrated in the examples by
+    #' removing an [Interval] from a `Set`.
+    #' @return If the complement cannot be simplified to a `Set` then a [ComplementSet] is returned
+    #' otherwise an object inheriting from [Set] is returned.
+    #' @examples
+    #' Set$new(1,2,3)$remove(1,2)$print()
+    #' Set$new(1,Set$new(1),2)$remove(Set$new(1))$print()
+    #' Interval$new(1,5)$remove(5)$print()
+    #' Interval$new(1,5)$remove(4)$print()
+    #'
+    #' # setcomplement vs. remove
+    #' Set$new(1,2,3)$remove(Interval$new(5,7))$print()
+    #' Set$new(1,2,3) - Interval$new(5,7)
+    remove = function(...){
+      els = setcomplement(self, Set$new(elements = list(...)))
+      if(inherits(els, "SetWrapper")) {
+        return(els)
+      } else {
+        private$.elements <- els$elements
+        private$.lower <- els$lower
+        private$.upper <- els$upper
+        private$.properties <- els$properties
+        private$.type <- els$type
+        invisible(self)
+      }
     }
   ),
 
@@ -356,57 +428,43 @@ Set <- R6Class("Set",
     #' @field max
     #' If the Set consists of numerics only then returns the maximum element in the Set. For open
     #' or half-open sets, then the maximum is defined by
-    #' \deqn{upper - .Machine\$double.xmin}{upper - .Machine$double.xmin}
+    #' \deqn{upper - 1e-15}
     max = function(){
-      if(private$.type %in% c("()","[)"))
-        return(private$.upper-.Machine$double.xmin)
-      else
-        return(private$.upper)
+      if(self$class %in% c("numeric","integer","complex")) {
+        if(self$type %in% c("()","(]"))
+          return(self$upper - 1e-15)
+        else
+          return(self$upper)
+      } else {
+        return(NaN)
+      }
     },
 
     #' @field min
     #' If the Set consists of numerics only then returns the minimum element in the Set. For open
     #' or half-open sets, then the minimum is defined by
-    #' \deqn{lower + .Machine\$double.xmin}{lower + .Machine$double.xmin}
+    #' \deqn{lower + 1e-15}
     min = function(){
-      if(private$.type %in% c("()","(]"))
-        return(private$.lower+.Machine$double.xmin)
-      else
-        return(private$.lower)
+      if(self$class %in% c("numeric","integer","complex")) {
+        if(self$type %in% c("()","(]"))
+          return(self$lower + 1e-15)
+        else
+          return(self$lower)
+      } else {
+        return(NaN)
+      }
     },
 
     #' @field upper
     #' If the Set consists of numerics only then returns the upper bound of the Set.
     upper = function(){
-      if(testSet(private$.upper))
-        return(private$.upper)
-
-      x = private$.upper
-
-      if(is.nan(x))
-        x = try(self$elements[[self$length]], silent = TRUE)
-
-      if (inherits(x, "try-error") | is.nan(x))
-        return(NA)
-      else
-        return(x)
+      return(private$.upper)
     },
 
     #' @field lower
     #' If the Set consists of numerics only then returns the lower bound of the Set.
     lower = function(){
-      if(testSet(private$.lower))
-        return(private$.lower)
-
-      x = private$.lower
-
-      if(is.nan(x))
-        x = try(self$elements[[1]], silent = TRUE)
-
-      if (inherits(x, "try-error") | is.nan(x))
-        return(NA)
-      else
-        return(x)
+      return(private$.lower)
     },
 
     #' @field class
@@ -431,10 +489,10 @@ Set <- R6Class("Set",
     #' If the Set consists of numerics only then returns the range of the Set defined by
     #' \deqn{upper - lower}
     range = function(){
-      if(self$class %in% c("numeric", "integer"))
+      if(self$class %in% c("numeric", "integer","complex"))
         return(self$upper - self$lower)
       else
-        return(numeric(0))
+        return(NaN)
     },
 
     #' @field length
@@ -454,8 +512,8 @@ Set <- R6Class("Set",
   private = list(
     .class = "ANY",
     .type = "{}",
-    .lower = NaN,
-    .upper = NaN,
+    .lower = NA,
+    .upper = NA,
     .universe = NULL,
     .elements = list(),
     .properties = NULL,

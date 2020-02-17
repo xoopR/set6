@@ -88,16 +88,13 @@ setunion <- function(..., simplify = TRUE){
   }
 
   # if no sets are left after cleaning return Empty, otherwise if all are the same return the set
-  if(length(sets) == 0)
-    return(Set$new())
-  else if(length(sets) == 1 |
-          length(unique(rsapply(sets, "strprint"))) == 1)
+  if(length(sets) == 1 | length(unique(rsapply(sets, "strprint"))) == 1)
     return(sets[[1]])
 
   # remove subsets
   rm_ind = c()
-  for(i in 1:length(sets)){
-    for(j in 1:length(sets)){
+  for(i in seq_along(sets)){
+    for(j in seq_along(sets)){
       if(i != j){
         # separate subset and proper subset to prevent both sets being removed due to equality
         if(suppressMessages(sets[[i]] < sets[[j]]) | suppressMessages((sets[[i]] == sets[[j]] & i < j)))
@@ -150,10 +147,14 @@ setunion <- function(..., simplify = TRUE){
   if(length(class) != 1 | any(class == "ANY"))
     class = NULL
 
+  elements = unlist(rsapply(sets, "elements", active = TRUE), recursive = FALSE)
+  if(!inherits(elements, "list"))
+    elements = as.list(elements)
+
   if(any(grepl("Set", sapply(sets, getR6Class))))
-    return(Set$new(unlist(rsapply(sets, "elements", active = TRUE)), class = class))
+    return(Set$new(elements = elements, class = class))
   else
-    return(Tuple$new(unlist(rsapply(sets, "elements", active = TRUE)), class = class))
+    return(Tuple$new(elements = elements, class = class))
 }
 .union_interval <- function(sets){
   if(length(sets) == 1)
@@ -161,8 +162,11 @@ setunion <- function(..., simplify = TRUE){
 
   rm = c()
   sets = sets[order(rsapply(sets, "lower", active = TRUE))]
+
   for(i in 2:length(sets)){
-    if(sets[[i]]$lower > sets[[i-1]]$lower & sets[[i]]$lower < sets[[i-1]]$upper){
+    if(sets[[i]]$lower > sets[[i-1]]$lower & sets[[i]]$lower <= sets[[i-1]]$upper &
+       (sets[[i]]$class == sets[[i-1]]$class | sets[[i]]$length == 1 | sets[[i-1]]$length == 1) &
+       (testClosedAbove(sets[[i-1]]) | testClosedBelow(sets[[i]]))){
       sets[[i]] = Interval$new(sets[[i-1]]$lower, sets[[i]]$upper,
                                type = paste0(substr(sets[[i-1]]$type,1,1),
                                              substr(sets[[i]]$type,2,2)))

@@ -2,6 +2,7 @@
 #' @template SetWrapper
 #' @templateVar operation complement
 #' @templateVar class ComplementSet
+#' @export
 ComplementSet <- R6Class("ComplementSet", inherit = SetWrapper,
   public = list(
     #' @description Create a new `ComplementSet` object. It is not recommended to construct this class directly.

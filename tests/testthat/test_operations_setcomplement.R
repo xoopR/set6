@@ -27,6 +27,7 @@ test_that("set",{
   expect_equal(Tuple$new(1:5) - Set$new(6:10), Tuple$new(1:5))
   expect_equal(Set$new(1:5) - Interval$new(4, 15), Set$new(1:3))
   expect_equal(Tuple$new(1:5) - Interval$new(4, 15), Tuple$new(1:3))
+  expect_equal(setcomplement(Set$new(1,2,universe = Set$new(1,2,3))),Set$new(3))
 })
 
 test_that("interval",{

@@ -73,6 +73,28 @@ Set$new(1,2) < Set$new(1,2,3) # proper subset
 
 c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
 Set$new(1,2,3) <= Set$new(1,2,3) # proper
+
+## ------------------------------------------------
+## Method `Set$add`
+## ------------------------------------------------
+
+Set$new(1,2)$add(3)$print()
+Set$new(1,2,universe = Interval$new(1,3))$add(3)$print()
+\dontrun{
+# errors as 4 is not in [1,3]
+Set$new(1,2,universe = Interval$new(1,3))$add(4)$print()
+}
+# coerced to complex
+Set$new(0+1i, 2i, class = "complex")$add(4)$print()
+
+## ------------------------------------------------
+## Method `Set$remove`
+## ------------------------------------------------
+
+Set$new(1,2,3)$remove(1,2)$print()
+Set$new(1,Set$new(1),2)$remove(Set$new(1))$print()
+Interval$new(1,5)$remove(5)$print()
+Interval$new(1,5)$remove(4)$print()
 }
 \seealso{
 Other sets: 
@@ -140,6 +162,8 @@ the cardinality property for the type of infinity.}
 \item \href{#method-contains}{\code{Set$contains()}}
 \item \href{#method-equals}{\code{Set$equals()}}
 \item \href{#method-isSubset}{\code{Set$isSubset()}}
+\item \href{#method-add}{\code{Set$add()}}
+\item \href{#method-remove}{\code{Set$remove()}}
 \item \href{#method-clone}{\code{Set$clone()}}
 }
 }
@@ -388,6 +412,84 @@ Set$new(1,2) < Set$new(1,2,3) # proper subset
 
 c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
 Set$new(1,2,3) <= Set$new(1,2,3) # proper
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-add"></a>}}
+\subsection{Method \code{add()}}{
+Add elements to a set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$add(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{elements to add}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\verb{$add} is a wrapper around the \code{setunion} method with
+\code{setunion(self, Set$new(...))}. However \verb{$add} first coerces \code{...} to \verb{$class} if \code{self}
+is a typed-set (i.e. \verb{$class != "ANY"}), and \verb{$add} checks if elements in \code{...} live in the
+universe of \code{self}.
+}
+
+\subsection{Returns}{
+If the union cannot be simplified to a \code{Set} then a \link{UnionSet} is returned
+otherwise an object inheriting from \link{Set} is returned.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Set$new(1,2)$add(3)$print()
+Set$new(1,2,universe = Interval$new(1,3))$add(3)$print()
+\dontrun{
+# errors as 4 is not in [1,3]
+Set$new(1,2,universe = Interval$new(1,3))$add(4)$print()
+}
+# coerced to complex
+Set$new(0+1i, 2i, class = "complex")$add(4)$print()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-remove"></a>}}
+\subsection{Method \code{remove()}}{
+Remove elements from a set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$remove(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{elements to remove}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\verb{$remove} is a wrapper around the \code{setcomplement} method with
+\code{setcomplement(self, Set$new(...))}.
+}
+
+\subsection{Returns}{
+If the complement cannot be simplified to a \code{Set} then a \link{ComplementSet} is returned
+otherwise an object inheriting from \link{Set} is returned.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Set$new(1,2,3)$remove(1,2)$print()
+Set$new(1,Set$new(1),2)$remove(Set$new(1))$print()
+Interval$new(1,5)$remove(5)$print()
+Interval$new(1,5)$remove(4)$print()
 }
 \if{html}{\out{</div>}}
 

@@ -242,13 +242,8 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
         if(!testFuzzySet(el))
           return(FALSE)
 
-        if(class(el$elements) == "list" | class(self$elements) == "list"){
-          elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-          selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-        } else {
-          elel = el$elements
-          selel = self$elements
-        }
+        elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
 
         el_mat = matrix(c(elel,el$membership()),ncol=2)[order(elel),]
         self_mat = matrix(c(selel,self$membership()),ncol=2)[order(selel),]

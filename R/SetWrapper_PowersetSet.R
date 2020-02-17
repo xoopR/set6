@@ -2,6 +2,7 @@
 #' @template SetWrapper
 #' @templateVar operation powerset
 #' @templateVar class PowersetSet
+#' @export
 PowersetSet <- R6Class("PowersetSet", inherit = ProductSet,
   public = list(
     #' @description Create a new `PowersetSet` object. It is not recommended to construct this class directly.
