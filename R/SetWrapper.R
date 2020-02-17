@@ -24,12 +24,10 @@ SetWrapper <- R6Class("SetWrapper", inherit = Set,
       if(!is.null(lower)) private$.lower <- lower
       if(!is.null(upper)) private$.upper <- upper
       if(!is.null(type)) private$.type <- type
-      #
-      #   class <- sapply(setlist, function(x) x$class)
-      #   if(length(unique(class)) == 1)
-      #     private$.class <- unique(class)
-      #   else
-      #     private$.class <- "multiple"
+
+      class <- rsapply(setlist, class, active = TRUE)
+      if(length(unique(class)) == 1)
+        private$.class <- unique(class)
 
       private$.properties <- Properties$new(closure = "closed", cardinality)
 

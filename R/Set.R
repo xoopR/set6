@@ -431,7 +431,7 @@ Set <- R6Class("Set",
     #' \deqn{upper - 1e-15}
     max = function(){
       if(self$class %in% c("numeric","integer","complex")) {
-        if(self$type %in% c("()","(]"))
+        if(self$type %in% c("()","[)"))
           return(self$upper - 1e-15)
         else
           return(self$upper)
