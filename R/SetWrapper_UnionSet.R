@@ -1,6 +1,7 @@
 #' @template SetWrapper
 #' @templateVar operation union
 #' @templateVar class UnionSet
+#' @export
 UnionSet <- R6Class("UnionSet", inherit = SetWrapper,
   public = list(
     #' @description Create a new `UnionSet` object. It is not recommended to construct this class directly.

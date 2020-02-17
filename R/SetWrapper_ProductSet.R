@@ -2,6 +2,7 @@
 #' @template SetWrapper
 #' @templateVar operation product
 #' @templateVar class ProductSet
+#' @export
 ProductSet <- R6Class("ProductSet", inherit = SetWrapper,
   public = list(
     #' @description Create a new `ProductSet` object. It is not recommended to construct this class directly.
