@@ -87,6 +87,10 @@ Set$new(1,2,universe = Interval$new(1,3))$add(4)$print()
 # coerced to complex
 Set$new(0+1i, 2i, class = "complex")$add(4)$print()
 
+# setunion vs. add
+Set$new(1,2)$add(Interval$new(5,6))$print()
+Set$new(1,2) + Interval$new(5,6)
+
 ## ------------------------------------------------
 ## Method `Set$remove`
 ## ------------------------------------------------
@@ -95,6 +99,10 @@ Set$new(1,2,3)$remove(1,2)$print()
 Set$new(1,Set$new(1),2)$remove(Set$new(1))$print()
 Interval$new(1,5)$remove(5)$print()
 Interval$new(1,5)$remove(4)$print()
+
+# setcomplement vs. remove
+Set$new(1,2,3)$remove(Interval$new(5,7))$print()
+Set$new(1,2,3) - Interval$new(5,7)
 }
 \seealso{
 Other sets: 
@@ -128,11 +136,11 @@ properties include:
 
 \item{\code{max}}{If the Set consists of numerics only then returns the maximum element in the Set. For open
 or half-open sets, then the maximum is defined by
-\deqn{upper - .Machine\$double.xmin}{upper - .Machine$double.xmin}}
+\deqn{upper - 1e-15}}
 
 \item{\code{min}}{If the Set consists of numerics only then returns the minimum element in the Set. For open
 or half-open sets, then the minimum is defined by
-\deqn{lower + .Machine\$double.xmin}{lower + .Machine$double.xmin}}
+\deqn{lower + 1e-15}}
 
 \item{\code{upper}}{If the Set consists of numerics only then returns the upper bound of the Set.}
 
@@ -140,7 +148,7 @@ or half-open sets, then the minimum is defined by
 
 \item{\code{class}}{If all elements in the Set are the same class then returns that class, otherwise "ANY".}
 
-\item{\code{elements}}{If the Set is finite then returns all elements in the Set, otherwise "NA".}
+\item{\code{elements}}{If the Set is finite then returns all elements in the Set as a \code{list}, otherwise "NA".}
 
 \item{\code{universe}}{Returns the universe of the Set, i.e. the set of values that can be added to the Set.}
 
@@ -434,15 +442,16 @@ Add elements to a set.
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-\verb{$add} is a wrapper around the \code{setunion} method with
-\code{setunion(self, Set$new(...))}. However \verb{$add} first coerces \code{...} to \verb{$class} if \code{self}
-is a typed-set (i.e. \verb{$class != "ANY"}), and \verb{$add} checks if elements in \code{...} live in the
-universe of \code{self}.
+\verb{$add} is a wrapper around the \code{setunion} method with \code{setunion(self, Set$new(...))}.
+Note a key difference is that any elements passed to \code{...} are first converted to a \code{Set}, this
+important difference is illustrated in the examples by adding an \link{Interval} to a \code{Set}.
+
+Additionally, \verb{$add} first coerces \code{...} to \verb{$class} if \code{self} is a typed-set (i.e. \verb{$class != "ANY"}),
+and \verb{$add} checks if elements in \code{...} live in the universe of \code{self}.
 }
 
 \subsection{Returns}{
-If the union cannot be simplified to a \code{Set} then a \link{UnionSet} is returned
-otherwise an object inheriting from \link{Set} is returned.
+An object inheriting from \link{Set}.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
@@ -454,6 +463,10 @@ Set$new(1,2,universe = Interval$new(1,3))$add(4)$print()
 }
 # coerced to complex
 Set$new(0+1i, 2i, class = "complex")$add(4)$print()
+
+# setunion vs. add
+Set$new(1,2)$add(Interval$new(5,6))$print()
+Set$new(1,2) + Interval$new(5,6)
 }
 \if{html}{\out{</div>}}
 
@@ -477,7 +490,9 @@ Remove elements from a set.
 }
 \subsection{Details}{
 \verb{$remove} is a wrapper around the \code{setcomplement} method with
-\code{setcomplement(self, Set$new(...))}.
+\code{setcomplement(self, Set$new(...))}. Note a key difference is that any elements passed to \code{...}
+are first converted to a \code{Set}, this important difference is illustrated in the examples by
+removing an \link{Interval} from a \code{Set}.
 }
 
 \subsection{Returns}{
@@ -490,6 +505,10 @@ otherwise an object inheriting from \link{Set} is returned.
 Set$new(1,Set$new(1),2)$remove(Set$new(1))$print()
 Interval$new(1,5)$remove(5)$print()
 Interval$new(1,5)$remove(4)$print()
+
+# setcomplement vs. remove
+Set$new(1,2,3)$remove(Interval$new(5,7))$print()
+Set$new(1,2,3) - Interval$new(5,7)
 }
 \if{html}{\out{</div>}}
 

@@ -474,7 +474,7 @@ Set <- R6Class("Set",
     },
 
     #' @field elements
-    #' If the Set is finite then returns all elements in the Set, otherwise "NA".
+    #' If the Set is finite then returns all elements in the Set as a `list`, otherwise "NA".
     elements = function(){
       return(private$.elements)
     },
