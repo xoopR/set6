@@ -24,13 +24,17 @@ chat](https://badges.gitter.im/xoopR/set6.png)](https://gitter.im/xoopR/set6)
 
 ## What is set6?
 
-`set6` is an R6 upgrade to the `sets` package in R that includes: \*
-Multi-dimensional sets \* Tuples \* Finite and infinite intervals \*
-Fuzzy sets and tuples \* Set operations including union, intersect,
-(asymmetric and symmetric) difference, and product \* Symbolic
-representation of infinite sets including common special sets such as
-the Reals and Integers \* ConditionalSets for defining sets according to
-logical conditions
+`set6` is an R6 upgrade to the `sets` package in R that includes:
+
+  - Multi-dimensional sets
+  - Tuples
+  - Finite and infinite intervals
+  - Fuzzy sets and tuples
+  - Set operations including union, intersect, (asymmetric and
+    symmetric) difference, and product
+  - Symbolic representation of infinite sets including common special
+    sets such as the Reals and Integers
+  - ConditionalSets for defining sets according to logical conditions
 
 ## Installation
 
@@ -74,10 +78,10 @@ f$inclusion(3)
 
 # Symbolic intervals provide a clean way to represent infinite sets
 Interval$new()
-#> [-∞, +∞]
+#> [-∞,+∞]
 # Different closure types and classes are possible
 Interval$new(1, 7, type = "(]") # half-open
-#> (1, 7]
+#> (1,7]
 Interval$new(1, 7, class = "integer") == Set$new(1:7)
 #> [1] TRUE
 
@@ -95,7 +99,7 @@ PosRationals$new()
 Set$new(1, 4, "a", "b") + Set$new(5)
 #> {1, 4,...,b, 5}
 Interval$new(1, 5) + FuzzyTuple$new(1, 0.6)
-#> [1, 5]
+#> [1,5]
 
 # Power
 Set$new(1:5)^2
@@ -110,7 +114,7 @@ Reals$new()^5
 Set$new(1,2) * Set$new(5, 6)
 #> {1, 2} × {5, 6}
 Interval$new(1,5) * Tuple$new(3)
-#> [1, 5] × (3)
+#> [1,5] × (3)
 
 # Intersection
 Set$new(1:5) & Set$new(4:10)
@@ -122,7 +126,7 @@ Interval$new(1, 10) & Set$new(5:6)
 
 # Difference
 Interval$new(1, 10) - Set$new(5)
-#> [1, 5) ∪ (5, 10]
+#> [1,5) ∪ (5,10]
 Set$new(1:5) - Set$new(2:3)
 #> {1, 4, 5}
 ```

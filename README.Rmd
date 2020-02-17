@@ -25,6 +25,7 @@ set.seed(42)
 ## What is set6?
 
 `set6` is an R6 upgrade to the `sets` package in R that includes:
+
 * Multi-dimensional sets
 * Tuples
 * Finite and infinite intervals
