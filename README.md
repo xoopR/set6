@@ -10,6 +10,8 @@ status](https://ci.appveyor.com/api/projects/status/ueqvqs5n38tcs3r8?svg=true)](
 [![codecov](https://codecov.io/gh/RaphaelS1/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/set6)
 [![Lifecycle
 Badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://img.shields.io/badge/lifecycle-maturing-blue)
+[![Repo
+Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/set6)](https://cran.r-project.org/package=set6)
 [![CRAN
@@ -211,6 +213,21 @@ These mainly include
 
 At a later stage we may consider adding Venn diagrams for visualisation
 of sets and intervals, but this is very low priority.
+
+## Similar Packages
+
+  - [sets](https://cran.r-project.org/web/packages/sets/index.html) -
+    The **sets** package uses S3 to define some symbolic representaton
+    of mathematical sets, tuple, intervals, and fuzzy variants. However
+    the symbolic representation is not consistent throughout the
+    package, does not allow for clear inspection of set/interval
+    elements, and there is no support for multi-dimensional sets.
+
+  - [BaseSet](https://github.com/llrs/BaseSet) - The **BaseSet** package
+    focuses on storing and analysing sets in a ‘tidy’ way, with more
+    options for data storage in long and wide formats. The primary usage
+    is neat and efficient inspection of finite sets, there is no support
+    for infinite sets or symbolic representation.
 
 ## Contributing
 
