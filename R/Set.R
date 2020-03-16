@@ -47,7 +47,7 @@ Set <- R6Class("Set",
       assertSet(universe)
       private$.universe <- universe
 
-      if(is.null(elements)) {
+      if(!length(elements)) {
         elements = list(...)
         if(length(elements) > 0) {
           if(length(elements) == 1 & checkmate::testVector(elements[[1]]))

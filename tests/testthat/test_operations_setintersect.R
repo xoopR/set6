@@ -35,6 +35,9 @@ test_that("mixed",{
   expect_equal(Set$new(1:2) & ConditionalSet$new(function(x) x == 3), Set$new())
   expect_equal(Set$new("a",2) & Interval$new(1,10), Set$new(2))
   expect_equal(Interval$new(1,10) & Set$new("a",2), Set$new(2))
+  expect_equal(Interval$new() & Set$new(), Set$new())
+  expect_equal(Interval$new(1,5) & Interval$new(2,3), Interval$new(2,3))
+  expect_equal(Interval$new(2,3) & Interval$new(1,5), Interval$new(2,3))
 })
 
 test_that("UnionSet",{
