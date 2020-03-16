@@ -83,3 +83,8 @@ test_that("setSymbol",{
   expect_equal(setSymbol(Reals), "R")
   useUnicode(TRUE)
 })
+
+test_that("returner",{
+  expect_equal(returner(list(TRUE), TRUE),TRUE)
+})
+

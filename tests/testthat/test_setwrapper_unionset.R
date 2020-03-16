@@ -43,4 +43,5 @@ test_that("length",{
 test_that("cardinality",{
   expect_equal(setunion(Set$new(1,2) + Set$new(3,4))$properties$cardinality, 4)
   expect_equal(setunion(Set$new(1,2) + Set$new(2,3,4))$properties$cardinality, 4)
+  expect_equal(UnionSet$new(list(Set$new(1,2), UniversalSet$new()))$properties$cardinality, Inf)
 })

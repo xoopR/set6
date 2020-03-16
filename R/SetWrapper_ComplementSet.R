@@ -25,7 +25,7 @@ ComplementSet <- R6Class("ComplementSet", inherit = SetWrapper,
           else if(testInterval(addset) & addset$class == "integer")
             lower = addset$lower + 1
           else
-            lower = addset$elements[!subtractset$contains(addset$elements, bound = TRUE)][1]
+            lower = addset$elements[!subtractset$contains(addset$elements, bound = TRUE)][[1]]
         }
       }
 

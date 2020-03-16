@@ -2,6 +2,10 @@ library(testthat)
 
 context("setproduct")
 
+test_that("redundant",{
+  expect_equal(setproduct(), Set$new())
+  expect_equal(setproduct(Set$new(1)), Set$new(1))
+})
 test_that("Set",{
   useUnicode(FALSE)
   expect_equal(setproduct(Set$new(1), Set$new(2))$strprint(), "{1} X {2}")
