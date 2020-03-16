@@ -1,3 +1,10 @@
+# set6 0.1.3
+
+* Added assertion for testing if a set is countably finite
+* Slight speed improvements to operations - still require a lot of work
+* Fixed bug in `UnionSet` cardinality calculation
+* Fixed bug in `UniversalSet` countability
+
 # set6 0.1.2
 
 ### Patches

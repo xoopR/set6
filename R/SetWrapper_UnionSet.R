@@ -30,11 +30,18 @@ UnionSet <- R6Class("UnionSet", inherit = SetWrapper,
                                                    substr, start = 5, stop = 100))))
       } else if(any(grepl("Aleph", cardinality))) {
         cardinality = "Aleph0"
+      } else if(any(grepl(Inf, cardinality))) {
+        cardinality = Inf
       } else {
         if(any(unlist(sapply(cardinality, is.null))))
           cardinality = NULL
-        else
-          cardinality = sum(cardinality)
+        else {
+          el = setlist[[1]]$elements
+          for(i in 2:length(setlist)){
+            el = intersect(el, setlist[[i]]$elements)
+          }
+          cardinality = sum(cardinality) - length(el)
+        }
       }
 
       super$initialize(setlist = setlist, lower = lower, upper = upper, type = type,

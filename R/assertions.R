@@ -267,3 +267,20 @@ makeChecks(assertionName = "Subset",
            args = c(alist(object = , sets = , proper = FALSE,
                           errormsg = "sets are not subsets of the object")),
            pos = environment())
+
+#' @template assertions_properties
+#' @templateVar property CountablyFinite
+#' @templateVar test1 Set$new(1,2,3)
+#' @templateVar test2 Interval$new(1,10)
+#' @export
+testCountablyFinite <- function(){}
+#' @rdname testCountablyFinite
+#' @export
+checkCountablyFinite <- function(){}
+#' @rdname testCountablyFinite
+#' @export
+assertCountablyFinite <- function(){}
+makeChecks(assertionName = "CountablyFinite",
+           cond = if(!length(object$properties$countability)) return(FALSE) else object$properties$countability == "countably finite",
+           errormsg = "This is not a countably finite set",
+           pos = environment())

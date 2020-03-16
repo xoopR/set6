@@ -39,3 +39,8 @@ test_that("length",{
   expect_equal(UnionSet$new(list(Set$new(1,2,3), Set$new(letters[1:5])))$length, 8)
   expect_equal(UnionSet$new(list(Set$new(1,2,3), Interval$new()))$length, Inf)
 })
+
+test_that("cardinality",{
+  expect_equal(setunion(Set$new(1,2) + Set$new(3,4))$properties$cardinality, 4)
+  expect_equal(setunion(Set$new(1,2) + Set$new(2,3,4))$properties$cardinality, 4)
+})

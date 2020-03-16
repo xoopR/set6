@@ -62,13 +62,19 @@
 #'
 #' @export
 setproduct <- function(..., simplify = FALSE, nest = FALSE){
-  sets = operation_cleaner(list(...), "ProductSet", nest, simplify = simplify)
-
-  if(length(sets) == 0)
+  if (...length() == 0) {
     return(Set$new())
-  else if(length(sets) == 1)
-    return(sets[[1]])
+  } else if(...length() == 1){
+    assertSet(...elt(1))
+    return(...elt(1))
+  }
 
+  sets = operation_cleaner(list(...), "ProductSet", nest, simplify = simplify)
+  if(length(sets) == 1){
+    return(sets[[1]])
+  } else if(length(sets) == 0){
+    return(Set$new())
+  }
 
   classes = sapply(sets, getR6Class)
 

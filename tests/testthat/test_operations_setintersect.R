@@ -55,7 +55,8 @@ test_that("ComplementSet",{
 test_that("ProductSet",{
   expect_equal(setproduct(Set$new(1,2), Set$new(3,4), simplify = TRUE) & Set$new(Tuple$new(1,4)),
                Set$new(Tuple$new(1,4)))
-  expect_equal((Set$new(1,2) * Set$new(3,4)) & Set$new(Tuple$new(1,4), Tuple$new(5,6)), Set$new(Tuple$new(1,4)))
+  expect_equal((Set$new(1,2) * Set$new(3,4)) & Set$new(Tuple$new(1,4), Tuple$new(5,6)),
+               Set$new(Tuple$new(1,4)))
   expect_equal((Set$new(1,2) * Set$new(3,4)) & Tuple$new(1,4), Set$new())
   expect_message((Set$new(1,2) * Set$new(3,4)) & (Set$new(1,2) * Set$new(3,4)), "currently not implemented")
 })
