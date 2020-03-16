@@ -19,3 +19,5 @@ man-roxygen
 ^.*\.Rproj$
 ^\.Rproj\.user$
 tic\.R
+papers
+^codemeta\.json$

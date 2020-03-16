@@ -17,6 +17,7 @@ Suggests: knitr, testthat, devtools, rmarkdown
 License: MIT + file LICENSE
 LazyData: true
 URL: https://raphaels1.github.io/set6/, https://github.com/RaphaelS1/set6
+BugReports: https://github.com/RaphaelS1/set6/issues
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
