@@ -52,6 +52,8 @@
 #'
 #' @export
 setintersect <- function(x, y){
+  if(testCountablyFinite(x) & testCountablyFinite(y) & !inherits(x, "SetWrapper") & !inherits(y, "SetWrapper"))
+    return(Set$new(elements = intersect(x$elements, y$elements)))
 
   if(getR6Class(y) == "UniversalSet")
     return(x)
@@ -82,14 +84,7 @@ setintersect <- function(x, y){
 
   return(Set$new(elements = listify(x$elements[y$contains(x$elements)])))
 }
-# #' rdname setintersect
-# #' export
-# setintersect.Set <- function(x, y){
-#   if (inherits(y, "ConditionalSet"))
-#     return(Set$new())
-#   else
-#     return(Set$new(x$elements[y$contains(x$elements)]))
-# }
+
 #' @rdname setintersect
 #' @export
 setintersect.Interval <- function(x, y){

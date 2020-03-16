@@ -56,6 +56,18 @@ setunion <- function(..., simplify = TRUE){
 
   sets = list(...)
 
+  # if(all(sapply(sets, testCountablyFinite))){
+  #   class = unique(rsapply(sets, class, active = TRUE))
+  #   if(length(class) != 1 | any(class == "ANY"))
+  #     class = NULL
+  #
+  #   el = sets[[1]]$elements
+  #   for(i in 2:length(sets)){
+  #     el = union(el, sets[[i]]$elements)
+  #   }
+  #   return(Set$new(elements = el, class = class))
+  # }
+
   classes = sapply(sets, getR6Class)
 
   if(all(classes %in% c("Set", "Tuple")) & simplify)
@@ -177,36 +189,6 @@ setunion <- function(..., simplify = TRUE){
     sets = sets[-rm]
 
   return(sets)
-#
-#
-#   # function to seee which overlap,add these into a single interval then UnionSet the rest
-#     if (x$upper > y$lower & x$lower < y$lower)
-#       return(Interval$new(x$lower, y$upper,
-#                           type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-#     else if(y$upper > x$lower & y$lower < x$lower)
-#       return(Interval$new(y$lower, x$upper,
-#                           type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-#     else if(x$upper < y$lower)
-#       return(UnionSet$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
-#                        type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-#     else if(y$upper < x$lower)
-#       return(UnionSet$new(setlist = list(y,x), lower = y$lower, upper = x$upper,
-#                        type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-#     else if(y$upper == x$lower){
-#       if(!testClosedAbove(y) & !testClosedBelow(x))
-#         return(UnionSet$new(setlist = list(x,y), lower = y$lower, upper = x$upper,
-#                          type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-#       else
-#         return(Interval$new(y$lower, x$upper,
-#                             type = paste0(substr(y$type,1,1),substr(x$type,2,2))))
-#     } else if (x$upper == y$lower){
-#       if(!testClosedAbove(x) & !testClosedBelow(y))
-#         return(UnionSet$new(setlist = list(x,y), lower = x$lower, upper = y$upper,
-#                          type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-#       else
-#         return(Interval$new(x$lower, y$upper,
-#                             type = paste0(substr(x$type,1,1),substr(y$type,2,2))))
-#     }
 }
 .union_fuzzyset <- function(sets){
   # if(length(sets) == 1)

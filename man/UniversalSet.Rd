@@ -9,8 +9,9 @@ The \code{UniversalSet} is defined as the \link{Set} containing all possible ele
 \details{
 The Universal set is the default universe to all sets, and is the largest possible set.
 The Universal set contains every single possible element. We denote the Universal set with \code{V}
-instead of \code{U} to avoid confusion with the union symbol. The Universal set is also responsible
-for a few set paradoxes, to resolve these we use the following results:
+instead of \code{U} to avoid confusion with the union symbol. The Universal set cardinality is set to
+\code{Inf} where we assume \code{Inf} is greater than any \code{Aleph} or \code{Beth} numbers. The Universal set is
+also responsible for a few set paradoxes, to resolve these we use the following results:
 
 Let \eqn{V} be the universal set, \eqn{S} be any non-universal set, and \eqn{0} the empty set, then
 

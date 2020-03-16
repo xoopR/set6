@@ -27,11 +27,17 @@ Properties <- R6Class("Properties",
             else
               private$.cardinality = paste0("Beth", substr(cardinality, 5, 100))
             private$.countability = "uncountable"
-          } else
+          } else {
             stop("Cardinality must either be a number or in {'Aleph0', 'A0', 'BethX', 'BX'} for some number X (case-insensitive)")
+          }
         } else {
           private$.cardinality = cardinality
-          private$.countability = "countably finite"
+
+          if (cardinality == Inf) {
+            private$.countability = "uncountable"
+          } else {
+            private$.countability = "countably finite"
+          }
         }
 
         private$.empty = (cardinality == 0)

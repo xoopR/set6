@@ -54,7 +54,6 @@
 #'
 #' @export
 setcomplement <- function(x, y, simplify = TRUE){
-
   if (missing(y)) {
     if(getR6Class(x) == "FuzzySet")
       return(FuzzySet$new(elements = x$elements, membership = 1 - x$membership()))
@@ -64,6 +63,10 @@ setcomplement <- function(x, y, simplify = TRUE){
       stop("Set y is missing and x does not have a universe for absolute complement.")
     else
       return(setcomplement(x$universe, x))
+  }
+
+  if(testCountablyFinite(x) & testCountablyFinite(y)){
+    Set$new(elements = setdiff(x$elements, y$elements))
   }
 
   if(getR6Class(y) == "UniversalSet")
