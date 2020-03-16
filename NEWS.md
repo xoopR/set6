@@ -1,3 +1,5 @@
+# set6 0.1.3.9000
+
 # set6 0.1.3
 
 * Added assertion for testing if a set is countably finite
