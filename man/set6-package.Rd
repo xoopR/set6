@@ -35,6 +35,7 @@ Useful links:
 \itemize{
   \item \url{https://raphaels1.github.io/set6/}
   \item \url{https://github.com/RaphaelS1/set6}
+  \item Report bugs at \url{https://github.com/RaphaelS1/set6/issues}
 }
 
 }
