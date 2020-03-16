@@ -8,17 +8,19 @@ Status](https://travis-ci.com/RaphaelS1/set6.svg?branch=master)](https://travis-
 [![Appveyor Build
 status](https://ci.appveyor.com/api/projects/status/ueqvqs5n38tcs3r8?svg=true)](https://ci.appveyor.com/project/RaphaelS1/set6)
 [![codecov](https://codecov.io/gh/RaphaelS1/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/set6)
+[![Repo
+Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
 [![Lifecycle
 Badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://img.shields.io/badge/lifecycle-maturing-blue)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/set6)](https://cran.r-project.org/package=set6)
 [![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/set6)](https://cran.r-project.org/package=set6)
-[![dependencies](https://tinyverse.netlify.com/badge/set6)](https://CRAN.R-project.org/package=set6)
+Checks](https://cranchecks.info/badges/summary/set6)](https://cran.r-project.org/web/checks/check_results_set6.html)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CRAN
-Checks](https://cranchecks.info/badges/summary/set6)](https://cran.r-project.org/web/checks/check_results_set6.html)
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/set6)](https://cran.r-project.org/package=set6)
+[![dependencies](https://tinyverse.netlify.com/badge/set6)](https://CRAN.R-project.org/package=set6)
 [![Gitter
 chat](https://badges.gitter.im/xoopR/set6.png)](https://gitter.im/xoopR/set6)
 
@@ -74,10 +76,10 @@ f$inclusion(3)
 
 # Symbolic intervals provide a clean way to represent infinite sets
 Interval$new()
-#> [-∞, +∞]
+#> [-∞,+∞]
 # Different closure types and classes are possible
 Interval$new(1, 7, type = "(]") # half-open
-#> (1, 7]
+#> (1,7]
 Interval$new(1, 7, class = "integer") == Set$new(1:7)
 #> [1] TRUE
 
@@ -95,7 +97,7 @@ PosRationals$new()
 Set$new(1, 4, "a", "b") + Set$new(5)
 #> {1, 4,...,b, 5}
 Interval$new(1, 5) + FuzzyTuple$new(1, 0.6)
-#> [1, 5]
+#> [1,5]
 
 # Power
 Set$new(1:5)^2
@@ -110,7 +112,7 @@ Reals$new()^5
 Set$new(1,2) * Set$new(5, 6)
 #> {1, 2} × {5, 6}
 Interval$new(1,5) * Tuple$new(3)
-#> [1, 5] × (3)
+#> [1,5] × (3)
 
 # Intersection
 Set$new(1:5) & Set$new(4:10)
@@ -122,7 +124,7 @@ Interval$new(1, 10) & Set$new(5:6)
 
 # Difference
 Interval$new(1, 10) - Set$new(5)
-#> [1, 5) ∪ (5, 10]
+#> [1,5) ∪ (5,10]
 Set$new(1:5) - Set$new(2:3)
 #> {1, 4, 5}
 ```
