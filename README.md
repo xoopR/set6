@@ -50,7 +50,7 @@ install.packages("set6")
 Or for the latest stable build
 
 ``` r
-remotes::install_github("RaphaelS1/set6")
+remotes::install_github("xoopR/set6")
 ```
 
 ## Main Features
