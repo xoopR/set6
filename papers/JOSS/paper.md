@@ -39,14 +39,14 @@ Related software includes the `sets` [@packagesets] family of packages.
 
 # Key Use-Cases
 
-1. **Constructing and querying mathematical sets** - Many mathematical Set-like objects can be constructed, including sets, tuple, intervals, and fuzzy variants. Sets and tuples can contain objects of any `R` type (atomic or otherwise). 
+1. **Constructing and querying mathematical sets** - Many mathematical Set-like objects can be constructed, including sets, tuples, intervals, and fuzzy variants. Sets and tuples can contain objects of any `R` type (atomic or otherwise). 
 2. **Containedness checks** - Public methods allow all objects inheriting from `Set` to check if elements are contained within them. This provides a powerful mechanism for use with parameter or distribution supports for other packages as it can be viewed as a 'type check', i.e. checks if a value fits within a specified mathematical type.
 3. **Representation of infinite sets** - Symbolic representation and lazy evaluation allows infinite (or very large) sets and intervals to be constructed. This also allows operations such as powerset to be used without crashing the system.
 4. **Comparison of, possibly infinite, sets** - Two `Set` objects can be compared to check if they are equal or (proper) sub/supersets. Infix operators allow quick and neat comparison.
-5. **Creation of composite sets from simpler classes** - Common set operations, such as unions and complements are implemented, as well as products and exponents. These make use of S3 dispatch to allow quick calculation of composite sets.  In line with design principle (4.), lazy and greedy evaluation with symbolic representation allow for composite sets to be created, inspected, and printed, without ever needing to be evaluated themselves.
+5. **Creation of composite sets from simpler classes** - Common set operations, such as unions and complements are implemented, as well as products and exponents. These make use of S3 dispatch to allow quick calculation of composite sets.  In line with design principle 4), lazy and greedy evaluation with symbolic representation allow for composite sets to be created, inspected, and printed, without ever needing to be evaluated themselves.
 
 # Software Availability
 
-``set6`` is available on [GitHub](https://github.com/RaphaelS1/set6) and [CRAN](https://CRAN.R-project.org/package=set6). It can either be installed from GitHub using the `devtools` [@packagedevtools] library or directly from CRAN with `install.packages`. The package uses the MIT open-source licence. Contributions, issues, feature requests, and general feedback can all be found and provided on the project [GitHub](https://github.com/RaphaelS1/set6). Full tutorials and further details are available on the [project website](https://raphaels1.github.io/set6/).
+``set6`` is available on [GitHub](https://github.com/xoopR/set6) and [CRAN](https://CRAN.R-project.org/package=set6). It can either be installed from GitHub using the `devtools` [@packagedevtools] library or directly from CRAN with `install.packages`. The package uses the MIT open-source licence. Contributions, issues, feature requests, and general feedback can all be found and provided on the project [GitHub](https://github.com/xoopR/set6). Full tutorials and further details are available on the [project website](https://xoopR.github.io/set6/).
 
 # References
