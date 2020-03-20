@@ -12,9 +12,9 @@ authors:
   - name: Franz J. Kiraly
     affiliation: "1, 2"
 affiliations:
- - name: Department of Statistical Science, University College London, Gower Street, London WC1E 6BT, United Kingdom
+ - name: Department of Statistical Science, University College London
    index: 1
- - name: Shell
+ - name: Data Science Development, Shell Global Solutions International BV
    index: 2
 date: 17 February 2020
 bibliography: paper.bib
