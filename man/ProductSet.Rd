@@ -54,6 +54,7 @@ Other wrappers:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ProductSet} object. It is not recommended to construct this class directly.
 \subsection{Usage}{
@@ -87,6 +88,7 @@ A new \code{ProductSet} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the object.
 \subsection{Usage}{
@@ -106,6 +108,7 @@ A character string representing the object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-contains"></a>}}
+\if{latex}{\out{\hypertarget{method-contains}{}}}
 \subsection{Method \code{contains()}}{
 Tests if elements \code{x} are contained in \code{self}.
 \subsection{Usage}{
@@ -133,6 +136,7 @@ is on or within the (possibly-open) bounds of \code{self}, otherwise \code{TRUE}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -4,7 +4,7 @@ context("setunion")
 
 test_that("subsets",{
   expect_equal(Set$new(1,2,3) + Set$new(1), Set$new(1,2,3))
-  expect_equal(Set$new(1:3) + Set$new(1:4), Set$new(1:4))
+  expect_equal(Set$new(elements = 1:3) + Set$new(elements = 1:4), Set$new(elements = 1:4))
 })
 
 test_that("special sets",{

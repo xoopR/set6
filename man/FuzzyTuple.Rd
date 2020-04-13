@@ -82,6 +82,7 @@ Other sets:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-equals}{}}}
 \subsection{Method \code{equals()}}{
 Tests if two sets are equal.
 \subsection{Usage}{
@@ -114,6 +115,7 @@ element of \code{x}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-isSubset"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubset}{}}}
 \subsection{Method \code{isSubset()}}{
 Test if one set is a (proper) subset of another
 \subsection{Usage}{
@@ -154,6 +156,7 @@ element of \code{x}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-alphaCut"></a>}}
+\if{latex}{\out{\hypertarget{method-alphaCut}{}}}
 \subsection{Method \code{alphaCut()}}{
 The alpha-cut of a fuzzy set is defined as the set
 \deqn{A_\alpha = \{x \epsilon F | m \ge \alpha\}}{A_\alpha = {x \epsilon F | m \ge \alpha}}
@@ -179,6 +182,7 @@ Elements in \link{FuzzyTuple} or a \link{Set} of the elements.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

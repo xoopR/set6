@@ -65,17 +65,32 @@ setcomplement <- function(x, y, simplify = TRUE){
       return(setcomplement(x$universe, x))
   }
 
+  if(testFuzzy(x)){
+    UseMethod("setcomplement")
+  }
+
+  if((testConditionalSet(x) & !testConditionalSet(y)) |
+     (testConditionalSet(y) & !testConditionalSet(x)) |
+     !simplify | getR6Class(x) == "UniversalSet"){
+    return(ComplementSet$new(x, y))
+  } else if(testConditionalSet(x) | inherits(x, "ComplementSet")){
+    UseMethod("setcomplement")
+  }
+
+  if(testEmpty(y)){
+    return(x)
+  }
+
   if(testCountablyFinite(x) & testCountablyFinite(y)){
-    Set$new(elements = setdiff(x$elements, y$elements))
+    if(testTuple(x)){
+      return(Tuple$new(elements = setdiff(x$elements, y$elements)))
+    } else {
+      return(Set$new(elements = setdiff(x$elements, y$elements)))
+    }
   }
 
   if(getR6Class(y) == "UniversalSet")
     return(Set$new())
-
-  if((testConditionalSet(x) & !testConditionalSet(y)) |
-     (testConditionalSet(y) & !testConditionalSet(x)) |
-     !simplify | getR6Class(x) == "UniversalSet")
-    return(ComplementSet$new(x, y))
 
   if(testCrisp(x) & testFuzzyTuple(y))
     y = as.Tuple(y)
@@ -85,9 +100,7 @@ setcomplement <- function(x, y, simplify = TRUE){
   if(x == y)
     return(Set$new())
 
-  if(inherits(x, "ComplementSet"))
-    UseMethod("setcomplement")
-  else if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
+  if(inherits(x, "SetWrapper") | inherits(y, "SetWrapper"))
     return(ComplementSet$new(x, y))
 
   if(testConditionalSet(x))
@@ -107,15 +120,15 @@ setcomplement.Set <- function(x, y, simplify = TRUE){
   # difference of two sets
   if(getR6Class(y) %in% c("Set", "Tuple","FuzzySet","FuzzyTuple")){
     if(testTuple(x))
-      return(Tuple$new(x$elements[!(x$elements %in% y$elements)]))
+      return(Tuple$new(elements = x$elements[!(x$elements %in% y$elements)]))
     else
-      return(Set$new(x$elements[!(x$elements %in% y$elements)]))
+      return(Set$new(elements = x$elements[!(x$elements %in% y$elements)]))
   # difference of set and interval
   } else if(testInterval(y)){
     if(testTuple(x))
-      return(Tuple$new(x$elements[!y$contains(x$elements)]))
+      return(Tuple$new(elements = x$elements[!y$contains(x$elements)]))
     else
-      return(Set$new(x$elements[!y$contains(x$elements)]))
+      return(Set$new(elements = x$elements[!y$contains(x$elements)]))
   }
 }
 #' @rdname setcomplement

@@ -116,10 +116,10 @@ s != c(Set$new(1,2,3), Set$new(1, 2))
 # The `bound` argument in `isSubset` is used for specifying
 #   how open interval containedness should be checked
 i = Interval$new(1, 10, type = "(]")
-i$contains(1, bound = FALSE)
-i$contains(10, bound = FALSE)
-i$contains(1, bound = TRUE)
-i$contains(10, bound = TRUE)
+i$contains(Set$new(1), bound = FALSE)
+i$contains(Set$new(10), bound = FALSE)
+i$contains(Set$new(1), bound = TRUE)
+i$contains(Set$new(10), bound = TRUE)
 ```
 
 ## Algebra of Sets
@@ -153,7 +153,7 @@ PosReals$new() + NegReals$new()
 The relative complement of two sets, $A-B$, is defined as the set of elements in $A$ but not in $B$.
 
 ```{r}
-Set$new(1:10) - Set$new(4:10)
+Set$new(elements = 1:10) - Set$new(elements = 4:10)
 Set$new(1,2,3,4) - Set$new(2)
 
 Reals$new() - PosReals$new()

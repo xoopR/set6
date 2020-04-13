@@ -52,15 +52,14 @@ getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1){
   else
     return(get(class(object)[[n.par+1]], pos = pos))
 }
-ifnerror <- function(expr, noerror = NULL, error = NULL, silent = T, errormsg = "Error not Nerror!"){
+ifnerror <- function(expr, noerror = NULL, error = NULL, silent = T, stopwarn = "warn", errormsg = "Error not Nerror!"){
   x = try(expr, silent)
   if(inherits(x, "try-error")){
-    if(is.null(error) | error == "warn")
-      stopwarn("warn", errormsg)
-    else if(error == "stop")
-      stopwarn("stop", errormsg)
-    else
+    if (is.null(error)) {
+      stopwarn(stopwarn, errormsg)
+    } else{
       return(error)
+    }
   } else {
     if(is.null(noerror))
       noerror = x

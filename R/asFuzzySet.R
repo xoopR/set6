@@ -51,7 +51,7 @@ as.FuzzySet.FuzzySet <- function(object){
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzySet.Interval <- function(object){
-  ifnerror(as.Set.Interval(object), error = "stop", errormsg = "Interval cannot be coerced to FuzzySet.")
+  ifnerror(as.Set.Interval(object), stopwarn = "stop", errormsg = "Interval cannot be coerced to FuzzySet.")
 }
 #' @rdname as.FuzzySet
 #' @export
@@ -104,7 +104,7 @@ as.FuzzyTuple.FuzzySet <- function(object){
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.Interval <- function(object){
-  ifnerror(as.Set.Interval(object), error = "stop", errormsg = "Interval cannot be coerced to FuzzyTuple.")
+  ifnerror(as.Set.Interval(object), stopwarn = "stop", errormsg = "Interval cannot be coerced to FuzzyTuple.")
 }
 #' @rdname as.FuzzySet
 #' @export

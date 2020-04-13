@@ -42,10 +42,10 @@ test_that("testmessage",{
 })
 
 test_that("ifnerror",{
-  expect_equal(ifnerror(stop("Error"),"Success","Failure",silent = T),"Failure")
-  expect_equal(ifnerror("Nerror","Success","Failure",silent = T),"Success")
-  expect_warning(ifnerror(stop("Error"),"Success","warn",silent = T))
-  expect_error(ifnerror(stop("Error"),"Success","stop",silent = T))
+  expect_equal(ifnerror(stop("Error"),noerror = "Success",error = "Failure",silent = T),"Failure")
+  expect_equal(ifnerror("Nerror",noerror = "Success",error = "Failure",silent = T),"Success")
+  expect_warning(ifnerror(stop("Error"),noerror = "Success",stopwarn = "warn",silent = T))
+  expect_error(ifnerror(stop("Error"),noerror = "Success",stopwarn = "stop",silent = T))
 })
 
 test_that("modal",{

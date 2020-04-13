@@ -7,7 +7,7 @@ test_that("construction",{
   expect_warning(expect_error(FuzzyTuple$new(0.1,1,0.9,"a")))
   expect_silent(FuzzyTuple$new(1,0.1,"a",0.9))
   expect_silent(FuzzyTuple$new(1,0.1,"a",0.9))
-  expect_silent(FuzzyTuple$new("A",0,TRUE,1,function(x){x^2},0.4,as.factor("a"), 0.6))
+  expect_silent(FuzzyTuple$new("A",0,TRUE,1,as.factor("a"), 0.6))
   expect_equal(FuzzyTuple$new(1,0.1,2,0.8),FuzzyTuple$new(elements = c(1,2),
                                                       membership = c(0.1,0.8)))
   expect_error(FuzzyTuple$new(1,0.1,2))
@@ -73,7 +73,7 @@ test_that("equals",{
   expect_false(FuzzyTuple$new(1,0.1,2,0.1,3,0.1,4,0.1)$equals(FuzzyTuple$new(elements = 1:3, membership = rep(0.1,3))))
   expect_true(FuzzyTuple$new(1,0.1,2,0.1) != FuzzyTuple$new(2,0.1,1,0.1))
   expect_true(FuzzyTuple$new(2,0.1,2,0.1) != FuzzyTuple$new(2,0.1))
-  expect_true(FuzzyTuple$new(elements = 1:3)$equals(Set$new(1:3)))
+  expect_true(FuzzyTuple$new(elements = 1:3)$equals(Set$new(elements = 1:3)))
   expect_false(FuzzyTuple$new(1, 0.3, 2, 0.5)$equals(Interval$new(1, 3)))
   expect_true(FuzzyTuple$new(1, 0.1, 2, 0.2, "a", 0.3) == FuzzyTuple$new(elements = list(1,2,"a"), membership = c(0.1,0.2,0.3)))
   expect_false(FuzzyTuple$new(2, 0.1, 1, 0.2, "a", 0.3) == FuzzyTuple$new(elements = list(1,2,"a"), membership = c(0.1,0.2,0.3)))

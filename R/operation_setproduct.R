@@ -65,8 +65,7 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE){
   if (...length() == 0) {
     return(Set$new())
   } else if(...length() == 1){
-    assertSet(...elt(1))
-    return(...elt(1))
+    return(assertSet(...elt(1)))
   }
 
   sets = operation_cleaner(list(...), "ProductSet", nest, simplify = simplify)
@@ -91,11 +90,11 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE){
 
 .product_set <- function(sets, nest){
   if (!nest | length(sets) < 3)
-    return(Set$new(apply(expand.grid(rlapply(sets, "elements", active = T)), 1, function(z) Tuple$new(z))))
+    return(Set$new(elements = apply(expand.grid(rlapply(sets, "elements", active = T)), 1, function(z) Tuple$new(elements = z))))
   else {
-    s = Set$new(apply(expand.grid(sets[[1]]$elements, sets[[2]]$elements), 1, function(z) Tuple$new(z)))
+    s = Set$new(elements = apply(expand.grid(sets[[1]]$elements, sets[[2]]$elements), 1, function(z) Tuple$new(elements = z)))
     for(i in 3:length(sets)){
-      s = Set$new(apply(expand.grid(s$elements, sets[[3]]$elements), 1, function(z) Tuple$new(z)))
+      s = Set$new(elements = apply(expand.grid(s$elements, sets[[3]]$elements), 1, function(z) Tuple$new(elements = z)))
     }
     return(s)
   }
@@ -103,7 +102,7 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE){
 .product_fuzzyset <- function(sets){
   mat = cbind(expand.grid(rlapply(sets, "elements", active = T)),
               expand.grid(rlapply(sets, "membership")))
-  return(Set$new(apply(mat, 1, function(x) FuzzyTuple$new(elements = x[1:(ncol(mat)/2)],
+  return(Set$new(elements = apply(mat, 1, function(x) FuzzyTuple$new(elements = x[1:(ncol(mat)/2)],
                                            membership = x[((ncol(mat)/2)+1):(ncol(mat))]))))
 }
 

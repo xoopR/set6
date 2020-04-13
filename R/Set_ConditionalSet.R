@@ -8,24 +8,8 @@
 #' using standard 'and', `&`, and 'or', `|`, operators.
 #'
 #' @examples
-#' # Set of positives
-#' s = ConditionalSet$new(function(x) x > 0)
-#' s$contains(list(1,-1))
-#'
-#' # Set via equality
-#' s = ConditionalSet$new(function(x, y) x + y == 2)
-#' s$contains(list(Set$new(2, 0), Set$new(0, 2)))
-#'
-#' # Tuples are recommended when using contains as they allow non-unique elements
-#' s = ConditionalSet$new(function(x, y) x + y == 4)
-#' \dontrun{
-#' s$contains(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
-#' }
-#' s$contains(Tuple$new(2, 2))
-#'
 #' # Set of Positive Naturals
 #' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
-#' s$contains(list(-2, 2))
 #'
 #' @export
 ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
@@ -88,15 +72,40 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #'
     #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
     #' see examples.
+    #'
+    #' @examples
+    #' # Set of positives
+    #' s = ConditionalSet$new(function(x) x > 0)
+    #' s$contains(list(1,-1))
+    #'
+    #' # Set via equality
+    #' s = ConditionalSet$new(function(x, y) x + y == 2)
+    #' s$contains(list(Set$new(2, 0), Set$new(0, 2)))
+    #'
+    #' # Tuples are recommended when using contains as they allow non-unique elements
+    #' s = ConditionalSet$new(function(x, y) x + y == 4)
+    #' \dontrun{
+    #' s$contains(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
+    #' }
+    #'
+    #' # Set of Positive Naturals
+    #' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
+    #' s$contains(list(-2, 2))
     contains = function(x, all = FALSE, bound = NULL){
-      x <- lapply(listify(x), function(y) ifelse(testSet(y), return(y), return(Set$new(y))))
+      x <- listify(x)
+      if(!testSetList(x)){
+        x <- as.Set(x)
+      }
+      # x <- assertSetList(listify(x),
+      #                    "`x` should be a Set, Tuple, or list of Sets/Tuples.")
 
-      ret <- sapply(1:length(x), function(i){
+      ret = sapply(seq_along(x), function(i){
         els <- as.list(x[[i]]$elements)
-        if(length(els) != length(self$class))
+        if (length(els) != length(self$class)) {
           stop(sprintf("Set is of length %s, length %s expected.", length(els), length(self$class)))
+        }
         names(els) <- names(self$class)
-        do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
+        ret = do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
       })
 
       returner(ret, all)

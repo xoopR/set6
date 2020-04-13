@@ -124,6 +124,7 @@ otherwise \code{Inf}. See the cardinality property for the type of infinity.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Interval} object.
 \subsection{Usage}{
@@ -164,6 +165,7 @@ A new \code{Interval} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the object.
 \subsection{Usage}{
@@ -183,6 +185,7 @@ A character string representing the object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-equals}{}}}
 \subsection{Method \code{equals()}}{
 Tests if two sets are equal.
 \subsection{Usage}{
@@ -224,6 +227,7 @@ Interval$new(1,5, class = "integer") != Interval$new(1,5,class="numeric")
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-contains"></a>}}
+\if{latex}{\out{\hypertarget{method-contains}{}}}
 \subsection{Method \code{contains()}}{
 Tests to see if \code{x} is contained in the Set.
 \subsection{Usage}{
@@ -283,6 +287,7 @@ c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-isSubset"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubset}{}}}
 \subsection{Method \code{isSubset()}}{
 Test if one set is a (proper) subset of another
 \subsection{Usage}{
@@ -336,6 +341,7 @@ Set$new(1,3) < Interval$new(0,5)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-isSubinterval"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubinterval}{}}}
 \subsection{Method \code{isSubinterval()}}{
 Test if one interval is a (proper) subinterval of another
 \subsection{Usage}{
@@ -383,6 +389,7 @@ Reals$new()$isSubinterval(Integers$new()) # FALSE
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

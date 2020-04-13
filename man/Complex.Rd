@@ -56,6 +56,7 @@ Other special sets:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{Complex} object.
 \subsection{Usage}{
@@ -77,6 +78,7 @@ A new \code{Complex} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-contains"></a>}}
+\if{latex}{\out{\hypertarget{method-contains}{}}}
 \subsection{Method \code{contains()}}{
 Tests to see if \code{x} is contained in the Set.
 \subsection{Usage}{
@@ -115,6 +117,7 @@ see examples.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
