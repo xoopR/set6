@@ -36,7 +36,7 @@ Set$new(1, 2) == Set$new(2, 1)
 ## Method `Set$contains`
 ## ------------------------------------------------
 
-s = Set$new(1:5)
+s = Set$new(elements = 1:5)
 
 # Simplest case
 s$contains(4)
@@ -313,7 +313,7 @@ see examples.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{s = Set$new(1:5)
+\preformatted{s = Set$new(elements = 1:5)
 
 # Simplest case
 s$contains(4)

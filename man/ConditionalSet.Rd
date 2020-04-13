@@ -11,6 +11,14 @@ Conditional sets are a useful tool for symbolically defining possibly infinite s
 using standard 'and', \code{&}, and 'or', \code{|}, operators.
 }
 \examples{
+# Set of Positive Naturals
+s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
+
+
+## ------------------------------------------------
+## Method `ConditionalSet$contains`
+## ------------------------------------------------
+
 # Set of positives
 s = ConditionalSet$new(function(x) x > 0)
 s$contains(list(1,-1))
@@ -24,12 +32,10 @@ s = ConditionalSet$new(function(x, y) x + y == 4)
 \dontrun{
 s$contains(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
 }
-s$contains(Tuple$new(2, 2))
 
 # Set of Positive Naturals
 s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
 s$contains(list(-2, 2))
-
 }
 \seealso{
 Other sets: 
@@ -146,6 +152,30 @@ element of \code{x}.
 The infix operator \verb{\%inset\%} is available to test if \code{x} is an element in the \code{Set},
 see examples.
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# Set of positives
+s = ConditionalSet$new(function(x) x > 0)
+s$contains(list(1,-1))
+
+# Set via equality
+s = ConditionalSet$new(function(x, y) x + y == 2)
+s$contains(list(Set$new(2, 0), Set$new(0, 2)))
+
+# Tuples are recommended when using contains as they allow non-unique elements
+s = ConditionalSet$new(function(x, y) x + y == 4)
+\dontrun{
+s$contains(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
+}
+
+# Set of Positive Naturals
+s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
+s$contains(list(-2, 2))
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-equals"></a>}}

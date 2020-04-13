@@ -8,24 +8,8 @@
 #' using standard 'and', `&`, and 'or', `|`, operators.
 #'
 #' @examples
-#' # Set of positives
-#' s = ConditionalSet$new(function(x) x > 0)
-#' s$contains(list(1,-1))
-#'
-#' # Set via equality
-#' s = ConditionalSet$new(function(x, y) x + y == 2)
-#' s$contains(list(Set$new(2, 0), Set$new(0, 2)))
-#'
-#' # Tuples are recommended when using contains as they allow non-unique elements
-#' s = ConditionalSet$new(function(x, y) x + y == 4)
-#' \dontrun{
-#' s$contains(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
-#' }
-#' s$contains(Tuple$new(2, 2))
-#'
 #' # Set of Positive Naturals
 #' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
-#' s$contains(list(-2, 2))
 #'
 #' @export
 ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
@@ -88,6 +72,25 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #'
     #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
     #' see examples.
+    #'
+    #' @examples
+    #' # Set of positives
+    #' s = ConditionalSet$new(function(x) x > 0)
+    #' s$contains(list(1,-1))
+    #'
+    #' # Set via equality
+    #' s = ConditionalSet$new(function(x, y) x + y == 2)
+    #' s$contains(list(Set$new(2, 0), Set$new(0, 2)))
+    #'
+    #' # Tuples are recommended when using contains as they allow non-unique elements
+    #' s = ConditionalSet$new(function(x, y) x + y == 4)
+    #' \dontrun{
+    #' s$contains(Set$new(2, 2)) # Errors as Set$new(2,2) == Set$new(2)
+    #' }
+    #'
+    #' # Set of Positive Naturals
+    #' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
+    #' s$contains(list(-2, 2))
     contains = function(x, all = FALSE, bound = NULL){
       x <- assertSetList(listify(x),
                          "`x` should be a Set, Tuple, or list of Sets/Tuples.")
