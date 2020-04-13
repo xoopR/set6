@@ -11,8 +11,8 @@ ProductSet <- R6Class("ProductSet", inherit = SetWrapper,
     #' @return A new `ProductSet` object.
     initialize = function(setlist, lower = NULL, upper = NULL, type = NULL,
                           cardinality = NULL){
-      if(is.null(lower)) lower = Tuple$new(rsapply(setlist, "lower", active = TRUE))
-      if(is.null(upper)) upper = Tuple$new(rsapply(setlist, "upper", active = TRUE))
+      if(is.null(lower)) lower = Tuple$new(elements = rsapply(setlist, "lower", active = TRUE))
+      if(is.null(upper)) upper = Tuple$new(elements = rsapply(setlist, "upper", active = TRUE))
       if(is.null(type)) type = "{}"
 
       if(is.null(cardinality)){
@@ -90,7 +90,7 @@ ProductSet <- R6Class("ProductSet", inherit = SetWrapper,
     #' @field length
     #' Returns the number of elements in the object.
     length = function(){
-      return(Tuple$new(rsapply(self$wrappedSets, "length", active = TRUE)))
+      return(Tuple$new(elements = rsapply(self$wrappedSets, "length", active = TRUE)))
     }
   )
 )

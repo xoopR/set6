@@ -121,6 +121,7 @@ Other sets:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{FuzzySet} object.
 \subsection{Usage}{
@@ -159,6 +160,7 @@ A new \code{FuzzySet} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the object.
 \subsection{Usage}{
@@ -178,6 +180,7 @@ A character string representing the object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-membership"></a>}}
+\if{latex}{\out{\hypertarget{method-membership}{}}}
 \subsection{Method \code{membership()}}{
 Returns the membership, i.e. value in [0, 1], of either the given element(s)
 or all elements in the fuzzy set.
@@ -214,6 +217,7 @@ f$membership(2)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-alphaCut"></a>}}
+\if{latex}{\out{\hypertarget{method-alphaCut}{}}}
 \subsection{Method \code{alphaCut()}}{
 The alpha-cut of a fuzzy set is defined as the set
 \deqn{A_\alpha = \{x \epsilon F | m \ge \alpha\}}{A_\alpha = {x \epsilon F | m \ge \alpha}}
@@ -255,6 +259,7 @@ f$alphaCut(0.5, create = TRUE)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-support"></a>}}
+\if{latex}{\out{\hypertarget{method-support}{}}}
 \subsection{Method \code{support()}}{
 The support of a fuzzy set is defined as the set of elements whose membership
 is greater than zero, or the strong alpha-cut with \eqn{\alpha = 0},
@@ -288,6 +293,7 @@ f$support(TRUE)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-core"></a>}}
+\if{latex}{\out{\hypertarget{method-core}{}}}
 \subsection{Method \code{core()}}{
 The core of a fuzzy set is defined as the set of elements whose membership is equal to one,
 or the alpha-cut with \eqn{\alpha = 1},
@@ -320,6 +326,7 @@ f$core(TRUE)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-inclusion"></a>}}
+\if{latex}{\out{\hypertarget{method-inclusion}{}}}
 \subsection{Method \code{inclusion()}}{
 An element in a fuzzy set, with corresponding membership \eqn{m}, is:
 \itemize{
@@ -361,6 +368,7 @@ f$inclusion(3)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-equals}{}}}
 \subsection{Method \code{equals()}}{
 Tests if two sets are equal.
 \subsection{Usage}{
@@ -393,6 +401,7 @@ element of \code{x}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-isSubset"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubset}{}}}
 \subsection{Method \code{isSubset()}}{
 Test if one set is a (proper) subset of another
 \subsection{Usage}{
@@ -433,6 +442,7 @@ element of \code{x}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

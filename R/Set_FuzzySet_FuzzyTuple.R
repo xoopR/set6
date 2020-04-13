@@ -146,7 +146,7 @@ FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet,
         if(length(els) == 0)
           return(Set$new())
         else
-          return(Tuple$new(els))
+          return(Tuple$new(elements = els))
       } else{
         if(length(els) == 0)
           return(NULL)

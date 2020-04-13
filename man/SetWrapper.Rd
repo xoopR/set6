@@ -39,6 +39,7 @@ This class should not be constructed directly. Parent class to \code{SetWrapper}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{SetWrapper} object. It is not recommended to construct this class directly.
 \subsection{Usage}{
@@ -75,6 +76,7 @@ A new \code{SetWrapper} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-equals}{}}}
 \subsection{Method \code{equals()}}{
 Tests if \code{x} is equal to \code{self}.
 \subsection{Usage}{
@@ -102,6 +104,7 @@ if each is equal to \code{self}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-isSubset"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubset}{}}}
 \subsection{Method \code{isSubset()}}{
 Tests if \code{x} is a (proper) subset of \code{self}.
 \subsection{Usage}{
@@ -131,6 +134,7 @@ if each is a (proper) subset of \code{self}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

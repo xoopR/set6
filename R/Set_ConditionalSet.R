@@ -89,15 +89,18 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
     #' see examples.
     contains = function(x, all = FALSE, bound = NULL){
-      x <- lapply(listify(x), function(y) ifelse(testSet(y), return(y), return(Set$new(y))))
+      x <- assertSetList(listify(x),
+                         "`x` should be a Set, Tuple, or list of Sets/Tuples.")
 
-      ret <- sapply(1:length(x), function(i){
+      ret = logical(length(x))
+      for (i in seq_along(x)) {
         els <- as.list(x[[i]]$elements)
-        if(length(els) != length(self$class))
+        if (length(els) != length(self$class)) {
           stop(sprintf("Set is of length %s, length %s expected.", length(els), length(self$class)))
+        }
         names(els) <- names(self$class)
         do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
-      })
+      }
 
       returner(ret, all)
     },

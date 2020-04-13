@@ -181,35 +181,20 @@ Interval <- R6Class("Interval", inherit = Set,
     #' s2$contains(Tuple$new(2,1))
     #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
     contains = function(x, all = FALSE, bound = FALSE){
-      if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
-        return(super$contains(x, all, bound))
-
-      x <- listify(x)
-
-      ret = rep(FALSE, length(x))
-
-      if(self$class == "integer")
-        class_test = sapply(x, checkmate::testIntegerish)
-      else if(self$class == "numeric")
-        class_test = sapply(x, checkmate::testNumeric)
-
-      if(bound)
-        ret[class_test][(x >= self$lower & x <= self$upper)] = TRUE
-      else if (!bound){
-        index = rep(FALSE, length(ret))
-        if(testClosedAbove(self))
-          index[class_test] = x[class_test] <= self$max
-        else
-          index[class_test] = x[class_test] < self$max
-        if(testClosedBelow(self))
-          index[class_test] = index[class_test] & x[class_test] >= self$min
-        else
-          index[class_test] = index[class_test] & x[class_test] > self$min
-
-        ret[index] = TRUE
+      x = suppressWarnings(as(unlist(x), "numeric"))
+      if (is.null(x)) {
+        return(TRUE)
+      } else {
+        if(all){
+          IntervalContainsAll(x = x, inf = self$lower, sup = self$upper,
+                              min = self$min, max = self$max,
+                              bound = bound, class_str = self$class)
+        } else {
+          IntervalContains(x = x, inf = self$lower, sup = self$upper,
+                           min = self$min, max = self$max,
+                           bound = bound, class_str = self$class)
+        }
       }
-
-      returner(ret, all)
     },
 
     #' @description  Test if one set is a (proper) subset of another
@@ -241,42 +226,30 @@ Interval <- R6Class("Interval", inherit = Set,
     #' Interval$new(1,3) < Interval$new(1,5)
     #' Set$new(1,3) < Interval$new(0,5)
     isSubset = function(x, proper = FALSE, all = FALSE){
-      if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
+      # if this Interval can be coerced to a Set then uses Set method instead
+      if (class(try(as.Set(self), silent = TRUE))[1] != "try-error") {
         return(super$isSubset(x, proper, all))
+      }
 
       x <- listify(x)
-
-      ret = sapply(x, function(el){
-        if(!testSet(el))
-          return(FALSE)
-
-        if(el$properties$empty)
-          return(TRUE)
-
-        if(!testInterval(el)){
-          if(self$contains(el$elements, all = TRUE, bound = FALSE))
-            return(TRUE)
-          else
-            return(FALSE)
+      ret = logical(length(x))
+      for(i in seq_along(x)){
+        if(testSet(x[[i]])){
+          if(testEmpty(x[[i]])) {
+            ret[i] = TRUE
+          } else if(!testInterval(x[[i]])) {
+            ret[i] = self$contains(x[[i]]$elements, all = TRUE, bound = FALSE)
+          } else if(!(self$class == "integer" & x[[i]]$class == "numeric")){
+            if (proper) {
+              ret[i] = (x[[i]]$min > self$min & x[[i]]$max <= self$max) |
+                (x[[i]]$min >= self$min & x[[i]]$max < self$max) |
+                (x[[i]]$min >= self$min & x[[i]]$max <= self$max & x[[i]]$class == "integer" & self$class == "numeric")
+            } else {
+              ret[i] = x[[i]]$min >= self$min & x[[i]]$max <= self$max
+            }
+          }
         }
-
-        if(el$class == "numeric" & self$class == "integer")
-          return(FALSE)
-
-        if(proper){
-          if((el$min > self$min & el$max <= self$max) |
-             (el$min >= self$min & el$max < self$max) |
-             (el$min >= self$min & el$max <= self$max & el$class == "integer" & self$class == "numeric"))
-            return(TRUE)
-          else
-            return(FALSE)
-        } else {
-          if(el$min >= self$min & el$max <= self$max)
-            return(TRUE)
-          else
-            return(FALSE)
-        }
-      })
+      }
 
       returner(ret, all)
     },

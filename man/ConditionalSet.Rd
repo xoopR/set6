@@ -78,6 +78,7 @@ Other sets:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ConditionalSet} object.
 \subsection{Usage}{
@@ -106,6 +107,7 @@ A new \code{ConditionalSet} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-contains"></a>}}
+\if{latex}{\out{\hypertarget{method-contains}{}}}
 \subsection{Method \code{contains()}}{
 Tests to see if \code{x} is contained in the Set.
 \subsection{Usage}{
@@ -147,6 +149,7 @@ see examples.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-equals}{}}}
 \subsection{Method \code{equals()}}{
 Tests if two sets are equal.
 \subsection{Usage}{
@@ -178,6 +181,7 @@ element of \code{x}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the object.
 \subsection{Usage}{
@@ -197,6 +201,7 @@ A character string representing the object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-summary}{}}}
 \subsection{Method \code{summary()}}{
 See \code{strprint}.
 \subsection{Usage}{
@@ -213,6 +218,7 @@ See \code{strprint}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-isSubset"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubset}{}}}
 \subsection{Method \code{isSubset()}}{
 Currently undefined for \code{ConditionalSet}s.
 \subsection{Usage}{
@@ -233,6 +239,7 @@ Currently undefined for \code{ConditionalSet}s.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

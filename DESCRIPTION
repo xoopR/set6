@@ -12,7 +12,8 @@ Authors@R:
              role = "aut",
              email = "f.kiraly@ucl.ac.uk"))
 Description: An object-oriented package for mathematical sets, upgrading the current gold-standard {sets}. Many forms of mathematical sets are implemented, including (countably finite) sets, tuples, intervals (countably infinite or uncountable), and fuzzy variants. Wrappers extend functionality by allowing symbolic representations of complex operations on sets, including unions, (cartesian) products, exponentiation, and differences (asymmetric and symmetric).
-Imports: checkmate, R6, utils
+LinkingTo: Rcpp
+Imports: checkmate, Rcpp, R6, utils
 Suggests: knitr, testthat, devtools, rmarkdown
 License: MIT + file LICENSE
 LazyData: true
@@ -21,10 +22,11 @@ BugReports: https://github.com/xoopR/set6/issues
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE, r6 = TRUE)
 Collate: 
     'Properties.R'
+    'RcppExports.R'
     'Set.R'
     'SetWrapper.R'
     'SetWrapper_ComplementSet.R'
@@ -43,9 +45,9 @@ Collate:
     'asFuzzySet.R'
     'asInterval.R'
     'asSet.R'
-    'asdouble.R'
     'helpers.R'
     'assertions.R'
+    'atomic_coercions.R'
     'listSpecialSets.R'
     'operation_cleaner.R'
     'operation_powerset.R'
@@ -57,7 +59,7 @@ Collate:
     'operation_setunion.R'
     'operators.R'
     'set6-deprecated.R'
-    'set6.R'
+    'set6-package.R'
     'set6.news.R'
     'useUnicode.R'
     'zzz.R'

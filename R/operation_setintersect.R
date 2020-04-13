@@ -52,8 +52,10 @@
 #'
 #' @export
 setintersect <- function(x, y){
-  if(testCountablyFinite(x) & testCountablyFinite(y) & !inherits(x, "SetWrapper") & !inherits(y, "SetWrapper"))
+  if(testCountablyFinite(x) & testCountablyFinite(y) & !inherits(x, "SetWrapper") &
+     !inherits(y, "SetWrapper")){
     return(Set$new(elements = intersect(x$elements, y$elements)))
+  }
 
   if(getR6Class(y) == "UniversalSet")
     return(x)
@@ -69,7 +71,7 @@ setintersect <- function(x, y){
   if(testConditionalSet(x))
     UseMethod("setintersect")
   else if (testConditionalSet(y))
-    return(Set$new(x$elements[y$contains(x$elements)]))
+    return(Set$new(elements = x$elements[y$contains(x$elements)]))
 
   if (y$isSubset(x, proper = FALSE))
     return(x)
@@ -128,7 +130,7 @@ setintersect.ConditionalSet <- function(x, y){
 #' @export
 setintersect.UnionSet <- function(x, y){
   if(!inherits(y, "SetWrapper"))
-    return(Set$new(unlist(y$elements[x$contains(y$elements)])))
+    return(Set$new(elements = unlist(y$elements[x$contains(y$elements)])))
   else {
     int = Set$new()
     sets = sapply(x$wrappedSets, function(set) setintersect(set, y))
@@ -142,7 +144,7 @@ setintersect.UnionSet <- function(x, y){
 #' @export
 setintersect.ComplementSet <- function(x, y){
   if(!inherits(y, "SetWrapper"))
-    return(Set$new(unlist(y$elements[x$contains(y$elements)])))
+    return(Set$new(elements = unlist(y$elements[x$contains(y$elements)])))
   else if(inherits(y, "ComplementSet")){
     return((x$addedSet & y$addedSet) - (x$subtractedSet + y$subtractedSet))
   } else {
@@ -156,7 +158,7 @@ setintersect.ComplementSet <- function(x, y){
 #' @export
 setintersect.ProductSet <- function(x, y){
   if (!inherits(y, "SetWrapper"))
-    return(Set$new(unlist(y$elements[x$contains(y$elements)])))
+    return(Set$new(elements = unlist(y$elements[x$contains(y$elements)])))
   else
     message("setIntersect of ProductSet & SetWrapper currently not implemented.")
 }

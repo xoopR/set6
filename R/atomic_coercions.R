@@ -5,3 +5,8 @@ as.double.Set <- function(x,...) {
   else
     return(unlist(x$elements))
 }
+
+#' @export
+as.character.Set <- function(x, n = 1e10, ...){
+  x$strprint(n = n)
+}

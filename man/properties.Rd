@@ -33,6 +33,7 @@ it should never be constructed outside of the \link{Set} constructor.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new \code{Properties} object.
 \subsection{Usage}{
@@ -54,6 +55,7 @@ A new \code{Properties} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the \code{Properties} list.
 \subsection{Usage}{
@@ -66,6 +68,7 @@ Prints \code{Properties} list to console.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the \code{Properties}.
 \subsection{Usage}{
@@ -78,6 +81,7 @@ A \code{list} of properties.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -1,3 +1,9 @@
+## usethis namespace: start
+#' @importFrom Rcpp sourceCpp
+#' @useDynLib set6, .registration = TRUE
+## usethis namespace: end
+NULL
+
 #' set6: R6 Mathematical Sets Interface
 #'
 #' set6 upgrades the `{sets}` package to R6. Many forms of mathematical sets are implemented,

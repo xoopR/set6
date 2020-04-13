@@ -58,10 +58,7 @@ UniversalSet <- R6::R6Class("UniversalSet", inherit = Set,
     #' !Set$new(1,2)$equals(Set$new(1,2))
     #' Set$new(1,2) != Set$new(1,5)
     equals = function(x, all = FALSE){
-      x <- listify(x)
-      ret <- rep(FALSE, length(x))
-      ret[sapply(x, getR6Class) %in% "UniversalSet"] = TRUE
-
+      ret = sapply(listify(x), getR6Class) %in% "UniversalSet"
       returner(ret, all)
     },
 
@@ -99,18 +96,10 @@ UniversalSet <- R6::R6Class("UniversalSet", inherit = Set,
     #' c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
     #' Set$new(1,2,3) <= Set$new(1,2,3) # proper
     isSubset = function(x, proper = FALSE, all = FALSE){
-      x <- listify(x)
-
-      ret = sapply(x, function(el){
-        if(!inherits(el, "Set"))
-          return(FALSE)
-        else if(proper & getR6Class(el) == "UniversalSet")
-          return(FALSE)
-        else
-          return(TRUE)
-      })
-
-      returner(ret, all)
+      x = listify(x)
+      returner(x = sapply(x, inherits, what = "Set") & sapply(x, getR6Class) != "UniversalSet" |
+                 sapply(x, getR6Class) == "UniversalSet" & !proper,
+               all = all)
     },
 
     #' @description Tests to see if \code{x} is contained in the Set.
@@ -153,7 +142,8 @@ UniversalSet <- R6::R6Class("UniversalSet", inherit = Set,
     #' s2$contains(Tuple$new(2,1))
     #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
     contains = function(x, all = FALSE, bound = NULL){
-      returner(rep(TRUE, length(x)), all)
+      returner(x = rep(TRUE, length(listify(x))),
+               all = all)
     },
 
     #' @description Creates a printable representation of the object.

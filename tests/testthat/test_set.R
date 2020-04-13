@@ -5,7 +5,7 @@ context("Set")
 test_that("construction",{
   expect_silent(Set$new(1,2,3))
   expect_silent(Set$new(1,2,3,1))
-  expect_silent(Set$new("A",TRUE,function(x) x^2, as.factor("a")))
+  expect_silent(Set$new("A",TRUE, as.factor("a")))
   expect_silent(Set$new(1+0i,2,2L,5.67))
   expect_silent(Set$new(1:10))
   expect_silent(Set$new(list(a=1)))
@@ -18,10 +18,8 @@ test_that("construction",{
 test_that("elements",{
   expect_equal(Set$new(1,2,3)$elements, list(1,2,3))
   expect_equal(Set$new(1,2,3,1,2)$elements, list(1,2,3))
-  expect_equal(Set$new("A",TRUE,function(x) x^2, as.factor("a"))$elements, list("A",TRUE,function(x) x^2, as.factor("a")))
-  expect_equal(Set$new(1+0i,2,2L,5.67)$elements,list(1+0i,2,2L,5.67))
-  expect_equal(Set$new(1:10)$elements, as.list(1:10))
-  expect_equal(Set$new(list(1))$elements, list(1))
+  expect_equal(Set$new("A",TRUE, as.factor("a"))$elements, list("A",TRUE, as.factor("a")))
+  expect_equal(Set$new(1+0i,2,5.67)$elements,list(1+0i,2,5.67))
   expect_equal(Set$new(Set$new(2), Interval$new(1,5))$elements, c(Set$new(2),Interval$new(1,5)))
 })
 
@@ -118,7 +116,7 @@ test_that("as.Set",{
 })
 
 test_that("as.double",{
-  expect_equal(as.numeric(Set$new(1:10)), 1:10)
+  expect_equal(as.numeric(Set$new(elements = 1:10)), 1:10)
   expect_equal(as.numeric(FuzzySet$new(1,0,2,0.1,3,1)), 2:3)
 })
 

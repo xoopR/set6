@@ -21,8 +21,8 @@ operation_cleaner <- function(sets, operation_class, nest, simplify = TRUE){
     if(all(classes %in% c("Set","Interval"))){
       # try converting all intervals to sets
       if(any(sapply(sets[interval], function(x) x$properties$countability == "uncountable"))) {
-        sets[set] = lapply(sets[set], function(x){
-          return(ifnerror(as.Interval(x), error = x))
+        sets[set] = lapply(sets[set], function(el){
+          return(ifnerror(as.Interval(el), error = el))
         })
         return(sets)
       }

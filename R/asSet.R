@@ -13,17 +13,17 @@ as.Set <- function(object){
 #' @rdname as.Set
 #' @export
 as.Set.numeric <- function(object){
-  Set$new(object)
+  Set$new(elements = object)
 }
 #' @rdname as.Set
 #' @export
 as.Set.list <- function(object){
-  return(lapply(object, function(x) Set$new(x)))
+  return(lapply(object, function(x) Set$new(elements = x)))
 }
 #' @rdname as.Set
 #' @export
 as.Set.matrix <- function(object){
-  return(apply(object,2,function(x) Set$new(x)))
+  return(apply(object,2,function(x) Set$new(elements = x)))
 }
 #' @rdname as.Set
 #' @export
@@ -44,7 +44,7 @@ as.Set.Interval <- function(object){
   if(any(is.na(object$elements))){
     stop("Interval cannot be coerced to Set.")
   } else {
-    return(Set$new(object$elements))
+    return(Set$new(elements = object$elements))
   }
 }
 #' @rdname as.Set
@@ -64,17 +64,17 @@ as.Tuple <- function(object){
 #' @rdname as.Set
 #' @export
 as.Tuple.numeric <- function(object){
-  Tuple$new(object)
+  Tuple$new(elements = object)
 }
 #' @rdname as.Set
 #' @export
 as.Tuple.list <- function(object){
-  return(lapply(object, function(x) Tuple$new(x)))
+  return(lapply(object, function(x) Tuple$new(elements = x)))
 }
 #' @rdname as.Set
 #' @export
 as.Tuple.matrix <- function(object){
-  return(apply(object,2,function(x) Tuple$new(x)))
+  return(apply(object,2,function(x) Tuple$new(elements = x)))
 }
 #' @rdname as.Set
 #' @export
@@ -95,7 +95,7 @@ as.Tuple.Interval <- function(object){
   if(any(is.na(object$elements))){
     stop("Interval cannot be coerced to Tuple.")
   } else {
-    return(Tuple$new(object$elements))
+    return(Tuple$new(elements = object$elements))
   }
 }
 #' @rdname as.Set

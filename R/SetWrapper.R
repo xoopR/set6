@@ -17,9 +17,7 @@ SetWrapper <- R6Class("SetWrapper", inherit = Set,
       if(getR6Class(self) == "SetWrapper")
         stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
 
-      assertSetList(setlist)
-
-      private$.wrappedSets <- setlist
+      private$.wrappedSets <-  assertSetList(setlist)
 
       if(!is.null(lower)) private$.lower <- lower
       if(!is.null(upper)) private$.upper <- upper

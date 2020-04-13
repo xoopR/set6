@@ -81,6 +81,7 @@ Other sets:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-equals}{}}}
 \subsection{Method \code{equals()}}{
 Tests if two sets are equal.
 \subsection{Usage}{
@@ -123,6 +124,7 @@ Tuple$new(1,1) != Set$new(1,1)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-isSubset"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubset}{}}}
 \subsection{Method \code{isSubset()}}{
 Test if one set is a (proper) subset of another
 \subsection{Usage}{
@@ -179,6 +181,7 @@ Tuple$new(1,3,2) < Tuple$new(1,2,3,4)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

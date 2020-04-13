@@ -7,7 +7,7 @@ test_that("construction",{
   expect_warning(expect_error(FuzzySet$new(0.1,1,0.9,"a")))
   expect_silent(FuzzySet$new(1,0.1,"a",0.9))
   expect_silent(FuzzySet$new(1,0.1,"a",0.9))
-  expect_silent(FuzzySet$new("A",0,TRUE,1,function(x){x^2},0.4,as.factor("a"), 0.6))
+  expect_silent(FuzzySet$new("A",0,TRUE,1,as.factor("a"), 0.6))
   expect_equal(FuzzySet$new(1,0.1,2,0.8),FuzzySet$new(elements = c(1,2),
                                                       membership = c(0.1,0.8)))
   expect_error(FuzzySet$new(1,0.1,2))

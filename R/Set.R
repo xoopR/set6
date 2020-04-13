@@ -44,18 +44,16 @@ Set <- R6Class("Set",
     #' @return A new `Set` object.
     initialize = function(..., universe = UniversalSet$new(), elements = NULL, class = NULL){
 
-      assertSet(universe)
-      private$.universe <- universe
+      private$.universe <- assertSet(universe)
 
-      if(!length(elements)) {
+      if(is.null(elements)) {
         elements = list(...)
-        if(length(elements) > 0) {
-          if(length(elements) == 1 & checkmate::testVector(elements[[1]]))
-            elements = as.list(elements[[1]])
-        }
       }
 
-      if(length(elements) != 0 & length(unlist(elements))!=0){
+      if(length(elements)){
+        if(!checkmate::testList(elements)){
+          elements = as.list(elements)
+        }
 
         if (!is.null(class)){
           private$.class <- class
@@ -70,20 +68,21 @@ Set <- R6Class("Set",
           }
         }
 
-        assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
+        if(getR6Class(universe) != "UniversalSet"){
+          assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
+        }
+
+        private$.str_elements = sapply(elements, as.character)
         private$.elements <- elements
+
 
         if(!testTuple(self) & !testFuzzyTuple(self)) {
           if(private$.class != "ANY") {
             private$.elements <- unique(elements)
           } else {
-            private$.elements <- elements[!duplicated(lapply(elements, function(x){
-              y = try(x$strprint(), silent = TRUE)
-              if(inherits(y, "try-error"))
-                return(x)
-              else
-                return(y)
-            }))]
+            dup = duplicated(private$.str_elements)
+            private$.elements <- elements[!dup]
+            private$.str_elements <- private$.str_elements[!dup]
           }
         }
 
@@ -120,13 +119,7 @@ Set <- R6Class("Set",
           return("{}")
       } else {
         type <- private$.type
-        elements <- lapply(self$elements, function(x){
-          y = try(x$strprint(), silent = T)
-          if(inherits(y,"try-error"))
-            return(x)
-          else
-            return(y)
-        })
+        elements <- sapply(private$.elements, as.character, n = n)
         if(self$length <= n * 2)
           return(paste0(substr(type,1,1),paste0(elements, collapse = ", "), substr(type,2,2)))
         else
@@ -173,7 +166,7 @@ Set <- R6Class("Set",
     #' see examples.
     #'
     #' @examples
-    #' s = Set$new(1:5)
+    #' s = Set$new(elements = 1:5)
     #'
     #' # Simplest case
     #' s$contains(4)
@@ -188,34 +181,8 @@ Set <- R6Class("Set",
     #' s2$contains(Tuple$new(2,1))
     #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
     contains = function(x, all = FALSE, bound = NULL){
-      x = listify(x)
-
-      ret = rep(FALSE, length(x))
-
-      # determine which elements are R6 and need a special equals method
-      r6.fil <- sapply(x, function(y) ifelse(inherits(y, "R6"), TRUE, FALSE))
-      r6.match <- x[r6.fil]
-      atom.match <- x[!r6.fil]
-
-      # for base classes simply use %in% for containedness
-      if(length(atom.match) > 0)
-        ret[!r6.fil][atom.match %in% self$elements] = TRUE
-
-      # for R6 classes a
-      if(length(r6.match) > 0){
-        r6.tr <- sapply(r6.match, function(y){
-          if(Set$new()$equals(y))
-            y <- Set$new()
-          cl <- getR6Class(y)
-          # first check to see if they are same class
-          fil <- sapply(self$elements, function(z) ifelse(inherits(z, cl), TRUE, FALSE))
-          # if they are then check if any of elements of self are equal to x
-          any(sapply(self$elements[fil], function(z) y$equals(z)))
-        })
-        ret[r6.fil][r6.tr] = TRUE
-      }
-
-      returner(ret, all)
+      returner(x = sapply(listify(x), as.character) %in% private$.str_elements,
+               all = all)
     },
 
     #' @description Tests if two sets are equal.
@@ -240,23 +207,31 @@ Set <- R6Class("Set",
     #' !Set$new(1,2)$equals(Set$new(1,2))
     #' Set$new(1,2) != Set$new(1,5)
     equals = function(x, all = FALSE){
-      x <- listify(x)
-
-      ret = sapply(x, function(el){
-        if(testFuzzy(el)){
-          if(all(el$membership() == 1))
-            el = as.Set(el)
-          else
-            return(FALSE)
+      x = listify(x)
+      ret = sapply(x, function(y){
+        if(!testSet(y)){
+          return(FALSE)
         }
 
-        if(!testSet(el))
+        if(testFuzzy(y)){
+          if(!all(y$membership() == 1)){
+            return(FALSE)
+          }
+        }
+
+        if(testConditionalSet(y)){
           return(FALSE)
-
-        elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-        selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-
-        suppressWarnings(all(elel %in% selel) & all(selel %in% elel))
+        } else if(testInterval(y)){
+          if(testCountablyFinite(y)){
+            return(all(suppressWarnings(y$elements %in% self$elements &
+                         self$elements %in% y$elements)))
+          } else {
+            return(FALSE)
+          }
+        } else {
+          return(all(suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements &
+                       private$.str_elements %in% y$.__enclos_env__$private$.str_elements)))
+        }
       })
 
       returner(ret, all)
@@ -290,31 +265,37 @@ Set <- R6Class("Set",
     #' Set$new(1,2,3) <= Set$new(1,2,3) # proper
     isSubset = function(x, proper = FALSE, all = FALSE){
       x = listify(x)
-
-      ret = sapply(x, function(el){
-        if(!inherits(el, "R6"))
+      ret = sapply(x, function(y){
+        if(!testSet(y)){
           return(FALSE)
-
-        if(testFuzzy(el)){
-          if(all(el$membership() == 1))
-            el = as.Set(el)
-          else
-            return(FALSE)
         }
 
-        elel = lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-        selel = lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+        if(testFuzzy(y)){
+          if(!all(y$membership() == 1)){
+            return(FALSE)
+          }
+        }
 
-        if(proper){
-          if(all(elel %in% selel) & !all(selel %in% elel))
-            return(TRUE)
-          else
+        if(getR6Class(y) %in% c("ConditionalSet", "UniversalSet")) {
+          return(FALSE)
+        } else if(testInterval(y)){
+          if(testFinite(y)){
+            if(proper){
+              return(all(suppressWarnings(y$elements %in% self$elements)) &
+                       !all(suppressWarnings(self$elements %in% y$elements)))
+            } else {
+              return(all(suppressWarnings(y$elements %in% self$elements)))
+            }
+          } else {
             return(FALSE)
-        }else{
-          if(all(elel %in% selel))
-            return(TRUE)
-          else
-            return(FALSE)
+          }
+        } else {
+          if(proper){
+            return(all(suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements)) &
+                     !all(suppressWarnings(private$.str_elements %in% y$.__enclos_env__$private$.str_elements)))
+          } else {
+            return(all(suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements)))
+          }
         }
       })
 
@@ -355,6 +336,7 @@ Set <- R6Class("Set",
       }
 
       private$.elements <- els$elements
+      private$.str_elements <- els$.__enclos_env__$private$.str_elements
       private$.lower <- els$lower
       private$.upper <- els$upper
       private$.properties <- els$properties
@@ -386,6 +368,7 @@ Set <- R6Class("Set",
         return(els)
       } else {
         private$.elements <- els$elements
+        private$.str_elements <- els$.__enclos_env__$private$.str_elements
         private$.lower <- els$lower
         private$.upper <- els$upper
         private$.properties <- els$properties
@@ -516,6 +499,7 @@ Set <- R6Class("Set",
     .upper = NA,
     .universe = NULL,
     .elements = list(),
+    .str_elements = c(),
     .properties = NULL,
     .traits = list(crisp = TRUE),
     .dimension = integer()
