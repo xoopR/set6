@@ -42,7 +42,7 @@ Interval <- R6Class("Interval", inherit = Set,
     #' @param universe Set. Universe that the interval lives in, default [Reals].
     #' @return A new `Interval` object.
     initialize = function(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"),
-                          class = "numeric", universe = Reals$new()){
+                          class = "numeric", universe = ExtendedReals$new()){
 
       type = match.arg(type)
       if(checkmate::testComplex(lower) | checkmate::testComplex(upper)){

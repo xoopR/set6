@@ -1,6 +1,8 @@
 # set6 0.1.3.9000
 
 * Speed performance improvements for `$contains` method for `Interval` and `Set`. `Rcpp` now used for `Interval`.
+* Now for any `Interval` if not bounded above and `upper` is $Inf$ then `max = .Machine$double.xmax`, analogously for `lower`.
+* Default universe of `Interval` is now `ExtendedReals`
 
 # set6 0.1.3
 

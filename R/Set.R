@@ -422,10 +422,15 @@ Set <- R6Class("Set",
     #' \deqn{upper - 1e-15}
     max = function(){
       if(self$class %in% c("numeric","integer","complex")) {
-        if(self$type %in% c("()","[)"))
-          return(self$upper - 1e-15)
-        else
+        if (self$type %in% c("()","[)")) {
+          if (self$upper == Inf) {
+            return(.Machine$double.xmax)
+          } else {
+            return(self$upper - 1e-15)
+          }
+        } else {
           return(self$upper)
+        }
       } else {
         return(NaN)
       }
@@ -437,10 +442,15 @@ Set <- R6Class("Set",
     #' \deqn{lower + 1e-15}
     min = function(){
       if(self$class %in% c("numeric","integer","complex")) {
-        if(self$type %in% c("()","(]"))
-          return(self$lower + 1e-15)
-        else
+        if(self$type %in% c("()","(]")) {
+          if(self$lower == -Inf) {
+            return(-.Machine$double.xmax)
+          } else {
+            return(self$lower + 1e-15)
+          }
+        } else {
           return(self$lower)
+        }
       } else {
         return(NaN)
       }
