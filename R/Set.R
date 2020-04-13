@@ -47,8 +47,12 @@ Set <- R6Class("Set",
       private$.universe <- assertSet(universe)
 
       if(is.null(elements)) {
-        if(length(...elt(1)) > 1){
-          elements = as.list(...elt(1))
+        if(...length() == 1){
+          if(length(...elt(1)) > 1 & !is.environment(...elt(1))){
+            elements = as.list(...elt(1))
+          } else {
+            elements = list(...)
+          }
         } else {
           elements = list(...)
         }
