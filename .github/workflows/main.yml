@@ -21,7 +21,7 @@ jobs:
           # comment out lines if you do not want to build on certain platforms
           - { os: windows-latest, r: "release" }
           - { os: macOS-latest, r: "release" }
-          - { os: macOS-latest, r: "devel" }
+          - { os: ubuntu-latest, r: "devel" }
           - { os: ubuntu-latest, r: "release" }
 
     env:
@@ -95,27 +95,27 @@ jobs:
 
       # install ccache and write config file
       # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
-      - name: "[macOS] ccache"
-        if: runner.os == 'macOS' && matrix.config.r != 'devel'
-        run: |
-          brew install ccache
-          wget https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
-          sudo installer -package clang-7.0.0.pkg -target /
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCC11=ccache /usr/local/clang7/bin/clang\nCC14=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/clang7/bin/clang++\nCXX11=ccache /usr/local/clang7/bin/clang++\nCXX14=ccache /usr/local/clang7/bin/clang++\nC11=ccache /usr/local/clang7/bin/clang++\nC14=ccache /usr/local/clang7/bin/clang++\nF77=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
-          brew install Caskroom/cask/xquartz
-          R CMD javareconf
+     # - name: "[macOS] ccache"
+     #  if: runner.os == 'macOS' && matrix.config.r != 'devel'
+     #  run: |
+     #    brew install ccache
+     #    wget https://cran.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
+     #    sudo installer -package clang-7.0.0.pkg -target /
+     #    mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang7/bin/clang\nCC11=ccache /usr/local/clang7/bin/clang\nCC14=ccache /usr/local/clang7/bin/clang\nCXX=ccache /usr/local/clang7/bin/clang++\nCXX11=ccache /usr/local/clang7/bin/clang++\nCXX14=ccache /usr/local/clang7/bin/clang++\nC11=ccache /usr/local/clang7/bin/clang++\nC14=ccache /usr/local/clang7/bin/clang++\nF77=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+     #    brew install Caskroom/cask/xquartz
+     #    R CMD javareconf
 
       # install ccache and write config file
       # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
-      - name: "[macOS-devel] ccache"
-        if: runner.os == 'macOS' && matrix.config.r == 'devel'
-        run: |
-          brew install ccache
-          wget https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg
-          sudo installer -package clang-8.0.0.pkg -target /
-          mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang8/bin/clang\nCC11=ccache /usr/local/clang8/bin/clang\nCC14=ccache /usr/local/clang8/bin/clang\nCXX=ccache /usr/local/clang8/bin/clang++\nCXX11=ccache /usr/local/clang8/bin/clang++\nCXX14=ccache /usr/local/clang8/bin/clang++\nC11=ccache /usr/local/clang8/bin/clang++\nC14=ccache /usr/local/clang8/bin/clang++\nF88=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
-          brew install Caskroom/cask/xquartz
-          R CMD javareconf
+    #  - name: "[macOS-devel] ccache"
+    #    if: runner.os == 'macOS' && matrix.config.r == 'devel'
+    #    run: |
+    #      brew install ccache
+    #      wget https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg
+    #      sudo installer -package clang-8.0.0.pkg -target /
+    #      mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang8/bin/clang\nCC11=ccache /usr/local/clang8/bin/clang\nCC14=ccache /usr/local/clang8/bin/clang\nCXX=ccache /usr/local/clang8/bin/clang++\nCXX11=ccache /usr/local/clang8/bin/clang++\nCXX14=ccache /usr/local/clang8/bin/clang++\nC11=ccache /usr/local/clang8/bin/clang++\nC14=ccache /usr/local/clang8/bin/clang++\nF88=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
+    #      brew install Caskroom/cask/xquartz
+    #      R CMD javareconf
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Prepare"
@@ -128,11 +128,11 @@ jobs:
         run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
       # macOS devel needs its own stage because we need to work with an options to suppress the usage of binaries
-      - name: "[Stage] Prepare & Install (macOS-devel)"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
-        run: |
-          echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-          Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+   #   - name: "[Stage] Prepare & Install (macOS-devel)"
+   #     if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
+   #     run: |
+   #       echo -e 'options(pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+   #       Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
