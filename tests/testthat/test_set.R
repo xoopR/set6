@@ -4,6 +4,7 @@ context("Set")
 
 test_that("construction",{
   expect_silent(Set$new(1,2,3))
+  expect_equal(Set$new(1,2,3), Set$new(1:3))
   expect_silent(Set$new(1,2,3,1))
   expect_silent(Set$new("A",TRUE, as.factor("a")))
   expect_silent(Set$new(1+0i,2,2L,5.67))
