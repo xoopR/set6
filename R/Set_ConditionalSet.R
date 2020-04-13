@@ -92,18 +92,21 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
     #' s$contains(list(-2, 2))
     contains = function(x, all = FALSE, bound = NULL){
-      x <- assertSetList(listify(x),
-                         "`x` should be a Set, Tuple, or list of Sets/Tuples.")
+      x <- listify(x)
+      if(!testSetList(x)){
+        x <- as.Set(x)
+      }
+      # x <- assertSetList(listify(x),
+      #                    "`x` should be a Set, Tuple, or list of Sets/Tuples.")
 
-      ret = logical(length(x))
-      for (i in seq_along(x)) {
+      ret = sapply(seq_along(x), function(i){
         els <- as.list(x[[i]]$elements)
         if (length(els) != length(self$class)) {
           stop(sprintf("Set is of length %s, length %s expected.", length(els), length(self$class)))
         }
         names(els) <- names(self$class)
-        do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
-      }
+        ret = do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
+      })
 
       returner(ret, all)
     },
