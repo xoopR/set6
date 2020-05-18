@@ -1,6 +1,6 @@
 Package: set6
 Title: R6 Mathematical Sets Interface
-Version: 0.1.3.9000
+Version: 0.1.4
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",

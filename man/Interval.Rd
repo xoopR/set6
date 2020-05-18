@@ -133,7 +133,7 @@ Create a new \code{Interval} object.
   upper = Inf,
   type = c("[]", "(]", "[)", "()"),
   class = "numeric",
-  universe = Reals$new()
+  universe = ExtendedReals$new()
 )}\if{html}{\out{</div>}}
 }
 

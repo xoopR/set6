@@ -2,6 +2,7 @@
 #' @templateVar class1 Set
 #' @templateVar class2 Tuple
 #' @details
+#' * `as.Set.default` - Creates a [Set] using the object as the elements.
 #' * `as.Set.list` - Creates a [Set] for each element in `list`.
 #' * `as.Set.matrix/as.Set.data.frame` - Creates a [Set] for each column in `matrix/data.frame`.
 #' * `as.Set.FuzzySet` - Creates a [Set] from the support of the [FuzzySet].
@@ -12,7 +13,7 @@ as.Set <- function(object){
 }
 #' @rdname as.Set
 #' @export
-as.Set.numeric <- function(object){
+as.Set.default <- function(object){
   Set$new(elements = object)
 }
 #' @rdname as.Set
@@ -63,7 +64,7 @@ as.Tuple <- function(object){
 }
 #' @rdname as.Set
 #' @export
-as.Tuple.numeric <- function(object){
+as.Tuple.default <- function(object){
   Tuple$new(elements = object)
 }
 #' @rdname as.Set

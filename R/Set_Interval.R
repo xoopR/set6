@@ -182,6 +182,7 @@ Interval <- R6Class("Interval", inherit = Set,
     #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
     contains = function(x, all = FALSE, bound = FALSE){
       x = suppressWarnings(as(unlist(x), "numeric"))
+      x[is.na(x)] = NaN
       if (is.null(x)) {
         return(TRUE)
       } else {
