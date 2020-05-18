@@ -5,7 +5,7 @@ set6
 
 ![R CMD Check via
 {tic}](https://github.com/xoopR/set6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)
-[![codecov](https://codecov.io/gh/RaphaelS1/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/set6)
+[![codecov](https://codecov.io/gh/xoopR/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/xoopR/set6)
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
 [![Lifecycle
@@ -215,12 +215,12 @@ of sets and intervals, but this is very low priority.
 
 ## Similar Packages
 
-  - [sets](https://cran.r-project.org/web/packages/sets/index.html) -
-    The **sets** package uses S3 to define some symbolic representaton
-    of mathematical sets, tuple, intervals, and fuzzy variants. However
-    the symbolic representation is not consistent throughout the
-    package, does not allow for clear inspection of set/interval
-    elements, and there is no support for multi-dimensional sets.
+  - [sets](https://CRAN.R-project.org/package=sets) - The **sets**
+    package uses S3 to define some symbolic representaton of
+    mathematical sets, tuple, intervals, and fuzzy variants. However the
+    symbolic representation is not consistent throughout the package,
+    does not allow for clear inspection of set/interval elements, and
+    there is no support for multi-dimensional sets.
 
   - [BaseSet](https://github.com/llrs/BaseSet) - The **BaseSet** package
     focuses on storing and analysing sets in a ‘tidy’ way, with more
@@ -234,5 +234,5 @@ As `set6` is in its early stages, contributions are very welcome. If you
 have any ideas for good features please open an issue or create a pull
 request. Otherwise bug reports are very appreciated if you stumble
 across any broken code, these can be posted to the [issue
-tracker](https://github.com/RaphaelS1/set6/issues). For updates on
-`set6` follow/star this repo.
+tracker](https://github.com/xoopR/set6/issues). For updates on `set6`
+follow/star this repo.

@@ -12,7 +12,7 @@ set.seed(42)
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 ![R CMD Check via {tic}](https://github.com/xoopR/set6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)
-[![codecov](https://codecov.io/gh/RaphaelS1/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/RaphaelS1/set6)
+[![codecov](https://codecov.io/gh/xoopR/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/xoopR/set6)
 [![Repo Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/badges/latest/active)
 [![Lifecycle Badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://img.shields.io/badge/lifecycle-maturing-blue)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/set6)](https://cran.r-project.org/package=set6)
@@ -153,7 +153,7 @@ At a later stage we may consider adding Venn diagrams for visualisation of sets 
 
 ## Similar Packages
 
-* [sets](https://cran.r-project.org/web/packages/sets/index.html) - The **sets** package uses S3 to define some symbolic representaton of mathematical sets,
+* [sets](https://CRAN.R-project.org/package=sets) - The **sets** package uses S3 to define some symbolic representaton of mathematical sets,
 tuple, intervals, and fuzzy variants. However the symbolic representation is not consistent throughout
 the package, does not allow for clear inspection of set/interval elements, and there is no support for
 multi-dimensional sets.
@@ -165,4 +165,4 @@ representation.
 
 ## Contributing
 
-As `set6` is in its early stages, contributions are very welcome. If you have any ideas for good features please open an issue or create a pull request. Otherwise bug reports are very appreciated if you stumble across any broken code, these can be posted to the [issue tracker](https://github.com/RaphaelS1/set6/issues). For updates on `set6` follow/star this repo.
+As `set6` is in its early stages, contributions are very welcome. If you have any ideas for good features please open an issue or create a pull request. Otherwise bug reports are very appreciated if you stumble across any broken code, these can be posted to the [issue tracker](https://github.com/xoopR/set6/issues). For updates on `set6` follow/star this repo.
