@@ -6,7 +6,7 @@ tags:
   - sets
   - object-oriented
 authors:
-  - name: Raphael E.B. Sonabend
+  - name: Raphael Sonabend
     orcid: 0000-0001-9225-4654
     affiliation: 1
   - name: Franz J. Kiraly
