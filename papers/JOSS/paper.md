@@ -10,12 +10,10 @@ authors:
     orcid: 0000-0001-9225-4654
     affiliation: 1
   - name: Franz J. Kiraly
-    affiliation: "1, 2"
+    affiliation: 1
 affiliations:
  - name: Department of Statistical Science, University College London
    index: 1
- - name: Data Science Development, Shell Global Solutions International BV
-   index: 2
 date: 23 March 2020
 bibliography: paper.bib
 ---
