@@ -1,7 +1,5 @@
 library(testthat)
 
-context("UniversalSet")
-
 test_that("construction",{
   expect_silent(UniversalSet$new())
   expect_error(UniversalSet$new(12))

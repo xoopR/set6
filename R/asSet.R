@@ -18,6 +18,11 @@ as.Set.default <- function(object){
 }
 #' @rdname as.Set
 #' @export
+as.Set.numeric <- function(object){
+  Set$new(elements = object, class = "numeric")
+}
+#' @rdname as.Set
+#' @export
 as.Set.list <- function(object){
   return(lapply(object, function(x) Set$new(elements = x)))
 }
@@ -66,6 +71,11 @@ as.Tuple <- function(object){
 #' @export
 as.Tuple.default <- function(object){
   Tuple$new(elements = object)
+}
+#' @rdname as.Set
+#' @export
+as.Tuple.numeric <- function(object){
+  Tuple$new(elements = object, class = "numeric")
 }
 #' @rdname as.Set
 #' @export

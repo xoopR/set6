@@ -3,6 +3,7 @@
 \name{as.Set}
 \alias{as.Set}
 \alias{as.Set.default}
+\alias{as.Set.numeric}
 \alias{as.Set.list}
 \alias{as.Set.matrix}
 \alias{as.Set.data.frame}
@@ -12,6 +13,7 @@
 \alias{as.Set.ConditionalSet}
 \alias{as.Tuple}
 \alias{as.Tuple.default}
+\alias{as.Tuple.numeric}
 \alias{as.Tuple.list}
 \alias{as.Tuple.matrix}
 \alias{as.Tuple.data.frame}
@@ -24,6 +26,8 @@
 as.Set(object)
 
 \method{as.Set}{default}(object)
+
+\method{as.Set}{numeric}(object)
 
 \method{as.Set}{list}(object)
 
@@ -42,6 +46,8 @@ as.Set(object)
 as.Tuple(object)
 
 \method{as.Tuple}{default}(object)
+
+\method{as.Tuple}{numeric}(object)
 
 \method{as.Tuple}{list}(object)
 

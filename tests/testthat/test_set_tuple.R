@@ -75,7 +75,7 @@ test_that("isSubset",{
 })
 
 test_that("as.Tuple",{
-  expect_equal(as.Tuple(c(1,2)), Tuple$new(1,2))
+  expect_equal(as.Tuple(c(1,2)), Tuple$new(1,2,class="numeric"))
   expect_equal(as.Tuple(list(1:2,2)), list(Tuple$new(elements = 1:2), Tuple$new(2)))
   expect_equal(as.Tuple(matrix(c(1,2,3,4),nrow = 2)), list(Tuple$new(1,2),Tuple$new(3,4)))
   expect_equal(as.Tuple(FuzzySet$new(1, 0.1, 2, 0.2)), Tuple$new(1, 2))

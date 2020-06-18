@@ -46,6 +46,7 @@ Other sets:
 \code{\link{ConditionalSet}},
 \code{\link{FuzzySet}},
 \code{\link{Interval}},
+\code{\link{LogicalSet}},
 \code{\link{Set}},
 \code{\link{Tuple}},
 \code{\link{UniversalSet}}

@@ -42,6 +42,7 @@ Other sets:
 \code{\link{FuzzySet}},
 \code{\link{FuzzyTuple}},
 \code{\link{Interval}},
+\code{\link{LogicalSet}},
 \code{\link{Set}},
 \code{\link{Tuple}},
 \code{\link{UniversalSet}}

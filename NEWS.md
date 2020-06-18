@@ -1,3 +1,8 @@
+# set6 0.1.4.9000
+
+* Added `LogicalSet`, the set of $\{TRUE, FALSE\}$
+* Added `as.Set.numeric` and `as.Tuple.numeric`
+
 # set6 0.1.4
 
 * Speed performance improvements for `$contains` method for `Interval` and `Set`. `Rcpp` now used for `Interval`.

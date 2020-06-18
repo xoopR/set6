@@ -1,6 +1,6 @@
 Package: set6
 Title: R6 Mathematical Sets Interface
-Version: 0.1.4
+Version: 0.1.4.9000
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -40,6 +40,7 @@ Collate:
     'Set_Interval.R'
     'setSymbol.R'
     'Set_Interval_SpecialSet.R'
+    'Set_LogicalSet.R'
     'Set_Tuple.R'
     'Set_UniversalSet.R'
     'asFuzzySet.R'

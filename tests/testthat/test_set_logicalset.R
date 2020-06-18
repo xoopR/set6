@@ -1,0 +1,12 @@
+library(testthat)
+
+test_that("construction", {
+  expect_silent(LogicalSet$new())
+  l = LogicalSet$new()
+  s = Set$new(TRUE, FALSE)
+  expect_equal(l$elements, s$elements)
+  expect_equal(l$min, s$min)
+  expect_equal(l$max, s$max)
+  expect_equal(l$lower, s$lower)
+  expect_equal(l$upper, s$upper)
+})
