@@ -13,9 +13,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="R6 Mathematical Sets Interface">
 <meta property="og:description" content="An object-oriented package for mathematical sets, upgrading the current gold-standard {sets}. Many forms of mathematical sets are implemented, including (countably finite) sets, tuples, intervals (countably infinite or uncountable), and fuzzy variants. Wrappers extend functionality by allowing symbolic representations of complex operations on sets, including unions, (cartesian) products, exponentiation, and differences (asymmetric and symmetric).">
 <meta property="og:image" content="/logo.png">
@@ -24,7 +25,7 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4.9000</span>
       </span>
     </div>
 
@@ -76,7 +77,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#set6" class="anchor"></a>set6</h1></div>
 <p><img src="reference/figures/logo.png" align="right" alt="" width="120"></p>
-<p><a href="https://travis-ci.com/RaphaelS1/set6"><img src="https://travis-ci.com/RaphaelS1/set6.svg?branch=master" alt="Travis Build Status"></a> <a href="https://ci.appveyor.com/project/RaphaelS1/set6"><img src="https://ci.appveyor.com/api/projects/status/ueqvqs5n38tcs3r8?svg=true" alt="Appveyor Build status"></a> <a href="https://codecov.io/gh/RaphaelS1/set6"><img src="https://codecov.io/gh/RaphaelS1/set6/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://www.repostatus.org/badges/latest/active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repo Status"></a> <a href="https://img.shields.io/badge/lifecycle-maturing-blue"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle Badge"></a> <a href="https://cran.r-project.org/package=set6"><img src="https://www.r-pkg.org/badges/version-ago/set6" alt="CRAN Status Badge"></a> <a href="https://cran.r-project.org/web/checks/check_results_set6.html"><img src="https://cranchecks.info/badges/summary/set6" alt="CRAN Checks"></a> <a href="https://zenodo.org/badge/latestdoi/197164551"><img src="https://zenodo.org/badge/197164551.svg" alt="DOI"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a> <a href="https://cran.r-project.org/package=set6"><img src="https://cranlogs.r-pkg.org/badges/grand-total/set6" alt="CRAN Downloads"></a> <a href="https://CRAN.R-project.org/package=set6"><img src="https://tinyverse.netlify.com/badge/set6" alt="dependencies"></a> <a href="https://gitter.im/xoopR/set6"><img src="https://badges.gitter.im/xoopR/set6.png" alt="Gitter chat"></a></p>
+<p><img src="https://github.com/xoopR/set6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master" alt="R CMD Check via {tic}"><a href="https://codecov.io/gh/xoopR/set6"><img src="https://codecov.io/gh/xoopR/set6/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repo Status"></a> <a href="https://img.shields.io/badge/lifecycle-maturing-blue"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle Badge"></a> <a href="https://cran.r-project.org/package=set6"><img src="https://www.r-pkg.org/badges/version-ago/set6" alt="CRAN Status Badge"></a> <a href="https://cran.r-project.org/web/checks/check_results_set6.html"><img src="https://cranchecks.info/badges/summary/set6" alt="CRAN Checks"></a> <a href="https://zenodo.org/badge/latestdoi/197164551"><img src="https://zenodo.org/badge/197164551.svg" alt="DOI"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a> <a href="https://cran.r-project.org/package=set6"><img src="https://cranlogs.r-pkg.org/badges/grand-total/set6" alt="CRAN Downloads"></a> <a href="https://CRAN.R-project.org/package=set6"><img src="https://tinyverse.netlify.com/badge/set6" alt="dependencies"></a> <a href="https://gitter.im/xoopR/set6"><img src="https://badges.gitter.im/xoopR/set6.png" alt="Gitter chat"></a></p>
 <div id="what-is-set6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-is-set6" class="anchor"></a>What is set6?</h2>
@@ -95,9 +96,9 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The current CRAN release can be installed with</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"set6"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"set6"</span>)</pre></div>
 <p>Or for the latest stable build</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"RaphaelS1/set6"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"xoopR/set6"</span>)</pre></div>
 </div>
 <div id="main-features" class="section level2">
 <h2 class="hasAnchor">
@@ -105,121 +106,121 @@
 <div id="a-clear-inheritance-structure" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-clear-inheritance-structure" class="anchor"></a>A Clear Inheritance Structure</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Sets require elements to be unique and order doesn't matter</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>) <span class="op">==</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">==</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">2</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># But tuples can enforce these restrictions</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">Tuple<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>) <span class="op">!=</span><span class="st"> </span>Tuple<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">Tuple<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">!=</span><span class="st"> </span>Tuple<span class="op">$</span><span class="kw">new</span>(<span class="dv">2</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># Fuzzy sets and tuples extend sets further</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">f =<span class="st"> </span>FuzzySet<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.6</span>, <span class="dv">3</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">f<span class="op">$</span><span class="kw">inclusion</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; [1] "Not Included"</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">f<span class="op">$</span><span class="kw">inclusion</span>(<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; [1] "Partially Included"</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">f<span class="op">$</span><span class="kw">inclusion</span>(<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; [1] "Fully Included"</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co"># Symbolic intervals provide a clean way to represent infinite sets</span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">Interval<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; [-∞,+∞]</span></a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co"># Different closure types and classes are possible</span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dt">type =</span> <span class="st">"(]"</span>) <span class="co"># half-open</span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; (1,7]</span></a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dt">class =</span> <span class="st">"integer"</span>) <span class="op">==</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>)</a>
-<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb3-30" data-line-number="30"></a>
-<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co"># And SpecialSets inheriting from these intervals</span></a>
-<a class="sourceLine" id="cb3-32" data-line-number="32">Reals<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="co">#&gt; ℝ</span></a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">PosRationals<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">#&gt; ℚ+</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="co"># Sets require elements to be unique and order doesn't matter</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>) <span class="kw">==</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>) <span class="kw">==</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">2</span>, <span class="fl">1</span>)
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="co"># But tuples can enforce these restrictions</span>
+<span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>) <span class="kw">!=</span> <span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>) <span class="kw">!=</span> <span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">2</span>, <span class="fl">1</span>)
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="co"># Fuzzy sets and tuples extend sets further</span>
+<span class="no">f</span> <span class="kw">=</span> <span class="no">FuzzySet</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">3</span>, <span class="fl">1</span>)
+<span class="no">f</span>$<span class="fu">inclusion</span>(<span class="fl">1</span>)
+<span class="co">#&gt; [1] "Not Included"</span>
+<span class="no">f</span>$<span class="fu">inclusion</span>(<span class="fl">2</span>)
+<span class="co">#&gt; [1] "Partially Included"</span>
+<span class="no">f</span>$<span class="fu">inclusion</span>(<span class="fl">3</span>)
+<span class="co">#&gt; [1] "Fully Included"</span>
+
+<span class="co"># Symbolic intervals provide a clean way to represent infinite sets</span>
+<span class="no">Interval</span>$<span class="fu">new</span>()
+<span class="co">#&gt; [-∞,+∞]</span>
+<span class="co"># Different closure types and classes are possible</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">7</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"(]"</span>) <span class="co"># half-open</span>
+<span class="co">#&gt; (1,7]</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">7</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"integer"</span>) <span class="kw">==</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">7</span>)
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="co"># And SpecialSets inheriting from these intervals</span>
+<span class="no">Reals</span>$<span class="fu">new</span>()
+<span class="co">#&gt; ℝ</span>
+<span class="no">PosRationals</span>$<span class="fu">new</span>()
+<span class="co">#&gt; ℚ+</span></pre></div>
 </div>
 <div id="set-operations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#set-operations" class="anchor"></a>Set operations</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Union</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="st">"a"</span>, <span class="st">"b"</span>) <span class="op">+</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; {1, 4,...,b, 5}</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span>FuzzyTuple<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="fl">0.6</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; [1,5]</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Power</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; {1, 2,...,4, 5}^2</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># A symbolic representation is also possible</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw"><a href="reference/setpower.html">setpower</a></span>(Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">power =</span> <span class="dv">2</span>, <span class="dt">simplify =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; {1, 2,...,4, 5}^2</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">Reals<span class="op">$</span><span class="kw">new</span>()<span class="op">^</span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; ℝ^5</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co"># Product</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>,<span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">5</span>, <span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; {1, 2} × {5, 6}</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>,<span class="dv">5</span>) <span class="op">*</span><span class="st"> </span>Tuple<span class="op">$</span><span class="kw">new</span>(<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; [1,5] × (3)</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co"># Intersection</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) <span class="op">&amp;</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; {4, 5}</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">ConditionalSet<span class="op">$</span><span class="kw">new</span>(<span class="cf">function</span>(x) x <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">&amp;</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="op">-</span><span class="dv">2</span><span class="op">:</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; {0}</span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">10</span>) <span class="op">&amp;</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; {5, 6}</span></a>
-<a class="sourceLine" id="cb4-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co"># Difference</span></a>
-<a class="sourceLine" id="cb4-31" data-line-number="31">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">10</span>) <span class="op">-</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt; [1,5) ∪ (5,10]</span></a>
-<a class="sourceLine" id="cb4-33" data-line-number="33">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) <span class="op">-</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt; {1, 4, 5}</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="co"># Union</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">4</span>, <span class="st">"a"</span>, <span class="st">"b"</span>) + <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>)
+<span class="co">#&gt; {1, 4,...,b, 5}</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>) + <span class="no">FuzzyTuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">0.6</span>)
+<span class="co">#&gt; [1,5]</span>
+
+<span class="co"># Power</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>)^<span class="fl">2</span>
+<span class="co">#&gt; {1, 2,...,4, 5}^2</span>
+<span class="co"># A symbolic representation is also possible</span>
+<span class="fu"><a href="reference/setpower.html">setpower</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>), <span class="kw">power</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="co">#&gt; {1, 2,...,4, 5}^2</span>
+<span class="no">Reals</span>$<span class="fu">new</span>()^<span class="fl">5</span>
+<span class="co">#&gt; ℝ^5</span>
+
+<span class="co"># Product</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>,<span class="fl">2</span>) * <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>, <span class="fl">6</span>)
+<span class="co">#&gt; {1, 2} × {5, 6}</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>,<span class="fl">5</span>) * <span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">3</span>)
+<span class="co">#&gt; [1,5] × (3)</span>
+
+<span class="co"># Intersection</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>) <span class="kw">&amp;</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">4</span>:<span class="fl">10</span>)
+<span class="co">#&gt; {4, 5}</span>
+<span class="no">ConditionalSet</span>$<span class="fu">new</span>(<span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span> <span class="kw">==</span> <span class="fl">0</span>) <span class="kw">&amp;</span> <span class="no">Set</span>$<span class="fu">new</span>(-<span class="fl">2</span>:<span class="fl">2</span>)
+<span class="co">#&gt; {0}</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>) <span class="kw">&amp;</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>:<span class="fl">6</span>)
+<span class="co">#&gt; {5, 6}</span>
+
+<span class="co"># Difference</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>) - <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>)
+<span class="co">#&gt; [1,5) ∪ (5,10]</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>) - <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">2</span>:<span class="fl">3</span>)
+<span class="co">#&gt; {1, 4, 5}</span></pre></div>
 </div>
 <div id="containedness-and-comparators" class="section level3">
 <h3 class="hasAnchor">
 <a href="#containedness-and-comparators" class="anchor"></a>Containedness and Comparators</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">10</span>)<span class="op">$</span><span class="kw"><a href="reference/contains.html">contains</a></span>(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># check multiple elements</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">10</span>)<span class="op">$</span><span class="kw"><a href="reference/contains.html">contains</a></span>(<span class="dv">8</span><span class="op">:</span><span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [1]  TRUE  TRUE  TRUE FALSE FALSE</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># only return TRUE if all are TRUE</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">10</span>)<span class="op">$</span><span class="kw"><a href="reference/contains.html">contains</a></span>(<span class="dv">8</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">all =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; [1] FALSE</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co"># decide whether open bounds should be included</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">type =</span> <span class="st">"()"</span>)<span class="op">$</span><span class="kw"><a href="reference/contains.html">contains</a></span>(<span class="dv">10</span>, <span class="dt">bound =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">type =</span> <span class="st">"()"</span>)<span class="op">$</span><span class="kw"><a href="reference/contains.html">contains</a></span>(<span class="dv">10</span>, <span class="dt">bound =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dt">class =</span> <span class="st">"numeric"</span>)<span class="op">$</span><span class="kw"><a href="reference/equals.html">equals</a></span>(Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; [1] FALSE</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">Interval<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dt">class =</span> <span class="st">"integer"</span>)<span class="op">$</span><span class="kw"><a href="reference/equals.html">equals</a></span>(Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>) <span class="op">==</span><span class="st"> </span>FuzzySet<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co"># proper subsets</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)<span class="op">$</span><span class="kw"><a href="reference/isSubset.html">isSubset</a></span>(Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>), <span class="dt">proper =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co"># (non-proper) subsets</span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)<span class="op">$</span><span class="kw"><a href="reference/isSubset.html">isSubset</a></span>(Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">proper =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32">Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">&lt;=</span><span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co"># multi-dimensional checks</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36">x =<span class="st"> </span>PosReals<span class="op">$</span><span class="kw">new</span>()<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37">x<span class="op">$</span><span class="kw"><a href="reference/contains.html">contains</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(Tuple<span class="op">$</span><span class="kw">new</span>(<span class="dv">1</span>, <span class="dv">1</span>), Tuple<span class="op">$</span><span class="kw">new</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>)))</a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt; [1]  TRUE FALSE</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">5</span>)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="co"># check multiple elements</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">8</span>:<span class="fl">12</span>)
+<span class="co">#&gt; [1]  TRUE  TRUE  TRUE FALSE FALSE</span>
+<span class="co"># only return TRUE if all are TRUE</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">8</span>:<span class="fl">12</span>, <span class="kw">all</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; [1] FALSE</span>
+<span class="co"># decide whether open bounds should be included</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"()"</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">10</span>, <span class="kw">bound</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"()"</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">10</span>, <span class="kw">bound</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"numeric"</span>)$<span class="fu"><a href="reference/equals.html">equals</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>))
+<span class="co">#&gt; [1] FALSE</span>
+<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"integer"</span>)$<span class="fu"><a href="reference/equals.html">equals</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>))
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>) <span class="kw">==</span> <span class="no">FuzzySet</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">1</span>)
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="co"># proper subsets</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)$<span class="fu"><a href="reference/isSubset.html">isSubset</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>), <span class="kw">proper</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>) <span class="kw">&lt;</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="co"># (non-proper) subsets</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)$<span class="fu"><a href="reference/isSubset.html">isSubset</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>), <span class="kw">proper</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="co">#&gt; [1] TRUE</span>
+<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>) <span class="kw">&lt;=</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="co"># multi-dimensional checks</span>
+<span class="no">x</span> <span class="kw">=</span> <span class="no">PosReals</span>$<span class="fu">new</span>()^<span class="fl">2</span>
+<span class="no">x</span>$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">1</span>), <span class="no">Tuple</span>$<span class="fu">new</span>(-<span class="fl">2</span>, <span class="fl">3</span>)))
+<span class="co">#&gt; [1]  TRUE FALSE</span></pre></div>
 </div>
 </div>
 <div id="usage" class="section level2">
@@ -249,14 +250,14 @@
 <h2 class="hasAnchor">
 <a href="#similar-packages" class="anchor"></a>Similar Packages</h2>
 <ul>
-<li><p><a href="https://cran.r-project.org/web/packages/sets/index.html">sets</a> - The <strong>sets</strong> package uses S3 to define some symbolic representaton of mathematical sets, tuple, intervals, and fuzzy variants. However the symbolic representation is not consistent throughout the package, does not allow for clear inspection of set/interval elements, and there is no support for multi-dimensional sets.</p></li>
+<li><p><a href="https://CRAN.R-project.org/package=sets">sets</a> - The <strong>sets</strong> package uses S3 to define some symbolic representaton of mathematical sets, tuple, intervals, and fuzzy variants. However the symbolic representation is not consistent throughout the package, does not allow for clear inspection of set/interval elements, and there is no support for multi-dimensional sets.</p></li>
 <li><p><a href="https://github.com/llrs/BaseSet">BaseSet</a> - The <strong>BaseSet</strong> package focuses on storing and analysing sets in a ‘tidy’ way, with more options for data storage in long and wide formats. The primary usage is neat and efficient inspection of finite sets, there is no support for infinite sets or symbolic representation.</p></li>
 </ul>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing</h2>
-<p>As <code>set6</code> is in its early stages, contributions are very welcome. If you have any ideas for good features please open an issue or create a pull request. Otherwise bug reports are very appreciated if you stumble across any broken code, these can be posted to the <a href="https://github.com/RaphaelS1/set6/issues">issue tracker</a>. For updates on <code>set6</code> follow/star this repo.</p>
+<p>As <code>set6</code> is in its early stages, contributions are very welcome. If you have any ideas for good features please open an issue or create a pull request. Otherwise bug reports are very appreciated if you stumble across any broken code, these can be posted to the <a href="https://github.com/xoopR/set6/issues">issue tracker</a>. For updates on <code>set6</code> follow/star this repo.</p>
 </div>
 </div>
   </div>
@@ -267,9 +268,9 @@
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=set6">https://​cloud.r-project.org/​package=set6</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/RaphaelS1/set6">https://​github.com/​RaphaelS1/​set6</a>
+<li>Browse source code at <br><a href="https://github.com/xoopR/set6/">https://​github.com/​xoopR/​set6/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/RaphaelS1/set6/issues">https://​github.com/​RaphaelS1/​set6/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/xoopR/set6/issues">https://​github.com/​xoopR/​set6/​issues</a>
 </li>
 </ul>
 </div>
@@ -297,7 +298,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
