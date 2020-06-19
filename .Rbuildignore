@@ -21,3 +21,6 @@ man-roxygen
 tic\.R
 papers
 ^codemeta\.json$
+^\.ccache$
+^\.github$
+^tic\.R$
