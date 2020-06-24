@@ -24,11 +24,11 @@ bibliography: paper.bib
 
 `set6` is currently being used in `distr6` [@packagedistr6], which is an object-oriented probability distributions interface, that makes use of `set6` for distribution and parameter support. Additional uses of `set6` include representing infinite sets, and constructing assertions.
 
-The speed and efficiency of ``R6`` allows `set6` to be a scalable and efficient interface. A focus on symbolic representation and neat printing methods means that `set6` can accurately and clearly represent complicated sets. `set6` has the ambitious long-term goal of being the only dependency package needed for object-oriented interfaces in `R` that require clear symbolic representations of mathematical sets.
+The speed and efficiency of ``R6`` and `Rcpp` [@pkgrcpp] allows `set6` to be a scalable and efficient interface. A focus on symbolic representation and neat printing methods means that `set6` can accurately and clearly represent complicated sets. `set6` has the ambitious long-term goal of being the only dependency package needed for object-oriented interfaces in `R` that require clear symbolic representations of mathematical sets.
 
-Related software in `R` includes the `sets` [@pkgsets] package, which uses the S3 and S4 object-oriented paradigms to implement mathematical sets. Whilst `sets` and `set6` have similar implemented features, as both offer multiple forms of sets (intervals, fuzzy, etc.) and with symbolic representation, the `sets` package does not offer lazy evaluation in set operations and thus can lead to significant overheads for large or possibly-infinite sets. Similar packages in other computing languages include i) `portion` [@pkgportion] in Python, which only supports intervals without generalisation to other mathematical sets; ii) `IntervalSets.jl` [@pkgintervalsets] in Julia, which is again limited to intervals though with good features for infix operators and inspection; and iii) a variety of implementations in the `JuliaIntervals` family of packages (https://juliapackages.com/u/juliaintervals), which primarily focuses on rigorous arithmetic implementation.  
+Related software in `R` includes `sets` [@pkgsets], which uses the S3 and S4 object-oriented paradigms to implement mathematical sets. Whilst `sets` and `set6` have similar implemented features, as both offer multiple forms of sets (intervals, fuzzy, etc.) and with symbolic representation, the `sets` package does not offer lazy evaluation in set operations, which leads to significant overheads for large or possibly-infinite sets. Similar packages in other computing languages include: i) `portion` [@pkgportion] in Python, which only supports intervals without generalisation to other mathematical sets; ii) `IntervalSets.jl` [@pkgintervalsets] in Julia, which is again limited to intervals though with good features for infix operators and inspection; and iii) a variety of implementations in the `JuliaIntervals` family of packages (https://juliapackages.com/u/juliaintervals), which primarily focus on rigorous arithmetic implementation.  
 
-The example below demonstrates construction of a set and interval, comparisons of these, set complement operator, and printing of the final result.
+The example below demonstrates construction of a set and interval, comparisons of these, the set complement operator, and printing of the final result. Note the example does not use unicode printing but that this is possible within the package.
 
 ```R
 > a <- Set$new(1, 2, 3)
@@ -41,7 +41,7 @@ The example below demonstrates construction of a set and interval, comparisons o
 TRUE
 > c <- b - a
 > c$print()
-(1,2) ∪ (2,3) ∪ (3,+∞] 
+(1,2) U (2,3) U (3,+Inf] 
 ```
 
 
@@ -58,15 +58,15 @@ TRUE
 
 > I <- Interval$new(10, Inf, type = "[)")
 > I$print()
-[10,+∞)
+[10,Inf)
 > I$contains(9:11)
 [1] FALSE TRUE TRUE
  
-> N <- Naturals$new()
-> N$print()
-ℕ0 
+> n <- Naturals$new()
+> n$print()
+N0
 # binary operators also available
-> c(pi, 2) %inset% N
+> c(pi, 2) %inset% n
 [1] FALSE TRUE
  
 ```
@@ -80,7 +80,7 @@ TRUE
 > s <- Set$new(1, 2, 3)
 > p <- powerset(powerset(powerset(s)))
 > p$print()
-℘(℘(℘({1, 2, 3}))) 
+2^2^2^{1, 2, 3}
 > p$properties$cardinality
 [1] 1.157921e+77
 > p$contains(Set$new(Set$new(Set$new(1), Set$new(1, 2, 3))))
