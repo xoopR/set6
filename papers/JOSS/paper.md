@@ -53,7 +53,8 @@ TRUE
 3. **Inspectability and reactive user interface** - `set6` prioritises symbolic representation and lazy evaluation to allow for the package to be scalable and to fit into any other package. However it is ensured that this does not detract from a clear user interface, i.e. at all times it should be clear what an object contains both externally (how it prints) and internally (inspection methods). `set6` allows sets to be queried in many different ways, including calling the elements in the set (if finite), finding the bounds of the set (if numeric), and listing properties and traits.
 
 ```R
-# Symbolic representation allows neat representation of infinite sets and intervals whilst making the elements clear by inspection
+# Symbolic representation allows neat representation of infinite sets
+# and intervals whilst making the elements clear by inspection
 
 > I <- Interval$new(10, Inf, type = "[)")
 > I$print()
@@ -73,7 +74,8 @@ TRUE
 4. **Combination of lazy and greedy evaluation** - By default, 'multiplying' operations such as products and powersets are evaluated lazily, whereas 'adding' operations such as unions and differences are evaluated greedily. These prevent system crashes from trying to evaluate sets of very large cardinality. In all cases, the user can override defaults. Symbolic representation is used with lazy evaluation so that large sets can be printed neatly without the individual elements ever being evaluated.
 
 ```R
-# Lazy evaluation allows very large sets to be queried without explicit evaluation
+# Lazy evaluation allows very large sets to be queried without
+# explicit evaluation
 
 > s <- Set$new(1, 2, 3)
 > p <- powerset(powerset(powerset(s)))
