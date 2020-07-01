@@ -1,6 +1,15 @@
-# R CMD check results
+## Test Environments
+
+On GitHub actions:
+
+* windows-latest (R release)
+* macOS-latest (R release)
+* macOS-latest (R devel)
+* ubuntu-latest (R release)
+
+## R CMD check results
 
 There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Downstream dependencies
-Expected to break distr6, a patch is ready for this. Other dependencies all OK.
+All downstream dependencies OK.
