@@ -5,11 +5,14 @@ operation_cleaner <- function(sets, operation_class, nest, simplify = TRUE){
 
   if (!nest) {
     sets = unlist(lapply(sets, function(x){
-      wraps = x$wrappedSets
-      if(is.null(wraps))
+      wraps = try(x$wrappedSets, silent = TRUE)
+      if (class(wraps)[1] == "try-error") {
         return(x)
-      else
+      } else if (is.null(wraps)) {
+        return(x)
+      } else {
         return(wraps)
+      }
     }))
   }
 
