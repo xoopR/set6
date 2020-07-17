@@ -1,3 +1,7 @@
+# set6 0.1.7
+
+* Critical patch
+
 # set6 0.1.6
 
 * Bugfix in set operation cleaner
