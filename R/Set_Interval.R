@@ -181,20 +181,24 @@ Interval <- R6Class("Interval", inherit = Set,
     #' s2$contains(Tuple$new(2,1))
     #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
     contains = function(x, all = FALSE, bound = FALSE){
-      x = suppressWarnings(as(unlist(x), "numeric"))
-      x[is.na(x)] = NaN
       if (is.null(x)) {
         return(TRUE)
+      }
+
+      x <- sapply(x, function(y) ifelse(inherits(y, c("numeric", "integer")), y, NaN))
+
+      if (all & any(is.nan(x))) {
+        return(FALSE)
+      }
+
+      if (all) {
+        IntervalContainsAll(x = x, inf = self$lower, sup = self$upper,
+                            min = self$min, max = self$max,
+                            bound = bound, class_str = self$class)
       } else {
-        if(all){
-          IntervalContainsAll(x = x, inf = self$lower, sup = self$upper,
-                              min = self$min, max = self$max,
-                              bound = bound, class_str = self$class)
-        } else {
-          IntervalContains(x = x, inf = self$lower, sup = self$upper,
-                           min = self$min, max = self$max,
-                           bound = bound, class_str = self$class)
-        }
+        IntervalContains(x = x, inf = self$lower, sup = self$upper,
+                         min = self$min, max = self$max,
+                         bound = bound, class_str = self$class)
       }
     },
 

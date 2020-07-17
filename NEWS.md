@@ -1,6 +1,7 @@
-# set6 0.1.5.9000
+# set6 0.1.6
 
 * Bugfix in set operation cleaner
+* Bugfix causing `Interval$contains` to return `TRUE` for tuples
 
 # set6 0.1.5
 
