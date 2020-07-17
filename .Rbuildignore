@@ -23,4 +23,4 @@ papers
 ^\.ccache$
 ^\.github$
 ^tic\.R$
-^lintr\.R$
+^\.lintr$
