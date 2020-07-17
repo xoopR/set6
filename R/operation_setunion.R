@@ -78,6 +78,11 @@ setunion <- function(..., simplify = TRUE) {
     return(UniversalSet$new())
   }
 
+  # call UnionSet class if any products
+  if (any(sapply(sets, inherits, "ProductSet"))) {
+    return(UnionSet$new(sets))
+  }
+
   # clean-up sets, ensure fuzzy/crisp consistency
   sets <- operation_cleaner(sets, "UnionSet", nest = FALSE)
 

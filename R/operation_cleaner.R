@@ -5,9 +5,6 @@ operation_cleaner <- function(sets, operation_class, nest, simplify = TRUE) {
 
   if (!nest) {
     sets <- unlist(lapply(sets, function(x) {
-      if (class(x)[1] != "UnionSet" & operation_class == "UnionSet") {
-        return(x)
-      }
       wraps <- try(x$wrappedSets, silent = TRUE)
       if (class(wraps)[1] == "try-error") {
         return(x)
