@@ -11,21 +11,32 @@ ExponentSet <- R6Class("ExponentSet",
     #' @param power numeric. Power to raise Set to.
     #' @return A new `ExponentSet` object.
     initialize = function(set, power) {
-      lower <- Tuple$new(rep(set$lower, power))
-      upper <- Tuple$new(rep(set$upper, power))
-      type <- "{}"
-      setlist <- rep(list(set), power)
-      private$.power <- as.integer(power)
 
-      if (is.null(set$properties$cardinality)) {
+      if (power == "n") {
+        lower <- set$lower
+        upper <- set$upper
+        setlist <- list(set)
+        private$.power <- "n"
         cardinality <- NULL
-      } else if (grepl("Beth|Aleph", set$properties$cardinality)) {
-        cardinality <- set$properties$cardinality
       } else {
-        cardinality <- set$properties$cardinality^power
+        lower <- Tuple$new(rep(set$lower, power))
+        upper <- Tuple$new(rep(set$upper, power))
+        setlist <- rep(list(set), power)
+        private$.power <- as.integer(power)
+
+        if (is.null(set$properties$cardinality)) {
+          cardinality <- NULL
+        } else if (grepl("Beth|Aleph", set$properties$cardinality)) {
+          cardinality <- set$properties$cardinality
+        } else {
+          cardinality <- set$properties$cardinality^power
+        }
       }
 
-      super$initialize(setlist = setlist, lower = lower, upper = upper, type = type, cardinality = cardinality)
+      type <- "{}"
+
+      super$initialize(setlist = setlist, lower = lower, upper = upper, type = type,
+                       cardinality = cardinality)
     },
 
     #' @template param_strprint
@@ -48,6 +59,19 @@ ExponentSet <- R6Class("ExponentSet",
     #' is on or within the (possibly-open) bounds of `self`, otherwise `TRUE` only if the element is within
     #' `self` or the bounds are closed.
     contains = function(x, all = FALSE, bound = FALSE) {
+
+      if (self$power == "n") {
+        if (!testTuple(x)) {
+          stop("Variable exponent set can only perform containedness checks on a single tuple.")
+        } else {
+          if (x$length == 1) {
+            return(self$wrappedSets[[1]]$contains(x$elements[[1]], all, bound))
+          } else {
+            return(setpower(self$wrappedSets[[1]], x$length)$contains(x, all, bound))
+          }
+        }
+      }
+
       x <- listify(x)
 
       ret <- sapply(x, function(el) {

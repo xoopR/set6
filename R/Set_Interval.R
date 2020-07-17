@@ -193,10 +193,12 @@ Interval <- R6Class("Interval",
         return(TRUE)
       }
 
-      x <- sapply(x, function(y) ifelse(inherits(y, c("numeric", "integer")), y, NaN))
+      x <- sapply(listify(x), function(y) ifelse(inherits(y, c("numeric", "integer")), y, NaN))
 
       if (all & any(is.nan(x))) {
         return(FALSE)
+      } else if (all(is.nan(x))) {
+        return(rep(FALSE, length(x)))
       }
 
       if (all) {

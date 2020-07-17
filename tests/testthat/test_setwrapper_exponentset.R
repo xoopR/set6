@@ -1,7 +1,5 @@
 library(testthat)
 
-context("exponentset")
-
 test_that("contains", {
   e <- Set$new(1, 2)^2
   expect_true(e$contains(Tuple$new(1, 1)))
