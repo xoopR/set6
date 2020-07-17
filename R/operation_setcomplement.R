@@ -187,7 +187,7 @@ setcomplement.Interval <- function(x, y, simplify = TRUE) {
       }
     }
     u <- Set$new()
-    for (i in 1:y$length) {
+    for (i in seq_len(y$length)) {
       if (i == y$length & y$elements[[i]] == x$upper) {
         break()
       }
