@@ -2,7 +2,7 @@ library(testthat)
 
 context("Properties")
 
-test_that("construction",{
+test_that("construction", {
   expect_error(Properties$new(cardinality = "c"), "Cardinality must either")
   expect_equal(Properties$new(cardinality = "a0")$cardinality, "Aleph0")
   expect_equal(Properties$new(cardinality = "aleph0")$cardinality, "Aleph0")
@@ -13,7 +13,7 @@ test_that("construction",{
   expect_error(Properties$new(closure = "not closed"))
 })
 
-test_that("strprint/print",{
+test_that("strprint/print", {
   expect_equal(class(Properties$new("closed", 5)$strprint()), "list")
   expect_output(print(Properties$new("closed", 5)))
 

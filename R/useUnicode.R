@@ -8,15 +8,15 @@
 #' By default `set6` starts with unicode printing turned on.
 #'
 #' @examples
-#' current = useUnicode()
+#' current <- useUnicode()
 #' useUnicode(TRUE)
 #' useUnicode()
 #' useUnicode(current)
 #' @export
-useUnicode <- function(use){
-  if(missing(use))
+useUnicode <- function(use) {
+  if (missing(use)) {
     return(getOption("set6.unicode"))
-  else{
+  } else {
     checkmate::assertFlag(use)
     options(set6.unicode = use)
   }

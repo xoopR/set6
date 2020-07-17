@@ -16,19 +16,19 @@
 #' Interval$new(class = "integer")
 #'
 #' # Half-open interval
-#' i = Interval$new(1, 10, "(]")
+#' i <- Interval$new(1, 10, "(]")
 #' i$contains(c(1, 10))
 #' i$contains(c(1, 10), bound = TRUE)
 #'
 #' # Equivalent Set and Interval
-#' Set$new(1:5) == Interval$new(1,5,class="integer")
+#' Set$new(1:5) == Interval$new(1, 5, class = "integer")
 #'
 #' # SpecialSets can provide more efficient implementation
 #' Interval$new() == ExtendedReals$new()
 #' Interval$new(class = "integer", type = "()") == Integers$new()
-#'
 #' @export
-Interval <- R6Class("Interval", inherit = Set,
+Interval <- R6Class("Interval",
+  inherit = Set,
   public = list(
     #' @description Create a new `Interval` object.
     #' @details `Interval`s are constructed by specifying the `Interval` limits, the boundary type,
@@ -41,28 +41,31 @@ Interval <- R6Class("Interval", inherit = Set,
     #' @param class character. One of: 'numeric', 'integer', which specifies if interval is over the Reals or Integers.
     #' @param universe Set. Universe that the interval lives in, default [Reals].
     #' @return A new `Interval` object.
-    initialize = function(lower = -Inf, upper = Inf, type = c("[]","(]","[)","()"),
-                          class = "numeric", universe = ExtendedReals$new()){
+    initialize = function(lower = -Inf, upper = Inf, type = c("[]", "(]", "[)", "()"),
+                          class = "numeric", universe = ExtendedReals$new()) {
 
-      type = match.arg(type)
-      if(checkmate::testComplex(lower) | checkmate::testComplex(upper)){
-        lower = as.complex(lower)
-        upper = as.complex(upper)
+      type <- match.arg(type)
+      if (checkmate::testComplex(lower) | checkmate::testComplex(upper)) {
+        lower <- as.complex(lower)
+        upper <- as.complex(upper)
         checkmate::assert(Re(upper) > Re(lower) | (Re(upper) == Re(lower) & Im(upper) > Im(lower)),
-                          .var.name = sprintf("Assertion on '%s' failed. '%s' must be less than '%s'.",
-                                              lower, lower, upper))
+          .var.name = sprintf(
+            "Assertion on '%s' failed. '%s' must be less than '%s'.",
+            lower, lower, upper
+          )
+        )
       } else {
         checkmate::assert(lower <= upper)
       }
-      checkmate::assertChoice(class, c("numeric","integer"))
+      checkmate::assertChoice(class, c("numeric", "integer"))
 
-      if(getR6Class(self) != "SpecialSet"){
+      if (getR6Class(self) != "SpecialSet") {
         assertSet(universe)
         private$.universe <- universe
       }
 
 
-      if(lower == upper){
+      if (lower == upper) {
         private$.class <- "integer"
         private$.type <- "[]"
       } else {
@@ -73,22 +76,23 @@ Interval <- R6Class("Interval", inherit = Set,
       private$.lower <- lower
       private$.upper <- upper
 
-      if(private$.class == "numeric"){
-        cardinality = "b1"
+      if (private$.class == "numeric") {
+        cardinality <- "b1"
       } else {
-        if (lower == -Inf | upper == Inf)
-          cardinality = "a0"
-        else
-          cardinality = length(seq.int(lower, upper, 1))
+        if (lower == -Inf | upper == Inf) {
+          cardinality <- "a0"
+        } else {
+          cardinality <- length(seq.int(lower, upper, 1))
+        }
       }
 
-      closure = switch(type,
-                       "[]" = "closed",
-                       "()" = "open",
-                       "half-open"
+      closure <- switch(type,
+        "[]" = "closed",
+        "()" = "open",
+        "half-open"
       )
 
-      private$.properties = Properties$new(closure, cardinality)
+      private$.properties <- Properties$new(closure, cardinality)
 
       assertSubset(universe, self, errormsg = "interval is not contained in the given universe")
       invisible(self)
@@ -97,15 +101,16 @@ Interval <- R6Class("Interval", inherit = Set,
     #' @description Creates a printable representation of the object.
     #' @param ... ignored, added for consistency.
     #' @return A character string representing the object.
-    strprint = function(...){
+    strprint = function(...) {
 
-      inf <- ifelse(self$lower==-Inf & useUnicode(), "-\u221E", self$lower)
-      sup <- ifelse(self$upper==Inf & useUnicode(), "+\u221E", self$upper)
+      inf <- ifelse(self$lower == -Inf & useUnicode(), "-\u221E", self$lower)
+      sup <- ifelse(self$upper == Inf & useUnicode(), "+\u221E", self$upper)
 
-      if(self$class == "integer")
+      if (self$class == "integer") {
         return(paste0("{", inf, ",...,", sup, "}"))
-      else
-        return(paste0(substr(self$type,1,1),inf,",",sup,substr(self$type,2,2)))
+      } else {
+        return(paste0(substr(self$type, 1, 1), inf, ",", sup, substr(self$type, 2, 2)))
+      }
     },
 
     #' @description Tests if two sets are equal.
@@ -125,20 +130,23 @@ Interval <- R6Class("Interval", inherit = Set,
     #' @examples
     #' Interval$new(1,5) == Interval$new(1,5)
     #' Interval$new(1,5, class = "integer") != Interval$new(1,5,class="numeric")
-    equals = function(x, all = FALSE){
-      if(class(try(as.Set(self), silent = TRUE))[1] != "try-error")
+    equals = function(x, all = FALSE) {
+      if (class(try(as.Set(self), silent = TRUE))[1] != "try-error") {
         return(super$equals(x, all))
+      }
 
       x <- listify(x)
 
-      ret = sapply(x, function(el){
-        if (!testInterval(el))
+      ret <- sapply(x, function(el) {
+        if (!testInterval(el)) {
           return(FALSE)
+        }
 
-        if (el$lower == self$lower & el$upper == self$upper & el$type == self$type & el$class == self$class)
+        if (el$lower == self$lower & el$upper == self$upper & el$type == self$type & el$class == self$class) {
           return(TRUE)
-        else
+        } else {
           return(FALSE)
+        }
       })
 
       returner(ret, all)
@@ -180,7 +188,7 @@ Interval <- R6Class("Interval", inherit = Set,
     #' s2 = s * s
     #' s2$contains(Tuple$new(2,1))
     #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
-    contains = function(x, all = FALSE, bound = FALSE){
+    contains = function(x, all = FALSE, bound = FALSE) {
       if (is.null(x)) {
         return(TRUE)
       }
@@ -192,13 +200,17 @@ Interval <- R6Class("Interval", inherit = Set,
       }
 
       if (all) {
-        IntervalContainsAll(x = x, inf = self$lower, sup = self$upper,
-                            min = self$min, max = self$max,
-                            bound = bound, class_str = self$class)
+        IntervalContainsAll(
+          x = x, inf = self$lower, sup = self$upper,
+          min = self$min, max = self$max,
+          bound = bound, class_str = self$class
+        )
       } else {
-        IntervalContains(x = x, inf = self$lower, sup = self$upper,
-                         min = self$min, max = self$max,
-                         bound = bound, class_str = self$class)
+        IntervalContains(
+          x = x, inf = self$lower, sup = self$upper,
+          min = self$min, max = self$max,
+          bound = bound, class_str = self$class
+        )
       }
     },
 
@@ -230,27 +242,27 @@ Interval <- R6Class("Interval", inherit = Set,
     #' @examples
     #' Interval$new(1,3) < Interval$new(1,5)
     #' Set$new(1,3) < Interval$new(0,5)
-    isSubset = function(x, proper = FALSE, all = FALSE){
+    isSubset = function(x, proper = FALSE, all = FALSE) {
       # if this Interval can be coerced to a Set then uses Set method instead
       if (class(try(as.Set(self), silent = TRUE))[1] != "try-error") {
         return(super$isSubset(x, proper, all))
       }
 
       x <- listify(x)
-      ret = logical(length(x))
-      for(i in seq_along(x)){
-        if(testSet(x[[i]])){
-          if(testEmpty(x[[i]])) {
-            ret[i] = TRUE
-          } else if(!testInterval(x[[i]])) {
-            ret[i] = self$contains(x[[i]]$elements, all = TRUE, bound = FALSE)
-          } else if(!(self$class == "integer" & x[[i]]$class == "numeric")){
+      ret <- logical(length(x))
+      for (i in seq_along(x)) {
+        if (testSet(x[[i]])) {
+          if (testEmpty(x[[i]])) {
+            ret[i] <- TRUE
+          } else if (!testInterval(x[[i]])) {
+            ret[i] <- self$contains(x[[i]]$elements, all = TRUE, bound = FALSE)
+          } else if (!(self$class == "integer" & x[[i]]$class == "numeric")) {
             if (proper) {
-              ret[i] = (x[[i]]$min > self$min & x[[i]]$max <= self$max) |
+              ret[i] <- (x[[i]]$min > self$min & x[[i]]$max <= self$max) |
                 (x[[i]]$min >= self$min & x[[i]]$max < self$max) |
                 (x[[i]]$min >= self$min & x[[i]]$max <= self$max & x[[i]]$class == "integer" & self$class == "numeric")
             } else {
-              ret[i] = x[[i]]$min >= self$min & x[[i]]$max <= self$max
+              ret[i] <- x[[i]]$min >= self$min & x[[i]]$max <= self$max
             }
           }
         }
@@ -279,40 +291,48 @@ Interval <- R6Class("Interval", inherit = Set,
     #'
     #' Reals$new()$isSubset(Integers$new()) # TRUE
     #' Reals$new()$isSubinterval(Integers$new()) # FALSE
-    isSubinterval = function(x, proper = FALSE, all = FALSE){
-      if(class(try(as.Tuple(self), silent = TRUE))[1] != "try-error")
+    isSubinterval = function(x, proper = FALSE, all = FALSE) {
+      if (class(try(as.Tuple(self), silent = TRUE))[1] != "try-error") {
         return(as.Tuple(self)$isSubset(x, proper, all))
+      }
 
       x <- listify(x)
 
-      ret = sapply(x, function(el){
-        if(!testSet(el))
+      ret <- sapply(x, function(el) {
+        if (!testSet(el)) {
           return(FALSE)
+        }
 
-        if(el$properties$empty)
+        if (el$properties$empty) {
           return(TRUE)
+        }
 
-        if(testFuzzy(el) | testConditionalSet(el))
+        if (testFuzzy(el) | testConditionalSet(el)) {
           return(FALSE)
+        }
 
-        el = try(as.Interval(el), silent = TRUE)
+        el <- try(as.Interval(el), silent = TRUE)
 
-        if(class(el)[1] == "try-error")
+        if (class(el)[1] == "try-error") {
           return(FALSE)
+        }
 
-        if(el$class != self$class)
+        if (el$class != self$class) {
           return(FALSE)
+        }
 
-        if(proper){
-          if((el$lower > self$lower & el$upper <= self$upper) | (el$lower >= self$lower & el$upper < self$upper))
+        if (proper) {
+          if ((el$lower > self$lower & el$upper <= self$upper) | (el$lower >= self$lower & el$upper < self$upper)) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
+          }
         } else {
-          if(el$lower >= self$lower & el$upper <= self$upper)
+          if (el$lower >= self$lower & el$upper <= self$upper) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
+          }
         }
       })
 
@@ -324,20 +344,22 @@ Interval <- R6Class("Interval", inherit = Set,
     #' @field length
     #' If the `Interval` is countably finite then returns the number of elements in the `Interval`,
     #' otherwise `Inf`. See the cardinality property for the type of infinity.
-    length = function(){
-      if(self$properties$countability == "countably finite")
+    length = function() {
+      if (self$properties$countability == "countably finite") {
         return(length(self$elements))
-      else
+      } else {
         return(Inf)
+      }
     },
 
     #' @field elements
     #' If the `Interval` is finite then returns all elements in the `Interval`, otherwise `NA`.
-    elements = function(){
-      if(self$properties$countability == "countably finite")
+    elements = function() {
+      if (self$properties$countability == "countably finite") {
         return(seq.int(self$min, self$max, 1))
-      else
+      } else {
         return(NA)
+      }
     }
   ),
 

@@ -1,20 +1,21 @@
 #' @importFrom R6 R6Class
 
 # nocov start
-.onLoad = function(libname, pkgname) {
+.onLoad <- function(libname, pkgname) {
   options(set6.unicode = l10n_info()$`UTF-8`)
 }
 
-.onUnload = function(libname, pkgname) {
+.onUnload <- function(libname, pkgname) {
   options(set6.unicode = NULL)
 }
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("\n-----------------------------")
-  packageStartupMessage("\tset6 v",utils::packageVersion("set6"),
-                        "\n\nGet started:\t?set6
-Changelog:\tset6News()")
+  packageStartupMessage(
+    "\tset6 v", utils::packageVersion("set6"),
+    "\n\nGet started:\t?set6
+Changelog:\tset6News()"
+  )
   packageStartupMessage("-----------------------------\n")
 }
 # nocov end
-

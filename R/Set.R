@@ -18,7 +18,7 @@
 #' Set$new("a", 5, Set$new(1))
 #'
 #' # Each Set has properties and traits
-#' s = Set$new(1,2,3)
+#' s <- Set$new(1, 2, 3)
 #' s$traits
 #' s$properties
 #'
@@ -27,7 +27,6 @@
 #'
 #' # Ordering does not matter
 #' Set$new(1, 2) == Set$new(2, 1)
-#'
 #' @export
 Set <- R6Class("Set",
   public = list(
@@ -42,65 +41,65 @@ Set <- R6Class("Set",
     #' @param elements list. Alternative constructor that may be more efficient if passing objects of multiple classes.
     #' @param class character. Optional string naming a class that if supplied gives the set the `typed` property.
     #' @return A new `Set` object.
-    initialize = function(..., universe = UniversalSet$new(), elements = NULL, class = NULL){
+    initialize = function(..., universe = UniversalSet$new(), elements = NULL, class = NULL) {
 
       private$.universe <- assertSet(universe)
 
-      if(is.null(elements)) {
-        if(...length() == 1){
-          if(length(...elt(1)) > 1 & !is.environment(...elt(1))){
-            elements = as.list(...elt(1))
+      if (is.null(elements)) {
+        if (...length() == 1) {
+          if (length(...elt(1)) > 1 & !is.environment(...elt(1))) {
+            elements <- as.list(...elt(1))
           } else {
-            elements = list(...)
+            elements <- list(...)
           }
         } else {
-          elements = list(...)
+          elements <- list(...)
         }
       }
 
-      if(length(elements)){
-        if(!checkmate::testList(elements)){
-          elements = as.list(elements)
+      if (length(elements)) {
+        if (!checkmate::testList(elements)) {
+          elements <- as.list(elements)
         }
 
-        if (!is.null(class)){
+        if (!is.null(class)) {
           private$.class <- class
           elements <- as.list(as(unlist(elements), class))
-          if(class %in% c("numeric", "integer")) {
+          if (class %in% c("numeric", "integer")) {
             private$.lower <- min(unlist(elements))
             private$.upper <- max(unlist(elements))
           } else if (class == "complex") {
-            abs_els = Vectorize(abs)(unlist(elements))
+            abs_els <- Vectorize(abs)(unlist(elements))
             private$.lower <- unlist(elements[which.min(abs_els)])
             private$.upper <- unlist(elements[which.max(abs_els)])
           }
         }
 
-        if(getR6Class(universe) != "UniversalSet"){
+        if (getR6Class(universe) != "UniversalSet") {
           assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
         }
 
-        private$.str_elements = sapply(elements, as.character)
+        private$.str_elements <- sapply(elements, as.character)
         private$.elements <- elements
 
 
-        if(!testTuple(self) & !testFuzzyTuple(self)) {
-          if(private$.class != "ANY") {
+        if (!testTuple(self) & !testFuzzyTuple(self)) {
+          if (private$.class != "ANY") {
             private$.elements <- unique(elements)
           } else {
-            dup = duplicated(private$.str_elements)
+            dup <- duplicated(private$.str_elements)
             private$.elements <- elements[!dup]
             private$.str_elements <- private$.str_elements[!dup]
           }
         }
 
-        if(!(private$.class %in% c("numeric","integer","complex"))){
+        if (!(private$.class %in% c("numeric", "integer", "complex"))) {
           private$.lower <- private$.elements[[1]]
           private$.upper <- private$.elements[[length(private$.elements)]]
         }
       }
 
-      private$.properties = Properties$new(closure = "closed", cardinality = self$length)
+      private$.properties <- Properties$new(closure = "closed", cardinality = self$length)
 
       invisible(self)
     },
@@ -110,8 +109,8 @@ Set <- R6Class("Set",
     #' @details The function [useUnicode()] can be used to determine if unicode should be used when
     #' printing the `Set`. Internally `print` first calls `strprint` to create a printable representation
     #' of the Set.
-    print = function(n = 2){
-      cat(self$strprint(n),"\n")
+    print = function(n = 2) {
+      cat(self$strprint(n), "\n")
       invisible(self)
     },
 
@@ -119,21 +118,25 @@ Set <- R6Class("Set",
     #' Creates a printable representation of the object.
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @return A character string representing the object.
-    strprint = function(n = 2){
+    strprint = function(n = 2) {
       if (self$properties$empty) {
-        if(useUnicode())
+        if (useUnicode()) {
           return("\u2205")
-        else
+        } else {
           return("{}")
+        }
       } else {
         type <- private$.type
         elements <- sapply(private$.elements, as.character, n = n)
-        if(self$length <= n * 2)
-          return(paste0(substr(type,1,1),paste0(elements, collapse = ", "), substr(type,2,2)))
-        else
-          return(paste0(substr(type,1,1),paste0(elements[1:n], collapse = ", "), ",...,",
-                        paste0(elements[(self$length-n+1):self$length],collapse=", "),
-                        substr(type,2,2), collapse = ", "))
+        if (self$length <= n * 2) {
+          return(paste0(substr(type, 1, 1), paste0(elements, collapse = ", "), substr(type, 2, 2)))
+        } else {
+          return(paste0(substr(type, 1, 1), paste0(elements[1:n], collapse = ", "), ",...,",
+            paste0(elements[(self$length - n + 1):self$length], collapse = ", "),
+            substr(type, 2, 2),
+            collapse = ", "
+          ))
+        }
       }
     },
 
@@ -141,16 +144,16 @@ Set <- R6Class("Set",
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @details The function [useUnicode()] can be used to determine if unicode should be used when
     #' printing the `Set`. Summarised details include the `Set` class, properties, and traits.
-    summary = function(n = 2){
-      prop = self$properties
-      cat(getR6Class(self),"\n\t",self$strprint(n),"\n",sep="")
+    summary = function(n = 2) {
+      prop <- self$properties
+      cat(getR6Class(self), "\n\t", self$strprint(n), "\n", sep = "")
       cat("Traits:\n\t")
-      cat(ifelse(testCrisp(self), "Crisp", "Fuzzy"),"\n")
+      cat(ifelse(testCrisp(self), "Crisp", "Fuzzy"), "\n")
       cat("Properties:\n")
-      if(prop$empty) cat("\tEmpty\n")
-      if(prop$singleton) cat("\tSingleton\n")
-      cat("\tCardinality =",prop$cardinality," - ",prop$countability,"\n")
-      cat("\t",toproper(prop$closure),"\n",sep="")
+      if (prop$empty) cat("\tEmpty\n")
+      if (prop$singleton) cat("\tSingleton\n")
+      cat("\tCardinality =", prop$cardinality, " - ", prop$countability, "\n")
+      cat("\t", toproper(prop$closure), "\n", sep = "")
     },
 
     #' @description Tests to see if \code{x} is contained in the Set.
@@ -188,9 +191,11 @@ Set <- R6Class("Set",
     #' s2 = s * s
     #' s2$contains(Tuple$new(2,1))
     #' c(Tuple$new(2,1), Tuple$new(1,7), 2) %inset% s2
-    contains = function(x, all = FALSE, bound = NULL){
-      returner(x = sapply(listify(x), as.character) %in% private$.str_elements,
-               all = all)
+    contains = function(x, all = FALSE, bound = NULL) {
+      returner(
+        x = sapply(listify(x), as.character) %in% private$.str_elements,
+        all = all
+      )
     },
 
     #' @description Tests if two sets are equal.
@@ -214,31 +219,31 @@ Set <- R6Class("Set",
     #' # Not equal
     #' !Set$new(1,2)$equals(Set$new(1,2))
     #' Set$new(1,2) != Set$new(1,5)
-    equals = function(x, all = FALSE){
-      x = listify(x)
-      ret = sapply(x, function(y){
-        if(!testSet(y)){
+    equals = function(x, all = FALSE) {
+      x <- listify(x)
+      ret <- sapply(x, function(y) {
+        if (!testSet(y)) {
           return(FALSE)
         }
 
-        if(testFuzzy(y)){
-          if(!all(y$membership() == 1)){
+        if (testFuzzy(y)) {
+          if (!all(y$membership() == 1)) {
             return(FALSE)
           }
         }
 
-        if(testConditionalSet(y)){
+        if (testConditionalSet(y)) {
           return(FALSE)
-        } else if(testInterval(y)){
-          if(testCountablyFinite(y)){
+        } else if (testInterval(y)) {
+          if (testCountablyFinite(y)) {
             return(all(suppressWarnings(y$elements %in% self$elements &
-                         self$elements %in% y$elements)))
+              self$elements %in% y$elements)))
           } else {
             return(FALSE)
           }
         } else {
           return(all(suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements &
-                       private$.str_elements %in% y$.__enclos_env__$private$.str_elements)))
+            private$.str_elements %in% y$.__enclos_env__$private$.str_elements)))
         }
       })
 
@@ -271,26 +276,26 @@ Set <- R6Class("Set",
     #'
     #' c(Set$new(1,2,3), Set$new(1)) < Set$new(1,2,3) # not proper
     #' Set$new(1,2,3) <= Set$new(1,2,3) # proper
-    isSubset = function(x, proper = FALSE, all = FALSE){
-      x = listify(x)
-      ret = sapply(x, function(y){
-        if(!testSet(y)){
+    isSubset = function(x, proper = FALSE, all = FALSE) {
+      x <- listify(x)
+      ret <- sapply(x, function(y) {
+        if (!testSet(y)) {
           return(FALSE)
         }
 
-        if(testFuzzy(y)){
-          if(!all(y$membership() == 1)){
+        if (testFuzzy(y)) {
+          if (!all(y$membership() == 1)) {
             return(FALSE)
           }
         }
 
-        if(getR6Class(y) %in% c("ConditionalSet", "UniversalSet")) {
+        if (getR6Class(y) %in% c("ConditionalSet", "UniversalSet")) {
           return(FALSE)
-        } else if(testInterval(y)){
-          if(testFinite(y)){
-            if(proper){
+        } else if (testInterval(y)) {
+          if (testFinite(y)) {
+            if (proper) {
               return(all(suppressWarnings(y$elements %in% self$elements)) &
-                       !all(suppressWarnings(self$elements %in% y$elements)))
+                !all(suppressWarnings(self$elements %in% y$elements)))
             } else {
               return(all(suppressWarnings(y$elements %in% self$elements)))
             }
@@ -298,9 +303,9 @@ Set <- R6Class("Set",
             return(FALSE)
           }
         } else {
-          if(proper){
+          if (proper) {
             return(all(suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements)) &
-                     !all(suppressWarnings(private$.str_elements %in% y$.__enclos_env__$private$.str_elements)))
+              !all(suppressWarnings(private$.str_elements %in% y$.__enclos_env__$private$.str_elements)))
           } else {
             return(all(suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements)))
           }
@@ -332,15 +337,18 @@ Set <- R6Class("Set",
     #' # setunion vs. add
     #' Set$new(1,2)$add(Interval$new(5,6))$print()
     #' Set$new(1,2) + Interval$new(5,6)
-    add = function(...){
+    add = function(...) {
       assertContains(self$universe, list(...),
-                     errormsg = sprintf("some added elements are not contained in the set universe: %s",
-                                        self$universe$strprint()))
+        errormsg = sprintf(
+          "some added elements are not contained in the set universe: %s",
+          self$universe$strprint()
+        )
+      )
 
       if (self$class == "ANY") {
-        els = setunion(self, Set$new(elements = list(...)))
+        els <- setunion(self, Set$new(elements = list(...)))
       } else {
-        els = setunion(self, Set$new(elements = list(...), class = self$class))
+        els <- setunion(self, Set$new(elements = list(...), class = self$class))
       }
 
       private$.elements <- els$elements
@@ -370,9 +378,9 @@ Set <- R6Class("Set",
     #' # setcomplement vs. remove
     #' Set$new(1,2,3)$remove(Interval$new(5,7))$print()
     #' Set$new(1,2,3) - Interval$new(5,7)
-    remove = function(...){
-      els = setcomplement(self, Set$new(elements = list(...)))
-      if(inherits(els, "SetWrapper")) {
+    remove = function(...) {
+      els <- setcomplement(self, Set$new(elements = list(...)))
+      if (inherits(els, "SetWrapper")) {
         return(els)
       } else {
         private$.elements <- els$elements
@@ -397,7 +405,7 @@ Set <- R6Class("Set",
     #'  \item \code{countability} - One of: countably finite, countably infinite, uncountable
     #'  \item \code{closure} - One of: closed, open, half-open
     #' }
-    properties = function(){
+    properties = function() {
       return(private$.properties)
     },
 
@@ -406,13 +414,13 @@ Set <- R6Class("Set",
     #' \itemize{
     #'  \item \code{crisp} - is the Set crisp or fuzzy?
     #' }
-    traits = function(){
+    traits = function() {
       return(private$.traits)
     },
 
     #' @field type
     #' Returns the type of the Set. One of: (), (], [), [], \{\}
-    type = function(){
+    type = function() {
       return(private$.type)
     },
 
@@ -420,9 +428,9 @@ Set <- R6Class("Set",
     #' If the Set consists of numerics only then returns the maximum element in the Set. For open
     #' or half-open sets, then the maximum is defined by
     #' \deqn{upper - 1e-15}
-    max = function(){
-      if(self$class %in% c("numeric","integer","complex")) {
-        if (self$type %in% c("()","[)")) {
+    max = function() {
+      if (self$class %in% c("numeric", "integer", "complex")) {
+        if (self$type %in% c("()", "[)")) {
           if (self$upper == Inf) {
             return(.Machine$double.xmax)
           } else {
@@ -440,10 +448,10 @@ Set <- R6Class("Set",
     #' If the Set consists of numerics only then returns the minimum element in the Set. For open
     #' or half-open sets, then the minimum is defined by
     #' \deqn{lower + 1e-15}
-    min = function(){
-      if(self$class %in% c("numeric","integer","complex")) {
-        if(self$type %in% c("()","(]")) {
-          if(self$lower == -Inf) {
+    min = function() {
+      if (self$class %in% c("numeric", "integer", "complex")) {
+        if (self$type %in% c("()", "(]")) {
+          if (self$lower == -Inf) {
             return(-.Machine$double.xmax)
           } else {
             return(self$lower + 1e-15)
@@ -458,48 +466,49 @@ Set <- R6Class("Set",
 
     #' @field upper
     #' If the Set consists of numerics only then returns the upper bound of the Set.
-    upper = function(){
+    upper = function() {
       return(private$.upper)
     },
 
     #' @field lower
     #' If the Set consists of numerics only then returns the lower bound of the Set.
-    lower = function(){
+    lower = function() {
       return(private$.lower)
     },
 
     #' @field class
     #' If all elements in the Set are the same class then returns that class, otherwise "ANY".
-    class = function(){
+    class = function() {
       return(private$.class)
     },
 
     #' @field elements
     #' If the Set is finite then returns all elements in the Set as a `list`, otherwise "NA".
-    elements = function(){
+    elements = function() {
       return(private$.elements)
     },
 
     #' @field universe
     #' Returns the universe of the Set, i.e. the set of values that can be added to the Set.
-    universe = function(){
+    universe = function() {
       return(private$.universe)
     },
 
     #' @field range
     #' If the Set consists of numerics only then returns the range of the Set defined by
     #' \deqn{upper - lower}
-    range = function(){
-      if(self$class %in% c("numeric", "integer","complex"))
+    range = function() {
+      if (self$class %in% c("numeric", "integer", "complex")) {
         return(self$upper - self$lower)
-      else
+      } else {
         return(NaN)
+      }
     },
 
     #' @field length
     #' If the Set is finite then returns the number of elements in the Set, otherwise Inf. See
     #' the cardinality property for the type of infinity.
-    length = function(){
+    length = function() {
       if (class(self$elements) == "logical") {
         if (is.na(self$elements)) {
           return(Inf)
@@ -525,4 +534,4 @@ Set <- R6Class("Set",
 )
 
 #' @export
-summary.Set = function(object, n, ...) object$summary(n = 2)
+summary.Set <- function(object, n, ...) object$summary(n = 2)

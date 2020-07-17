@@ -2,8 +2,8 @@
 #' @rdname powerset
 #' @title Calculate a Set's Powerset
 #' @description Calculates and returns the powerset of a Set.
-#' @details A powerset of a set, S, is defined as the set of all subsets of S, including S itself and
-#' the empty set.
+#' @details A powerset of a set, S, is defined as the set of all subsets of S, including S itself
+#' and the empty set.
 #' @param x [Set]
 #' @param simplify logical, if `TRUE` then tries to simplify the result to a `Set` otherwise
 #' creates an object of class [PowersetSet].
@@ -11,8 +11,8 @@
 #' @family operators
 #' @examples
 #' # simplify = FALSE is default
-#' powerset(Set$new(1,2))
-#' powerset(Set$new(1,2), simplify = TRUE)
+#' powerset(Set$new(1, 2))
+#' powerset(Set$new(1, 2), simplify = TRUE)
 #'
 #' # powerset of intervals
 #' powerset(Interval$new())
@@ -21,39 +21,44 @@
 #' powerset(powerset(Reals$new()))
 #' powerset(powerset(Reals$new()))$properties$cardinality
 #' @export
-powerset <- function(x, simplify = FALSE){
-  if(getR6Class(x) == "UniversalSet")
+powerset <- function(x, simplify = FALSE) {
+  if (getR6Class(x) == "UniversalSet") {
     return(x)
+  }
 
-  if(x$properties$empty)
+  if (x$properties$empty) {
     return(Set$new(Set$new()))
+  }
 
-  if(simplify & testFuzzyTuple(x))
+  if (simplify & testFuzzyTuple(x)) {
     return(.powerset_fuzzytuple(x))
-  else if(simplify & testFuzzy(x))
+  } else if (simplify & testFuzzy(x)) {
     return(.powerset_fuzzyset(x))
-  # else if(simplify & testTuple(x))
+  } # else if(simplify & testTuple(x))
   #   return(.powerset_tuple(x))
-  else if(simplify & (getR6Class(x) == "Set" | testTuple(x)))
+  else if (simplify & (getR6Class(x) == "Set" | testTuple(x))) {
     return(.powerset_set(x))
-  else
+  } else {
     return(PowersetSet$new(x))
+  }
 }
 
-.powerset_fuzzytuple <- function(x){
-  y = Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),vectorize.args = c("m"))(1:(x$length-1))
+.powerset_fuzzytuple <- function(x) {
+  y <- Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),
+                 vectorize.args = c("m"))(1:(x$length - 1))
   # if(class(y[1,1]) == "list")
-    y = lapply(unlist(y), function(el) FuzzyTuple$new(elements = el, membership = x$membership(el)))
+  y <- lapply(unlist(y), function(el) FuzzyTuple$new(elements = el, membership = x$membership(el)))
   # else
   #   y = apply(y, 1, function(el){
   #     FuzzyTuple$new(elements = el, membership = x$membership(el))
   #   })
   return(Set$new(elements = c(Set$new(), y, x)))
 }
-.powerset_fuzzyset <- function(x){
-  y = Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),vectorize.args = c("m"))(1:(x$length-1))
+.powerset_fuzzyset <- function(x) {
+  y <- Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),
+                 vectorize.args = c("m"))(1:(x$length - 1))
   # if(class(y[1,1]) == "list")
-    y = sapply(unlist(y), function(el) FuzzySet$new(elements = el, membership = x$membership(el)))
+  y <- sapply(unlist(y), function(el) FuzzySet$new(elements = el, membership = x$membership(el)))
   # else
   #   y = apply(y, 1, function(el){
   #     FuzzySet$new(elements = el, membership = x$membership(el))
@@ -62,16 +67,21 @@ powerset <- function(x, simplify = FALSE){
 }
 # .powerset_tuple <- function(x){
 #   elements <- x$elements
-#   y = Vectorize(function(m) utils::combn(elements, m, simplify = FALSE),vectorize.args = c("m"))(1:(x$length-1))
+#   y = Vectorize(function(m) utils::combn(elements, m, simplify = FALSE),
+#   vectorize.args = c("m"))(1:(x$length-1))
 #   return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, as.Tuple)), x)))
 # }
-.powerset_set <- function(x){
+.powerset_set <- function(x) {
   elements <- x$elements
-  y = Vectorize(function(m) utils::combn(elements, m, simplify = FALSE),vectorize.args = c("m"), SIMPLIFY = FALSE)(1:(x$length-1))
+  y <- Vectorize(function(m) utils::combn(elements, m, simplify = FALSE), vectorize.args = c("m"),
+                 SIMPLIFY = FALSE)(1:(x$length - 1))
 
-  try({
-    return(Set$new(elements = c(Set$new(), unlist(apply(y,2,as.Set)), as.Set(x))))
-  }, silent = TRUE)
+  try(
+    {
+      return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, as.Set)), as.Set(x))))
+    },
+    silent = TRUE
+  )
 
   return(Set$new(elements = c(Set$new(), unlist(lapply(y, as.Set)), as.Set(x))))
 }

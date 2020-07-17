@@ -2,11 +2,11 @@ library(testthat)
 
 context("Special sets")
 
-test_that("test abstract",{
+test_that("test abstract", {
   expect_error(SpecialSet$new())
 })
 
-test_that("special constructors",{
+test_that("special constructors", {
   expect_silent(Complex$new())
   expect_silent(Integers$new())
   expect_silent(Naturals$new())
@@ -28,11 +28,11 @@ test_that("special constructors",{
   expect_silent(PosReals$new(zero = F))
 })
 
-test_that("complex contains",{
-  c = Complex$new()
+test_that("complex contains", {
+  c <- Complex$new()
   expect_false(c$contains(1))
   expect_true(c$contains(1i))
-  expect_true(c$contains(c(1i,2i), all = TRUE))
-  expect_false(c$contains(list(1i,2), all = TRUE))
-  expect_equal(c$contains(list(1,2i)), c(FALSE, TRUE))
+  expect_true(c$contains(c(1i, 2i), all = TRUE))
+  expect_false(c$contains(list(1i, 2), all = TRUE))
+  expect_equal(c$contains(list(1, 2i)), c(FALSE, TRUE))
 })

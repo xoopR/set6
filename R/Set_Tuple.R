@@ -17,7 +17,7 @@
 #' Tuple$new("a", 5, Set$new(1), Tuple$new(2))
 #'
 #' # Each Tuple has properties and traits
-#' t = Tuple$new(1,2,3)
+#' t <- Tuple$new(1, 2, 3)
 #' t$traits
 #' t$properties
 #'
@@ -26,9 +26,9 @@
 #'
 #' # Ordering does matter
 #' Tuple$new(1, 2) != Tuple$new(2, 1)
-#'
 #' @export
-Tuple <- R6Class("Tuple", inherit = Set,
+Tuple <- R6Class("Tuple",
+  inherit = Set,
   public = list(
     #' @description Tests if two sets are equal.
     #' @param x [Set] or vector of [Set]s.
@@ -48,31 +48,35 @@ Tuple <- R6Class("Tuple", inherit = Set,
     #' Tuple$new(1,2) ==  Tuple$new(1,2)
     #' Tuple$new(1,2) != Tuple$new(1,2)
     #' Tuple$new(1,1) != Set$new(1,1)
-    equals = function(x, all = FALSE){
+    equals = function(x, all = FALSE) {
       x <- listify(x)
 
-      ret = sapply(x, function(el){
-        if(!inherits(el, "R6"))
+      ret <- sapply(x, function(el) {
+        if (!inherits(el, "R6")) {
           return(FALSE)
-
-        if(testFuzzy(el)){
-          if(all(el$membership() == 1))
-            el = as.Tuple(el)
         }
 
-        if(testInterval(el) & class(try(as.Tuple(el), silent = TRUE))[1] != "try-error")
-          el = as.Tuple(el)
-        else if(testConditionalSet(el))
+        if (testFuzzy(el)) {
+          if (all(el$membership() == 1)) {
+            el <- as.Tuple(el)
+          }
+        }
+
+        if (testInterval(el) & class(try(as.Tuple(el), silent = TRUE))[1] != "try-error") {
+          el <- as.Tuple(el)
+        } else if (testConditionalSet(el)) {
           return(FALSE)
+        }
 
-        if(el$length != self$length)
+        if (el$length != self$length) {
           return(FALSE)
+        }
 
-        for(i in seq_along(el$length)){
-          elel = ifnerror(el$elements[[i]]$strprint(), error = el$elements[[i]])
-          selel = ifnerror(self$elements[[i]]$strprint(), error = self$elements[[i]])
+        for (i in seq_along(el$length)) {
+          elel <- ifnerror(el$elements[[i]]$strprint(), error = el$elements[[i]])
+          selel <- ifnerror(self$elements[[i]]$strprint(), error = self$elements[[i]])
 
-          if(elel != selel){
+          if (elel != selel) {
             return(FALSE)
           }
         }
@@ -113,40 +117,47 @@ Tuple <- R6Class("Tuple", inherit = Set,
     #' @examples
     #' Tuple$new(1,2,3) < Tuple$new(1,2,3,4)
     #' Tuple$new(1,3,2) < Tuple$new(1,2,3,4)
-    isSubset = function(x, proper = FALSE, all = FALSE){
+    isSubset = function(x, proper = FALSE, all = FALSE) {
       x <- listify(x)
 
-      ret = sapply(x, function(el){
-        if(!inherits(el, "R6"))
+      ret <- sapply(x, function(el) {
+        if (!inherits(el, "R6")) {
           return(FALSE)
-
-        if(testFuzzy(el)){
-          if(all(el$membership() == 1))
-            el = as.Tuple(el)
         }
 
-        if(testInterval(el) & class(try(as.Tuple(el), silent = TRUE))[1] != "try-error")
-          el = as.Tuple(el)
+        if (testFuzzy(el)) {
+          if (all(el$membership() == 1)) {
+            el <- as.Tuple(el)
+          }
+        }
 
-        if(!testSet(el) | testFuzzy(el) | testConditionalSet(el) | testInterval(el))
-          return(FALSE)
+        if (testInterval(el) & class(try(as.Tuple(el), silent = TRUE))[1] != "try-error") {
+          el <- as.Tuple(el)
+        }
 
-        if(el$length > self$length)
+        if (!testSet(el) | testFuzzy(el) | testConditionalSet(el) | testInterval(el)) {
           return(FALSE)
-        else if(el$length == self$length){
-          if(!proper & el$equals(self))
+        }
+
+        if (el$length > self$length) {
+          return(FALSE)
+        } else if (el$length == self$length) {
+          if (!proper & el$equals(self)) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
-        } else{
+          }
+        } else {
           mtc <- match(el$elements, self$elements)
-          if(all(is.na(mtc)))
+          if (all(is.na(mtc))) {
             return(FALSE)
+          }
 
-          if(all(order(mtc) == (1:length(el$elements))))
+          if (all(order(mtc) == (1:length(el$elements)))) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
+          }
         }
       })
 

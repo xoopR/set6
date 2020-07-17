@@ -9,10 +9,10 @@
 #'
 #' @examples
 #' # Set of Positive Naturals
-#' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
-#'
+#' s <- ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
 #' @export
-ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
+ConditionalSet <- R6Class("ConditionalSet",
+  inherit = Set,
   public = list(
     #' @description Create a new `ConditionalSet` object.
     #' @return A new `ConditionalSet` object.
@@ -22,22 +22,23 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #' either `TRUE` or `FALSE`. Further constraints can be given by providing the universe of the
     #' function arguments as [Set]s, if these are not given then the [UniversalSet] is assumed.
     #' See examples.
-    initialize = function(condition, argclass = NULL){
-      if(!is.function(condition))
+    initialize = function(condition, argclass = NULL) {
+      if (!is.function(condition)) {
         stop("'condition' must be a function.")
-      else{
+      } else {
         lst <- as.list(1:length(formals(condition)))
         names(lst) <- names(formals(condition))
-        if(!checkmate::testLogical(do.call(condition, lst)))
+        if (!checkmate::testLogical(do.call(condition, lst))) {
           stop("'condition' should result in a logical.")
+        }
       }
 
       private$.condition <- condition
       private$.dimension <- length(formals(condition))
 
-      if (!is.null(argclass))
+      if (!is.null(argclass)) {
         assertSetList(argclass)
-      else {
+      } else {
         argclass <- rep(list(UniversalSet$new()), private$.dimension)
         names(argclass) <- names(formals(condition))
       }
@@ -91,21 +92,21 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #' # Set of Positive Naturals
     #' s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
     #' s$contains(list(-2, 2))
-    contains = function(x, all = FALSE, bound = NULL){
+    contains = function(x, all = FALSE, bound = NULL) {
       x <- listify(x)
-      if(!testSetList(x)){
+      if (!testSetList(x)) {
         x <- as.Set(x)
       }
       # x <- assertSetList(listify(x),
       #                    "`x` should be a Set, Tuple, or list of Sets/Tuples.")
 
-      ret = sapply(seq_along(x), function(i){
+      ret <- sapply(seq_along(x), function(i) {
         els <- as.list(x[[i]]$elements)
         if (length(els) != length(self$class)) {
           stop(sprintf("Set is of length %s, length %s expected.", length(els), length(self$class)))
         }
         names(els) <- names(self$class)
-        ret = do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
+        ret <- do.call(self$condition, els) & all(mapply(function(x, y) x$contains(y), self$class, els))
       })
 
       returner(ret, all)
@@ -122,38 +123,44 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
     #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
     #' element of `x`.
-    equals = function(x, all = FALSE){
+    equals = function(x, all = FALSE) {
       x <- listify(x)
 
-      ret = sapply(x, function(el){
-        if(!testConditionalSet(el))
+      ret <- sapply(x, function(el) {
+        if (!testConditionalSet(el)) {
           return(FALSE)
+        }
 
-        if(all(names(formals(el$condition)) == names(formals(self$condition))) &
-           all(body(el$condition) == body(self$condition)) &
-           all(unlist(lapply(el$class, getR6Class)) == unlist(lapply(self$class, getR6Class))))
+        if (all(names(formals(el$condition)) == names(formals(self$condition))) &
+          all(body(el$condition) == body(self$condition)) &
+          all(unlist(lapply(el$class, getR6Class)) == unlist(lapply(self$class, getR6Class)))) {
           return(TRUE)
+        }
 
 
-        if(!all(rsapply(self$class, "strprint") == rsapply(el$class, "strprint")))
+        if (!all(rsapply(self$class, "strprint") == rsapply(el$class, "strprint"))) {
           return(FALSE)
-        else{
-          sclass = self$class
-          elclass = el$class
-          if(length(sclass) < length(elclass))
-            sclass = rep(sclass, length(elclass))[1:length(elclass)]
-          if(length(elclass) < length(sclass))
-            elclass = rep(elclass, length(sclass))[1:length(sclass)]
-
-          elcond = body(el$condition)
-          if(!all(names(sclass) == names(elclass))){
-            for(i in 1:length(names(elclass)))
-              elcond = gsub(names(elclass)[[i]], names(sclass)[[i]], elcond, fixed = TRUE)
+        } else {
+          sclass <- self$class
+          elclass <- el$class
+          if (length(sclass) < length(elclass)) {
+            sclass <- rep(sclass, length(elclass))[1:length(elclass)]
           }
-          if(all(elcond == as.character(body(self$condition))))
+          if (length(elclass) < length(sclass)) {
+            elclass <- rep(elclass, length(sclass))[1:length(sclass)]
+          }
+
+          elcond <- body(el$condition)
+          if (!all(names(sclass) == names(elclass))) {
+            for (i in 1:length(names(elclass))) {
+              elcond <- gsub(names(elclass)[[i]], names(sclass)[[i]], elcond, fixed = TRUE)
+            }
+          }
+          if (all(elcond == as.character(body(self$condition)))) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
+          }
         }
       })
 
@@ -164,20 +171,24 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #' Creates a printable representation of the object.
     #' @param n ignored, added for consistency.
     #' @return A character string representing the object.
-    strprint = function(n = NULL){
-      if(useUnicode())
-        sep = " \u2208 "
-      else
-        sep = " in "
+    strprint = function(n = NULL) {
+      if (useUnicode()) {
+        sep <- " \u2208 "
+      } else {
+        sep <- " in "
+      }
 
-      return(paste0("{",paste0(paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), " : ",
-                               paste(names(self$class), sapply(self$class, function(x) x$strprint()),
-                                     sep = sep, collapse = ", "),"}")))
+      return(paste0("{", paste0(
+        paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), " : ",
+        paste(names(self$class), sapply(self$class, function(x) x$strprint()),
+          sep = sep, collapse = ", "
+        ), "}"
+      )))
     },
 
     #' @description See `strprint`.
     #' @param n ignored, added for consistency.
-    summary = function(n = NULL){
+    summary = function(n = NULL) {
       self$print()
     },
 
@@ -185,7 +196,7 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     #' @param x ignored, added for consistency.
     #' @param proper ignored, added for consistency.
     #' @param all ignored, added for consistency.
-    isSubset = function(x, proper = FALSE, all = FALSE){
+    isSubset = function(x, proper = FALSE, all = FALSE) {
       message("isSubset is currently undefined for conditional sets.")
       return(FALSE)
     }
@@ -194,19 +205,19 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
   active = list(
     #' @field condition
     #' Returns the condition defining the ConditionalSet.
-    condition = function(){
+    condition = function() {
       return(private$.condition)
     },
 
     #' @field class
     #' Returns `argclass`, see `$new`.
-    class = function(){
+    class = function() {
       return(private$.argclass)
     },
 
     #' @field elements
     #' Returns `NA`.
-    elements = function(){
+    elements = function() {
       return(NA)
     }
   ),
@@ -218,5 +229,3 @@ ConditionalSet <- R6Class("ConditionalSet", inherit = Set,
     .upper = NA
   )
 )
-
-

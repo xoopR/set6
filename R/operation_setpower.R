@@ -18,7 +18,7 @@
 #' # Power of a Set
 #' setpower(Set$new(1, 2), 3, simplify = FALSE)
 #' setpower(Set$new(1, 2), 3, simplify = TRUE)
-#' Set$new(1,2)^3
+#' Set$new(1, 2)^3
 #'
 #' # Power of an interval
 #' Interval$new(2, 5)^5
@@ -31,27 +31,29 @@
 #' ConditionalSet$new(function(x) TRUE)^2
 #'
 #' # Power of FuzzySet
-#' FuzzySet$new(1,0.1,2,0.5)^2
-#'
+#' FuzzySet$new(1, 0.1, 2, 0.5)^2
 #' @export
-setpower <- function(x, power, simplify = FALSE, nest = FALSE){
-  if(getR6Class(x) == "UniversalSet")
+setpower <- function(x, power, simplify = FALSE, nest = FALSE) {
+  if (getR6Class(x) == "UniversalSet") {
     return(x)
+  }
 
-  if(power == 1)
+  if (power == 1) {
     return(x)
+  }
 
-  if (getR6Class(x) %in% c("Set", "FuzzySet", "Tuple", "FuzzyTuple") & simplify){
-    x = rep(list(x), power)
+  if (getR6Class(x) %in% c("Set", "FuzzySet", "Tuple", "FuzzyTuple") & simplify) {
+    x <- rep(list(x), power)
     return(do.call(setproduct, c(x, list(nest = nest, simplify = TRUE))))
-  } else if (inherits(x, "ExponentSet"))
+  } else if (inherits(x, "ExponentSet")) {
     return(ExponentSet$new(x$wrappedSets[[1]], x$power * power))
-  else
+  } else {
     return(ExponentSet$new(x, power))
+  }
 }
 
 #' @rdname setpower
 #' @export
-`^.Set` <- function(x, power){
+`^.Set` <- function(x, power) {
   setpower(x, power)
 }

@@ -21,7 +21,7 @@
 #' # Note membership defaults to full membership
 #' FuzzyTuple$new(elements = 1:5) == Tuple$new(1:5)
 #'
-#' f = FuzzyTuple$new(1, 0.2, 2, 1, 3, 0)
+#' f <- FuzzyTuple$new(1, 0.2, 2, 1, 3, 0)
 #' f$membership()
 #' f$alphaCut(0.3)
 #' f$core()
@@ -36,10 +36,10 @@
 #' # More important is ordering.
 #' FuzzyTuple$new(1, 0.1, 2, 0.2) != FuzzyTuple$new(2, 0.2, 1, 0.1)
 #' FuzzySet$new(1, 0.1, 2, 0.2) == FuzzySet$new(2, 0.2, 1, 0.1)
-#'
 #' @export
-FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet,
-  public  = list(
+FuzzyTuple <- R6Class("FuzzyTuple",
+  inherit = FuzzySet,
+  public = list(
     #' @description Tests if two sets are equal.
     #' @details Two fuzzy sets are equal if they contain the same elements with the same memberships and
     #' in the same order. Infix operators can be used for:
@@ -52,21 +52,24 @@ FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet,
     #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
     #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
     #' element of `x`.
-    equals = function(x, all = FALSE){
-      if(all(self$membership() == 1))
+    equals = function(x, all = FALSE) {
+      if (all(self$membership() == 1)) {
         return(self$core(create = T)$equals(x))
+      }
 
       x <- listify(x)
 
-      ret = sapply(x, function(el){
-        if(!testFuzzySet(el))
+      ret <- sapply(x, function(el) {
+        if (!testFuzzySet(el)) {
           return(FALSE)
+        }
 
-        if(el$length != self$length)
+        if (el$length != self$length) {
           return(FALSE)
+        }
 
-        elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-        selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        elel <- unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        selel <- unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
 
         return(suppressWarnings(all(elel == selel) & all(el$membership() == self$membership())))
       })
@@ -94,35 +97,39 @@ FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet,
     #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
     #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
     #' element of `x`.
-    isSubset = function(x, proper = FALSE, all = FALSE){
-      if(all(self$membership() == 1))
+    isSubset = function(x, proper = FALSE, all = FALSE) {
+      if (all(self$membership() == 1)) {
         return(self$core(create = T)$isSubset(x, proper = proper, all = all))
+      }
 
       x <- listify(x)
 
-      ret = rep(FALSE, length(x))
-      ind = sapply(x, testFuzzyTuple)
+      ret <- rep(FALSE, length(x))
+      ind <- sapply(x, testFuzzyTuple)
 
-      ret[ind] = sapply(x[ind], function(el){
-        self_comp <- paste(self$elements, self$membership(), sep=";")
-        el_comp <- paste(el$elements, el$membership(), sep=";")
+      ret[ind] <- sapply(x[ind], function(el) {
+        self_comp <- paste(self$elements, self$membership(), sep = ";")
+        el_comp <- paste(el$elements, el$membership(), sep = ";")
 
-        if(el$length > self$length)
+        if (el$length > self$length) {
           return(FALSE)
-        else if(el$length == self$length){
-          if(!proper & el$equals(self))
+        } else if (el$length == self$length) {
+          if (!proper & el$equals(self)) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
-        } else{
+          }
+        } else {
           mtc <- match(el_comp, self_comp)
-          if(all(is.na(mtc)))
+          if (all(is.na(mtc))) {
             return(FALSE)
+          }
 
-          if(all(order(mtc) == (1:length(el$elements))))
+          if (all(order(mtc) == (1:length(el$elements)))) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
+          }
         }
       })
 
@@ -136,22 +143,25 @@ FuzzyTuple <- R6Class("FuzzyTuple", inherit = FuzzySet,
     #' @param strong logical, if `FALSE` (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than
     #' @param create logical, if `FALSE` (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements
     #' @return Elements in [FuzzyTuple] or a [Set] of the elements.
-    alphaCut = function(alpha, strong = FALSE, create = FALSE){
-      if(strong)
+    alphaCut = function(alpha, strong = FALSE, create = FALSE) {
+      if (strong) {
         els <- self$elements[self$membership() > alpha]
-      else
+      } else {
         els <- self$elements[self$membership() >= alpha]
+      }
 
-      if(create){
-        if(length(els) == 0)
+      if (create) {
+        if (length(els) == 0) {
           return(Set$new())
-        else
+        } else {
           return(Tuple$new(elements = els))
-      } else{
-        if(length(els) == 0)
+        }
+      } else {
+        if (length(els) == 0) {
           return(NULL)
-        else
+        } else {
           return(els)
+        }
       }
     }
   ),

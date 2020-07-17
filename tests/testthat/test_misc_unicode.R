@@ -2,7 +2,7 @@ library(testthat)
 
 context("useUnicode")
 
-test_that("useUnicode",{
+test_that("useUnicode", {
   expect_error(useUnicode("a"), "Assertion on")
   expect_silent(useUnicode(TRUE))
   expect_true(useUnicode())

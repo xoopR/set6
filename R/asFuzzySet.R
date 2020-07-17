@@ -4,12 +4,14 @@
 #' @details
 #' * `as.FuzzySet.list` - Assumes `list` has two items, named `elements` and `membership`,
 #' and that they are ordered to be corresponding.
-#' * `as.FuzzySet.matrix` - Assumes first column corresponds to `elements` and second column corresponds
-#' to their respective `membership`.
-#' * `as.FuzzySet.data.frame` - First checks to see if one column is called `elements` and the other is called `membership`.
-#' If not then uses `as.FuzzySet.matrix`.
-#' * `as.FuzzySet.Set` - Creates a [FuzzySet] by assuming [Set] elements all have `membership` equal to \eqn{1}.
-#' * `as.FuzzySet.Interval` - First tries coercion via [as.Set.Interval] then uses [as.FuzzySet.Set].
+#' * `as.FuzzySet.matrix` - Assumes first column corresponds to `elements` and second column
+#' corresponds to their respective `membership`.
+#' * `as.FuzzySet.data.frame` - First checks to see if one column is called `elements` and the
+#' other is called `membership`. If not then uses `as.FuzzySet.matrix`.
+#' * `as.FuzzySet.Set` - Creates a [FuzzySet] by assuming [Set] elements all have `membership`
+#' equal to \eqn{1}.
+#' * `as.FuzzySet.Interval` - First tries coercion via [as.Set.Interval] then uses
+#' [as.FuzzySet.Set].
 #' @export
 as.FuzzySet <- function(object) {
   UseMethod("as.FuzzySet", object)
@@ -113,7 +115,8 @@ as.FuzzyTuple.FuzzySet <- function(object) {
 #' @rdname as.FuzzySet
 #' @export
 as.FuzzyTuple.Interval <- function(object) {
-  ifnerror(as.Set.Interval(object), stopwarn = "stop", errormsg = "Interval cannot be coerced to FuzzyTuple.")
+  ifnerror(as.Set.Interval(object), stopwarn = "stop",
+           errormsg = "Interval cannot be coerced to FuzzyTuple.")
 }
 #' @rdname as.FuzzySet
 #' @export

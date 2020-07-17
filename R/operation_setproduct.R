@@ -28,86 +28,93 @@
 #' Set$new(1, 2) * Set$new(2, 3) * Set$new(4, 5)
 #' setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE) # same as above
 #' setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
-#' unnest_set = setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE)
-#' nest_set = setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
+#' unnest_set <- setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE)
+#' nest_set <- setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
 #' # note the difference when using contains
-#' unnest_set$contains(Tuple$new(1,3,5))
+#' unnest_set$contains(Tuple$new(1, 3, 5))
 #' nest_set$contains(Tuple$new(Tuple$new(1, 3), 5))
 #'
 #' # product of two sets
 #' Set$new(-2:4) * Set$new(2:5)
-#' setproduct(Set$new(1,4,"a"), Set$new("a", 6))
-#' setproduct(Set$new(1,4,"a"), Set$new("a", 6), simplify = TRUE)
+#' setproduct(Set$new(1, 4, "a"), Set$new("a", 6))
+#' setproduct(Set$new(1, 4, "a"), Set$new("a", 6), simplify = TRUE)
 #'
 #' # product of two intervals
 #' Interval$new(1, 10) * Interval$new(5, 15)
 #' Interval$new(1, 2, type = "()") * Interval$new(2, 3, type = "(]")
 #' Interval$new(1, 5, class = "integer") *
-#'     Interval$new(2, 7, class = "integer")
+#'   Interval$new(2, 7, class = "integer")
 #'
 #' # product of mixed set types
 #' Set$new(1:10) * Interval$new(5, 15)
-#' Set$new(5,7) * Tuple$new(6, 8, 7)
-#' FuzzySet$new(1,0.1) * Set$new(2)
+#' Set$new(5, 7) * Tuple$new(6, 8, 7)
+#' FuzzySet$new(1, 0.1) * Set$new(2)
 #'
 #' # product of FuzzySet
 #' FuzzySet$new(1, 0.1, 2, 0.5) * Set$new(2:5)
 #'
 #' # product of conditional sets
 #' ConditionalSet$new(function(x, y) x >= y) *
-#'     ConditionalSet$new(function(x, y) x == y)
+#'   ConditionalSet$new(function(x, y) x == y)
 #'
 #' # product of special sets
 #' PosReals$new() * NegReals$new()
-#'
 #' @export
-setproduct <- function(..., simplify = FALSE, nest = FALSE){
+setproduct <- function(..., simplify = FALSE, nest = FALSE) {
   if (...length() == 0) {
     return(Set$new())
-  } else if(...length() == 1){
+  } else if (...length() == 1) {
     return(assertSet(...elt(1)))
   }
 
-  sets = operation_cleaner(list(...), "ProductSet", nest, simplify = simplify)
-  if(length(sets) == 1){
+  sets <- operation_cleaner(list(...), "ProductSet", nest, simplify = simplify)
+  if (length(sets) == 1) {
     return(sets[[1]])
-  } else if(length(sets) == 0){
+  } else if (length(sets) == 0) {
     return(Set$new())
   }
 
-  classes = sapply(sets, getR6Class)
+  classes <- sapply(sets, getR6Class)
 
-  if(length(unique(rsapply(sets, "strprint"))) == 1 & !simplify)
+  if (length(unique(rsapply(sets, "strprint"))) == 1 & !simplify) {
     return(ExponentSet$new(sets[[1]], length(sets)))
-  else if (any(sapply(sets, function(x) inherits(x, "SetWrapper"))) |
-           any(grepl("ConditionalSet|Interval", classes)) | !simplify)
+  } else if (any(sapply(sets, function(x) inherits(x, "SetWrapper"))) |
+    any(grepl("ConditionalSet|Interval", classes)) | !simplify) {
     return(ProductSet$new(sets))
-  else if (any(grepl("FuzzySet|FuzzyTuple", unique(classes))))
+  } else if (any(grepl("FuzzySet|FuzzyTuple", unique(classes)))) {
     return(.product_fuzzyset(sets))
-  else (any(grepl("Set|Tuple", unique(classes))))
-    return(.product_set(sets, nest))
+  } else {
+    (any(grepl("Set|Tuple", unique(classes))))
+  }
+  return(.product_set(sets, nest))
 }
 
-.product_set <- function(sets, nest){
-  if (!nest | length(sets) < 3)
+.product_set <- function(sets, nest) {
+  if (!nest | length(sets) < 3) {
     return(Set$new(elements = apply(expand.grid(rlapply(sets, "elements", active = T)), 1, function(z) Tuple$new(elements = z))))
-  else {
-    s = Set$new(elements = apply(expand.grid(sets[[1]]$elements, sets[[2]]$elements), 1, function(z) Tuple$new(elements = z)))
-    for(i in 3:length(sets)){
-      s = Set$new(elements = apply(expand.grid(s$elements, sets[[3]]$elements), 1, function(z) Tuple$new(elements = z)))
+  } else {
+    s <- Set$new(elements = apply(expand.grid(sets[[1]]$elements, sets[[2]]$elements), 1, function(z) Tuple$new(elements = z)))
+    for (i in 3:length(sets)) {
+      s <- Set$new(elements = apply(expand.grid(s$elements, sets[[3]]$elements), 1, function(z) Tuple$new(elements = z)))
     }
     return(s)
   }
 }
-.product_fuzzyset <- function(sets){
-  mat = cbind(expand.grid(rlapply(sets, "elements", active = T)),
-              expand.grid(rlapply(sets, "membership")))
-  return(Set$new(elements = apply(mat, 1, function(x) FuzzyTuple$new(elements = x[1:(ncol(mat)/2)],
-                                           membership = x[((ncol(mat)/2)+1):(ncol(mat))]))))
+.product_fuzzyset <- function(sets) {
+  mat <- cbind(
+    expand.grid(rlapply(sets, "elements", active = T)),
+    expand.grid(rlapply(sets, "membership"))
+  )
+  return(Set$new(elements = apply(mat, 1, function(x) {
+    FuzzyTuple$new(
+      elements = x[1:(ncol(mat) / 2)],
+      membership = x[((ncol(mat) / 2) + 1):(ncol(mat))]
+    )
+  })))
 }
 
 #' @rdname setproduct
 #' @export
-`*.Set` <- function(x, y){
+`*.Set` <- function(x, y) {
   setproduct(x, y)
 }

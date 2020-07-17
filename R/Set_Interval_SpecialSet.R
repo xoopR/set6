@@ -7,16 +7,18 @@
 #' and are thus given their own names.
 #' @details This is an abstract class and should not be constructed directly. Use [listSpecialSets]
 #' to see the list of implemented special sets.
-SpecialSet <- R6Class("SpecialSet", inherit = Interval,
+SpecialSet <- R6Class("SpecialSet",
+  inherit = Interval,
   public = list(
     #' @description `SpecialSet` is an abstract class, the constructor cannot be used directly.
     #' @param lower defines the lower bound of the interval.
     #' @param upper defines the upper bound of the interval.
     #' @param type defines the interval closure type.
     #' @param class defines the interval class.
-    initialize = function(lower = -Inf, upper = Inf, type = "()", class = "numeric"){
-      if(getR6Class(self, pos = environment()) == "SpecialSet")
+    initialize = function(lower = -Inf, upper = Inf, type = "()", class = "numeric") {
+      if (getR6Class(self, pos = environment()) == "SpecialSet") {
         stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
+      }
 
       super$initialize(lower = lower, upper = upper, type = type, class = class, universe = UniversalSet$new())
 
@@ -26,14 +28,15 @@ SpecialSet <- R6Class("SpecialSet", inherit = Interval,
     #' @description Creates a printable representation of the object.
     #' @param n ignored, added for consistency.
     #' @return A character string representing the object.
-    strprint = function(n = NULL){
+    strprint = function(n = NULL) {
       setSymbol(getR6Class(self), private$.zero)
     }
   ),
 
   private = list(
     .zero = FALSE
-  ))
+  )
+)
 
 #' @name Naturals
 #' @title Set of Natural Numbers
@@ -41,15 +44,17 @@ SpecialSet <- R6Class("SpecialSet", inherit = Interval,
 #' \deqn{\\{0, 1, 2,...\\}}{0, 1, 2,...}
 #' @family special sets
 #' @export
-Naturals <- R6Class("Naturals",inherit = SpecialSet,
+Naturals <- R6Class("Naturals",
+  inherit = SpecialSet,
   public = list(
     #' @description Create a new `Naturals` object.
     #' @return A new `Naturals` object.
     #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
-    initialize = function(lower = 0){
+    initialize = function(lower = 0) {
       super$initialize(lower = lower, upper = Inf, type = "[)", class = "integer")
     }
-  ))
+  )
+)
 
 #' @name PosNaturals
 #' @title Set of Positive Natural Numbers
@@ -57,14 +62,16 @@ Naturals <- R6Class("Naturals",inherit = SpecialSet,
 #' \deqn{\\{1, 2, 3,...\\}}{0, 1, 2, 3,...}
 #' @family special sets
 #' @export
-PosNaturals <- R6Class("PosNaturals",inherit = Naturals,
+PosNaturals <- R6Class("PosNaturals",
+  inherit = Naturals,
   public = list(
     #' @description Create a new `PosNaturals` object.
     #' @return A new `PosNaturals` object.
-    initialize = function(){
+    initialize = function() {
       super$initialize(lower = 1)
     }
-  ))
+  )
+)
 
 
 #' @name Integers
@@ -73,17 +80,19 @@ PosNaturals <- R6Class("PosNaturals",inherit = Naturals,
 #' \deqn{\\{...,-3, -2, -1, 0, 1, 2, 3,...\\}}{...,-3, -2, -1, 0, 1, 2, 3,...}
 #' @family special sets
 #' @export
-Integers <- R6Class("Integers",inherit = SpecialSet,
+Integers <- R6Class("Integers",
+  inherit = SpecialSet,
   public = list(
     #' @description Create a new `Integers` object.
     #' @return A new `Integers` object.
     #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
     #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
     #' @param type character Set closure type. Advised to ignore, used by child-classes.
-    initialize = function(lower = -Inf, upper = Inf, type = "()"){
+    initialize = function(lower = -Inf, upper = Inf, type = "()") {
       super$initialize(lower = lower, upper = upper, type = type, class = "integer")
     }
-  ))
+  )
+)
 
 #' @name PosIntegers
 #' @title Set of Positive Integers
@@ -91,16 +100,18 @@ Integers <- R6Class("Integers",inherit = SpecialSet,
 #' \deqn{\\{0, 1, 2, 3,...\\}}{0, 1, 2, 3,...}
 #' @family special sets
 #' @export
-PosIntegers <- R6Class("PosIntegers",inherit = Integers,
-                       public = list(
-                         #' @description Create a new `PosIntegers` object.
-                         #' @return A new `PosIntegers` object.
-                         #' @param zero logical. If TRUE, zero is included in the set.
-                         initialize = function(zero = FALSE){
-                           if(zero) private$.zero = TRUE
-                           super$initialize(lower = ifelse(zero, 0, 1), type = "[)")
-                         }
-                       ))
+PosIntegers <- R6Class("PosIntegers",
+  inherit = Integers,
+  public = list(
+    #' @description Create a new `PosIntegers` object.
+    #' @return A new `PosIntegers` object.
+    #' @param zero logical. If TRUE, zero is included in the set.
+    initialize = function(zero = FALSE) {
+      if (zero) private$.zero <- TRUE
+      super$initialize(lower = ifelse(zero, 0, 1), type = "[)")
+    }
+  )
+)
 
 #' @name NegIntegers
 #' @title Set of Negative Integers
@@ -108,16 +119,18 @@ PosIntegers <- R6Class("PosIntegers",inherit = Integers,
 #' \deqn{\\{...,-3, -2, -1, 0\\}}{...,-3, -2, -1, 0}
 #' @family special sets
 #' @export
-NegIntegers <- R6Class("NegIntegers",inherit = Integers,
-                       public = list(
-                         #' @description Create a new `NegIntegers` object.
-                         #' @return A new `NegIntegers` object.
-                         #' @param zero logical. If TRUE, zero is included in the set.
-                         initialize = function(zero = FALSE){
-                           if(zero) private$.zero = TRUE
-                           super$initialize(upper = ifelse(zero, 0, -1), type = "(]")
-                         }
-                       ))
+NegIntegers <- R6Class("NegIntegers",
+  inherit = Integers,
+  public = list(
+    #' @description Create a new `NegIntegers` object.
+    #' @return A new `NegIntegers` object.
+    #' @param zero logical. If TRUE, zero is included in the set.
+    initialize = function(zero = FALSE) {
+      if (zero) private$.zero <- TRUE
+      super$initialize(upper = ifelse(zero, 0, -1), type = "(]")
+    }
+  )
+)
 
 #' @name Rationals
 #' @title Set of Rational Numbers
@@ -130,17 +143,19 @@ NegIntegers <- R6Class("NegIntegers",inherit = Integers,
 #' Furthermore, computers must truncate all irrational numbers to rational numbers.
 #' @family special sets
 #' @export
-Rationals <- R6Class("Rationals",inherit = SpecialSet,
-                     public = list(
-                       #' @description Create a new `Rationals` object.
-                       #' @return A new `Rationals` object.
-                       #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
-                       #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
-                       #' @param type character Set closure type. Advised to ignore, used by child-classes.
-                       initialize = function(lower = -Inf, upper = Inf, type = "()"){
-                         super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
-                       }
-                     ))
+Rationals <- R6Class("Rationals",
+  inherit = SpecialSet,
+  public = list(
+    #' @description Create a new `Rationals` object.
+    #' @return A new `Rationals` object.
+    #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
+    #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
+    #' @param type character Set closure type. Advised to ignore, used by child-classes.
+    initialize = function(lower = -Inf, upper = Inf, type = "()") {
+      super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
+    }
+  )
+)
 
 #' @name PosRationals
 #' @title Set of Positive Rational Numbers
@@ -153,16 +168,18 @@ Rationals <- R6Class("Rationals",inherit = SpecialSet,
 #' Furthermore, computers must truncate all irrational numbers to rational numbers.
 #' @family special sets
 #' @export
-PosRationals <- R6Class("PosRationals",inherit = Rationals,
-                        public = list(
-                          #' @description Create a new `PosRationals` object.
-                          #' @return A new `PosRationals` object.
-                          #' @param zero logical. If TRUE, zero is included in the set.
-                          initialize = function(zero = FALSE){
-                            if(zero) private$.zero = TRUE
-                            super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
-                          }
-                        ))
+PosRationals <- R6Class("PosRationals",
+  inherit = Rationals,
+  public = list(
+    #' @description Create a new `PosRationals` object.
+    #' @return A new `PosRationals` object.
+    #' @param zero logical. If TRUE, zero is included in the set.
+    initialize = function(zero = FALSE) {
+      if (zero) private$.zero <- TRUE
+      super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
+    }
+  )
+)
 
 #' @name NegRationals
 #' @title Set of Negative Rational Numbers
@@ -175,16 +192,18 @@ PosRationals <- R6Class("PosRationals",inherit = Rationals,
 #' Furthermore, computers must truncate all irrational numbers to rational numbers.
 #' @family special sets
 #' @export
-NegRationals <- R6Class("NegRationals",inherit = Rationals,
-                        public = list(
-                          #' @description Create a new `NegRationals` object.
-                          #' @return A new `NegRationals` object.
-                          #' @param zero logical. If TRUE, zero is included in the set.
-                          initialize = function(zero = FALSE){
-                            if(zero) private$.zero = TRUE
-                            super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
-                          }
-                        ))
+NegRationals <- R6Class("NegRationals",
+  inherit = Rationals,
+  public = list(
+    #' @description Create a new `NegRationals` object.
+    #' @return A new `NegRationals` object.
+    #' @param zero logical. If TRUE, zero is included in the set.
+    initialize = function(zero = FALSE) {
+      if (zero) private$.zero <- TRUE
+      super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
+    }
+  )
+)
 
 #' @name Reals
 #' @title Set of Real Numbers
@@ -194,17 +213,19 @@ NegRationals <- R6Class("NegRationals",inherit = Rationals,
 #' where \eqn{I} is the set of irrationals and \eqn{Q} is the set of rationals.
 #' @family special sets
 #' @export
-Reals <- R6Class("Reals",inherit = SpecialSet,
-                 public = list(
-                   #' @description Create a new `Reals` object.
-                   #' @return A new `Reals` object.
-                   #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
-                   #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
-                   #' @param type character Set closure type. Advised to ignore, used by child-classes.
-                   initialize = function(lower = -Inf, upper = Inf, type = "()"){
-                     super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
-                   }
-                 ))
+Reals <- R6Class("Reals",
+  inherit = SpecialSet,
+  public = list(
+    #' @description Create a new `Reals` object.
+    #' @return A new `Reals` object.
+    #' @param lower numeric. Where to start the set. Advised to ignore, used by child-classes.
+    #' @param upper numeric. Where to end the set. Advised to ignore, used by child-classes.
+    #' @param type character Set closure type. Advised to ignore, used by child-classes.
+    initialize = function(lower = -Inf, upper = Inf, type = "()") {
+      super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
+    }
+  )
+)
 
 #' @name PosReals
 #' @title Set of Positive Real Numbers
@@ -214,16 +235,18 @@ Reals <- R6Class("Reals",inherit = SpecialSet,
 #' where \eqn{I^+}{I+} is the set of positive irrationals and \eqn{Q^+}{Q+} is the set of positive rationals.
 #' @family special sets
 #' @export
-PosReals <- R6Class("PosReals",inherit = Reals,
-                    public = list(
-                      #' @description Create a new `PosReals` object.
-                      #' @return A new `PosReals` object.
-                      #' @param zero logical. If TRUE, zero is included in the set.
-                      initialize = function(zero = FALSE){
-                        if(zero) private$.zero = TRUE
-                        super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
-                      }
-                    ))
+PosReals <- R6Class("PosReals",
+  inherit = Reals,
+  public = list(
+    #' @description Create a new `PosReals` object.
+    #' @return A new `PosReals` object.
+    #' @param zero logical. If TRUE, zero is included in the set.
+    initialize = function(zero = FALSE) {
+      if (zero) private$.zero <- TRUE
+      super$initialize(lower = 0, type = ifelse(zero, "[)", "()"))
+    }
+  )
+)
 
 #' @name NegReals
 #' @title Set of Negative Real Numbers
@@ -233,16 +256,18 @@ PosReals <- R6Class("PosReals",inherit = Reals,
 #' where \eqn{I^-}{I-} is the set of negative irrationals and \eqn{Q^-}{Q-} is the set of negative rationals.
 #' @family special sets
 #' @export
-NegReals <- R6Class("NegReals",inherit = Reals,
-                    public = list(
-                      #' @description Create a new `NegReals` object.
-                      #' @return A new `NegReals` object.
-                      #' @param zero logical. If TRUE, zero is included in the set.
-                      initialize = function(zero = FALSE){
-                        if(zero) private$.zero = TRUE
-                        super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
-                      }
-                    ))
+NegReals <- R6Class("NegReals",
+  inherit = Reals,
+  public = list(
+    #' @description Create a new `NegReals` object.
+    #' @return A new `NegReals` object.
+    #' @param zero logical. If TRUE, zero is included in the set.
+    initialize = function(zero = FALSE) {
+      if (zero) private$.zero <- TRUE
+      super$initialize(upper = 0, type = ifelse(zero, "(]", "()"))
+    }
+  )
+)
 
 
 #' @name ExtendedReals
@@ -253,14 +278,16 @@ NegReals <- R6Class("NegReals",inherit = Reals,
 #' where \eqn{R} is the set of reals.
 #' @family special sets
 #' @export
-ExtendedReals <- R6Class("ExtendedReals",inherit = Reals,
-                         public = list(
-                           #' @description Create a new `ExtendedReals` object.
-                           #' @return A new `ExtendedReals` object.
-                           initialize = function(){
-                             super$initialize(type = "[]")
-                           }
-                         ))
+ExtendedReals <- R6Class("ExtendedReals",
+  inherit = Reals,
+  public = list(
+    #' @description Create a new `ExtendedReals` object.
+    #' @return A new `ExtendedReals` object.
+    initialize = function() {
+      super$initialize(type = "[]")
+    }
+  )
+)
 
 #' @name Complex
 #' @title Set of Complex Numbers
@@ -272,13 +299,14 @@ ExtendedReals <- R6Class("ExtendedReals",inherit = Reals,
 #' case where values can be complex, as opposed to reals or integers in [Interval].
 #' @family special sets
 #' @export
-Complex <- R6Class("Complex",inherit = SpecialSet,
+Complex <- R6Class("Complex",
+  inherit = SpecialSet,
   public = list(
     #' @description Create a new `Complex` object.
     #' @return A new `Complex` object.
     #' @param lower complex. Where to start the set.
     #' @param upper complex. Where to end the set.
-    initialize = function(lower = -Inf+0i, upper = Inf+0i){
+    initialize = function(lower = -Inf + 0i, upper = Inf + 0i) {
       super$initialize(lower = as.complex(lower), upper = as.complex(upper), type = "()", class = "numeric")
     },
 
@@ -302,8 +330,11 @@ Complex <- R6Class("Complex",inherit = SpecialSet,
     #'
     #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
     #' see examples.
-    contains = function(x, all = FALSE, bound = NULL){
-      returner(x = sapply(x, is.complex),
-               all = all)
+    contains = function(x, all = FALSE, bound = NULL) {
+      returner(
+        x = sapply(x, is.complex),
+        all = all
+      )
     }
-  ))
+  )
+)

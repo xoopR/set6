@@ -5,7 +5,8 @@
 #' @examples
 #' set6News()
 #' @export
-set6News <- function (){
+set6News <- function() {
   file.show(file.path(system.file(package = "set6"), "NEWS.md"),
-            title = "set6 Changelog")
+    title = "set6 Changelog"
+  )
 }

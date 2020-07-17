@@ -4,21 +4,21 @@
 #' @family sets
 #'
 #' @examples
-#' l = LogicalSet$new()
+#' l <- LogicalSet$new()
 #' print(l)
 #' l$contains(list(TRUE, 1, FALSE))
-#'
 #' @export
-LogicalSet <- R6::R6Class("LogicalSet", inherit = Set,
+LogicalSet <- R6::R6Class("LogicalSet",
+  inherit = Set,
   public = list(
     #' @description Create a new `LogicalSet` object.
     #' @details The Logical set is the set containing `TRUE` and `FALSE`.
     #' @return A new `LogicalSet` object.
-    initialize = function(){
+    initialize = function() {
       private$.elements <- list(TRUE, FALSE)
       private$.str_elements <- c("TRUE", "FALSE")
       private$.class <- "logical"
-      private$.properties = Properties$new(closure = "closed", cardinality = 2)
+      private$.properties <- Properties$new(closure = "closed", cardinality = 2)
       private$.lower <- TRUE
       private$.upper <- FALSE
       private$.universe <- self

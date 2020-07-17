@@ -18,24 +18,24 @@
 #' @family operators
 #' @examples
 #' # symmetrical difference compared to union and intersection
-#' Set$new(1,2,3) %-% Set$new(3, 4)
-#' (Set$new(1,2,3) | Set$new(3, 4)) - (Set$new(1,2,3) & Set$new(3, 4))
+#' Set$new(1, 2, 3) %-% Set$new(3, 4)
+#' (Set$new(1, 2, 3) | Set$new(3, 4)) - (Set$new(1, 2, 3) & Set$new(3, 4))
 #'
 #' # ConditionalSets demonstrate the internal logic
 #' ConditionalSet$new(function(x) x > 0) %-%
 #'   ConditionalSet$new(function(y) y == 0)
-#'
 #' @export
-setsymdiff <- function(x, y, simplify = TRUE){
-  if(x <= y)
+setsymdiff <- function(x, y, simplify = TRUE) {
+  if (x <= y) {
     return(setcomplement(y, x, simplify = simplify))
-  else if(y <= x)
+  } else if (y <= x) {
     return(setcomplement(x, y, simplify = simplify))
-  else
+  } else {
     return(setcomplement(setunion(x, y, simplify = simplify), setintersect(x, y), simplify = simplify))
+  }
 }
 #' @rdname setsymdiff
 #' @export
-`%-%` <- function(x, y){
+`%-%` <- function(x, y) {
   setsymdiff(x, y)
 }

@@ -8,23 +8,23 @@ NULL
 
 #' @rdname isSubset
 #' @export
-'<.Set' <- function(x, y){
+"<.Set" <- function(x, y) {
   return(y$isSubset(x, proper = TRUE))
 }
 
 #' @rdname isSubset
 #' @export
-'<=.Set' <- function(x, y){
+"<=.Set" <- function(x, y) {
   return(y$isSubset(x, proper = FALSE))
 }
 #' @rdname isSubset
 #' @export
-'>.Set' <- function(x, y){
+">.Set" <- function(x, y) {
   return(x$isSubset(y, proper = TRUE))
 }
 #' @rdname isSubset
 #' @export
-'>=.Set' <- function(x, y){
+">=.Set" <- function(x, y) {
   return(x$isSubset(y, proper = FALSE))
 }
 
@@ -35,12 +35,12 @@ NULL
 NULL
 #' @rdname equals
 #' @export
-'==.Set' <- function(x, y){
+"==.Set" <- function(x, y) {
   return(x$equals(y))
 }
 #' @rdname equals
 #' @export
-'!=.Set' <- function(x, y){
+"!=.Set" <- function(x, y) {
   return(!x$equals(y))
 }
 
@@ -50,6 +50,6 @@ NULL
 NULL
 #' @rdname contains
 #' @export
-'%inset%' <- function(x, y){
+"%inset%" <- function(x, y) {
   return(y$contains(x))
 }

@@ -21,16 +21,16 @@
 #' # Note membership defaults to full membership
 #' FuzzySet$new(elements = 1:5) == Set$new(1:5)
 #'
-#' f = FuzzySet$new(1, 0.2, 2, 1, 3, 0)
+#' f <- FuzzySet$new(1, 0.2, 2, 1, 3, 0)
 #' f$membership()
 #' f$alphaCut(0.3)
 #' f$core()
 #' f$inclusion(0)
 #' f$membership(0)
 #' f$membership(1)
-#'
 #' @export
-FuzzySet <- R6Class("FuzzySet", inherit = Set,
+FuzzySet <- R6Class("FuzzySet",
+  inherit = Set,
   public = list(
     #' @description Create a new `FuzzySet` object.
     #' @return A new `FuzzySet` object.
@@ -44,21 +44,23 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' respective memberships to `membership`, see examples. If the `class` argument is non-`NULL`,
     #' then all elements will be coerced to the given class in construction, and if elements of a
     #' different class are added these will either be rejected or coerced.
-    initialize = function(..., elements = NULL, membership = rep(1, length(elements)), class = NULL){
-      if(!is.null(elements) & !is.null(membership)){
+    initialize = function(..., elements = NULL, membership = rep(1, length(elements)), class = NULL) {
+      if (!is.null(elements) & !is.null(membership)) {
         elements <- listify(elements)
         membership <- as.numeric(membership)
-        if(length(membership) == 1)
+        if (length(membership) == 1) {
           membership <- rep(membership, length(elements))
-      } else if(length(list(...)) != 0){
+        }
+      } else if (length(list(...)) != 0) {
         dots <- list(...)
-        if(length(dots)%%2)
+        if (length(dots) %% 2) {
           stop("Every element needs a corresponding membership.")
-        elements <- dots[seq.int(1,length(dots),2)]
-        membership <- as.numeric(dots[seq.int(2,length(dots),2)])
+        }
+        elements <- dots[seq.int(1, length(dots), 2)]
+        membership <- as.numeric(dots[seq.int(2, length(dots), 2)])
       }
 
-      if(any(duplicated(elements)) & !testFuzzyTuple(self)){
+      if (any(duplicated(elements)) & !testFuzzyTuple(self)) {
         message("Duplicated elements dedicated, only the first element-membership pair is included.")
         membership <- membership[!duplicated(elements)]
         elements <- elements[!duplicated(elements)]
@@ -76,30 +78,39 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' Creates a printable representation of the object.
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @return A character string representing the object.
-    strprint = function(n = 2){
-      if(self$properties$empty) {
-        if(useUnicode())
+    strprint = function(n = 2) {
+      if (self$properties$empty) {
+        if (useUnicode()) {
           return("\u2205")
-        else
+        } else {
           return("{}")
+        }
       } else {
-        elements <- sapply(self$elements, function(x){
-          y = try(x$strprint(), silent = T)
-          if(inherits(y,"try-error"))
+        elements <- sapply(self$elements, function(x) {
+          y <- try(x$strprint(), silent = T)
+          if (inherits(y, "try-error")) {
             return(x)
-          else
+          } else {
             return(y)
+          }
         })
         members <- self$membership()
 
-        if(self$length <= n * 2)
-          return(paste0(substr(self$type,1,1),paste0(elements,"(",members,")", collapse = ", "),
-                        substr(self$type,2,2)))
-        else
-          return(paste0(substr(self$type,1,1),paste0(elements[1:n],"(",members[1:n],")",collapse = ", "), ",...,",
-                        paste0(elements[(self$length-n+1):self$length],"(",
-                               members[(self$length-n+1):self$length],")",collapse=", "),
-                        substr(self$type,2,2), collapse = ", "))
+        if (self$length <= n * 2) {
+          return(paste0(
+            substr(self$type, 1, 1), paste0(elements, "(", members, ")", collapse = ", "),
+            substr(self$type, 2, 2)
+          ))
+        } else {
+          return(paste0(substr(self$type, 1, 1), paste0(elements[1:n], "(", members[1:n], ")", collapse = ", "), ",...,",
+            paste0(elements[(self$length - n + 1):self$length], "(",
+              members[(self$length - n + 1):self$length], ")",
+              collapse = ", "
+            ),
+            substr(self$type, 2, 2),
+            collapse = ", "
+          ))
+        }
       }
     },
 
@@ -114,17 +125,20 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
     #' f$membership()
     #' f$membership(2)
-    membership = function(element = NULL){
-      if(is.null(element))
+    membership = function(element = NULL) {
+      if (is.null(element)) {
         return(private$.membership)
+      }
 
-      element = listify(element)
+      element <- listify(element)
 
-      ind = match(lapply(element, function(x) ifelse(testSet(x), x$strprint(), x)),
-                  lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+      ind <- match(
+        lapply(element, function(x) ifelse(testSet(x), x$strprint(), x)),
+        lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
+      )
 
-      ret = numeric(length(element))
-      ret[!is.na(ind)] = private$.membership[ind[!is.na(ind)]]
+      ret <- numeric(length(element))
+      ret[!is.na(ind)] <- private$.membership[ind[!is.na(ind)]]
 
       ret
     },
@@ -146,22 +160,25 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #'
     #' # Create a set from the alpha-cut
     #' f$alphaCut(0.5, create = TRUE)
-    alphaCut = function(alpha, strong = FALSE, create = FALSE){
-      if(strong)
+    alphaCut = function(alpha, strong = FALSE, create = FALSE) {
+      if (strong) {
         els <- self$elements[self$membership() > alpha]
-      else
+      } else {
         els <- self$elements[self$membership() >= alpha]
+      }
 
-      if(create){
-        if(length(els) == 0)
+      if (create) {
+        if (length(els) == 0) {
           return(Set$new())
-        else
+        } else {
           return(Set$new(elements = els))
-      } else{
-        if(length(els) == 0)
+        }
+      } else {
+        if (length(els) == 0) {
           return(NULL)
-        else
+        } else {
           return(unname(els))
+        }
       }
     },
 
@@ -176,7 +193,7 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
     #' f$support()
     #' f$support(TRUE)
-    support = function(create = FALSE){
+    support = function(create = FALSE) {
       self$alphaCut(0, TRUE, create)
     },
 
@@ -190,7 +207,7 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
     #' f$core()
     #' f$core(TRUE)
-    core = function(create = FALSE){
+    core = function(create = FALSE) {
       self$alphaCut(1, FALSE, create)
     },
 
@@ -208,13 +225,13 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' f$inclusion(0.1)
     #' f$inclusion(1)
     #' f$inclusion(3)
-    inclusion = function(element){
+    inclusion = function(element) {
 
       member <- self$membership(element)
 
-      member[member == 0] = "Not Included"
-      member[member == 1] = "Fully Included"
-      member[member > 0 & member < 1] = "Partially Included"
+      member[member == 0] <- "Not Included"
+      member[member == 1] <- "Fully Included"
+      member[member > 0 & member < 1] <- "Partially Included"
 
       member
     },
@@ -231,30 +248,34 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are equal to the Set, otherwise
     #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
     #' element of `x`.
-    equals = function(x, all = FALSE){
-      if(all(self$membership() == 1))
+    equals = function(x, all = FALSE) {
+      if (all(self$membership() == 1)) {
         return(self$core(create = T)$equals(x))
+      }
 
       x <- listify(x)
 
-      ret = sapply(x, function(el){
+      ret <- sapply(x, function(el) {
 
-        if(!testFuzzySet(el))
+        if (!testFuzzySet(el)) {
           return(FALSE)
+        }
 
-        elel = unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-        selel = unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        elel <- unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        selel <- unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
 
-        el_mat = matrix(c(elel,el$membership()),ncol=2)[order(elel),]
-        self_mat = matrix(c(selel,self$membership()),ncol=2)[order(selel),]
+        el_mat <- matrix(c(elel, el$membership()), ncol = 2)[order(elel), ]
+        self_mat <- matrix(c(selel, self$membership()), ncol = 2)[order(selel), ]
 
-        if(any(dim(el_mat) != dim(self_mat)))
+        if (any(dim(el_mat) != dim(self_mat))) {
           return(FALSE)
+        }
 
-        if(all(el_mat == self_mat))
+        if (all(el_mat == self_mat)) {
           return(TRUE)
-        else
+        } else {
           return(FALSE)
+        }
       })
 
       returner(ret, all)
@@ -280,29 +301,32 @@ FuzzySet <- R6Class("FuzzySet", inherit = Set,
     #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
     #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
     #' element of `x`.
-    isSubset = function(x, proper = FALSE, all = FALSE){
-      if(all(self$membership() == 1))
+    isSubset = function(x, proper = FALSE, all = FALSE) {
+      if (all(self$membership() == 1)) {
         return(self$core(create = T)$isSubset(x, proper = proper, all = all))
+      }
 
       x <- listify(x)
 
-      ret = rep(FALSE, length(x))
-      ind = sapply(x, testFuzzySet)
+      ret <- rep(FALSE, length(x))
+      ind <- sapply(x, testFuzzySet)
 
-      ret[ind] = sapply(x[ind], function(el){
-        self_comp <- paste(self$elements, self$membership(), sep=";")
-        el_comp <- paste(el$elements, el$membership(), sep=";")
+      ret[ind] <- sapply(x[ind], function(el) {
+        self_comp <- paste(self$elements, self$membership(), sep = ";")
+        el_comp <- paste(el$elements, el$membership(), sep = ";")
 
-        if(proper){
-          if(all(el_comp %in% self_comp) & !all(self_comp %in% el_comp))
+        if (proper) {
+          if (all(el_comp %in% self_comp) & !all(self_comp %in% el_comp)) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
-        }else{
-          if(all(el_comp %in% self_comp))
+          }
+        } else {
+          if (all(el_comp %in% self_comp)) {
             return(TRUE)
-          else
+          } else {
             return(FALSE)
+          }
         }
       })
 

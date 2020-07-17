@@ -27,6 +27,6 @@ NULL
 #'
 #' And for more advanced usage see the complete tutorials at
 #'
-#'\href{https://github.com/xoopR/set6}{https://github.com/xoopR/set6}
+#' \href{https://github.com/xoopR/set6}{https://github.com/xoopR/set6}
 #'
 "_PACKAGE"
