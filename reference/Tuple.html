@@ -257,7 +257,7 @@ element of <code>x</code>.</p>
 <span class='co'># Tuple of multiple types</span>
 <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='st'>"a"</span>, <span class='fl'>5</span>, <span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>1</span>), <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>2</span>))</div><div class='output co'>#&gt; (a, 5, {1}, (2)) </div><div class='input'>
 <span class='co'># Each Tuple has properties and traits</span>
-<span class='no'>t</span> <span class='kw'>=</span> <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>)
+<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>)
 <span class='no'>t</span>$<span class='no'>traits</span></div><div class='output co'>#&gt; $crisp
 #&gt; [1] TRUE
 #&gt; </div><div class='input'><span class='no'>t</span>$<span class='no'>properties</span></div><div class='output co'>#&gt; $empty
@@ -279,7 +279,6 @@ element of <code>x</code>.</p>
 <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>2</span>) <span class='kw'>!=</span> <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Ordering does matter</span>
 <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>) <span class='kw'>!=</span> <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Tuple$equals`</span>
 <span class='co'>## ------------------------------------------------</span>

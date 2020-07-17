@@ -415,13 +415,12 @@ element of <code>x</code>.</p>
 <span class='co'># Crisp sets are a special case FuzzySet</span>
 <span class='co'># Note membership defaults to full membership</span>
 <span class='no'>FuzzySet</span>$<span class='fu'>new</span>(<span class='kw'>elements</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>==</span> <span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='no'>f</span> <span class='kw'>=</span> <span class='no'>FuzzySet</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span>)
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='no'>FuzzySet</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span>)
 <span class='no'>f</span>$<span class='fu'>membership</span>()</div><div class='output co'>#&gt; [1] 0.2 1.0 0.0</div><div class='input'><span class='no'>f</span>$<span class='fu'>alphaCut</span>(<span class='fl'>0.3</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 2
 #&gt; </div><div class='input'><span class='no'>f</span>$<span class='fu'>core</span>()</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 2
 #&gt; </div><div class='input'><span class='no'>f</span>$<span class='fu'>inclusion</span>(<span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] "Not Included"</div><div class='input'><span class='no'>f</span>$<span class='fu'>membership</span>(<span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='no'>f</span>$<span class='fu'>membership</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 0.2</div><div class='input'>
-
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `FuzzySet$membership`</span>
 <span class='co'>## ------------------------------------------------</span>

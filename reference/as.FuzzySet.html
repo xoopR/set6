@@ -192,12 +192,14 @@
 <ul>
 <li><p><code>as.FuzzySet.list</code> - Assumes <code>list</code> has two items, named <code>elements</code> and <code>membership</code>,
 and that they are ordered to be corresponding.</p></li>
-<li><p><code>as.FuzzySet.matrix</code> - Assumes first column corresponds to <code>elements</code> and second column corresponds
-to their respective <code>membership</code>.</p></li>
-<li><p><code>as.FuzzySet.data.frame</code> - First checks to see if one column is called <code>elements</code> and the other is called <code>membership</code>.
-If not then uses <code>as.FuzzySet.matrix</code>.</p></li>
-<li><p><code>as.FuzzySet.Set</code> - Creates a <a href='FuzzySet.html'>FuzzySet</a> by assuming <a href='Set.html'>Set</a> elements all have <code>membership</code> equal to \(1\).</p></li>
-<li><p><code>as.FuzzySet.Interval</code> - First tries coercion via <a href='as.Set.html'>as.Set.Interval</a> then uses as.FuzzySet.Set.</p></li>
+<li><p><code>as.FuzzySet.matrix</code> - Assumes first column corresponds to <code>elements</code> and second column
+corresponds to their respective <code>membership</code>.</p></li>
+<li><p><code>as.FuzzySet.data.frame</code> - First checks to see if one column is called <code>elements</code> and the
+other is called <code>membership</code>. If not then uses <code>as.FuzzySet.matrix</code>.</p></li>
+<li><p><code>as.FuzzySet.Set</code> - Creates a <a href='FuzzySet.html'>FuzzySet</a> by assuming <a href='Set.html'>Set</a> elements all have <code>membership</code>
+equal to \(1\).</p></li>
+<li><p><code>as.FuzzySet.Interval</code> - First tries coercion via <a href='as.Set.html'>as.Set.Interval</a> then uses
+as.FuzzySet.Set.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
