@@ -56,7 +56,8 @@ Other wrappers:
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a new \code{ExponentSet} object. It is not recommended to construct this class directly.
+Create a new \code{ExponentSet} object. It is not recommended to construct this
+class directly.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ExponentSet$new(set, power)}\if{html}{\out{</div>}}
 }
@@ -115,11 +116,11 @@ Tests if elements \code{x} are contained in \code{self}.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-If \code{all == TRUE} then returns \code{TRUE} if all \code{x} are contained in \code{self}, otherwise \code{FALSE}.
-If \code{all == FALSE} returns a vector of logicals corresponding to the length of \code{x}, representing
-if each is contained in \code{self}. If \code{bound == TRUE} then an element is contained in \code{self} if it
-is on or within the (possibly-open) bounds of \code{self}, otherwise \code{TRUE} only if the element is within
-\code{self} or the bounds are closed.
+If \code{all == TRUE} then returns \code{TRUE} if all \code{x} are contained in \code{self},
+otherwise \code{FALSE}. If \code{all == FALSE} returns a vector of logicals corresponding to the
+length of \code{x}, representing if each is contained in \code{self}. If \code{bound == TRUE} then an
+element is contained in \code{self} if it is on or within the (possibly-open) bounds of \code{self},
+otherwise \code{TRUE} only if the element is within \code{self} or the bounds are closed.
 }
 }
 \if{html}{\out{<hr>}}

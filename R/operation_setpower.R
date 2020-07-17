@@ -41,11 +41,12 @@
 #' x$contains(Tuple$new(0))
 #' x$contains(Tuple$new(0, 1))
 #' x$contains(Tuple$new(0, 1, 0, 0, 1, 1, 0))
-#' x$contains(Tuple$new(0, 2))
+#' x$contains(list(Tuple$new(0, 2), Tuple$new(1, 1)))
 #'
 #' @export
 setpower <- function(x, power, simplify = FALSE, nest = FALSE) {
-  if (getR6Class(x) == "UniversalSet") {
+  classx <- getR6Class(x)
+  if (classx == "UniversalSet") {
     return(x)
   }
 
@@ -55,11 +56,15 @@ setpower <- function(x, power, simplify = FALSE, nest = FALSE) {
     return(x)
   } else if (power == "n") {
     return(ExponentSet$new(x, power))
-  } else if (getR6Class(x) %in% c("Set", "FuzzySet", "Tuple", "FuzzyTuple") & simplify) {
+  } else if (classx %in% c("Set", "FuzzySet", "Tuple", "FuzzyTuple") & simplify) {
     x <- rep(list(x), power)
     return(do.call(setproduct, c(x, list(nest = nest, simplify = TRUE))))
-  } else if (inherits(x, "ExponentSet")) {
-    return(ExponentSet$new(x$wrappedSets[[1]], x$power * power))
+  } else if (classx == "ExponentSet") {
+    if (x$power == "n") {
+      return(x)
+    } else {
+      return(ExponentSet$new(x$wrappedSets[[1]], x$power * power))
+    }
   } else {
     return(ExponentSet$new(x, power))
   }

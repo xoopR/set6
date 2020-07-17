@@ -67,12 +67,14 @@ Coerces object to an R6 \link{FuzzySet}/\link{FuzzyTuple}
 \itemize{
 \item \code{as.FuzzySet.list} - Assumes \code{list} has two items, named \code{elements} and \code{membership},
 and that they are ordered to be corresponding.
-\item \code{as.FuzzySet.matrix} - Assumes first column corresponds to \code{elements} and second column corresponds
-to their respective \code{membership}.
-\item \code{as.FuzzySet.data.frame} - First checks to see if one column is called \code{elements} and the other is called \code{membership}.
-If not then uses \code{as.FuzzySet.matrix}.
-\item \code{as.FuzzySet.Set} - Creates a \link{FuzzySet} by assuming \link{Set} elements all have \code{membership} equal to \eqn{1}.
-\item \code{as.FuzzySet.Interval} - First tries coercion via \link{as.Set.Interval} then uses \link{as.FuzzySet.Set}.
+\item \code{as.FuzzySet.matrix} - Assumes first column corresponds to \code{elements} and second column
+corresponds to their respective \code{membership}.
+\item \code{as.FuzzySet.data.frame} - First checks to see if one column is called \code{elements} and the
+other is called \code{membership}. If not then uses \code{as.FuzzySet.matrix}.
+\item \code{as.FuzzySet.Set} - Creates a \link{FuzzySet} by assuming \link{Set} elements all have \code{membership}
+equal to \eqn{1}.
+\item \code{as.FuzzySet.Interval} - First tries coercion via \link{as.Set.Interval} then uses
+\link{as.FuzzySet.Set}.
 }
 }
 \seealso{

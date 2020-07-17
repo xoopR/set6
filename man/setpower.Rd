@@ -12,10 +12,11 @@ setpower(x, power, simplify = FALSE, nest = FALSE)
 \arguments{
 \item{x}{Set}
 
-\item{power}{power to raise set to}
+\item{power}{power to raise set to, if \code{"n"} then a variable dimension set is created,
+see examples.`}
 
-\item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually a \code{Set},
-otherwise an \code{ExponentSet}.}
+\item{simplify}{logical, if \code{TRUE} returns the result in its simplest (unwrapped) form, usually
+a \code{Set}, otherwise an \code{ExponentSet}.}
 
 \item{nest}{logical, if \code{FALSE} (default) returns the n-ary cartesian product, otherwise returns
 the cartesian product applied n times.
@@ -25,17 +26,19 @@ the cartesian product applied n times.
 An R6 object of class \code{Set} or \code{ExponentSet} inheriting from \code{ProductSet}.
 }
 \description{
-A convenience wrapper for the n-ary cartesian product of a \code{Set} by itself, possibly multiple times.
+A convenience wrapper for the n-ary cartesian product of a \code{Set} by itself,
+possibly multiple times.
 }
 \details{
-See the details of \link{setproduct} for a longer discussion on the use of the \code{nest} argument, in particular
-with regards to n-ary cartesian products vs. 'standard' cartesian products.
+See the details of \link{setproduct} for a longer discussion on the use of the \code{nest}
+argument, in particular with regards to n-ary cartesian products vs. 'standard' cartesian
+products.
 }
 \examples{
 # Power of a Set
 setpower(Set$new(1, 2), 3, simplify = FALSE)
 setpower(Set$new(1, 2), 3, simplify = TRUE)
-Set$new(1,2)^3
+Set$new(1, 2)^3
 
 # Power of an interval
 Interval$new(2, 5)^5
@@ -48,7 +51,14 @@ Reals$new()^3
 ConditionalSet$new(function(x) TRUE)^2
 
 # Power of FuzzySet
-FuzzySet$new(1,0.1,2,0.5)^2
+FuzzySet$new(1, 0.1, 2, 0.5)^2
+
+# Variable length
+x <- Interval$new(0, 1)^"n"
+x$contains(Tuple$new(0))
+x$contains(Tuple$new(0, 1))
+x$contains(Tuple$new(0, 1, 0, 0, 1, 1, 0))
+x$contains(list(Tuple$new(0, 2), Tuple$new(1, 1)))
 
 }
 \seealso{

@@ -39,8 +39,8 @@ setcomplement(x, y, simplify = TRUE)
 \arguments{
 \item{x, y}{Set}
 
-\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a \code{Set} or
-\link{UnionSet}, otherwise a \code{ComplementSet}.}
+\item{simplify}{logical, if \code{TRUE} (default) returns the result in its simplest form, usually a
+\code{Set} or \link{UnionSet}, otherwise a \code{ComplementSet}.}
 }
 \value{
 An object inheriting from \code{Set} containing the set difference of elements in \code{x} and \code{y}.
@@ -61,13 +61,13 @@ The complement of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by
 }
 \examples{
 # absolute complement
-setcomplement(Set$new(1,2,3, universe = Reals$new()))
-setcomplement(Set$new(1,2, universe = Set$new(1,2,3,4,5)))
+setcomplement(Set$new(1, 2, 3, universe = Reals$new()))
+setcomplement(Set$new(1, 2, universe = Set$new(1, 2, 3, 4, 5)))
 
 # complement of two sets
 
 Set$new(-2:4) - Set$new(2:5)
-setcomplement(Set$new(1,4,"a"), Set$new("a", 6))
+setcomplement(Set$new(1, 4, "a"), Set$new("a", 6))
 
 # complement of two intervals
 
@@ -78,7 +78,7 @@ Interval$new(1, 10) - Interval$new(-1, 2)
 # complement of mixed set types
 
 Set$new(1:10) - Interval$new(5, 15)
-Set$new(5,7) - Tuple$new(6, 8, 7)
+Set$new(5, 7) - Tuple$new(6, 8, 7)
 
 # FuzzySet-Set returns a FuzzySet
 FuzzySet$new(1, 0.1, 2, 0.5) - Set$new(2:5)
@@ -88,13 +88,12 @@ Set$new(2:5) - FuzzySet$new(1, 0.1, 2, 0.5)
 # complement of conditional sets
 
 ConditionalSet$new(function(x, y, simplify = TRUE) x >= y) -
-    ConditionalSet$new(function(x, y, simplify = TRUE) x == y)
+  ConditionalSet$new(function(x, y, simplify = TRUE) x == y)
 
 # complement of special sets
 Reals$new() - NegReals$new()
 Rationals$new() - PosRationals$new()
 Integers$new() - PosIntegers$new()
-
 }
 \seealso{
 Other operators: 

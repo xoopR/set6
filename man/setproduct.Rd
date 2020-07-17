@@ -45,38 +45,37 @@ The product of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by fi
 Set$new(1, 2) * Set$new(2, 3) * Set$new(4, 5)
 setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE) # same as above
 setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
-unnest_set = setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE)
-nest_set = setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
+unnest_set <- setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = FALSE)
+nest_set <- setproduct(Set$new(1, 2) * Set$new(2, 3), Set$new(4, 5), nest = TRUE)
 # note the difference when using contains
-unnest_set$contains(Tuple$new(1,3,5))
+unnest_set$contains(Tuple$new(1, 3, 5))
 nest_set$contains(Tuple$new(Tuple$new(1, 3), 5))
 
 # product of two sets
 Set$new(-2:4) * Set$new(2:5)
-setproduct(Set$new(1,4,"a"), Set$new("a", 6))
-setproduct(Set$new(1,4,"a"), Set$new("a", 6), simplify = TRUE)
+setproduct(Set$new(1, 4, "a"), Set$new("a", 6))
+setproduct(Set$new(1, 4, "a"), Set$new("a", 6), simplify = TRUE)
 
 # product of two intervals
 Interval$new(1, 10) * Interval$new(5, 15)
 Interval$new(1, 2, type = "()") * Interval$new(2, 3, type = "(]")
 Interval$new(1, 5, class = "integer") *
-    Interval$new(2, 7, class = "integer")
+  Interval$new(2, 7, class = "integer")
 
 # product of mixed set types
 Set$new(1:10) * Interval$new(5, 15)
-Set$new(5,7) * Tuple$new(6, 8, 7)
-FuzzySet$new(1,0.1) * Set$new(2)
+Set$new(5, 7) * Tuple$new(6, 8, 7)
+FuzzySet$new(1, 0.1) * Set$new(2)
 
 # product of FuzzySet
 FuzzySet$new(1, 0.1, 2, 0.5) * Set$new(2:5)
 
 # product of conditional sets
 ConditionalSet$new(function(x, y) x >= y) *
-    ConditionalSet$new(function(x, y) x == y)
+  ConditionalSet$new(function(x, y) x == y)
 
 # product of special sets
 PosReals$new() * NegReals$new()
-
 }
 \seealso{
 Other operators: 

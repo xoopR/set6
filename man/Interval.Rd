@@ -19,17 +19,16 @@ Interval$new()
 Interval$new(class = "integer")
 
 # Half-open interval
-i = Interval$new(1, 10, "(]")
+i <- Interval$new(1, 10, "(]")
 i$contains(c(1, 10))
 i$contains(c(1, 10), bound = TRUE)
 
 # Equivalent Set and Interval
-Set$new(1:5) == Interval$new(1,5,class="integer")
+Set$new(1:5) == Interval$new(1, 5, class = "integer")
 
 # SpecialSets can provide more efficient implementation
 Interval$new() == ExtendedReals$new()
 Interval$new(class = "integer", type = "()") == Integers$new()
-
 
 ## ------------------------------------------------
 ## Method `Interval$equals`

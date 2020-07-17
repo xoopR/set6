@@ -48,7 +48,7 @@ The intersection of fuzzy and crisp sets first coerces fuzzy sets to crisp sets 
 # intersection of two sets
 
 Set$new(-2:4) & Set$new(2:5)
-setintersect(Set$new(1,4,"a"), Set$new("a", 6))
+setintersect(Set$new(1, 4, "a"), Set$new("a", 6))
 Set$new(1:4) & Set$new(5:7)
 
 # intersection of two intervals
@@ -56,12 +56,12 @@ Set$new(1:4) & Set$new(5:7)
 Interval$new(1, 10) & Interval$new(5, 15)
 Interval$new(1, 2) & Interval$new(2, 3)
 Interval$new(1, 5, class = "integer") &
-    Interval$new(2, 7, class = "integer")
+  Interval$new(2, 7, class = "integer")
 
 # intersection of mixed set types
 
 Set$new(1:10) & Interval$new(5, 15)
-Set$new(5,7) & Tuple$new(6, 8, 7)
+Set$new(5, 7) & Tuple$new(6, 8, 7)
 
 # Ignores membership of FuzzySet
 
@@ -70,15 +70,14 @@ FuzzySet$new(1, 0.1, 2, 0.5) & Set$new(2:5)
 # intersection of conditional sets
 
 ConditionalSet$new(function(x, y) x >= y) &
-    ConditionalSet$new(function(x, y) x == y)
+  ConditionalSet$new(function(x, y) x == y)
 ConditionalSet$new(function(x) x == 2) &
-    ConditionalSet$new(function(y) y == 3)
+  ConditionalSet$new(function(y) y == 3)
 
 # But be careful not to make an empty set
 
 ConditionalSet$new(function(x) x == 2) &
-    ConditionalSet$new(function(x) x == 3)
-
+  ConditionalSet$new(function(x) x == 3)
 }
 \seealso{
 Other operators: 

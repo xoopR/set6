@@ -22,10 +22,9 @@ Let \eqn{V} be the universal set, \eqn{S} be any non-universal set, and \eqn{0} 
 \deqn{P(V) = V}
 }
 \examples{
-u = UniversalSet$new()
+u <- UniversalSet$new()
 print(u)
 u$contains(c(1, letters, TRUE, Set$new()), all = TRUE)
-
 
 ## ------------------------------------------------
 ## Method `UniversalSet$equals`

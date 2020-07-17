@@ -12,8 +12,7 @@ using standard 'and', \code{&}, and 'or', \code{|}, operators.
 }
 \examples{
 # Set of Positive Naturals
-s = ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
-
+s <- ConditionalSet$new(function(x) TRUE, argclass = list(x = PosNaturals$new()))
 
 ## ------------------------------------------------
 ## Method `ConditionalSet$contains`

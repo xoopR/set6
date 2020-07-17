@@ -21,7 +21,7 @@ Set$new(1:5)
 Set$new("a", 5, Set$new(1))
 
 # Each Set has properties and traits
-s = Set$new(1,2,3)
+s <- Set$new(1, 2, 3)
 s$traits
 s$properties
 
@@ -30,7 +30,6 @@ Set$new(2, 2) == Set$new(2)
 
 # Ordering does not matter
 Set$new(1, 2) == Set$new(2, 1)
-
 
 ## ------------------------------------------------
 ## Method `Set$contains`

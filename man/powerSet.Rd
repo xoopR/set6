@@ -19,13 +19,13 @@ creates an object of class \link{PowersetSet}.}
 Calculates and returns the powerset of a Set.
 }
 \details{
-A powerset of a set, S, is defined as the set of all subsets of S, including S itself and
-the empty set.
+A powerset of a set, S, is defined as the set of all subsets of S, including S itself
+and the empty set.
 }
 \examples{
 # simplify = FALSE is default
-powerset(Set$new(1,2))
-powerset(Set$new(1,2), simplify = TRUE)
+powerset(Set$new(1, 2))
+powerset(Set$new(1, 2), simplify = TRUE)
 
 # powerset of intervals
 powerset(Interval$new())

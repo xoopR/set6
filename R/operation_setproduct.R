@@ -75,6 +75,12 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
   }
 
   classes <- sapply(sets, getR6Class)
+  if ("ExponentSet" %in% classes) {
+    varexp <- sapply(sets[classes == "ExponentSet"], function(x) x$power == "n")
+    if (any(varexp)) {
+      return(sets[classes == "ExponentSet"][which(varexp)[1]][[1]])
+    }
+  }
 
   if (length(unique(rsapply(sets, "strprint"))) == 1 & !simplify) {
     return(ExponentSet$new(sets[[1]], length(sets)))

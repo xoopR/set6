@@ -11,6 +11,11 @@ operation_cleaner <- function(sets, operation_class, nest, simplify = TRUE) {
       } else if (is.null(wraps)) {
         return(x)
       } else {
+        if (inherits(x, "ExponentSet")) {
+          if (x$power == "n") {
+            return(x)
+          }
+        }
         return(wraps)
       }
     }))

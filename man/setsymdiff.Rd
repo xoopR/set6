@@ -34,13 +34,12 @@ The symmetric difference of fuzzy and crisp sets first coerces fuzzy sets to cri
 }
 \examples{
 # symmetrical difference compared to union and intersection
-Set$new(1,2,3) \%-\% Set$new(3, 4)
-(Set$new(1,2,3) | Set$new(3, 4)) - (Set$new(1,2,3) & Set$new(3, 4))
+Set$new(1, 2, 3) \%-\% Set$new(3, 4)
+(Set$new(1, 2, 3) | Set$new(3, 4)) - (Set$new(1, 2, 3) & Set$new(3, 4))
 
 # ConditionalSets demonstrate the internal logic
 ConditionalSet$new(function(x) x > 0) \%-\%
   ConditionalSet$new(function(y) y == 0)
-
 }
 \seealso{
 Other operators: 

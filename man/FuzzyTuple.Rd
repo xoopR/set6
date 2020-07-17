@@ -24,7 +24,7 @@ FuzzyTuple$new(elements = 1:3, membership = c(0.5, 1, 0))
 # Note membership defaults to full membership
 FuzzyTuple$new(elements = 1:5) == Tuple$new(1:5)
 
-f = FuzzyTuple$new(1, 0.2, 2, 1, 3, 0)
+f <- FuzzyTuple$new(1, 0.2, 2, 1, 3, 0)
 f$membership()
 f$alphaCut(0.3)
 f$core()
@@ -39,7 +39,6 @@ FuzzyTuple$new(1, 0.1, 1, 1)
 # More important is ordering.
 FuzzyTuple$new(1, 0.1, 2, 0.2) != FuzzyTuple$new(2, 0.2, 1, 0.1)
 FuzzySet$new(1, 0.1, 2, 0.2) == FuzzySet$new(2, 0.2, 1, 0.1)
-
 }
 \seealso{
 Other sets: 

@@ -7,10 +7,9 @@
 The \code{LogicalSet} is defined as the \link{Set} containing the elements \code{TRUE} and \code{FALSE}.
 }
 \examples{
-l = LogicalSet$new()
+l <- LogicalSet$new()
 print(l)
 l$contains(list(TRUE, 1, FALSE))
-
 }
 \seealso{
 Other sets: 

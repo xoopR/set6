@@ -19,7 +19,7 @@ Tuple$new(1:5)
 Tuple$new("a", 5, Set$new(1), Tuple$new(2))
 
 # Each Tuple has properties and traits
-t = Tuple$new(1,2,3)
+t <- Tuple$new(1, 2, 3)
 t$traits
 t$properties
 
@@ -28,7 +28,6 @@ Tuple$new(2, 2) != Tuple$new(2)
 
 # Ordering does matter
 Tuple$new(1, 2) != Tuple$new(2, 1)
-
 
 ## ------------------------------------------------
 ## Method `Tuple$equals`

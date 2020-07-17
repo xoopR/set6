@@ -24,14 +24,13 @@ FuzzySet$new(elements = 1:3, membership = c(0.5, 1, 0))
 # Note membership defaults to full membership
 FuzzySet$new(elements = 1:5) == Set$new(1:5)
 
-f = FuzzySet$new(1, 0.2, 2, 1, 3, 0)
+f <- FuzzySet$new(1, 0.2, 2, 1, 3, 0)
 f$membership()
 f$alphaCut(0.3)
 f$core()
 f$inclusion(0)
 f$membership(0)
 f$membership(1)
-
 
 ## ------------------------------------------------
 ## Method `FuzzySet$membership`

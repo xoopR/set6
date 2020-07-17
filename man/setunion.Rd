@@ -40,21 +40,21 @@ The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by find
 # union of Sets
 
 Set$new(-2:4) + Set$new(2:5)
-setunion(Set$new(1,4,"a"), Set$new("a", 6))
-Set$new(1,2) + Set$new("a", 1i) + Set$new(9)
+setunion(Set$new(1, 4, "a"), Set$new("a", 6))
+Set$new(1, 2) + Set$new("a", 1i) + Set$new(9)
 
 # union of intervals
 
 Interval$new(1, 10) + Interval$new(5, 15) + Interval$new(20, 30)
 Interval$new(1, 2, type = "()") + Interval$new(2, 3, type = "(]")
 Interval$new(1, 5, class = "integer") +
-    Interval$new(2, 7, class = "integer")
+  Interval$new(2, 7, class = "integer")
 
 # union of mixed types
 
 Set$new(1:10) + Interval$new(5, 15)
 Set$new(1:10) + Interval$new(5, 15, class = "integer")
-Set$new(5,7) | Tuple$new(6, 8, 7)
+Set$new(5, 7) | Tuple$new(6, 8, 7)
 
 # union of FuzzySet
 FuzzySet$new(1, 0.1, 2, 0.5) + Set$new(2:5)
@@ -62,13 +62,12 @@ FuzzySet$new(1, 0.1, 2, 0.5) + Set$new(2:5)
 # union of conditional sets
 
 ConditionalSet$new(function(x, y) x >= y) +
-    ConditionalSet$new(function(x, y) x == y) +
-    ConditionalSet$new(function(x) x == 2)
+  ConditionalSet$new(function(x, y) x == y) +
+  ConditionalSet$new(function(x) x == 2)
 
 # union of special sets
 PosReals$new() + NegReals$new()
 Set$new(-Inf, Inf) + Reals$new()
-
 }
 \seealso{
 Other operators: 

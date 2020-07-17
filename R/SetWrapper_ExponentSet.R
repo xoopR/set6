@@ -6,7 +6,8 @@
 ExponentSet <- R6Class("ExponentSet",
   inherit = ProductSet,
   public = list(
-    #' @description Create a new `ExponentSet` object. It is not recommended to construct this class directly.
+    #' @description Create a new `ExponentSet` object. It is not recommended to construct this
+    #' class directly.
     #' @param set [Set] to wrap.
     #' @param power numeric. Power to raise Set to.
     #' @return A new `ExponentSet` object.
@@ -53,38 +54,36 @@ ExponentSet <- R6Class("ExponentSet",
     #' @description Tests if elements `x` are contained in `self`.
     #' @template param_xall
     #' @param bound logical
-    #' @return If `all == TRUE` then returns `TRUE` if all `x` are contained in `self`, otherwise `FALSE`.
-    #' If `all == FALSE` returns a vector of logicals corresponding to the length of `x`, representing
-    #' if each is contained in `self`. If `bound == TRUE` then an element is contained in `self` if it
-    #' is on or within the (possibly-open) bounds of `self`, otherwise `TRUE` only if the element is within
-    #' `self` or the bounds are closed.
+    #' @return If `all == TRUE` then returns `TRUE` if all `x` are contained in `self`,
+    #' otherwise `FALSE`. If `all == FALSE` returns a vector of logicals corresponding to the
+    #' length of `x`, representing if each is contained in `self`. If `bound == TRUE` then an
+    #' element is contained in `self` if it is on or within the (possibly-open) bounds of `self`,
+    #' otherwise `TRUE` only if the element is within `self` or the bounds are closed.
     contains = function(x, all = FALSE, bound = FALSE) {
-
-      if (self$power == "n") {
-        if (!testTuple(x)) {
-          stop("Variable exponent set can only perform containedness checks on a single tuple.")
-        } else {
-          if (x$length == 1) {
-            return(self$wrappedSets[[1]]$contains(x$elements[[1]], all, bound))
-          } else {
-            return(setpower(self$wrappedSets[[1]], x$length)$contains(x, all, bound))
-          }
-        }
-      }
 
       x <- listify(x)
 
-      ret <- sapply(x, function(el) {
-        if (!testSet(el)) {
-          el <- as.Set(el)
+      if (self$power == "n") {
+        len <- x[[1]]$length
+        if (len == 1) {
+         return(self$wrappedSets[[1]]$contains(unlist(rsapply(x, "elements", active = TRUE)),
+                                               all, bound))
+        } else {
+          return(setpower(self$wrappedSets[[1]], len)$contains(x, all, bound))
         }
+      } else {
+        ret <- sapply(x, function(el) {
+          if (!testSet(el)) {
+            el <- as.Set(el)
+          }
 
-        if (el$length != self$power) {
-          return(FALSE)
-        }
+          if (el$length != self$power) {
+            return(FALSE)
+          }
 
-        all(self$wrappedSets[[1]]$contains(el$elements, bound = bound))
-      })
+          all(self$wrappedSets[[1]]$contains(el$elements, bound = bound))
+        })
+      }
 
       returner(ret, all)
     }
