@@ -5,8 +5,10 @@
 #' @examples
 #' set6News()
 #' @export
+# nocov start
 set6News <- function() {
   file.show(file.path(system.file(package = "set6"), "NEWS.md"),
     title = "set6 Changelog"
   )
 }
+# nocov end
