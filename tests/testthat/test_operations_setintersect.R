@@ -13,15 +13,18 @@ test_that("SetXSet", {
 })
 
 test_that("conditionalset", {
+  useUnicode(FALSE)
   expect_equal(
-    ConditionalSet$new(function(x) x == 1) & ConditionalSet$new(function(y) y > 1),
-    ConditionalSet$new(function(x, y) x == 1 & y > 1)
+    (ConditionalSet$new(function(x) x == 1) & ConditionalSet$new(function(y) y > 1))$strprint(),
+    "{x == 1 & y > 1 : x in V, y in V}"
   )
   expect_equal(
     ConditionalSet$new(function(x) x == 1) & ConditionalSet$new(function(y) y == 1),
     ConditionalSet$new(function(x) x == 1)
   )
-  expect_true((ConditionalSet$new(function(x) x == 0) & Set$new(elements = -2:2))$equals(Set$new(0)))
+  expect_true((ConditionalSet$new(function(x) x == 0) &
+                 Set$new(elements = -2:2))$equals(Set$new(0)))
+  useUnicode(TRUE)
 })
 
 test_that("fuzzy", {

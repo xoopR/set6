@@ -1,4 +1,8 @@
-# set6 0.1.7.9000
+# set6 0.1.8
+
+* Patch for R-devel
+
+# set6 0.1.7
 
 * Critical patch
 

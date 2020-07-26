@@ -74,11 +74,12 @@ test_that("fuzzy", {
 })
 
 test_that("conditional", {
-  expect_equal(
-    ConditionalSet$new(function(x) x == 0) - ConditionalSet$new(function(y) y > 0),
-    ConditionalSet$new(function(x, y) x == 0 & !(y > 0))
-  )
   useUnicode(FALSE)
+  expect_equal(
+    (ConditionalSet$new(function(x) x == 0) - ConditionalSet$new(function(y) y > 0))$strprint(),
+    "{x == 0 & !(y > 0) : x in V, y in V}"
+  )
+
   expect_equal(
     (ConditionalSet$new(function(x) TRUE) - Set$new(1))$strprint(),
     "{TRUE : x in V} \\ {1}"
