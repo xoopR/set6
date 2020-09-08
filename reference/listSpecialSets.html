@@ -125,7 +125,7 @@
     <p>Lists special sets that can be used in Set.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>listSpecialSets</span>(<span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>listSpecialSets</span>(simplify = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,7 +143,8 @@ otherwise set names as characters.</p></td>
 and their traits.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>listSpecialSets</span>()</div><div class='output co'>#&gt;        ClassName       Symbol Infimum Supremum
+    <pre class="examples"><div class='input'><span class='fu'>listSpecialSets</span>()
+</div><div class='output co'>#&gt;        ClassName       Symbol Infimum Supremum
 #&gt; 1       Naturals           ℕ0       0      Inf
 #&gt; 2    PosNaturals           ℕ+     0/1      Inf
 #&gt; 3       Integers            ℤ    -Inf      Inf
@@ -156,7 +157,8 @@ and their traits.</p>
 #&gt; 10      PosReals           ℝ+     0/1      Inf
 #&gt; 11      NegReals           ℝ-    -Inf     -1/0
 #&gt; 12 ExtendedReals ℝ ∪ {-∞, +∞}    -Inf      Inf
-#&gt; 13       Complex            ℂ    -Inf      Inf</div><div class='input'><span class='fu'>listSpecialSets</span>(<span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] "Naturals"      "PosNaturals"   "Integers"      "PosIntegers"  
+#&gt; 13       Complex            ℂ    -Inf      Inf</div><div class='input'><span class='fu'>listSpecialSets</span>(<span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt;  [1] "Naturals"      "PosNaturals"   "Integers"      "PosIntegers"  
 #&gt;  [5] "NegIntegers"   "Rationals"     "PosRationals"  "NegRationals" 
 #&gt;  [9] "Reals"         "PosReals"      "NegReals"      "ExtendedReals"
 #&gt; [13] "Complex"      </div></pre>
@@ -175,7 +177,7 @@ and their traits.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

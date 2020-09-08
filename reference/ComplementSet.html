@@ -134,7 +134,7 @@ cannot be represented in a simpler class. Whilst this is not an abstract class, 
 this class directly but via the set operation methods.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Set operations: <a href='setunion.html'>setunion</a>, <a href='setproduct.html'>setproduct</a>, <a href='setpower.html'>setpower</a>, <a href='setcomplement.html'>setcomplement</a>, <a href='setsymdiff.html'>setsymdiff</a>,  <a href='powerSet.html'>powerset</a>, <a href='setintersect.html'>setintersect</a></p>
+    <div class='dont-index'><p>Set operations: <a href='setunion.html'>setunion</a>, <a href='setproduct.html'>setproduct</a>, <a href='setpower.html'>setpower</a>, <a href='setcomplement.html'>setcomplement</a>, <a href='setsymdiff.html'>setsymdiff</a>,  <a href='powerset.html'>powerset</a>, <a href='setintersect.html'>setintersect</a></p>
 <p>Other wrappers: 
 <code><a href='ExponentSet.html'>ExponentSet</a></code>,
 <code><a href='PowersetSet.html'>PowersetSet</a></code>,
@@ -145,7 +145,7 @@ this class directly but via the set operation methods.</p>
     <p><code><a href='Set.html'>set6::Set</a></code> -&gt; <code><a href='SetWrapper.html'>set6::SetWrapper</a></code> -&gt; <code>ComplementSet</code></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <p><div class="r6-active-bindings"></p><dl'>
+    <p><div class="r6-active-bindings"></p><dl>
 <dt><code>elements</code></dt><dd><p>Returns the elements in the object.</p></dd>
 
 <dt><code>length</code></dt><dd><p>Returns the number of elements in the object.</p></dd>
@@ -158,7 +158,7 @@ this class directly but via the set operation methods.</p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>ComplementSet$new()</code></a></p></li>
@@ -178,12 +178,12 @@ this class directly but via the set operation methods.</p>
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Create a new <code>ComplementSet</code> object. It is not recommended to construct this class directly.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ComplementSet</span>$<span class='fu'>new</span>(<span class='no'>addset</span>, <span class='no'>subtractset</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Create a new <code>ComplementSet</code> object. It is not recommended to construct this class directly.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>ComplementSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>addset</span>, <span class='kw'>subtractset</span>, lower = <span class='kw'>NULL</span>, upper = <span class='kw'>NULL</span>, type = <span class='kw'>NULL</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>addset</code></dt><dd><p><a href='Set.html'>Set</a> to be subtracted from.</p></dd>
 
 <dt><code>subtractset</code></dt><dd><p><a href='Set.html'>Set</a> to subtract.</p></dd>
@@ -195,27 +195,27 @@ this class directly but via the set operation methods.</p>
 <dt><code>type</code></dt><dd><p>closure type of new object.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>ComplementSet</code> object.</p>
 <p><hr>
-<a id="method-strprint"></a></p><h3>Method <code>strprint()</code></h3>
-<p>Creates a printable representation of the object.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ComplementSet</span>$<span class='fu'>strprint</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre><p></div></p>
+<a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>strprint()</code></h3>
+<p>Creates a printable representation of the object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>ComplementSet</span><span class='op'>$</span><span class='fu'>strprint</span>(n = <span class='fl'>2</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>n</code></dt><dd><p>numeric. Number of elements to display on either side of ellipsis when printing.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A character string representing the object.</p>
 <p><hr>
-<a id="method-contains"></a></p><h3>Method <code><a href='contains.html'>contains()</a></code></h3>
-<p>Tests if elements <code>x</code> are contained in <code>self</code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ComplementSet</span>$<span class='fu'><a href='contains.html'>contains</a></span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>bound</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-contains"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='contains.html'>contains()</a></code></h3>
+<p>Tests if elements <code>x</code> are contained in <code>self</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>ComplementSet</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='kw'>x</span>, all = <span class='fl'>FALSE</span>, bound = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><a href='Set.html'>Set</a> or vector of <a href='Set.html'>Set</a>s.</p></dd>
 
 <dt><code>all</code></dt><dd><p>logical. If <code>FALSE</code> tests each <code>x</code> separately. Otherwise returns <code>TRUE</code> only if all <code>x</code> pass test.</p></dd>
@@ -223,19 +223,19 @@ this class directly but via the set operation methods.</p>
 <dt><code>bound</code></dt><dd><p>logical</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>If <code>all == TRUE</code> then returns <code>TRUE</code> if all <code>x</code> are contained in <code>self</code>, otherwise <code>FALSE</code>.
 If <code>all == FALSE</code> returns a vector of logicals corresponding to the length of <code>x</code>, representing
 if each is contained in <code>self</code>. If <code>bound == TRUE</code> then an element is contained in <code>self</code> if it
 is on or within the (possibly-open) bounds of <code>self</code>, otherwise <code>TRUE</code> only if the element is within
 <code>self</code> or the bounds are closed.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>ComplementSet</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>ComplementSet</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -257,7 +257,7 @@ is on or within the (possibly-open) bounds of <code>self</code>, otherwise <code
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -152,7 +152,7 @@ does not matter and elements must be unique.</p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-equals'><code>FuzzyTuple$equals()</code></a></p></li>
@@ -177,37 +177,37 @@ does not matter and elements must be unique.</p>
 </details>
 
 <hr>
-<a id="method-equals"></a></p><h3>Method <code><a href='equals.html'>equals()</a></code></h3>
-<p>Tests if two sets are equal.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FuzzyTuple</span>$<span class='fu'><a href='equals.html'>equals</a></span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-equals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='equals.html'>equals()</a></code></h3>
+<p>Tests if two sets are equal.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'><a href='equals.html'>equals</a></span>(<span class='kw'>x</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><a href='Set.html'>Set</a> or vector of <a href='Set.html'>Set</a>s.</p></dd>
 
 <dt><code>all</code></dt><dd><p>logical. If <code>FALSE</code> tests each <code>x</code> separately. Otherwise returns <code>TRUE</code> only if all <code>x</code> pass test.</p></dd>
 
 </dl><p></div></p>
-<h3>Details</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>Two fuzzy sets are equal if they contain the same elements with the same memberships and
 in the same order. Infix operators can be used for:</p><table class='table'>
-<tr><td>Equal</td><td><code>==</code></td></tr>
-<tr><td>Not equal</td><td><code>!=</code></td></tr>
+<tr><td>Equal</td><td><code><a href='https://rdrr.io/r/base/Comparison.html'>==</a></code></td></tr>
+<tr><td>Not equal</td><td><code><a href='https://rdrr.io/r/base/Comparison.html'>!=</a></code></td></tr>
 </table>
 
 
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>If <code>all</code> is <code>TRUE</code> then returns <code>TRUE</code> if all <code>x</code> are equal to the Set, otherwise
 <code>FALSE</code>. If <code>all</code> is <code>FALSE</code> then returns a vector of logicals corresponding to each individual
 element of <code>x</code>.</p>
 <p><hr>
-<a id="method-isSubset"></a></p><h3>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
-<p>Test if one set is a (proper) subset of another</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FuzzyTuple</span>$<span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='no'>x</span>, <span class='kw'>proper</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-isSubset"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
+<p>Test if one set is a (proper) subset of another</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>x</span>, proper = <span class='fl'>FALSE</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p>any. Object or vector of objects to test.</p></dd>
 
 <dt><code>proper</code></dt><dd><p>logical. If <code>TRUE</code> tests for proper subsets.</p></dd>
@@ -215,7 +215,7 @@ element of <code>x</code>.</p>
 <dt><code>all</code></dt><dd><p>logical. If <code>FALSE</code> tests each <code>x</code> separately. Otherwise returns <code>TRUE</code> only if all <code>x</code> pass test.</p></dd>
 
 </dl><p></div></p>
-<h3>Details</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>If using the method directly, and not via one of the operators then the additional boolean
 argument <code>proper</code> can be used to specify testing of subsets or proper subsets. A Set is a proper
 subset of another if it is fully contained by the other Set (i.e. not equal to) whereas a Set is a
@@ -229,19 +229,19 @@ subset of another if it is fully contained by the other Set (i.e. not equal to) 
 
 
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>If <code>all</code> is <code>TRUE</code> then returns <code>TRUE</code> if all <code>x</code> are subsets of the Set, otherwise
 <code>FALSE</code>. If <code>all</code> is <code>FALSE</code> then returns a vector of logicals corresponding to each individual
 element of <code>x</code>.</p>
 <p><hr>
-<a id="method-alphaCut"></a></p><h3>Method <code>alphaCut()</code></h3>
+<a id="method-alphaCut"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>alphaCut()</code></h3>
 <p>The alpha-cut of a fuzzy set is defined as the set
 $$A_\alpha = \{x \epsilon F | m \ge \alpha\}$$
-where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the corresponding membership.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FuzzyTuple</span>$<span class='fu'>alphaCut</span>(<span class='no'>alpha</span>, <span class='kw'>strong</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>create</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the corresponding membership.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>alphaCut</span>(<span class='kw'>alpha</span>, strong = <span class='fl'>FALSE</span>, create = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>alpha</code></dt><dd><p>numeric in [0, 1] to determine which elements to return</p></dd>
 
 <dt><code>strong</code></dt><dd><p>logical, if <code>FALSE</code> (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than</p></dd>
@@ -249,15 +249,15 @@ where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the correspondin
 <dt><code>create</code></dt><dd><p>logical, if <code>FALSE</code> (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Elements in FuzzyTuple or a <a href='Set.html'>Set</a> of the elements.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FuzzyTuple</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -266,21 +266,33 @@ where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the correspondin
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Different constructors</span>
-<span class='no'>FuzzyTuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; (1(0.5), 2(1), 3(0)) </div><div class='input'><span class='no'>FuzzyTuple</span>$<span class='fu'>new</span>(<span class='kw'>elements</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>, <span class='kw'>membership</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>0</span>))</div><div class='output co'>#&gt; (1(0.5), 2(1), 3(0)) </div><div class='input'>
+<span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span>)
+</div><div class='output co'>#&gt; (1(0.5), 2(1), 3(0)) </div><div class='input'><span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span>(elements = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, membership = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>0</span>))
+</div><div class='output co'>#&gt; (1(0.5), 2(1), 3(0)) </div><div class='input'>
 <span class='co'># Crisp sets are a special case FuzzyTuple</span>
 <span class='co'># Note membership defaults to full membership</span>
-<span class='no'>FuzzyTuple</span>$<span class='fu'>new</span>(<span class='kw'>elements</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>==</span> <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='no'>FuzzyTuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span>)
-<span class='no'>f</span>$<span class='fu'>membership</span>()</div><div class='output co'>#&gt; [1] 0.2 1.0 0.0</div><div class='input'><span class='no'>f</span>$<span class='fu'>alphaCut</span>(<span class='fl'>0.3</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span>(elements = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>) <span class='op'>==</span> <span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='kw'>f</span> <span class='op'>&lt;-</span> <span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span>)
+<span class='kw'>f</span><span class='op'>$</span><span class='fu'>membership</span>()
+</div><div class='output co'>#&gt; [1] 0.2 1.0 0.0</div><div class='input'><span class='kw'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span>(<span class='fl'>0.3</span>)
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 2
-#&gt; </div><div class='input'><span class='no'>f</span>$<span class='fu'>core</span>()</div><div class='output co'>#&gt; [[1]]
+#&gt; </div><div class='input'><span class='kw'>f</span><span class='op'>$</span><span class='fu'>core</span>()
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 2
-#&gt; </div><div class='input'><span class='no'>f</span>$<span class='fu'>inclusion</span>(<span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] "Not Included"</div><div class='input'><span class='no'>f</span>$<span class='fu'>membership</span>(<span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='no'>f</span>$<span class='fu'>membership</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 0.2</div><div class='input'>
+#&gt; </div><div class='input'><span class='kw'>f</span><span class='op'>$</span><span class='fu'>inclusion</span>(<span class='fl'>0</span>)
+</div><div class='output co'>#&gt; [1] "Not Included"</div><div class='input'><span class='kw'>f</span><span class='op'>$</span><span class='fu'>membership</span>(<span class='fl'>0</span>)
+</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='kw'>f</span><span class='op'>$</span><span class='fu'>membership</span>(<span class='fl'>1</span>)
+</div><div class='output co'>#&gt; [1] 0.2</div><div class='input'>
 <span class='co'># Elements can be duplicated, and with different memberships,</span>
 <span class='co'>#  although this is not necessarily sensible.</span>
-<span class='no'>FuzzyTuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; (1(0.1), 1(1)) </div><div class='input'>
+<span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
+</div><div class='output co'>#&gt; (1(0.1), 1(1)) </div><div class='input'>
 <span class='co'># More important is ordering.</span>
-<span class='no'>FuzzyTuple</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span>) <span class='kw'>!=</span> <span class='no'>FuzzyTuple</span>$<span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='no'>FuzzySet</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span>) <span class='kw'>==</span> <span class='no'>FuzzySet</span>$<span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+<span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span>) != <span class='kw'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span>) <span class='op'>==</span> <span class='kw'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -296,7 +308,7 @@ where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the correspondin
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

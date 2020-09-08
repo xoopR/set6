@@ -125,11 +125,11 @@
     <p>Validation checks to test if a given object is closedabove.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>testClosedAbove</span>(<span class='no'>object</span>, <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='st'>"This is not a set closed above"</span>)
+    <pre class="usage"><span class='fu'>testClosedAbove</span>(<span class='kw'>object</span>, errormsg = <span class='st'>"This is not a set closed above"</span>)
 
-<span class='fu'>checkClosedAbove</span>(<span class='no'>object</span>, <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='st'>"This is not a set closed above"</span>)
+<span class='fu'>checkClosedAbove</span>(<span class='kw'>object</span>, errormsg = <span class='st'>"This is not a set closed above"</span>)
 
-<span class='fu'>assertClosedAbove</span>(<span class='no'>object</span>, <span class='kw'>errormsg</span> <span class='kw'>=</span> <span class='st'>"This is not a set closed above"</span>)</pre>
+<span class='fu'>assertClosedAbove</span>(<span class='kw'>object</span>, errormsg = <span class='st'>"This is not a set closed above"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,7 +151,9 @@ return <code>TRUE</code>. If check fails, <code>assert</code> stops code with er
 an error message as string, and <code>test</code> returns <code>FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>testClosedAbove</span>(<span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"[]"</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>testClosedAbove</span>(<span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"[)"</span>))</div><div class='output co'>#&gt; [1] FALSE</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>testClosedAbove</span>(<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, type = <span class='st'>"[]"</span>))
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>testClosedAbove</span>(<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, type = <span class='st'>"[)"</span>))
+</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -167,7 +169,7 @@ an error message as string, and <code>test</code> returns <code>FALSE</code>.</p
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

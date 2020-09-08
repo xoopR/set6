@@ -169,7 +169,7 @@ In the case where no elements are common to either set, then the empty set is re
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other operators: 
-<code><a href='powerSet.html'>powerset</a>()</code>,
+<code><a href='powerset.html'>powerset</a>()</code>,
 <code><a href='setcomplement.html'>setcomplement</a>()</code>,
 <code><a href='setpower.html'>setpower</a>()</code>,
 <code><a href='setproduct.html'>setproduct</a>()</code>,
@@ -179,26 +179,38 @@ In the case where no elements are common to either set, then the empty set is re
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># intersection of two sets</span>
 
-<span class='no'>Set</span>$<span class='fu'>new</span>(-<span class='fl'>2</span>:<span class='fl'>4</span>) <span class='kw'>&amp;</span> <span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>2</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; {2, 3, 4} </div><div class='input'><span class='fu'>setintersect</span>(<span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span>), <span class='no'>Set</span>$<span class='fu'>new</span>(<span class='st'>"a"</span>, <span class='fl'>6</span>))</div><div class='output co'>#&gt; {a} </div><div class='input'><span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>1</span>:<span class='fl'>4</span>) <span class='kw'>&amp;</span> <span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>5</span>:<span class='fl'>7</span>)</div><div class='output co'>#&gt; ∅ </div><div class='input'>
+<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span>) <span class='op'>&amp;</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>)
+</div><div class='output co'>#&gt; {2, 3, 4} </div><div class='input'><span class='fu'>setintersect</span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span>), <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='st'>"a"</span>, <span class='fl'>6</span>))
+</div><div class='output co'>#&gt; {a} </div><div class='input'><span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>) <span class='op'>&amp;</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>5</span><span class='op'>:</span><span class='fl'>7</span>)
+</div><div class='output co'>#&gt; ∅ </div><div class='input'>
 <span class='co'># intersection of two intervals</span>
 
-<span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>) <span class='kw'>&amp;</span> <span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>5</span>, <span class='fl'>15</span>)</div><div class='output co'>#&gt; [5,10] </div><div class='input'><span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>) <span class='kw'>&amp;</span> <span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; {2,...,2} </div><div class='input'><span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"integer"</span>) <span class='kw'>&amp;</span>
-  <span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>7</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"integer"</span>)</div><div class='output co'>#&gt; {2, 3, 4, 5} </div><div class='input'>
+<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>) <span class='op'>&amp;</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>5</span>, <span class='fl'>15</span>)
+</div><div class='output co'>#&gt; [5,10] </div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>) <span class='op'>&amp;</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; {2,...,2} </div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, class = <span class='st'>"integer"</span>) <span class='op'>&amp;</span>
+  <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>7</span>, class = <span class='st'>"integer"</span>)
+</div><div class='output co'>#&gt; {2, 3, 4, 5} </div><div class='input'>
 <span class='co'># intersection of mixed set types</span>
 
-<span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>1</span>:<span class='fl'>10</span>) <span class='kw'>&amp;</span> <span class='no'>Interval</span>$<span class='fu'>new</span>(<span class='fl'>5</span>, <span class='fl'>15</span>)</div><div class='output co'>#&gt; {5, 6,...,9, 10} </div><div class='input'><span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>5</span>, <span class='fl'>7</span>) <span class='kw'>&amp;</span> <span class='no'>Tuple</span>$<span class='fu'>new</span>(<span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; {7} </div><div class='input'>
+<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>) <span class='op'>&amp;</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>5</span>, <span class='fl'>15</span>)
+</div><div class='output co'>#&gt; {5, 6,...,9, 10} </div><div class='input'><span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>5</span>, <span class='fl'>7</span>) <span class='op'>&amp;</span> <span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>7</span>)
+</div><div class='output co'>#&gt; {7} </div><div class='input'>
 <span class='co'># Ignores membership of FuzzySet</span>
 
-<span class='no'>FuzzySet</span>$<span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>) <span class='kw'>&amp;</span> <span class='no'>Set</span>$<span class='fu'>new</span>(<span class='fl'>2</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; {2} </div><div class='input'>
+<span class='kw'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>) <span class='op'>&amp;</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>)
+</div><div class='output co'>#&gt; {2} </div><div class='input'>
 <span class='co'># intersection of conditional sets</span>
 
-<span class='no'>ConditionalSet</span>$<span class='fu'>new</span>(<span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> <span class='kw'>&gt;=</span> <span class='no'>y</span>) <span class='kw'>&amp;</span>
-  <span class='no'>ConditionalSet</span>$<span class='fu'>new</span>(<span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> <span class='kw'>==</span> <span class='no'>y</span>)</div><div class='output co'>#&gt; {x &gt;= y &amp; x == y : x ∈ V, y ∈ V} </div><div class='input'><span class='no'>ConditionalSet</span>$<span class='fu'>new</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> <span class='kw'>==</span> <span class='fl'>2</span>) <span class='kw'>&amp;</span>
-  <span class='no'>ConditionalSet</span>$<span class='fu'>new</span>(<span class='kw'>function</span>(<span class='no'>y</span>) <span class='no'>y</span> <span class='kw'>==</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; {x == 2 &amp; y == 3 : x ∈ V, y ∈ V} </div><div class='input'>
+<span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>y</span>) <span class='kw'>x</span> <span class='op'>&gt;=</span> <span class='kw'>y</span>) <span class='op'>&amp;</span>
+  <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>y</span>) <span class='kw'>x</span> <span class='op'>==</span> <span class='kw'>y</span>)
+</div><div class='output co'>#&gt; {x &gt;= y &amp; x == y : x ∈ V, y ∈ V} </div><div class='input'><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span> <span class='op'>==</span> <span class='fl'>2</span>) <span class='op'>&amp;</span>
+  <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>y</span>) <span class='kw'>y</span> <span class='op'>==</span> <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; {x == 2 &amp; y == 3 : x ∈ V, y ∈ V} </div><div class='input'>
 <span class='co'># But be careful not to make an empty set</span>
 
-<span class='no'>ConditionalSet</span>$<span class='fu'>new</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> <span class='kw'>==</span> <span class='fl'>2</span>) <span class='kw'>&amp;</span>
-  <span class='no'>ConditionalSet</span>$<span class='fu'>new</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> <span class='kw'>==</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; {x == 2 &amp; x == 3 : x ∈ V} </div></pre>
+<span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span> <span class='op'>==</span> <span class='fl'>2</span>) <span class='op'>&amp;</span>
+  <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span> <span class='op'>==</span> <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; {x == 2 &amp; x == 3 : x ∈ V} </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -214,7 +226,7 @@ In the case where no elements are common to either set, then the empty set is re
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

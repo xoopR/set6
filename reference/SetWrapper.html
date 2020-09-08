@@ -132,14 +132,14 @@
     <p><code><a href='Set.html'>set6::Set</a></code> -&gt; <code>SetWrapper</code></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <p><div class="r6-active-bindings"></p><dl'>
+    <p><div class="r6-active-bindings"></p><dl>
 <dt><code>wrappedSets</code></dt><dd><p>Returns the list of <code>Set</code>s that are wrapped in the given wrapper.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>SetWrapper$new()</code></a></p></li>
@@ -159,19 +159,19 @@
 </details>
 
 <hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Create a new <code>SetWrapper</code> object. It is not recommended to construct this class directly.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>SetWrapper</span>$<span class='fu'>new</span>(
-  <span class='no'>setlist</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>cardinality</span>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Create a new <code>SetWrapper</code> object. It is not recommended to construct this class directly.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>SetWrapper</span><span class='op'>$</span><span class='fu'>new</span>(
+  <span class='kw'>setlist</span>,
+  lower = <span class='kw'>NULL</span>,
+  upper = <span class='kw'>NULL</span>,
+  type = <span class='kw'>NULL</span>,
+  class = <span class='kw'>NULL</span>,
+  <span class='kw'>cardinality</span>
 )</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>setlist</code></dt><dd><p>List of <a href='Set.html'>Set</a>s to wrap.</p></dd>
 
 <dt><code>lower</code></dt><dd><p><a href='Set.html'>Set</a>. Lower bound of wrapper.</p></dd>
@@ -185,15 +185,15 @@
 <dt><code>cardinality</code></dt><dd><p>character or integer. Cardinality of wrapper.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>SetWrapper</code> object.</p>
 <p><hr>
-<a id="method-equals"></a></p><h3>Method <code><a href='equals.html'>equals()</a></code></h3>
-<p>Tests if <code>x</code> is equal to <code>self</code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>SetWrapper</span>$<span class='fu'><a href='equals.html'>equals</a></span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-equals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='equals.html'>equals()</a></code></h3>
+<p>Tests if <code>x</code> is equal to <code>self</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>SetWrapper</span><span class='op'>$</span><span class='fu'><a href='equals.html'>equals</a></span>(<span class='kw'>x</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><a href='Set.html'>Set</a> or vector of <a href='Set.html'>Set</a>s.</p></dd>
 
 <dt><code>x</code></dt><dd><p>any. Object or vector of objects to test.</p></dd>
@@ -203,17 +203,17 @@
 <dt><code>all</code></dt><dd><p>logical. If <code>FALSE</code> tests each <code>x</code> separately. Otherwise returns <code>TRUE</code> only if all <code>x</code> pass test.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>If <code>all == TRUE</code> then returns <code>TRUE</code> if all <code>x</code> are equal to <code>self</code>, otherwise <code>FALSE</code>.
 If <code>all == FALSE</code> returns a vector of logicals corresponding to the length of <code>x</code>, representing
 if each is equal to <code>self</code>.</p>
 <p><hr>
-<a id="method-isSubset"></a></p><h3>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
-<p>Tests if <code>x</code> is a (proper) subset of <code>self</code>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>SetWrapper</span>$<span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='no'>x</span>, <span class='kw'>proper</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-isSubset"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
+<p>Tests if <code>x</code> is a (proper) subset of <code>self</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>SetWrapper</span><span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>x</span>, proper = <span class='fl'>FALSE</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p><a href='Set.html'>Set</a> or vector of <a href='Set.html'>Set</a>s.</p></dd>
 
 <dt><code>x</code></dt><dd><p>any. Object or vector of objects to test.</p></dd>
@@ -225,17 +225,17 @@ if each is equal to <code>self</code>.</p>
 <dt><code>all</code></dt><dd><p>logical. If <code>FALSE</code> tests each <code>x</code> separately. Otherwise returns <code>TRUE</code> only if all <code>x</code> pass test.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>If <code>all == TRUE</code> then returns <code>TRUE</code> if all <code>x</code> are (proper) subsets of <code>self</code>, otherwise <code>FALSE</code>.
 If <code>all == FALSE</code> returns a vector of logicals corresponding to the length of <code>x</code>, representing
 if each is a (proper) subset of <code>self</code>.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>SetWrapper</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>SetWrapper</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -257,7 +257,7 @@ if each is a (proper) subset of <code>self</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

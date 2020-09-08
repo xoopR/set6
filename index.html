@@ -96,9 +96,13 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The current CRAN release can be installed with</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"set6"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"set6"</span>)
+</pre></div>
 <p>Or for the latest stable build</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"xoopR/set6"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"xoopR/set6"</span>)
+</pre></div>
 </div>
 <div id="main-features" class="section level2">
 <h2 class="hasAnchor">
@@ -106,121 +110,127 @@
 <div id="a-clear-inheritance-structure" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-clear-inheritance-structure" class="anchor"></a>A Clear Inheritance Structure</h3>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="co"># Sets require elements to be unique and order doesn't matter</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>) <span class="kw">==</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co"># Sets require elements to be unique and order doesn't matter</span>
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>) <span class="op">==</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>)
 <span class="co">#&gt; [1] TRUE</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>) <span class="kw">==</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">2</span>, <span class="fl">1</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>) <span class="op">==</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">2</span>, <span class="fl">1</span>)
 <span class="co">#&gt; [1] TRUE</span>
 
 <span class="co"># But tuples can enforce these restrictions</span>
-<span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>) <span class="kw">!=</span> <span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>)
+<span class="kw">Tuple</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>) != <span class="kw">Tuple</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>)
 <span class="co">#&gt; [1] TRUE</span>
-<span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>) <span class="kw">!=</span> <span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">2</span>, <span class="fl">1</span>)
+<span class="kw">Tuple</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">2</span>) != <span class="kw">Tuple</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">2</span>, <span class="fl">1</span>)
 <span class="co">#&gt; [1] TRUE</span>
 
 <span class="co"># Fuzzy sets and tuples extend sets further</span>
-<span class="no">f</span> <span class="kw">=</span> <span class="no">FuzzySet</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">3</span>, <span class="fl">1</span>)
-<span class="no">f</span>$<span class="fu">inclusion</span>(<span class="fl">1</span>)
+<span class="kw">f</span> <span class="op">=</span> <span class="kw">FuzzySet</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">3</span>, <span class="fl">1</span>)
+<span class="kw">f</span><span class="op">$</span><span class="fu">inclusion</span>(<span class="fl">1</span>)
 <span class="co">#&gt; [1] "Not Included"</span>
-<span class="no">f</span>$<span class="fu">inclusion</span>(<span class="fl">2</span>)
+<span class="kw">f</span><span class="op">$</span><span class="fu">inclusion</span>(<span class="fl">2</span>)
 <span class="co">#&gt; [1] "Partially Included"</span>
-<span class="no">f</span>$<span class="fu">inclusion</span>(<span class="fl">3</span>)
+<span class="kw">f</span><span class="op">$</span><span class="fu">inclusion</span>(<span class="fl">3</span>)
 <span class="co">#&gt; [1] "Fully Included"</span>
 
 <span class="co"># Symbolic intervals provide a clean way to represent infinite sets</span>
-<span class="no">Interval</span>$<span class="fu">new</span>()
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>()
 <span class="co">#&gt; [-∞,+∞]</span>
 <span class="co"># Different closure types and classes are possible</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">7</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"(]"</span>) <span class="co"># half-open</span>
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">7</span>, type = <span class="st">"(]"</span>) <span class="co"># half-open</span>
 <span class="co">#&gt; (1,7]</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">7</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"integer"</span>) <span class="kw">==</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">7</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">7</span>, class = <span class="st">"integer"</span>) <span class="op">==</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">7</span>)
 <span class="co">#&gt; [1] TRUE</span>
 
 <span class="co"># And SpecialSets inheriting from these intervals</span>
-<span class="no">Reals</span>$<span class="fu">new</span>()
+<span class="kw">Reals</span><span class="op">$</span><span class="fu">new</span>()
 <span class="co">#&gt; ℝ</span>
-<span class="no">PosRationals</span>$<span class="fu">new</span>()
-<span class="co">#&gt; ℚ+</span></pre></div>
+<span class="kw">PosRationals</span><span class="op">$</span><span class="fu">new</span>()
+<span class="co">#&gt; ℚ+</span>
+</pre></div>
 </div>
 <div id="set-operations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#set-operations" class="anchor"></a>Set operations</h3>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="co"># Union</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">4</span>, <span class="st">"a"</span>, <span class="st">"b"</span>) + <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="co"># Union</span>
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">4</span>, <span class="st">"a"</span>, <span class="st">"b"</span>) <span class="op">+</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">5</span>)
 <span class="co">#&gt; {1, 4,...,b, 5}</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>) + <span class="no">FuzzyTuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">0.6</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>) <span class="op">+</span> <span class="kw">FuzzyTuple</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">0.6</span>)
 <span class="co">#&gt; [1,5]</span>
 
 <span class="co"># Power</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>)^<span class="fl">2</span>
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>)<span class="op">^</span><span class="fl">2</span>
 <span class="co">#&gt; {1, 2,...,4, 5}^2</span>
 <span class="co"># A symbolic representation is also possible</span>
-<span class="fu"><a href="reference/setpower.html">setpower</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>), <span class="kw">power</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">simplify</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="fu"><a href="reference/setpower.html">setpower</a></span>(<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>), power = <span class="fl">2</span>, simplify = <span class="fl">FALSE</span>)
 <span class="co">#&gt; {1, 2,...,4, 5}^2</span>
-<span class="no">Reals</span>$<span class="fu">new</span>()^<span class="fl">5</span>
+<span class="kw">Reals</span><span class="op">$</span><span class="fu">new</span>()<span class="op">^</span><span class="fl">5</span>
 <span class="co">#&gt; ℝ^5</span>
 
 <span class="co"># Product</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>,<span class="fl">2</span>) * <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>, <span class="fl">6</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>,<span class="fl">2</span>) <span class="op">*</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">5</span>, <span class="fl">6</span>)
 <span class="co">#&gt; {1, 2} × {5, 6}</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>,<span class="fl">5</span>) * <span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">3</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>,<span class="fl">5</span>) <span class="op">*</span> <span class="kw">Tuple</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">3</span>)
 <span class="co">#&gt; [1,5] × (3)</span>
 
 <span class="co"># Intersection</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>) <span class="kw">&amp;</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">4</span>:<span class="fl">10</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>) <span class="op">&amp;</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">4</span><span class="op">:</span><span class="fl">10</span>)
 <span class="co">#&gt; {4, 5}</span>
-<span class="no">ConditionalSet</span>$<span class="fu">new</span>(<span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span> <span class="kw">==</span> <span class="fl">0</span>) <span class="kw">&amp;</span> <span class="no">Set</span>$<span class="fu">new</span>(-<span class="fl">2</span>:<span class="fl">2</span>)
+<span class="kw">ConditionalSet</span><span class="op">$</span><span class="fu">new</span>(<span class="fu">function</span>(<span class="kw">x</span>) <span class="kw">x</span> <span class="op">==</span> <span class="fl">0</span>) <span class="op">&amp;</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="op">-</span><span class="fl">2</span><span class="op">:</span><span class="fl">2</span>)
 <span class="co">#&gt; {0}</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>) <span class="kw">&amp;</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>:<span class="fl">6</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>) <span class="op">&amp;</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">5</span><span class="op">:</span><span class="fl">6</span>)
 <span class="co">#&gt; {5, 6}</span>
 
 <span class="co"># Difference</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>) - <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">5</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>) <span class="op">-</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">5</span>)
 <span class="co">#&gt; [1,5) ∪ (5,10]</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>) - <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">2</span>:<span class="fl">3</span>)
-<span class="co">#&gt; {1, 4, 5}</span></pre></div>
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>) <span class="op">-</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">2</span><span class="op">:</span><span class="fl">3</span>)
+<span class="co">#&gt; {1, 4, 5}</span>
+</pre></div>
 </div>
 <div id="containedness-and-comparators" class="section level3">
 <h3 class="hasAnchor">
 <a href="#containedness-and-comparators" class="anchor"></a>Containedness and Comparators</h3>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">5</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)<span class="op">$</span><span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">5</span>)
 <span class="co">#&gt; [1] TRUE</span>
 <span class="co"># check multiple elements</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">8</span>:<span class="fl">12</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)<span class="op">$</span><span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">8</span><span class="op">:</span><span class="fl">12</span>)
 <span class="co">#&gt; [1]  TRUE  TRUE  TRUE FALSE FALSE</span>
 <span class="co"># only return TRUE if all are TRUE</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">8</span>:<span class="fl">12</span>, <span class="kw">all</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>)<span class="op">$</span><span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">8</span><span class="op">:</span><span class="fl">12</span>, all = <span class="fl">TRUE</span>)
 <span class="co">#&gt; [1] FALSE</span>
 <span class="co"># decide whether open bounds should be included</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"()"</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">10</span>, <span class="kw">bound</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>, type = <span class="st">"()"</span>)<span class="op">$</span><span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">10</span>, bound = <span class="fl">TRUE</span>)
 <span class="co">#&gt; [1] TRUE</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"()"</span>)$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">10</span>, <span class="kw">bound</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">10</span>, type = <span class="st">"()"</span>)<span class="op">$</span><span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fl">10</span>, bound = <span class="fl">TRUE</span>)
 <span class="co">#&gt; [1] TRUE</span>
 
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"numeric"</span>)$<span class="fu"><a href="reference/equals.html">equals</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>))
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>, class = <span class="st">"numeric"</span>)<span class="op">$</span><span class="fu"><a href="reference/equals.html">equals</a></span>(<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>))
 <span class="co">#&gt; [1] FALSE</span>
-<span class="no">Interval</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>, <span class="kw">class</span> <span class="kw">=</span> <span class="st">"integer"</span>)$<span class="fu"><a href="reference/equals.html">equals</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">5</span>))
+<span class="kw">Interval</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">5</span>, class = <span class="st">"integer"</span>)<span class="op">$</span><span class="fu"><a href="reference/equals.html">equals</a></span>(<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>))
 <span class="co">#&gt; [1] TRUE</span>
 
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>) <span class="kw">==</span> <span class="no">FuzzySet</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">1</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>) <span class="op">==</span> <span class="kw">FuzzySet</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">1</span>)
 <span class="co">#&gt; [1] TRUE</span>
 
 <span class="co"># proper subsets</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)$<span class="fu"><a href="reference/isSubset.html">isSubset</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>), <span class="kw">proper</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)<span class="op">$</span><span class="fu"><a href="reference/isSubset.html">isSubset</a></span>(<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>), proper = <span class="fl">TRUE</span>)
 <span class="co">#&gt; [1] TRUE</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>) <span class="kw">&lt;</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>) <span class="op">&lt;</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)
 <span class="co">#&gt; [1] TRUE</span>
 
 <span class="co"># (non-proper) subsets</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)$<span class="fu"><a href="reference/isSubset.html">isSubset</a></span>(<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>), <span class="kw">proper</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)<span class="op">$</span><span class="fu"><a href="reference/isSubset.html">isSubset</a></span>(<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>), proper = <span class="fl">FALSE</span>)
 <span class="co">#&gt; [1] TRUE</span>
-<span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>) <span class="kw">&lt;=</span> <span class="no">Set</span>$<span class="fu">new</span>(<span class="fl">1</span>:<span class="fl">3</span>)
+<span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>) <span class="op">&lt;=</span> <span class="kw">Set</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)
 <span class="co">#&gt; [1] TRUE</span>
 
 <span class="co"># multi-dimensional checks</span>
-<span class="no">x</span> <span class="kw">=</span> <span class="no">PosReals</span>$<span class="fu">new</span>()^<span class="fl">2</span>
-<span class="no">x</span>$<span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">Tuple</span>$<span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">1</span>), <span class="no">Tuple</span>$<span class="fu">new</span>(-<span class="fl">2</span>, <span class="fl">3</span>)))
-<span class="co">#&gt; [1]  TRUE FALSE</span></pre></div>
+<span class="kw">x</span> <span class="op">=</span> <span class="kw">PosReals</span><span class="op">$</span><span class="fu">new</span>()<span class="op">^</span><span class="fl">2</span>
+<span class="kw">x</span><span class="op">$</span><span class="fu"><a href="reference/contains.html">contains</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">Tuple</span><span class="op">$</span><span class="fu">new</span>(<span class="fl">1</span>, <span class="fl">1</span>), <span class="kw">Tuple</span><span class="op">$</span><span class="fu">new</span>(<span class="op">-</span><span class="fl">2</span>, <span class="fl">3</span>)))
+<span class="co">#&gt; [1]  TRUE FALSE</span>
+</pre></div>
 </div>
 </div>
 <div id="usage" class="section level2">
@@ -298,7 +308,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
