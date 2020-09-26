@@ -179,7 +179,7 @@ using standard 'and', <code>&amp;</code>, and 'or', <code><a href='https://rdrr.
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Create a new <code>ConditionalSet</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>condition</span>, argclass = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>condition</span>, argclass <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -199,7 +199,7 @@ See examples.</p>
 <p><hr>
 <a id="method-contains"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='contains.html'>contains()</a></code></h3>
 <p>Tests to see if <code>x</code> is contained in the Set.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='kw'>x</span>, all = <span class='fl'>FALSE</span>, bound = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span>, bound <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -249,7 +249,7 @@ s$contains(list(-2, 2))
 <p><hr>
 <a id="method-equals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='equals.html'>equals()</a></code></h3>
 <p>Tests if two sets are equal.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'><a href='equals.html'>equals</a></span>(<span class='kw'>x</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>equals</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -273,7 +273,7 @@ element of <code>x</code>.</p>
 <p><hr>
 <a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>strprint()</code></h3>
 <p>Creates a printable representation of the object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>strprint</span>(n = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>strprint</span><span class='op'>(</span>n <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -285,7 +285,7 @@ element of <code>x</code>.</p>
 <p><hr>
 <a id="method-summary"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code></h3>
 <p>See <code>strprint</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(n = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>summary</span><span class='op'>(</span>n <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -295,7 +295,7 @@ element of <code>x</code>.</p>
 <p><hr>
 <a id="method-isSubset"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
 <p>Currently undefined for <code>ConditionalSet</code>s.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>x</span>, proper = <span class='fl'>FALSE</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'>x</span>, proper <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -309,7 +309,7 @@ element of <code>x</code>.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -321,29 +321,29 @@ element of <code>x</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Set of Positive Naturals</span>
-<span class='kw'>s</span> <span class='op'>&lt;-</span> <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fl'>TRUE</span>, argclass = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='kw'>PosNaturals</span><span class='op'>$</span><span class='fu'>new</span>()))
+<span class='va'>s</span> <span class='op'>&lt;-</span> <span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='cn'>TRUE</span>, argclass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'><a href='PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `ConditionalSet$contains`</span>
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='co'># Set of positives</span>
-<span class='kw'>s</span> <span class='op'>=</span> <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span> <span class='op'>&gt;</span> <span class='fl'>0</span>)
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>,<span class='op'>-</span><span class='fl'>1</span>))
+<span class='va'>s</span> <span class='op'>=</span> <span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1]  TRUE FALSE</div><div class='input'>
 <span class='co'># Set via equality</span>
-<span class='kw'>s</span> <span class='op'>=</span> <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>y</span>) <span class='kw'>x</span> <span class='op'>+</span> <span class='kw'>y</span> <span class='op'>==</span> <span class='fl'>2</span>)
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>0</span>), <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>, <span class='fl'>2</span>)))
+<span class='va'>s</span> <span class='op'>=</span> <span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span> <span class='op'>==</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE TRUE</div><div class='input'>
 <span class='co'># Tuples are recommended when using contains as they allow non-unique elements</span>
-<span class='kw'>s</span> <span class='op'>=</span> <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>y</span>) <span class='kw'>x</span> <span class='op'>+</span> <span class='kw'>y</span> <span class='op'>==</span> <span class='fl'>4</span>)
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>2</span>)) <span class='co'># Errors as Set$new(2,2) == Set$new(2)</span>
-}
+<span class='va'>s</span> <span class='op'>=</span> <span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># Errors as Set$new(2,2) == Set$new(2)</span>
+<span class='op'>}</span>
 
 <span class='co'># Set of Positive Naturals</span>
-<span class='kw'>s</span> <span class='op'>=</span> <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fl'>TRUE</span>, argclass = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='kw'>PosNaturals</span><span class='op'>$</span><span class='fu'>new</span>()))
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>2</span>))
+<span class='va'>s</span> <span class='op'>=</span> <span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='cn'>TRUE</span>, argclass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'><a href='PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE  TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

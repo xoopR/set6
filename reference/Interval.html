@@ -181,13 +181,13 @@ otherwise <code>Inf</code>. See the cardinality property for the type of infinit
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Create a new <code>Interval</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(
-  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
-  upper = <span class='fl'>Inf</span>,
-  type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"[]"</span>, <span class='st'>"(]"</span>, <span class='st'>"[)"</span>, <span class='st'>"()"</span>),
-  class = <span class='st'>"numeric"</span>,
-  universe = <span class='kw'>ExtendedReals</span><span class='op'>$</span><span class='fu'>new</span>()
-)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  lower <span class='op'>=</span> <span class='op'>-</span><span class='cn'>Inf</span>,
+  upper <span class='op'>=</span> <span class='cn'>Inf</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"[]"</span>, <span class='st'>"(]"</span>, <span class='st'>"[)"</span>, <span class='st'>"()"</span><span class='op'>)</span>,
+  class <span class='op'>=</span> <span class='st'>"numeric"</span>,
+  universe <span class='op'>=</span> <span class='va'><a href='ExtendedReals.html'>ExtendedReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -213,7 +213,7 @@ numerics, the <code>universe</code> specifies what range the interval could take
 <p><hr>
 <a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>strprint()</code></h3>
 <p>Creates a printable representation of the object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>strprint</span>(<span class='kw'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>strprint</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -225,7 +225,7 @@ numerics, the <code>universe</code> specifies what range the interval could take
 <p><hr>
 <a id="method-equals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='equals.html'>equals()</a></code></h3>
 <p>Tests if two sets are equal.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'><a href='equals.html'>equals</a></span>(<span class='kw'>x</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>equals</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -248,14 +248,14 @@ Infix operators can be used for:</p><table class='table'>
 <code>FALSE</code>. If <code>all</code> is <code>FALSE</code> then returns a vector of logicals corresponding to each individual
 element of <code>x</code>.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>) <span class='op'>==</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>)
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>, class = <span class='st'>"integer"</span>) != <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>,class=<span class='st'>"numeric"</span>)
+<p><div class="r example copy"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span>,class<span class='op'>=</span><span class='st'>"numeric"</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-contains"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='contains.html'>contains()</a></code></h3>
 <p>Tests to see if <code>x</code> is contained in the Set.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='kw'>x</span>, all = <span class='fl'>FALSE</span>, bound = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span>, bound <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -281,26 +281,26 @@ element of <code>x</code>.</p>
 <p>The infix operator <code>%inset%</code> is available to test if <code>x</code> is an element in the <code>Set</code>,
 see examples.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>s</span> <span class='op'>=</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
+<p><div class="r example copy"></p><pre><span class='va'>s</span> <span class='op'>=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># Simplest case</span>
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fl'>4</span>)
-<span class='fl'>8</span> <span class='op'>%inset%</span> <span class='kw'>s</span>
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='fl'>8</span> <span class='op'>%inset%</span> <span class='va'>s</span>
 
 <span class='co'># Test if multiple elements lie in the set</span>
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all = <span class='fl'>FALSE</span>)
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all = <span class='fl'>TRUE</span>)
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Check if a tuple lies in a Set of higher dimension</span>
-<span class='kw'>s2</span> <span class='op'>=</span> <span class='kw'>s</span> <span class='op'>*</span> <span class='kw'>s</span>
-<span class='kw'>s2</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>,<span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>,<span class='fl'>1</span>), <span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>7</span>), <span class='fl'>2</span>) <span class='op'>%inset%</span> <span class='kw'>s2</span>
+<span class='va'>s2</span> <span class='op'>=</span> <span class='va'>s</span> <span class='op'>*</span> <span class='va'>s</span>
+<span class='va'>s2</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span>, <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>7</span><span class='op'>)</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%inset%</span> <span class='va'>s2</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-isSubset"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
 <p>Test if one set is a (proper) subset of another</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>x</span>, proper = <span class='fl'>FALSE</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'>x</span>, proper <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -333,14 +333,14 @@ is a subinterval of another.</p>
 <code>FALSE</code>. If <code>all</code> is <code>FALSE</code> then returns a vector of logicals corresponding to each individual
 element of <code>x</code>.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>) <span class='op'>&lt;</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>)
-<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>) <span class='op'>&lt;</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>,<span class='fl'>5</span>)
+<p><div class="r example copy"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span><span class='op'>)</span>
+<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>5</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-isSubinterval"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>isSubinterval()</code></h3>
 <p>Test if one interval is a (proper) subinterval of another</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>x</span>, proper = <span class='fl'>FALSE</span>, all = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'>x</span>, proper <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -362,20 +362,20 @@ a clearer illustration of the difference.</p>
 <code>FALSE</code>. If <code>all</code> is <code>FALSE</code> then returns a vector of logicals corresponding to each individual
 element of <code>x</code>.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>2</span>)) <span class='co'># TRUE</span>
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>1</span>)) <span class='co'># TRUE</span>
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>, class = <span class='st'>"integer"</span>)<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>)) <span class='co'># TRUE</span>
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>)) <span class='co'># FALSE</span>
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>1</span>)) <span class='co'># FALSE</span>
+<p><div class="r example copy"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># FALSE</span>
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># FALSE</span>
 
-<span class='kw'>Reals</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>Integers</span><span class='op'>$</span><span class='fu'>new</span>()) <span class='co'># TRUE</span>
-<span class='kw'>Reals</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Integers</span><span class='op'>$</span><span class='fu'>new</span>()) <span class='co'># FALSE</span>
+<span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'><a href='Integers.html'>Integers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+<span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Integers.html'>Integers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># FALSE</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -387,68 +387,68 @@ element of <code>x</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Set of Reals</span>
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>()
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [-∞,+∞] </div><div class='input'>
 <span class='co'># Set of Integers</span>
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(class = <span class='st'>"integer"</span>)
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {-∞,...,+∞} </div><div class='input'>
 <span class='co'># Half-open interval</span>
-<span class='kw'>i</span> <span class='op'>&lt;-</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='st'>"(]"</span>)
-<span class='kw'>i</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>))
-</div><div class='output co'>#&gt; [1] FALSE  TRUE</div><div class='input'><span class='kw'>i</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>), bound = <span class='fl'>TRUE</span>)
+<span class='va'>i</span> <span class='op'>&lt;-</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span>, <span class='st'>"(]"</span><span class='op'>)</span>
+<span class='va'>i</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE  TRUE</div><div class='input'><span class='va'>i</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span>, bound <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE TRUE</div><div class='input'>
 <span class='co'># Equivalent Set and Interval</span>
-<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>) <span class='op'>==</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, class = <span class='st'>"integer"</span>)
+<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># SpecialSets can provide more efficient implementation</span>
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>() <span class='op'>==</span> <span class='kw'>ExtendedReals</span><span class='op'>$</span><span class='fu'>new</span>()
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(class = <span class='st'>"integer"</span>, type = <span class='st'>"()"</span>) <span class='op'>==</span> <span class='kw'>Integers</span><span class='op'>$</span><span class='fu'>new</span>()
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'><a href='ExtendedReals.html'>ExtendedReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>class <span class='op'>=</span> <span class='st'>"integer"</span>, type <span class='op'>=</span> <span class='st'>"()"</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'><a href='Integers.html'>Integers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Interval$equals`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>) <span class='op'>==</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>)
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>, class = <span class='st'>"integer"</span>) != <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>,class=<span class='st'>"numeric"</span>)
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span>,class<span class='op'>=</span><span class='st'>"numeric"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Interval$contains`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>s</span> <span class='op'>=</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>)
+<span class='va'>s</span> <span class='op'>=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># Simplest case</span>
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fl'>4</span>)
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fl'>8</span> <span class='op'>%inset%</span> <span class='kw'>s</span>
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fl'>8</span> <span class='op'>%inset%</span> <span class='va'>s</span>
 </div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># Test if multiple elements lie in the set</span>
-<span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; [1]  TRUE  TRUE FALSE</div><div class='input'><span class='kw'>s</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all = <span class='fl'>TRUE</span>)
+<span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  TRUE  TRUE FALSE</div><div class='input'><span class='va'>s</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, all <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># Check if a tuple lies in a Set of higher dimension</span>
-<span class='kw'>s2</span> <span class='op'>=</span> <span class='kw'>s</span> <span class='op'>*</span> <span class='kw'>s</span>
-<span class='kw'>s2</span><span class='op'>$</span><span class='fu'><a href='contains.html'>contains</a></span>(<span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>,<span class='fl'>1</span>))
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>,<span class='fl'>1</span>), <span class='kw'>Tuple</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>7</span>), <span class='fl'>2</span>) <span class='op'>%inset%</span> <span class='kw'>s2</span>
+<span class='va'>s2</span> <span class='op'>=</span> <span class='va'>s</span> <span class='op'>*</span> <span class='va'>s</span>
+<span class='va'>s2</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span>, <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>7</span><span class='op'>)</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%inset%</span> <span class='va'>s2</span>
 </div><div class='output co'>#&gt; [1]  TRUE FALSE FALSE</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Interval$isSubset`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>) <span class='op'>&lt;</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>5</span>)
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>) <span class='op'>&lt;</span> <span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>0</span>,<span class='fl'>5</span>)
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Interval$isSubinterval`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>2</span>)) <span class='co'># TRUE</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>1</span>)) <span class='co'># TRUE</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>, class = <span class='st'>"integer"</span>)<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>)) <span class='co'># TRUE</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>)) <span class='co'># FALSE</span>
-</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='kw'>Interval</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>,<span class='fl'>3</span>)<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>2</span>, <span class='fl'>1</span>)) <span class='co'># FALSE</span>
+<span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># FALSE</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='va'>Interval</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># FALSE</span>
 </div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='kw'>Reals</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'><a href='isSubset.html'>isSubset</a></span>(<span class='kw'>Integers</span><span class='op'>$</span><span class='fu'>new</span>()) <span class='co'># TRUE</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>Reals</span><span class='op'>$</span><span class='fu'>new</span>()<span class='op'>$</span><span class='fu'>isSubinterval</span>(<span class='kw'>Integers</span><span class='op'>$</span><span class='fu'>new</span>()) <span class='co'># FALSE</span>
+<span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'><a href='Integers.html'>Integers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>isSubinterval</span><span class='op'>(</span><span class='va'><a href='Integers.html'>Integers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># FALSE</span>
 </div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

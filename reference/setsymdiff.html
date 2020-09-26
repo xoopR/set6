@@ -125,9 +125,9 @@
     <p>Returns the symmetric difference of two objects inheriting from class <code>Set</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setsymdiff</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, simplify = <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>setsymdiff</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='kw'>x</span> <span class='op'>%-%</span> <span class='kw'>y</span></pre>
+<span class='va'>x</span> <span class='op'>%-%</span> <span class='va'>y</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,12 +167,12 @@ Therefore <code>setsymdiff</code> is written as a thin wrapper over these operat
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># symmetrical difference compared to union and intersection</span>
-<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>) <span class='op'>%-%</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>3</span>, <span class='fl'>4</span>)
-</div><div class='output co'>#&gt; {1, 2, 4} </div><div class='input'>(<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>) <span class='op'>|</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>3</span>, <span class='fl'>4</span>)) <span class='op'>-</span> (<span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>) <span class='op'>&amp;</span> <span class='kw'>Set</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fl'>3</span>, <span class='fl'>4</span>))
+<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%-%</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {1, 2, 4} </div><div class='input'><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {1, 2, 4} </div><div class='input'>
 <span class='co'># ConditionalSets demonstrate the internal logic</span>
-<span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span> <span class='op'>&gt;</span> <span class='fl'>0</span>) <span class='op'>%-%</span>
-  <span class='kw'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'>function</span>(<span class='kw'>y</span>) <span class='kw'>y</span> <span class='op'>==</span> <span class='fl'>0</span>)
+<span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>%-%</span>
+  <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='va'>y</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>isSubset is currently undefined for conditional sets.</span></div><div class='output co'>#&gt; <span class='message'>isSubset is currently undefined for conditional sets.</span></div><div class='output co'>#&gt; {(x &gt; 0 | y == 0) &amp; !(x &gt; 0 &amp; y == 0) : x ∈ V, y ∈ V} </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
