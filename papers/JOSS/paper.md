@@ -34,7 +34,7 @@ The example below demonstrates construction of a set and interval, comparisons o
 > a <- Set$new(1, 2, 3)
 > a$print()
 {1, 2, 3}
-> a$contains(1, "a")
+> a$contains(c(1, "a"))
 [1] TRUE FALSE
 > b <- Interval$new(1, Inf, class = "numeric")
 > b$isSubset(a)
@@ -49,7 +49,7 @@ TRUE
 # Key Design Principles
 
 1. **Maximum user-control over set operations** - Users can select how operations act on sets, including a choice of  associativity, lazy evaluation, and unicode printing.
-2. **Minimal dependencies** - `set6` has the goal of being a key dependency to any object-oriented requiring representation of mathematical sets, for example for representing function inputs and supports. Therefore `set6` is itself dependent on only three packages.
+2. **Minimal dependencies** - `set6` has the goal of being a key dependency to any object-oriented package requiring representation of mathematical sets, for example for representing function inputs and supports. Therefore `set6` is itself dependent on only three packages.
 3. **Inspectability and reactive user interface** - `set6` prioritises symbolic representation and lazy evaluation to allow for the package to be scalable and to fit into any other package. However it is ensured that this does not detract from a clear user interface, i.e. at all times it should be clear what an object contains both externally (how it prints) and internally (inspection methods). `set6` allows sets to be queried in many different ways, including calling the elements in the set (if finite), finding the bounds of the set (if numeric), and listing properties and traits.
 
 ```R
