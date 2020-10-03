@@ -338,3 +338,51 @@ Complex <- R6Class("Complex",
     }
   )
 )
+
+#' @name Primes
+#' @title Set of Prime Numbers
+#' @description The mathematical set of prime numbers,
+#' defined as the the set of integers that are divisible only be one and themselves.
+#' @family special sets
+#' @export
+Primes <- R6Class("Primes",
+  inherit = SpecialSet,
+  public = list(
+    #' @description Create a new `Primes` object.
+    #' @return A new `Primes` object.
+    initialize = function() {
+      super$initialize(lower = 2, type = "[]", class = "integer")
+    },
+
+    #' @description Tests to see if \code{x} is contained in the Set.
+    #'
+    #' @param x any. Object or vector of objects to test.
+    #' @param all logical. If `FALSE` tests each `x` separately. Otherwise returns `TRUE` only if all `x` pass test.
+    #' @param bound logical.
+    #'
+    #' @details \code{x} can be of any type, including a Set itself. \code{x} should be a tuple if
+    #' checking to see if it lies within a set of dimension greater than one. To test for multiple \code{x}
+    #' at the same time, then provide these as a list.
+    #'
+    #' If `all = TRUE` then returns `TRUE` if all `x` are contained in the `Set`, otherwise
+    #' returns a vector of logicals. For [Interval]s, `bound` is used to specify if elements lying on the
+    #' (possibly open) boundary of the interval are considered contained (`bound = TRUE`) or not (`bound = FALSE`).
+    #'
+    #' @return If \code{all} is `TRUE` then returns `TRUE` if all elements of \code{x} are contained in the `Set`, otherwise
+    #' `FALSE.` If \code{all} is `FALSE` then returns a vector of logicals corresponding to each individual
+    #' element of \code{x}.
+    #'
+    #' The infix operator `%inset%` is available to test if `x` is an element in the `Set`,
+    #' see examples.
+    contains = function(x, all = FALSE, bound = NULL) {
+      l <- vapply(x, checkmate::testIntegerish, logical(1))
+      x[l] = PrimesContains(x[l])
+      x[!l] = FALSE
+
+      returner(
+        x = as.logical(x),
+        all = all
+      )
+    }
+  )
+)

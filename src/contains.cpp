@@ -42,3 +42,24 @@ bool IntervalContainsAll(NumericVector x, long double inf, long double sup, long
 
   return true;
 }
+
+// [[Rcpp::export]]
+LogicalVector PrimesContains(IntegerVector x) {
+  LogicalVector ret(x.size());
+  for (int i = 0; i < x.size(); i++) {
+    if (x[i] < 2L) {
+      ret[i] = false;
+    } else if (x[i] == 2L) {
+      ret[i] = true;
+    } else {
+      ret[i] = true;
+      for (int j = 2; j <= ceil(sqrt(x[i])); j++) {
+        if (x[i] % j == 0) {
+          ret[i] = false;
+          break;
+        }
+      }
+    }
+  }
+  return ret;
+}

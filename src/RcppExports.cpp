@@ -39,10 +39,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// PrimesContains
+LogicalVector PrimesContains(IntegerVector x);
+RcppExport SEXP _set6_PrimesContains(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(PrimesContains(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_set6_IntervalContains", (DL_FUNC) &_set6_IntervalContains, 7},
     {"_set6_IntervalContainsAll", (DL_FUNC) &_set6_IntervalContainsAll, 7},
+    {"_set6_PrimesContains", (DL_FUNC) &_set6_PrimesContains, 1},
     {NULL, NULL, 0}
 };
 

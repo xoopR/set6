@@ -9,3 +9,7 @@ IntervalContainsAll <- function(x, inf, sup, min, max, bound, class_str) {
     .Call(`_set6_IntervalContainsAll`, x, inf, sup, min, max, bound, class_str)
 }
 
+PrimesContains <- function(x) {
+    .Call(`_set6_PrimesContains`, x)
+}
+
