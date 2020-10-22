@@ -173,7 +173,7 @@ Therefore <code>setsymdiff</code> is written as a thin wrapper over these operat
 <span class='co'># ConditionalSets demonstrate the internal logic</span>
 <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>%-%</span>
   <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='va'>y</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>isSubset is currently undefined for conditional sets.</span></div><div class='output co'>#&gt; <span class='message'>isSubset is currently undefined for conditional sets.</span></div><div class='output co'>#&gt; {(x &gt; 0 | y == 0) &amp; !(x &gt; 0 &amp; y == 0) : x ∈ V, y ∈ V} </div></pre>
+</div><div class='output co'>#&gt; <span class='message'>isSubset is currently undefined for conditional sets.</span></div><div class='output co'>#&gt; <span class='message'>isSubset is currently undefined for conditional sets.</span></div><div class='output co'>#&gt; {x ∈ 𝕍, y ∈ 𝕍 : (x &gt; 0 | y == 0) &amp; !(x &gt; 0 &amp; y == 0)} </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

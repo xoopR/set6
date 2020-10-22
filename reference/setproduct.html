@@ -212,7 +212,7 @@ where \((x1,...,xN)\) is a tuple.</p>
 <span class='co'># product of conditional sets</span>
 <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;=</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>*</span>
   <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='va'>y</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {x &gt;= y : x ∈ V, y ∈ V} × {x == y : x ∈ V, y ∈ V} </div><div class='input'>
+</div><div class='output co'>#&gt; {x ∈ 𝕍, y ∈ 𝕍 : x &gt;= y} × {x ∈ 𝕍, y ∈ 𝕍 : x == y} </div><div class='input'>
 <span class='co'># product of special sets</span>
 <span class='va'><a href='PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'><a href='NegReals.html'>NegReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ℝ+ × ℝ- </div></pre>
