@@ -178,12 +178,10 @@ ConditionalSet <- R6Class("ConditionalSet",
         sep <- " in "
       }
 
-      return(paste0("{", paste0(
-        paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), " : ",
+      paste0("{", paste0(
         paste(names(self$class), sapply(self$class, function(x) x$strprint()),
-          sep = sep, collapse = ", "
-        ), "}"
-      )))
+              sep = sep, collapse = ", "), " : ",
+        paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), "}"))
     },
 
     #' @description See `strprint`.

@@ -152,8 +152,8 @@ Universal <- R6::R6Class("Universal",
     #' @description Creates a printable representation of the object.
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @return A character string representing the object.
-    strprint = function(n = 2) {
-      return("V")
+    strprint = function(n = NULL) {
+      setSymbol("universal")
     }
   ),
 
