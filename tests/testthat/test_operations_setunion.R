@@ -25,7 +25,7 @@ test_that("set", {
   expect_true((Set$new(1, 2) | Interval$new(3, 4, class = "integer"))$equals(Set$new(1:4)))
   expect_equal(getR6Class(Set$new(1, 2) + Interval$new(3, 4)), "UnionSet")
   useUnicode(FALSE)
-  expect_equal((Set$new(1, 2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {TRUE : x in V}")
+  expect_equal((Set$new(1, 2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {x in V : TRUE}")
   expect_true(setunion(Set$new(1, 2, 3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
   expect_equal(Set$new(1, 2) + Set$new(5, 7) + Set$new(1, 10), Set$new(1, 2, 5, 7, 10))
   expect_equal(setunion(Set$new()), Set$new())
@@ -54,19 +54,19 @@ test_that("conditional", {
   useUnicode(FALSE)
   expect_equal(
     (ConditionalSet$new(function(x) x == 0) + ConditionalSet$new(function(y) y > 0))$strprint(),
-    "{x == 0 | y > 0 : x in V, y in V}"
+    "{x in V, y in V : x == 0 | y > 0}"
   )
   expect_equal(
     setunion(
       ConditionalSet$new(function(x) x == 0), ConditionalSet$new(function(y) y > 0),
       ConditionalSet$new(function(z) z == 2)
     )$strprint(),
-    "{x == 0 | y > 0 | z == 2 : x in V, y in V, z in V}"
+    "{x in V, y in V, z in V : x == 0 | y > 0 | z == 2}"
   )
   expect_equal(
     (ConditionalSet$new(function(x) x == 0) + ConditionalSet$new(function(y) y > 0) +
       ConditionalSet$new(function(z) z == 2))$strprint(),
-    "{x == 0 | y > 0 | z == 2 : x in V, y in V, z in V}"
+    "{x in V, y in V, z in V : x == 0 | y > 0 | z == 2}"
   )
   useUnicode(TRUE)
 })
