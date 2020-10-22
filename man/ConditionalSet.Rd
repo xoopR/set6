@@ -41,10 +41,8 @@ Other sets:
 \code{\link{FuzzySet}},
 \code{\link{FuzzyTuple}},
 \code{\link{Interval}},
-\code{\link{LogicalSet}},
 \code{\link{Set}},
-\code{\link{Tuple}},
-\code{\link{UniversalSet}}
+\code{\link{Tuple}}
 }
 \concept{sets}
 \section{Super class}{
@@ -103,7 +101,7 @@ Create a new \code{ConditionalSet} object.
 \subsection{Details}{
 The \code{condition} should be given as a function that when evaluated returns
 either \code{TRUE} or \code{FALSE}. Further constraints can be given by providing the universe of the
-function arguments as \link{Set}s, if these are not given then the \link{UniversalSet} is assumed.
+function arguments as \link{Set}s, if these are not given then \link{Universal} is assumed.
 See examples.
 }
 

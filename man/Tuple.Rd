@@ -50,9 +50,7 @@ Other sets:
 \code{\link{FuzzySet}},
 \code{\link{FuzzyTuple}},
 \code{\link{Interval}},
-\code{\link{LogicalSet}},
-\code{\link{Set}},
-\code{\link{UniversalSet}}
+\code{\link{Set}}
 }
 \concept{sets}
 \section{Super class}{

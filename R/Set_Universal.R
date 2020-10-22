@@ -1,6 +1,7 @@
-#' @name UniversalSet
+#' @name Universal
 #' @title Mathematical Universal Set
-#' @description The `UniversalSet` is defined as the [Set] containing all possible elements.
+#' @description The `Universal` is defined as the [Set] containing all possible elements.
+#' @family special sets
 #'
 #' @details
 #' The Universal set is the default universe to all sets, and is the largest possible set.
@@ -18,18 +19,17 @@
 #' \deqn{P(V) = V}
 #'
 #' @examples
-#' u <- UniversalSet$new()
+#' u <- Universal$new()
 #' print(u)
 #' u$contains(c(1, letters, TRUE, Set$new()), all = TRUE)
 #' @export
-UniversalSet <- R6::R6Class("UniversalSet",
+Universal <- R6::R6Class("Universal",
   inherit = Set,
   public = list(
-    #' @description Create a new `UniversalSet` object.
+    #' @description Create a new `Universal` object.
     #' @details The Universal set is the set containing every possible element.
-    #' @return A new `UniversalSet` object.
+    #' @return A new `Universal` object.
     initialize = function() {
-      warning("Deprecated. In the future please use Universal$new(). This will be removed in v0.4.0.")
       private$.properties <- Properties$new(closure = "open", cardinality = Inf)
       invisible(self)
     },
@@ -57,7 +57,7 @@ UniversalSet <- R6::R6Class("UniversalSet",
     #' !Set$new(1,2)$equals(Set$new(1,2))
     #' Set$new(1,2) != Set$new(1,5)
     equals = function(x, all = FALSE) {
-      ret <- sapply(listify(x), getR6Class) %in% "UniversalSet"
+      ret <- sapply(listify(x), getR6Class) %in% "Universal"
       returner(ret, all)
     },
 
@@ -82,8 +82,8 @@ UniversalSet <- R6::R6Class("UniversalSet",
     #' Proper Superset \tab `>=`
     #' }
     #'
-    #' Every `Set` is a subset of a `UniversalSet`. No `Set` is a super set of a `UniversalSet`,
-    #' and only a `UniversalSet` is not a proper subset of a `UniversalSet`.
+    #' Every `Set` is a subset of a `Universal`. No `Set` is a super set of a `Universal`,
+    #' and only a `Universal` is not a proper subset of a `Universal`.
     #'
     #' @return If `all` is `TRUE` then returns `TRUE` if all `x` are subsets of the Set, otherwise
     #' `FALSE`. If `all` is `FALSE` then returns a vector of logicals corresponding to each individual
@@ -97,8 +97,8 @@ UniversalSet <- R6::R6Class("UniversalSet",
     isSubset = function(x, proper = FALSE, all = FALSE) {
       x <- listify(x)
       returner(
-        x = sapply(x, inherits, what = "Set") & sapply(x, getR6Class) != "UniversalSet" |
-          sapply(x, getR6Class) == "UniversalSet" & !proper,
+        x = sapply(x, inherits, what = "Set") & sapply(x, getR6Class) != "Universal" |
+          sapply(x, getR6Class) == "Universal" & !proper,
         all = all
       )
     },

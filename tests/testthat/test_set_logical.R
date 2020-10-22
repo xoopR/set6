@@ -1,8 +1,6 @@
-library(testthat)
-
 test_that("construction", {
-  expect_silent(LogicalSet$new())
-  l <- LogicalSet$new()
+  expect_silent(Logicals$new())
+  l <- Logicals$new()
   s <- Set$new(TRUE, FALSE)
   expect_equal(l$elements, s$elements)
   expect_equal(l$min, s$min)

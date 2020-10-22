@@ -24,10 +24,11 @@ reference:
     - FuzzySet
     - FuzzyTuple
     - ConditionalSet
-    - UniversalSet
 - title: Special Sets
-  desc: R6 classes inheriting from SpecialSet
+  desc: Special sets already defined
   contents:
+    - Universal
+    - Logicals
     - Naturals
     - PosNaturals
     - Integers

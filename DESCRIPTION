@@ -1,6 +1,6 @@
 Package: set6
 Title: R6 Mathematical Sets Interface
-Version: 0.1.8
+Version: 0.1.8.9000
 Authors@R: 
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -22,7 +22,7 @@ BugReports: https://github.com/xoopR/set6/issues
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE, r6 = TRUE)
 Collate: 
     'Properties.R'
@@ -34,6 +34,7 @@ Collate:
     'SetWrapper_PowersetSet.R'
     'SetWrapper_ProductSet.R'
     'SetWrapper_UnionSet.R'
+    'Set_Complex.R'
     'Set_ConditionalSet.R'
     'Set_FuzzySet.R'
     'Set_FuzzySet_FuzzyTuple.R'
@@ -41,7 +42,9 @@ Collate:
     'setSymbol.R'
     'Set_Interval_SpecialSet.R'
     'Set_LogicalSet.R'
+    'Set_Logicals.R'
     'Set_Tuple.R'
+    'Set_Universal.R'
     'Set_UniversalSet.R'
     'asFuzzySet.R'
     'asInterval.R'

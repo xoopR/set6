@@ -13,6 +13,7 @@ where \eqn{R} is the set of reals.
 Other special sets: 
 \code{\link{Complex}},
 \code{\link{Integers}},
+\code{\link{Logicals}},
 \code{\link{Naturals}},
 \code{\link{NegIntegers}},
 \code{\link{NegRationals}},
@@ -22,7 +23,8 @@ Other special sets:
 \code{\link{PosRationals}},
 \code{\link{PosReals}},
 \code{\link{Rationals}},
-\code{\link{Reals}}
+\code{\link{Reals}},
+\code{\link{Universal}}
 }
 \concept{special sets}
 \section{Super classes}{

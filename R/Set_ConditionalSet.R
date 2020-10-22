@@ -20,7 +20,7 @@ ConditionalSet <- R6Class("ConditionalSet",
     #' @param argclass list. Optional list of sets that the function arguments live in, see details.
     #' @details The `condition` should be given as a function that when evaluated returns
     #' either `TRUE` or `FALSE`. Further constraints can be given by providing the universe of the
-    #' function arguments as [Set]s, if these are not given then the [UniversalSet] is assumed.
+    #' function arguments as [Set]s, if these are not given then [Universal] is assumed.
     #' See examples.
     initialize = function(condition, argclass = NULL) {
       if (!is.function(condition)) {
@@ -39,7 +39,7 @@ ConditionalSet <- R6Class("ConditionalSet",
       if (!is.null(argclass)) {
         assertSetList(argclass)
       } else {
-        argclass <- rep(list(UniversalSet$new()), private$.dimension)
+        argclass <- rep(list(Universal$new()), private$.dimension)
         names(argclass) <- names(formals(condition))
       }
 

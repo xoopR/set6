@@ -56,7 +56,7 @@ setintersect <- function(x, y) {
     return(Set$new(elements = intersect(x$elements, y$elements)))
   }
 
-  if (getR6Class(y) == "UniversalSet") {
+  if (getR6Class(y) == "Universal") {
     return(x)
   }
 

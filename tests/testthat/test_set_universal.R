@@ -1,20 +1,18 @@
-library(testthat)
-
 test_that("construction", {
-  expect_silent(UniversalSet$new())
-  expect_error(UniversalSet$new(12))
+  expect_silent(Universal$new())
+  expect_error(Universal$new(12))
 })
 
 test_that("strprint", {
-  expect_silent(expect_equal(UniversalSet$new()$strprint(), "V"))
+  expect_silent(expect_equal(Universal$new()$strprint(), "V"))
 })
 
-v <- UniversalSet$new()
+v <- Universal$new()
 
 test_that("contains", {
   expect_true(v$contains(list(letters, 1, 2, "a"), all = TRUE))
   expect_equal(v$contains(list(FALSE, 1, 2, "a")), rep(TRUE, 4))
-  expect_silent(expect_equal(UniversalSet$new()$strprint(), "V"))
+  expect_silent(expect_equal(Universal$new()$strprint(), "V"))
 })
 
 test_that("subset", {

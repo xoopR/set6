@@ -11,6 +11,7 @@ The mathematical set of integers, defined as the set of whole numbers. i.e.
 Other special sets: 
 \code{\link{Complex}},
 \code{\link{ExtendedReals}},
+\code{\link{Logicals}},
 \code{\link{Naturals}},
 \code{\link{NegIntegers}},
 \code{\link{NegRationals}},
@@ -20,7 +21,8 @@ Other special sets:
 \code{\link{PosRationals}},
 \code{\link{PosReals}},
 \code{\link{Rationals}},
-\code{\link{Reals}}
+\code{\link{Reals}},
+\code{\link{Universal}}
 }
 \concept{special sets}
 \section{Super classes}{

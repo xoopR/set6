@@ -1,20 +1,20 @@
-#' @name LogicalSet
+#' @name Logicals
 #' @title Set of Logicals
-#' @description The `LogicalSet` is defined as the [Set] containing the elements `TRUE` and `FALSE`.
+#' @description The `Logicals` is defined as the [Set] containing the elements `TRUE` and `FALSE`.
+#' @family special sets
 #'
 #' @examples
-#' l <- LogicalSet$new()
+#' l <- Logicals$new()
 #' print(l)
 #' l$contains(list(TRUE, 1, FALSE))
 #' @export
-LogicalSet <- R6::R6Class("LogicalSet",
+Logicals <- R6::R6Class("Logicals",
   inherit = Set,
   public = list(
-    #' @description Create a new `LogicalSet` object.
+    #' @description Create a new `Logicals` object.
     #' @details The Logical set is the set containing `TRUE` and `FALSE`.
-    #' @return A new `LogicalSet` object.
+    #' @return A new `Logicals` object.
     initialize = function() {
-      warning("Deprecated. In the future please use Logicals$new(). This will be removed in v0.4.0.")
       private$.elements <- list(TRUE, FALSE)
       private$.str_elements <- c("TRUE", "FALSE")
       private$.class <- "logical"

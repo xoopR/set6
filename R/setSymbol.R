@@ -18,7 +18,9 @@ setSymbol <- function(set, zero = FALSE) {
       posreals = paste0("\u211D", zero_str, "+"),
       negreals = paste0("\u211D", zero_str, "-"),
       extendedreals = "\u211D \u222A {-\u221E, +\u221E}",
-      complex = "\u2102"
+      complex = "\u2102",
+      logicals = "{TRUE, FALSE}",
+      universal = "\U1D54D"
     ))
   } else {
     return(switch(set,
@@ -34,7 +36,9 @@ setSymbol <- function(set, zero = FALSE) {
       posreals = paste0("R", zero_str, "+"),
       negreals = paste0("R", zero_str, "-"),
       extendedreals = "R U {-Inf, +Inf}",
-      complex = "C"
+      complex = "C",
+      logicals = "{TRUE, FALSE}",
+      universal = "V"
     ))
   }
 }

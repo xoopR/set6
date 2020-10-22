@@ -10,8 +10,8 @@
 #' @export
 listSpecialSets <- function(simplify = FALSE) {
   y <- c(
-    "Naturals", "PosNaturals", "Integers", "PosIntegers", "NegIntegers", "Rationals",
-    "PosRationals", "NegRationals", "Reals", "PosReals", "NegReals", "ExtendedReals",
+    "Universal", "Logicals", "Naturals", "PosNaturals", "Integers", "PosIntegers", "NegIntegers",
+    "Rationals", "PosRationals", "NegRationals", "Reals", "PosReals", "NegReals", "ExtendedReals",
     "Complex"
   )
   if (simplify) {
@@ -20,9 +20,9 @@ listSpecialSets <- function(simplify = FALSE) {
     return(data.frame(
       ClassName = y,
       Symbol = unname(sapply(y, setSymbol)),
-      Infimum = c("0", "0/1", "-Inf", "0/1", "-Inf", "-Inf", "0/1", "-Inf", "-Inf", "0/1",
-                  rep("-Inf", 3)),
-      Supremum = c(rep("Inf", 4), "-1/0", "Inf", "Inf", "-1/0", "Inf", "Inf", "-1/0", "Inf", "Inf")
+      Infimum = c("NA", "FALSE", "0", "0/1", "-Inf", "0/1", "-Inf", "-Inf", "0/1", "-Inf", "-Inf", "0/1",
+                  rep("-Inf", 2), "NA"),
+      Supremum = c("NA", "TRUE", rep("Inf", 4), "-1/0", "Inf", "Inf", "-1/0", "Inf", "Inf", "-1/0", "Inf", "NA")
     ))
   }
 }

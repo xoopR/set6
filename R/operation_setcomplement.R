@@ -71,7 +71,7 @@ setcomplement <- function(x, y, simplify = TRUE) {
 
   if ((testConditionalSet(x) & !testConditionalSet(y)) |
     (testConditionalSet(y) & !testConditionalSet(x)) |
-    !simplify | getR6Class(x) == "UniversalSet") {
+    !simplify | getR6Class(x) == "Universal") {
     return(ComplementSet$new(x, y))
   } else if (testConditionalSet(x) | inherits(x, "ComplementSet")) {
     UseMethod("setcomplement")
@@ -89,7 +89,7 @@ setcomplement <- function(x, y, simplify = TRUE) {
     }
   }
 
-  if (getR6Class(y) == "UniversalSet") {
+  if (getR6Class(y) == "Universal") {
     return(Set$new())
   }
 

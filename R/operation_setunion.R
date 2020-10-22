@@ -74,8 +74,8 @@ setunion <- function(..., simplify = TRUE) {
     return(.union_set(sets))
   }
 
-  if ("UniversalSet" %in% classes) {
-    return(UniversalSet$new())
+  if ("Universal" %in% classes) {
+    return(Universal$new())
   }
 
   # call UnionSet class if any products

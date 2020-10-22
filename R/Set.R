@@ -33,15 +33,15 @@ Set <- R6Class("Set",
     #' @description Create a new `Set` object.
     #' @details Sets are constructed by elements of any types (including R6 classes), excluding lists.
     #' `Set`s should be used within `Set`s instead of lists. The `universe` argument is useful for taking the absolute complement
-    #' of the `Set`. If a universe isn't given then [UniversalSet] is assumed. If the `class` argument is non-NULL, then all elements
+    #' of the `Set`. If a universe isn't given then [Universal] is assumed. If the `class` argument is non-NULL, then all elements
     #' will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
     #' or coerced.
     #' @param ... any. Elements in the set.
-    #' @param universe Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the [UniversalSet].
+    #' @param universe Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the [Universal].
     #' @param elements list. Alternative constructor that may be more efficient if passing objects of multiple classes.
     #' @param class character. Optional string naming a class that if supplied gives the set the `typed` property.
     #' @return A new `Set` object.
-    initialize = function(..., universe = UniversalSet$new(), elements = NULL, class = NULL) {
+    initialize = function(..., universe = Universal$new(), elements = NULL, class = NULL) {
 
       private$.universe <- assertSet(universe)
 
@@ -75,7 +75,7 @@ Set <- R6Class("Set",
           }
         }
 
-        if (getR6Class(universe) != "UniversalSet") {
+        if (getR6Class(universe) != "Universal") {
           assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
         }
 
@@ -289,7 +289,7 @@ Set <- R6Class("Set",
           }
         }
 
-        if (getR6Class(y) %in% c("ConditionalSet", "UniversalSet")) {
+        if (getR6Class(y) %in% c("ConditionalSet", "Universal")) {
           return(FALSE)
         } else if (testInterval(y)) {
           if (testFinite(y)) {

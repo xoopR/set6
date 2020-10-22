@@ -109,9 +109,7 @@ Other sets:
 \code{\link{FuzzySet}},
 \code{\link{FuzzyTuple}},
 \code{\link{Interval}},
-\code{\link{LogicalSet}},
-\code{\link{Tuple}},
-\code{\link{UniversalSet}}
+\code{\link{Tuple}}
 }
 \concept{sets}
 \section{Active bindings}{
@@ -181,7 +179,7 @@ the cardinality property for the type of infinity.}
 \subsection{Method \code{new()}}{
 Create a new \code{Set} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Set$new(..., universe = UniversalSet$new(), elements = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Set$new(..., universe = Universal$new(), elements = NULL, class = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -189,7 +187,7 @@ Create a new \code{Set} object.
 \describe{
 \item{\code{...}}{any. Elements in the set.}
 
-\item{\code{universe}}{Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the \link{UniversalSet}.}
+\item{\code{universe}}{Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the \link{Universal}.}
 
 \item{\code{elements}}{list. Alternative constructor that may be more efficient if passing objects of multiple classes.}
 
@@ -200,7 +198,7 @@ Create a new \code{Set} object.
 \subsection{Details}{
 Sets are constructed by elements of any types (including R6 classes), excluding lists.
 \code{Set}s should be used within \code{Set}s instead of lists. The \code{universe} argument is useful for taking the absolute complement
-of the \code{Set}. If a universe isn't given then \link{UniversalSet} is assumed. If the \code{class} argument is non-NULL, then all elements
+of the \code{Set}. If a universe isn't given then \link{Universal} is assumed. If the \code{class} argument is non-NULL, then all elements
 will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
 or coerced.
 }

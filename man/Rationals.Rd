@@ -19,6 +19,7 @@ Other special sets:
 \code{\link{Complex}},
 \code{\link{ExtendedReals}},
 \code{\link{Integers}},
+\code{\link{Logicals}},
 \code{\link{Naturals}},
 \code{\link{NegIntegers}},
 \code{\link{NegRationals}},
@@ -27,7 +28,8 @@ Other special sets:
 \code{\link{PosNaturals}},
 \code{\link{PosRationals}},
 \code{\link{PosReals}},
-\code{\link{Reals}}
+\code{\link{Reals}},
+\code{\link{Universal}}
 }
 \concept{special sets}
 \section{Super classes}{
