@@ -81,7 +81,7 @@ intervals, tuples, and fuzzy variants." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8.9000</span>
       </span>
     </div>
 
@@ -142,9 +142,7 @@ of elements does not matter, <a href='Tuple.html'>Tuple</a>s can be used if dupl
 <code><a href='FuzzySet.html'>FuzzySet</a></code>,
 <code><a href='FuzzyTuple.html'>FuzzyTuple</a></code>,
 <code><a href='Interval.html'>Interval</a></code>,
-<code><a href='LogicalSet.html'>LogicalSet</a></code>,
-<code><a href='Tuple.html'>Tuple</a></code>,
-<code><a href='UniversalSet.html'>UniversalSet</a></code></p></div>
+<code><a href='Tuple.html'>Tuple</a></code></p></div>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl>
@@ -210,13 +208,13 @@ the cardinality property for the type of infinity.</p></dd>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Create a new <code>Set</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>...</span>, universe <span class='op'>=</span> <span class='va'><a href='UniversalSet.html'>UniversalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, elements <span class='op'>=</span> <span class='cn'>NULL</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>...</span>, universe <span class='op'>=</span> <span class='va'><a href='Universal.html'>Universal</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, elements <span class='op'>=</span> <span class='cn'>NULL</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>any. Elements in the set.</p></dd>
 
-<dt><code>universe</code></dt><dd><p>Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the <a href='UniversalSet.html'>UniversalSet</a>.</p></dd>
+<dt><code>universe</code></dt><dd><p>Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the <a href='Universal.html'>Universal</a>.</p></dd>
 
 <dt><code>elements</code></dt><dd><p>list. Alternative constructor that may be more efficient if passing objects of multiple classes.</p></dd>
 
@@ -226,7 +224,7 @@ the cardinality property for the type of infinity.</p></dd>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>Sets are constructed by elements of any types (including R6 classes), excluding lists.
 <code>Set</code>s should be used within <code>Set</code>s instead of lists. The <code>universe</code> argument is useful for taking the absolute complement
-of the <code>Set</code>. If a universe isn't given then <a href='UniversalSet.html'>UniversalSet</a> is assumed. If the <code>class</code> argument is non-NULL, then all elements
+of the <code>Set</code>. If a universe isn't given then <a href='Universal.html'>Universal</a> is assumed. If the <code>class</code> argument is non-NULL, then all elements
 will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
 or coerced.</p>
 
