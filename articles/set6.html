@@ -127,7 +127,7 @@
 <span class="va">empty</span><span class="op">$</span><span class="va">traits</span>
 <span class="co">#&gt; $crisp</span>
 <span class="co">#&gt; [1] TRUE</span></pre></div>
-<p>Sets can take elements of any class, including other sets.</p>
+<p>Sets can contain any object in R that has a valid <code>as.character</code> dispatch method that ensures uniqueness in objects. This is a requirement as internally string representations are used to compare sets.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; {1, 2, 3}</span>
