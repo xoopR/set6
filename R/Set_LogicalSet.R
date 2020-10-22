@@ -17,6 +17,7 @@ LogicalSet <- R6::R6Class("LogicalSet",
       warning("Deprecated. In the future please use Logicals$new(). This will be removed in v0.4.0.")
       private$.elements <- list(TRUE, FALSE)
       private$.str_elements <- c("TRUE", "FALSE")
+      private$.multiplicity <- list("TRUE" = 1, "FALSE" = 1)
       private$.class <- "logical"
       private$.properties <- Properties$new(closure = "closed", cardinality = 2)
       private$.lower <- TRUE

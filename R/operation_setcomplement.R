@@ -55,9 +55,11 @@
 setcomplement <- function(x, y, simplify = TRUE) {
   if (missing(y)) {
     if (getR6Class(x) == "FuzzySet") {
-      return(FuzzySet$new(elements = x$elements, membership = 1 - x$membership()))
+      return(FuzzySet$new(elements = x$elements, membership = 1 - unlist(x$membership())))
     } else if (getR6Class(x) == "FuzzyTuple") {
-      return(FuzzyTuple$new(elements = x$elements, membership = 1 - x$membership()))
+      return(FuzzyTuple$new(elements = x$elements, membership = 1 - unlist(x$membership())))
+    } else if (getR6Class(x) == "FuzzyMultiset") {
+      return(FuzzyMultiset$new(elements = x$elements, membership = 1 - unlist(x$membership())))
     } else if (is.null(x$universe)) {
       stop("Set y is missing and x does not have a universe for absolute complement.")
     } else {

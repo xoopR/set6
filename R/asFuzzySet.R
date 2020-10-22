@@ -123,3 +123,60 @@ as.FuzzyTuple.Interval <- function(object) {
 as.FuzzyTuple.ConditionalSet <- function(object) {
   stop("ConditionalSet cannot be coerced to FuzzyTuple.")
 }
+#-----------------------------
+# FuzzyMultiset
+#-----------------------------
+#' @rdname as.FuzzySet
+#' @aliases as.FuzzyMultiset
+#' @export
+as.FuzzyMultiset <- function(object) {
+  UseMethod("as.FuzzyMultiset", object)
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.numeric <- function(object) {
+  FuzzyMultiset$new(
+    elements = object[seq.int(1, length(object), 2)],
+    membership = as.numeric(object[seq.int(2, length(object), 2)])
+  )
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.list <- function(object) {
+  return(FuzzyMultiset$new(elements = object$elements, membership = object$membership))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.matrix <- function(object) {
+  return(FuzzyMultiset$new(elements = object[, 1], membership = object[, 2]))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.data.frame <- function(object) {
+  if (all(c("elements", "membership") %in% colnames(object))) {
+    return(FuzzyMultiset$new(elements = object$elements, membership = object$membership))
+  } else {
+    return(FuzzyMultiset$new(elements = object[, 1], membership = object[, 2]))
+  }
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.Set <- function(object) {
+  return(FuzzyMultiset$new(elements = object$elements))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.FuzzySet <- function(object) {
+  return(FuzzyMultiset$new(elements = object$elements, membership = object$membership()))
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.Interval <- function(object) {
+  ifnerror(as.Set.Interval(object), stopwarn = "stop",
+           errormsg = "Interval cannot be coerced to FuzzyMultiset.")
+}
+#' @rdname as.FuzzySet
+#' @export
+as.FuzzyMultiset.ConditionalSet <- function(object) {
+  stop("ConditionalSet cannot be coerced to FuzzyMultiset.")
+}

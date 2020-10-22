@@ -21,6 +21,16 @@
 \alias{as.Tuple.Set}
 \alias{as.Tuple.Interval}
 \alias{as.Tuple.ConditionalSet}
+\alias{as.Multiset}
+\alias{as.Multiset.default}
+\alias{as.Multiset.numeric}
+\alias{as.Multiset.list}
+\alias{as.Multiset.matrix}
+\alias{as.Multiset.data.frame}
+\alias{as.Multiset.FuzzySet}
+\alias{as.Multiset.Set}
+\alias{as.Multiset.Interval}
+\alias{as.Multiset.ConditionalSet}
 \title{Coercion to R6 \code{Set}/\code{Tuple}}
 \usage{
 as.Set(object)
@@ -62,6 +72,26 @@ as.Tuple(object)
 \method{as.Tuple}{Interval}(object)
 
 \method{as.Tuple}{ConditionalSet}(object)
+
+as.Multiset(object)
+
+\method{as.Multiset}{default}(object)
+
+\method{as.Multiset}{numeric}(object)
+
+\method{as.Multiset}{list}(object)
+
+\method{as.Multiset}{matrix}(object)
+
+\method{as.Multiset}{data.frame}(object)
+
+\method{as.Multiset}{FuzzySet}(object)
+
+\method{as.Multiset}{Set}(object)
+
+\method{as.Multiset}{Interval}(object)
+
+\method{as.Multiset}{ConditionalSet}(object)
 }
 \arguments{
 \item{object}{object to coerce}

@@ -1,27 +1,26 @@
-#' @name FuzzyTuple
-#' @title Mathematical Fuzzy Tuple
-#' @description A general FuzzyTuple object for mathematical fuzzy tuples, inheriting from `FuzzySet`.
+#' @name FuzzyMultiset
+#' @title Mathematical Fuzzy Multiset
+#' @description A general FuzzyMultiset object for mathematical fuzzy multisets, inheriting from `FuzzySet`.
 #' @family sets
 #'
 #' @details
-#' Fuzzy tuples generalise standard mathematical tuples to allow for fuzzy relationships. Whereas a
-#' standard, or crisp, tuple assumes that an element is either in a tuple or not, a fuzzy tuple allows
-#' an element to be in a tuple to a particular degree, known as the membership function, which
-#' quantifies the inclusion of an element by a number in \[0, 1\]. Thus a (crisp) tuple is a
-#' fuzzy tuple where all elements have a membership equal to \eqn{1}. Similarly to [Tuple]s, elements
-#' do not need to be unique and the ordering does matter, [FuzzySet]s are special cases where the ordering
-#' does not matter and elements must be unique.
+#' Fuzzy multisets generalise standard mathematical multisets to allow for fuzzy relationships. Whereas a
+#' standard, or crisp, multiset assumes that an element is either in a multiset or not, a fuzzy multiset allows
+#' an element to be in a multiset to a particular degree, known as the membership function, which
+#' quantifies the inclusion of an element by a number in \[0, 1\]. Thus a (crisp) multiset is a
+#' fuzzy multiset where all elements have a membership equal to \eqn{1}. Similarly to [Multiset]s, elements
+#' do not need to be unique.
 #'
 #' @examples
 #' # Different constructors
-#' FuzzyTuple$new(1, 0.5, 2, 1, 3, 0)
-#' FuzzyTuple$new(elements = 1:3, membership = c(0.5, 1, 0))
+#' FuzzyMultiset$new(1, 0.5, 2, 1, 3, 0)
+#' FuzzyMultiset$new(elements = 1:3, membership = c(0.5, 1, 0))
 #'
-#' # Crisp sets are a special case FuzzyTuple
+#' # Crisp sets are a special case FuzzyMultiset
 #' # Note membership defaults to full membership
-#' FuzzyTuple$new(elements = 1:5) == Tuple$new(1:5)
+#' FuzzyMultiset$new(elements = 1:5) == Multiset$new(1:5)
 #'
-#' f <- FuzzyTuple$new(1, 0.2, 2, 1, 3, 0)
+#' f <- FuzzyMultiset$new(1, 0.2, 2, 1, 3, 0)
 #' f$membership()
 #' f$alphaCut(0.3)
 #' f$core()
@@ -31,13 +30,12 @@
 #'
 #' # Elements can be duplicated, and with different memberships,
 #' #  although this is not necessarily sensible.
-#' FuzzyTuple$new(1, 0.1, 1, 1)
+#' FuzzyMultiset$new(1, 0.1, 1, 1)
 #'
-#' # More important is ordering.
-#' FuzzyTuple$new(1, 0.1, 2, 0.2) != FuzzyTuple$new(2, 0.2, 1, 0.1)
-#' FuzzySet$new(1, 0.1, 2, 0.2) == FuzzySet$new(2, 0.2, 1, 0.1)
+#' # Like FuzzySets, ordering does not matter.
+#' FuzzyMultiset$new(1, 0.1, 2, 0.2) == FuzzyMultiset$new(2, 0.2, 1, 0.1)
 #' @export
-FuzzyTuple <- R6Class("FuzzyTuple",
+FuzzyMultiset <- R6Class("FuzzyMultiset",
   inherit = FuzzySet,
   public = list(
     #' @description Tests if two sets are equal.
@@ -68,10 +66,8 @@ FuzzyTuple <- R6Class("FuzzyTuple",
           return(FALSE)
         }
 
-        elel <- unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-        selel <- unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-
-        return(suppressWarnings(all(elel == selel) & all(el$membership() == self$membership())))
+        ifelse(all.equal(el$multiplicity(), self$multiplicity()) == TRUE, TRUE, FALSE) &&
+          ifelse(all.equal(el$membership(), self$membership()) == TRUE, TRUE, FALSE)
       })
 
       returner(ret, all)
@@ -105,7 +101,7 @@ FuzzyTuple <- R6Class("FuzzyTuple",
       x <- listify(x)
 
       ret <- rep(FALSE, length(x))
-      ind <- sapply(x, testFuzzyTuple)
+      ind <- sapply(x, testFuzzyMultiset)
 
       ret[ind] <- sapply(x[ind], function(el) {
         self_comp <- paste(self$elements, self$membership(), sep = ";")
@@ -123,12 +119,8 @@ FuzzyTuple <- R6Class("FuzzyTuple",
           mtc <- match(el_comp, self_comp)
           if (all(is.na(mtc))) {
             return(FALSE)
-          }
-
-          if (all(order(mtc) == (1:length(el$elements)))) {
-            return(TRUE)
           } else {
-            return(FALSE)
+            return(TRUE)
           }
         }
       })
@@ -142,7 +134,7 @@ FuzzyTuple <- R6Class("FuzzyTuple",
     #' @param alpha numeric in \[0, 1\] to determine which elements to return
     #' @param strong logical, if `FALSE` (default) then includes elements greater than or equal to alpha, otherwise only strictly greater than
     #' @param create logical, if `FALSE` (default) returns the elements in the alpha cut, otherwise returns a crisp set of the elements
-    #' @return Elements in [FuzzyTuple] or a [Set] of the elements.
+    #' @return Elements in [FuzzyMultiset] or a [Set] of the elements.
     alphaCut = function(alpha, strong = FALSE, create = FALSE) {
       els <- self$elements
       mem <- self$membership()
@@ -159,7 +151,7 @@ FuzzyTuple <- R6Class("FuzzyTuple",
         if (length(els) == 0) {
           return(Set$new())
         } else {
-          return(Tuple$new(elements = els))
+          return(Multiset$new(elements = els))
         }
       } else {
         if (length(els) == 0) {

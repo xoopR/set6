@@ -53,6 +53,23 @@ makeChecks(
 )
 
 #' @template assertions_class
+#' @templateVar class Multiset
+#' @export
+testMultiset <- function() {}
+#' @rdname testMultiset
+#' @export
+checkMultiset <- function() {}
+#' @rdname testMultiset
+#' @export
+assertMultiset <- function() {}
+makeChecks(
+  assertionName = "Multiset",
+  cond = inherits(object, "Multiset"),
+  errormsg = "This is not an R6 Multiset object",
+  pos = environment()
+)
+
+#' @template assertions_class
 #' @templateVar class FuzzySet
 #' @export
 testFuzzySet <- function() {}
@@ -83,6 +100,23 @@ makeChecks(
   assertionName = "FuzzyTuple",
   cond = inherits(object, "FuzzyTuple"),
   errormsg = "This is not an R6 FuzzyTuple object",
+  pos = environment()
+)
+
+#' @template assertions_class
+#' @templateVar class FuzzyMultiset
+#' @export
+testFuzzyMultiset <- function() {}
+#' @rdname testFuzzyMultiset
+#' @export
+checkFuzzyMultiset <- function() {}
+#' @rdname testFuzzyMultiset
+#' @export
+assertFuzzyMultiset <- function() {}
+makeChecks(
+  assertionName = "FuzzyMultiset",
+  cond = inherits(object, "FuzzyMultiset"),
+  errormsg = "This is not an R6 FuzzyMultiset object",
   pos = environment()
 )
 

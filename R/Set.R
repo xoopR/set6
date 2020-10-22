@@ -31,15 +31,15 @@
 Set <- R6Class("Set",
   public = list(
     #' @description Create a new `Set` object.
-    #' @details Sets are constructed by elements of any types (including R6 classes), excluding lists.
-    #' `Set`s should be used within `Set`s instead of lists. The `universe` argument is useful for taking the absolute complement
-    #' of the `Set`. If a universe isn't given then [Universal] is assumed. If the `class` argument is non-NULL, then all elements
-    #' will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
-    #' or coerced.
-    #' @param ... any. Elements in the set.
-    #' @param universe Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the [Universal].
-    #' @param elements list. Alternative constructor that may be more efficient if passing objects of multiple classes.
-    #' @param class character. Optional string naming a class that if supplied gives the set the `typed` property.
+    #' @param ... `ANY` Elements can be of any class except `list`, as long as there is a unique
+    #' `as.character` coercion method available.
+    #' @param universe Set. Universe that the Set lives in, i.e. elements that could be added to
+    #' the Set. Default is [Universal].
+    #' @param elements list. Alternative constructor that may be more efficient if passing objects
+    #' of multiple classes.
+    #' @param class character. Optional string naming a class that if supplied gives the set the
+    #' `typed` property. All elements will be coerced to this class and therefore there must be
+    #' a coercion method to this class available.
     #' @return A new `Set` object.
     initialize = function(..., universe = Universal$new(), elements = NULL, class = NULL) {
 
@@ -76,22 +76,34 @@ Set <- R6Class("Set",
         }
 
         if (getR6Class(universe) != "Universal") {
-          assertContains(universe, elements, errormsg = "elements are not contained in the given universe")
+          assertContains(universe, elements,
+                         errormsg = "elements are not contained in the given universe.")
         }
 
         private$.str_elements <- sapply(elements, as.character)
-        private$.elements <- elements
 
+        private$.multiplicity <- as.list(table(private$.str_elements))
 
-        if (!testTuple(self) & !testFuzzyTuple(self)) {
+        if (testTuple(self) || testFuzzyTuple(self)) {
+          private$.multiplicity <- private$.multiplicity[match(names(private$.multiplicity),
+                                                               unique(private$.str_elements))]
+        }
+
+        if (!testTuple(self) && !testFuzzyTuple(self) && !testMultiset(self) &&
+            !testFuzzyMultiset(self)) {
           if (private$.class != "ANY") {
+            private$.str_elements <- unique(private$.str_elements)
             private$.elements <- unique(elements)
           } else {
             dup <- duplicated(private$.str_elements)
-            private$.elements <- elements[!dup]
             private$.str_elements <- private$.str_elements[!dup]
+            private$.elements <- elements[!dup]
           }
         }
+
+        ord <- order(private$.str_elements)
+        private$.str_elements <- private$.str_elements[ord]
+        private$.elements <- elements[ord]
 
         if (!(private$.class %in% c("numeric", "integer", "complex"))) {
           private$.lower <- private$.elements[[1]]
@@ -353,6 +365,7 @@ Set <- R6Class("Set",
 
       private$.elements <- els$elements
       private$.str_elements <- els$.__enclos_env__$private$.str_elements
+      private$.multiplicity <- els$.__enclos_env__$private$.multiplicity
       private$.lower <- els$lower
       private$.upper <- els$upper
       private$.properties <- els$properties
@@ -385,12 +398,37 @@ Set <- R6Class("Set",
       } else {
         private$.elements <- els$elements
         private$.str_elements <- els$.__enclos_env__$private$.str_elements
+        private$.multiplicity <- els$.__enclos_env__$private$.multiplicity
         private$.lower <- els$lower
         private$.upper <- els$upper
         private$.properties <- els$properties
         private$.type <- els$type
         invisible(self)
       }
+    },
+
+
+    #' @description Returns the number of times an element appears in a set,
+    #' @param element element or list of elements in the `set`, if `NULL` returns multiplicity of all elements
+    #' @return Value, or list of values, in R+.
+    #' @examples
+    #' Set$new(1, 1, 2)$multiplicity()
+    #' Set$new(1, 1, 2)$multiplicity(1)
+    #' Set$new(1, 1, 2)$multiplicity(list(1, 2))
+    #' Tuple$new(1, 1, 2)$multiplicity(1)
+    #' Tuple$new(1, 1, 2)$multiplicity(2)
+    multiplicity = function(element = NULL) {
+
+      if (is.null(element)) {
+        return(private$.multiplicity)
+      }
+
+      element <- lapply(element, as.character)
+      mult <- private$.multiplicity
+      mult <- mult[match(element, names(mult))]
+
+      if (length(mult) == 1) mult <- mult[[1]]
+      return(mult)
     }
   ),
 
@@ -527,6 +565,7 @@ Set <- R6Class("Set",
     .universe = NULL,
     .elements = list(),
     .str_elements = c(),
+    .multiplicity = list(),
     .properties = NULL,
     .traits = list(crisp = TRUE),
     .dimension = integer()
