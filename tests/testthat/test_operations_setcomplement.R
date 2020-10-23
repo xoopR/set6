@@ -1,7 +1,3 @@
-library(testthat)
-
-context("setcomplement")
-
 test_that("subsets", {
   expect_equal(Set$new(elements = 1:3) - Set$new(elements = 1:4), Set$new())
   expect_equal(Set$new(1) - Reals$new(), Set$new())
@@ -77,25 +73,15 @@ test_that("conditional", {
   useUnicode(FALSE)
   expect_equal(
     (ConditionalSet$new(function(x) x == 0) - ConditionalSet$new(function(y) y > 0))$strprint(),
-    "{x == 0 & !(y > 0) : x in V, y in V}"
+    "{x in V, y in V : x == 0 & !(y > 0)}"
   )
 
   expect_equal(
     (ConditionalSet$new(function(x) TRUE) - Set$new(1))$strprint(),
-    "{TRUE : x in V} \\ {1}"
+    "{x in V : TRUE} \\ {1}"
   )
   useUnicode(TRUE)
 })
-#
-# test_that("contains",{
-#   x = Interval$new(1,8) - Interval$new(6, 6, type = "()")
-#   expect_false(x$contains(0))
-#   expect_true(x$contains(1))
-#   expect_false(x$contains(6))
-#   expect_false(x$contains(9))
-#   expect_false(x$contains(16))
-#   expect_equal(x$contains(c(0,1,6,9,16)), c(FALSE, TRUE, FALSE, FALSE, FALSE))
-# })
 
 test_that("wrappers", {
   expect_equal((Reals$new() - Integers$new()) - Set$new(1, 2), Reals$new() - Integers$new())

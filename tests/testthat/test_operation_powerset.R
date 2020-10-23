@@ -1,7 +1,3 @@
-library(testthat)
-
-context("powerset")
-
 test_that("Set", {
   expect_equal(powerset(Set$new()), Set$new(Set$new()))
   expect_equal(powerset(Set$new(1, 2), simplify = TRUE), Set$new(Set$new(), Set$new(1), Set$new(2), Set$new(1, 2)))

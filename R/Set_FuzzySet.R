@@ -134,7 +134,7 @@ FuzzySet <- R6Class("FuzzySet",
         return(private$.membership)
       }
 
-      element <- lapply(element, as.character)
+      element <- lapply(listify(element), as.character)
       ret <- numeric(length(element))
       mem <- private$.membership
       mtc <- match(element, names(mem))

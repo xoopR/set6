@@ -68,10 +68,8 @@ FuzzyTuple <- R6Class("FuzzyTuple",
           return(FALSE)
         }
 
-        elel <- unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-        selel <- unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-
-        return(suppressWarnings(all(elel == selel) & all(el$membership() == self$membership())))
+        ifelse(all.equal(el$multiplicity(), self$multiplicity()) == TRUE, TRUE, FALSE) &&
+          ifelse(all.equal(el$membership(), self$membership()) == TRUE, TRUE, FALSE)
       })
 
       returner(ret, all)
@@ -114,7 +112,7 @@ FuzzyTuple <- R6Class("FuzzyTuple",
         if (el$length > self$length) {
           return(FALSE)
         } else if (el$length == self$length) {
-          if (!proper & el$equals(self)) {
+          if (!proper && el$equals(self)) {
             return(TRUE)
           } else {
             return(FALSE)

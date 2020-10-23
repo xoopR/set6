@@ -4,7 +4,7 @@ test_that("construction", {
 })
 
 test_that("strprint", {
-  expect_silent(expect_equal(Universal$new()$strprint(), "V"))
+  expect_silent(expect_equal(Universal$new()$strprint(), "\U1D54D"))
 })
 
 v <- Universal$new()
@@ -12,7 +12,7 @@ v <- Universal$new()
 test_that("contains", {
   expect_true(v$contains(list(letters, 1, 2, "a"), all = TRUE))
   expect_equal(v$contains(list(FALSE, 1, 2, "a")), rep(TRUE, 4))
-  expect_silent(expect_equal(Universal$new()$strprint(), "V"))
+  expect_silent(expect_equal(Universal$new()$strprint(), "\U1D54D"))
 })
 
 test_that("subset", {

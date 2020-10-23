@@ -82,32 +82,42 @@ Set <- R6Class("Set",
 
         private$.str_elements <- sapply(elements, as.character)
 
-        private$.multiplicity <- as.list(table(private$.str_elements))
-
-        if (testTuple(self) || testFuzzyTuple(self)) {
-          private$.multiplicity <- private$.multiplicity[match(names(private$.multiplicity),
-                                                               unique(private$.str_elements))]
-        }
-
-        if (!testTuple(self) && !testFuzzyTuple(self) && !testMultiset(self) &&
-            !testFuzzyMultiset(self)) {
-          if (private$.class != "ANY") {
-            private$.str_elements <- unique(private$.str_elements)
-            private$.elements <- unique(elements)
+        if (!testTuple(self) && !testFuzzyTuple(self)) {
+          if (!testMultiset(self) && !testFuzzyMultiset(self)) {
+            if (private$.class != "ANY") {
+              private$.str_elements <- unique(private$.str_elements)
+              private$.elements <- unique(elements)
+            } else {
+              dup <- duplicated(private$.str_elements)
+              private$.str_elements <- private$.str_elements[!dup]
+              private$.elements <- elements[!dup]
+            }
           } else {
-            dup <- duplicated(private$.str_elements)
-            private$.str_elements <- private$.str_elements[!dup]
-            private$.elements <- elements[!dup]
+            private$.elements <- elements
           }
-        }
 
-        ord <- order(private$.str_elements)
-        private$.str_elements <- private$.str_elements[ord]
-        private$.elements <- elements[ord]
+          if(private$.class != "ANY")
+            ord <- order(unlist(private$.elements))
+          else
+            ord <- order(private$.str_elements)
+
+          private$.str_elements <- private$.str_elements[ord]
+          private$.elements <- private$.elements[ord]
+        } else {
+          private$.elements <- elements
+        }
 
         if (!(private$.class %in% c("numeric", "integer", "complex"))) {
           private$.lower <- private$.elements[[1]]
           private$.upper <- private$.elements[[length(private$.elements)]]
+        }
+
+        private$.multiplicity <- as.list(table(private$.str_elements))
+
+
+        if (testTuple(self) || testFuzzyTuple(self)) {
+          private$.multiplicity <- private$.multiplicity[match(names(private$.multiplicity),
+                                                               unique(private$.str_elements))]
         }
       }
 

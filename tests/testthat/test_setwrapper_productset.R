@@ -1,12 +1,8 @@
-library(testthat)
-
-context("ProductSet")
-
 test_that("Interval", {
   useUnicode(FALSE)
   expect_equal(
     (Interval$new(1, 2) * ConditionalSet$new(function(x) TRUE))$strprint(),
-    "[1,2] X {TRUE : x in V}"
+    "[1,2] X {x in V : TRUE}"
   )
   expect_equal(Interval$new(1, 2) * Set$new(), Interval$new(1, 2))
 
@@ -30,7 +26,7 @@ test_that("conditionalset", {
   useUnicode(FALSE)
   expect_equal(
     (ConditionalSet$new(function(x) x == 1) * ConditionalSet$new(function(y) y > 1))$strprint(),
-    "{x == 1 : x in V} X {y > 1 : y in V}"
+    "{x in V : x == 1} X {y in V : y > 1}"
   )
   useUnicode(TRUE)
 })
@@ -39,7 +35,7 @@ test_that("fuzzy", {
   useUnicode(FALSE)
   expect_equal(
     (FuzzySet$new(1, 0.5) * ConditionalSet$new(function(x) TRUE))$strprint(),
-    "{1(0.5)} X {TRUE : x in V}"
+    "{1(0.5)} X {x in V : TRUE}"
   )
   expect_true(setproduct(FuzzySet$new(1, 0.1), FuzzySet$new(2, 0.2), simplify = TRUE)$equals(Set$new(FuzzyTuple$new(1, 0.1, 2, 0.2))))
   expect_equal(

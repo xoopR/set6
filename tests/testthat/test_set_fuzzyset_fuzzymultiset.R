@@ -78,7 +78,7 @@ test_that("isSubset", {
   expect_false(FuzzyMultiset$new(elements = 1:5, membership = 0.1) < f)
   expect_false(f$isSubset(FuzzyMultiset$new(2, 0.2, 1, 0.1, 3, 0.3), proper = TRUE))
   expect_true(f$isSubset(FuzzyMultiset$new(1, 0.1, 2, 0.2)))
-  expect_false(f$isSubset(FuzzyMultiset$new(2, 0.2, 1, 0.1)))
+  expect_true(f$isSubset(FuzzyMultiset$new(2, 0.2, 1, 0.1)))
   expect_true(FuzzyMultiset$new(elements = 1:5, membership = 1) > Tuple$new(1, 2))
 })
 

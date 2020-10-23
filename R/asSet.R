@@ -51,7 +51,7 @@ as.Set.Interval <- function(object) {
   if (any(is.na(object$elements))) {
     stop("Interval cannot be coerced to Set.")
   } else {
-    return(Set$new(elements = object$elements))
+    return(Set$new(elements = object$elements, class = object$class))
   }
 }
 #' @rdname as.Set
