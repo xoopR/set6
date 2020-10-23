@@ -68,8 +68,8 @@ FuzzyTuple <- R6Class("FuzzyTuple",
           return(FALSE)
         }
 
-        ifelse(all.equal(el$multiplicity(), self$multiplicity()) == TRUE, TRUE, FALSE) &&
-          ifelse(all.equal(el$membership(), self$membership()) == TRUE, TRUE, FALSE)
+        ifelse(all(all.equal(el$multiplicity(), self$multiplicity()) == TRUE), TRUE, FALSE) &&
+          ifelse(all(all.equal(el$membership(), self$membership()) == TRUE), TRUE, FALSE)
       })
 
       returner(ret, all)
