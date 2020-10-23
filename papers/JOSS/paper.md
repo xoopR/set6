@@ -91,7 +91,7 @@ N0
 
 # Key Use-Cases
 
-1. **Constructing and querying mathematical sets** - Many mathematical Set-like objects can be constructed, including sets, tuples, intervals, and fuzzy variants. Sets and tuples can contain objects of any `R` type (atomic or otherwise). 
+1. **Constructing and querying mathematical sets** - Many mathematical Set-like objects can be constructed, including sets, tuples, intervals, and fuzzy variants. Sets can contain objects of any `R` type that have a valid `as.character` coercion method that creates a unique symbolic representation of the class; this is required as internally checks are performed symbolically on character representations.
 2. **Containedness checks** - Public methods allow all objects inheriting from `Set` to check if elements are contained within them. This provides a powerful mechanism for use with parameter or distribution supports for other packages as it can be viewed as a 'type check', i.e. checks if a value fits within a specified mathematical type. A C++ implementation of these checks in Rcpp [@pkgrcpp] means that the computations are incredibly quick for sets and intervals of any size.
 3. **Representation of infinite sets** - Symbolic representation and lazy evaluation allows infinite (or very large) sets and intervals to be constructed. This also allows operations such as powerset to be used without crashing the system.
 4. **Comparison of, possibly infinite, sets** - Two `Set` objects can be compared to check if they are equal or (proper) sub/supersets. Infix operators allow quick and neat comparison.
