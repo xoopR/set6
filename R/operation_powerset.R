@@ -53,7 +53,7 @@ powerset <- function(x, simplify = FALSE) {
                  SIMPLIFY = FALSE)(1:(x$length - 1))
 
   try(
-    {return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, as, class = getR6Class(x))), x)))},
+    {return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, get(paste0("as.", getR6Class(x))))), x)))},
     silent = TRUE
   )
 

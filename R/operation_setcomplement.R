@@ -220,7 +220,7 @@ setcomplement.Interval <- function(x, y, simplify = TRUE) {
 #' @rdname setcomplement
 #' @export
 setcomplement.FuzzySet <- function(x, y, simplify = TRUE) {
-  y <- as(y, getR6Class(x))
+  y <- do.call(paste0("as.", getR6Class(x)), list(y))
   ind <- !(x$elements %in% y$elements)
   return(getR6Class(x, FALSE)$new(elements = x$elements[ind], membership = x$membership()[ind]))
 }
