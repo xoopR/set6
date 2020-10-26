@@ -246,7 +246,7 @@
 <ul>
 <li>Finalising all methods and fields - some are missing or possibly inaccurate for some wrappers. For example the cardinality of <code>ComplementSet</code>s is imprecise at the moment.</li>
 <li>We are considering adding a <code>simplify</code> method to wrappers to reduce classes inheriting from <code>SetWrapper</code> to simpler sets. This allows users to perform operations with <code>simplify = FALSE</code> and then to change their mind.</li>
-<li>There are some inefficient loops implemented that will need refactoring for more efficient code.</li>
+<li>There are known bottlenecks that need to be fixed to massively improve speed and efficiency.</li>
 <li>Adding more tutorials to make the interface easier for beginners, especially people new to R6</li>
 </ul>
 <p>At a later stage we may consider adding Venn diagrams for visualisation of sets and intervals, but this is very low priority.</p>
