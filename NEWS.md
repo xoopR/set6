@@ -6,6 +6,7 @@
 * Add `Multiset` for sets with non-unique elements but no ordering
 * Small speed improvements in `Tuple` and `FuzzyTuple`
 * For consistency most methods now return a `list` unless single elements requested
+* Printing of `ConditionalSet` is fixed
 
 # set6 0.1.8
 
