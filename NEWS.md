@@ -5,6 +5,7 @@
 * `Complex` now inherits from `Set`, incorrect methods for `isSubset, equals` have been removed.
 * Printing of `ConditionalSet` is fixed
 * `Rationals` and child-classes now error on calls to `contains, isSubset, equals` as any prior results were likely wrong/misleading
+* Removed erroneous complex boundaries in `Interval` class
 
 # set6 0.1.8
 

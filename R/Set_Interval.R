@@ -6,7 +6,7 @@
 #'
 #' @details
 #' The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
-#' integer intervals over a finite continuous range. Use [Complex] to define an interval with complex values.
+#' integer intervals over a finite continuous range.
 #'
 #' @examples
 #' # Set of Reals
@@ -45,18 +45,7 @@ Interval <- R6Class("Interval",
                           class = "numeric", universe = ExtendedReals$new()) {
 
       type <- match.arg(type)
-      if (checkmate::testComplex(lower) | checkmate::testComplex(upper)) {
-        lower <- as.complex(lower)
-        upper <- as.complex(upper)
-        checkmate::assert(Re(upper) > Re(lower) | (Re(upper) == Re(lower) & Im(upper) > Im(lower)),
-          .var.name = sprintf(
-            "Assertion on '%s' failed. '%s' must be less than '%s'.",
-            lower, lower, upper
-          )
-        )
-      } else {
-        checkmate::assert(lower <= upper)
-      }
+      checkmate::assert(lower <= upper)
       checkmate::assertChoice(class, c("numeric", "integer"))
 
       if (getR6Class(self) != "SpecialSet") {
