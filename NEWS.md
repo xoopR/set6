@@ -7,6 +7,8 @@
 * Small speed improvements in `Tuple` and `FuzzyTuple`
 * For consistency most methods now return a `list` unless single elements requested
 * Printing of `ConditionalSet` is fixed
+* `Rationals` and child-classes now error on calls to `contains, isSubset, equals` as any prior results were likely wrong/misleading
+* Removed erroneous complex boundaries in `Interval` class
 
 # set6 0.1.8
 

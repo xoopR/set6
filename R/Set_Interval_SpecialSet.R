@@ -153,6 +153,24 @@ Rationals <- R6Class("Rationals",
     #' @param type character Set closure type. Advised to ignore, used by child-classes.
     initialize = function(lower = -Inf, upper = Inf, type = "()") {
       super$initialize(lower = lower, upper = upper, type = type, class = "numeric")
+    },
+
+    #' @description Method not possible for Rationals.
+    #' @param ... Ignored
+    contains = function(...) {
+      stop("$contains method not possible for Rationals.")
+    },
+
+    #' @description Method not possible for Rationals.
+    #' @param ... Ignored
+    isSubset = function(...) {
+      stop("$isSubset method not possible for Rationals.")
+    },
+
+    #' @description Method not possible for Rationals.
+    #' @param ... Ignored
+    equals = function(...) {
+      stop("$equals method not possible for Rationals.")
     }
   )
 )

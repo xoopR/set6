@@ -39,6 +39,9 @@ Other special sets:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Rationals$new()}}
+\item \href{#method-contains}{\code{Rationals$contains()}}
+\item \href{#method-isSubset}{\code{Rationals$isSubset()}}
+\item \href{#method-equals}{\code{Rationals$equals()}}
 \item \href{#method-clone}{\code{Rationals$clone()}}
 }
 }
@@ -50,10 +53,7 @@ Other special sets:
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="remove">}\href{../../set6/html/Set.html#method-remove}{\code{set6::Set$remove()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="contains">}\href{../../set6/html/Interval.html#method-contains}{\code{set6::Interval$contains()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="equals">}\href{../../set6/html/Interval.html#method-equals}{\code{set6::Interval$equals()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="isSubinterval">}\href{../../set6/html/Interval.html#method-isSubinterval}{\code{set6::Interval$isSubinterval()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Interval" data-id="isSubset">}\href{../../set6/html/Interval.html#method-isSubset}{\code{set6::Interval$isSubset()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="SpecialSet" data-id="strprint">}\href{../../set6/html/SpecialSet.html#method-strprint}{\code{set6::SpecialSet$strprint()}}\out{</span>}
 }
 \out{</details>}
@@ -80,6 +80,57 @@ Create a new \code{Rationals} object.
 }
 \subsection{Returns}{
 A new \code{Rationals} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-contains"></a>}}
+\if{latex}{\out{\hypertarget{method-contains}{}}}
+\subsection{Method \code{contains()}}{
+Method not possible for Rationals.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Rationals$contains(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Ignored}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isSubset"></a>}}
+\if{latex}{\out{\hypertarget{method-isSubset}{}}}
+\subsection{Method \code{isSubset()}}{
+Method not possible for Rationals.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Rationals$isSubset(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Ignored}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-equals}{}}}
+\subsection{Method \code{equals()}}{
+Method not possible for Rationals.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Rationals$equals(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Ignored}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

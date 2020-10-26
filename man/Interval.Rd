@@ -9,7 +9,7 @@ may be open, closed, or half-open; as well as bounded above, below, or not at al
 }
 \details{
 The Interval class can be used for finite or infinite intervals, but often Sets will be preferred for
-integer intervals over a finite continuous range. Use \link{Complex} to define an interval with complex values.
+integer intervals over a finite continuous range.
 }
 \examples{
 # Set of Reals
