@@ -76,7 +76,7 @@ PowersetSet <- R6Class("PowersetSet",
           return(self$wrappedSets[[1]]$isSubset(el$wrappedSets[[1]], proper = proper))
         }
 
-        if (!(getR6Class(el) %in% c("Tuple", "Set"))) {
+        if (!(getR6Class(el) %in% c("Tuple", "Set", "Multiset"))) {
           return(FALSE)
         }
 

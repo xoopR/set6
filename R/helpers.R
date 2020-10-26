@@ -174,3 +174,6 @@ returner <- function(x, all) {
     return(x)
   }
 }
+sortlist <- function(x, decreasing = FALSE, ...) {
+  x[order(names(x), decreasing = decreasing, ...)]
+}

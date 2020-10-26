@@ -39,6 +39,7 @@ f$membership(1)
 f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
 f$membership()
 f$membership(2)
+f$membership(list(1, 2))
 
 ## ------------------------------------------------
 ## Method `FuzzySet$alphaCut`
@@ -82,8 +83,10 @@ f$inclusion(3)
 \seealso{
 Other sets: 
 \code{\link{ConditionalSet}},
+\code{\link{FuzzyMultiset}},
 \code{\link{FuzzyTuple}},
 \code{\link{Interval}},
+\code{\link{Multiset}},
 \code{\link{Set}},
 \code{\link{Tuple}}
 }
@@ -107,10 +110,11 @@ Other sets:
 }
 }
 \if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
+\out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="add">}\href{../../set6/html/Set.html#method-add}{\code{set6::Set$add()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="contains">}\href{../../set6/html/Set.html#method-contains}{\code{set6::Set$contains()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="multiplicity">}\href{../../set6/html/Set.html#method-multiplicity}{\code{set6::Set$multiplicity()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="remove">}\href{../../set6/html/Set.html#method-remove}{\code{set6::Set$remove()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}
@@ -195,18 +199,19 @@ or all elements in the fuzzy set.
 }
 \subsection{Details}{
 For \code{FuzzySet}s this is straightforward and returns the membership of the given element(s),
-however in \code{FuzzyTuple}s when an element may be duplicated, the function returns the membership of
+however in \code{FuzzyTuple}s and \code{FuzzyMultiset}s when an element may be duplicated, the function returns the membership of
 all instances of the element.
 }
 
 \subsection{Returns}{
-Value, or vector of values, in [0, 1]
+Value, or list of values, in [0, 1].
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
 f$membership()
 f$membership(2)
+f$membership(list(1, 2))
 }
 \if{html}{\out{</div>}}
 
@@ -345,7 +350,7 @@ An element in a fuzzy set, with corresponding membership \eqn{m}, is:
 }
 \subsection{Details}{
 For \link{FuzzySet}s this is straightforward and returns the inclusion level of the given element(s),
-however in \link{FuzzyTuple}s when an element may be duplicated, the function returns the inclusion level of
+however in \link{FuzzyTuple}s and \link{FuzzyMultiset}s when an element may be duplicated, the function returns the inclusion level of
 all instances of the element.
 }
 

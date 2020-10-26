@@ -79,8 +79,10 @@ Reals$new()$isSubinterval(Integers$new()) # FALSE
 \seealso{
 Other sets: 
 \code{\link{ConditionalSet}},
+\code{\link{FuzzyMultiset}},
 \code{\link{FuzzySet}},
 \code{\link{FuzzyTuple}},
+\code{\link{Multiset}},
 \code{\link{Set}},
 \code{\link{Tuple}}
 }
@@ -114,6 +116,7 @@ otherwise \code{Inf}. See the cardinality property for the type of infinity.}
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="add">}\href{../../set6/html/Set.html#method-add}{\code{set6::Set$add()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="multiplicity">}\href{../../set6/html/Set.html#method-multiplicity}{\code{set6::Set$multiplicity()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print">}\href{../../set6/html/Set.html#method-print}{\code{set6::Set$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="remove">}\href{../../set6/html/Set.html#method-remove}{\code{set6::Set$remove()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary">}\href{../../set6/html/Set.html#method-summary}{\code{set6::Set$summary()}}\out{</span>}

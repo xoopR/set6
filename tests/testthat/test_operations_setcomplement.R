@@ -21,6 +21,7 @@ test_that("set", {
   expect_equal(Set$new(elements = 1:5) - Set$new(elements = 3:5), Set$new(elements = 1:2))
   expect_equal(Set$new(elements = 1:5) - Set$new(elements = 6:10), Set$new(elements = 1:5))
   expect_equal(Tuple$new(elements = 1:5) - Set$new(elements = 6:10), Tuple$new(elements = 1:5))
+  expect_equal(Multiset$new(elements = 1:5) - Set$new(elements = 6:10), Multiset$new(elements = 1:5))
   expect_equal(Set$new(elements = 1:5) - Interval$new(4, 15), Set$new(elements = 1:3))
   expect_equal(Tuple$new(elements = 1:5) - Interval$new(4, 15), Tuple$new(elements = 1:3))
   expect_equal(setcomplement(Set$new(1, 2, universe = Set$new(1, 2, 3))), Set$new(3))
@@ -65,6 +66,8 @@ test_that("interval", {
 test_that("fuzzy", {
   expect_equal(FuzzySet$new(1, 0.1, 2, 0.2, 3, 0.3) - FuzzySet$new(3, 0.3, 4, 0.4), FuzzySet$new(1, 0.1, 2, 0.2))
   expect_equal(FuzzyTuple$new(1, 0.1, 2, 0.2, 3, 0.3) - FuzzyTuple$new(3, 0.3, 4, 0.4), FuzzyTuple$new(1, 0.1, 2, 0.2))
+  expect_equal(FuzzyMultiset$new(1, 0.1, 2, 0.2, 3, 0.3) - FuzzyMultiset$new(3, 0.3, 4, 0.4), FuzzyMultiset$new(1, 0.1, 2, 0.2))
+  expect_equal(Multiset$new(2) - FuzzySet$new(1, 0.1), Multiset$new(2))
   expect_equal(Tuple$new(2) - FuzzyTuple$new(2, 0.1), Tuple$new())
   expect_equal(Tuple$new(2) - FuzzySet$new(1, 0.1), Tuple$new(2))
 })

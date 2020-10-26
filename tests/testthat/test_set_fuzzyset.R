@@ -1,7 +1,3 @@
-library(testthat)
-
-context("FuzzySet")
-
 test_that("construction", {
   expect_error(FuzzySet$new(1, 2, 3))
   expect_warning(expect_error(FuzzySet$new(0.1, 1, 0.9, "a")))
@@ -18,19 +14,6 @@ test_that("construction", {
 
 test_that("inherited_methods", {
   expect_equal(FuzzySet$new(1, 0.3)$type, "{}")
-  # expect_equal(FuzzySet$new(1,0.4,2,0.9)$max,2)
-  # expect_equal(FuzzySet$new(1,0.2,2,0.8)$min,1)
-  # expect_equal(FuzzySet$new(1,0.2,2,0.1)$upper,2)
-  # expect_equal(FuzzySet$new(1,0,2,1)$lower,1)
-  # expect_equal(FuzzySet$new("a",0.1)$max,NaN)
-  # expect_equal(FuzzySet$new("a",0.1)$min,NaN)
-  # expect_equal(FuzzySet$new("a",0.1)$upper,"a")
-  # expect_equal(FuzzySet$new("a",0.1)$lower,"a")
-  # expect_equal(FuzzySet$new(1,0.3)$class, "numeric")
-  # expect_equal(FuzzySet$new(Set$new(1),0.1,Set$new(),0.7)$class, "Set")
-  # expect_equal(FuzzySet$new(1,0.1, "a",0.3)$class, "multiple")
-  # expect_equal(FuzzySet$new(1,0.1,2,0.3,3,0.9)$range,2)
-  # expect_equal(FuzzySet$new(1,0.2,"a",0.3)$range, numeric(0))
   expect_equal(FuzzySet$new(1, 0.1, 2, 0.3, 3, 0.9)$elements, as.list(1:3))
   expect_equal(FuzzySet$new(1, 0.1, 2, 0.3, 3, 0.9)$length, 3)
   expect_true(FuzzySet$new(1, 0.1, 2, 0.3, 3, 0.9)$contains(1))
@@ -38,9 +21,9 @@ test_that("inherited_methods", {
 })
 f <- FuzzySet$new(elements = c(1, 2, 3), membership = c(0.1, 0.2, 0.3))
 test_that("membership", {
-  expect_equal(f$membership(), c(0.1, 0.2, 0.3))
+  expect_equal(f$membership(), list("1" = 0.1, "2" = 0.2, "3" = 0.3))
   expect_equal(f$membership(1), 0.1)
-  expect_equal(f$membership(c(1, 5)), c(0.1, 0))
+  expect_equal(f$membership(c(1, 5)), list("1" = 0.1, "5" = 0))
 })
 test_that("strprint", {
   useUnicode(TRUE)
@@ -49,10 +32,10 @@ test_that("strprint", {
   expect_equal(FuzzySet$new()$strprint(), "{}")
   expect_equal(f$strprint(), "{1(0.1), 2(0.2), 3(0.3)}")
   expect_equal(f$strprint(1), "{1(0.1),...,3(0.3)}")
-  expect_equal(
-    FuzzySet$new(Set$new(1), 0.2, 2, 0.5)$strprint(),
-    "{{1}(0.2), 2(0.5)}"
-  )
+  # expect_equal(
+  #   FuzzySet$new(Set$new(1), 0.2, 2, 0.5)$strprint(),
+  #   "{{1}(0.2), 2(0.5)}"
+  # )
   useUnicode(TRUE)
 })
 test_that("alphaCut", {
@@ -77,7 +60,8 @@ test_that("inclusion", {
   expect_equal(FuzzySet$new(1, 0, 2, 0.4, 3, 1)$inclusion(4), "Not Included")
   expect_equal(FuzzySet$new(1, 0, 2, 0.4, 3, 1)$inclusion(2), "Partially Included")
   expect_equal(FuzzySet$new(1, 0, 2, 0.4, 3, 1)$inclusion(3), "Fully Included")
-  expect_equal(FuzzySet$new(1, 0, 2, 0.4, 3, 1)$inclusion(c(2, 5)), c("Partially Included", "Not Included"))
+  expect_equal(FuzzySet$new(1, 0, 2, 0.4, 3, 1)$inclusion(c(2, 5)),
+               list("2" = "Partially Included", "5" = "Not Included"))
 })
 test_that("equals", {
   expect_true(FuzzySet$new(1, 0.1, 2, 0.2)$equals(FuzzySet$new(1, 0.1, 2, 0.2)))
@@ -114,3 +98,4 @@ test_that("as.FuzzySet", {
   expect_error(expect_equal(as.FuzzySet(Interval$new()), Interval$new()), "Interval cannot be")
   expect_error(expect_equal(as.FuzzySet(ConditionalSet$new(function(x) TRUE)), ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
 })
+

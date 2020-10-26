@@ -17,7 +17,7 @@ test_that("Set", {
   )
   expect_equal(
     setproduct(Set$new(1, 2), Set$new(3, 4), Set$new(5, 6), simplify = T, nest = T)$strprint(),
-    "{((1, 3), 5), ((2, 3), 5),...,((1, 4), 6), ((2, 4), 6)}"
+    "{((1, 3), 5), ((1, 3), 6),...,((2, 4), 5), ((2, 4), 6)}"
   )
   useUnicode(TRUE)
 })

@@ -51,7 +51,7 @@ as.Set.Interval <- function(object) {
   if (any(is.na(object$elements))) {
     stop("Interval cannot be coerced to Set.")
   } else {
-    return(Set$new(elements = object$elements))
+    return(Set$new(elements = object$elements, class = object$class))
   }
 }
 #' @rdname as.Set
@@ -114,4 +114,60 @@ as.Tuple.Interval <- function(object) {
 #' @export
 as.Tuple.ConditionalSet <- function(object) {
   stop("ConditionalSet cannot be coerced to Tuple.")
+}
+#--------------------------
+# as.Multiset
+#--------------------------
+#' @rdname as.Set
+#' @aliases as.Multiset
+#' @export
+as.Multiset <- function(object) {
+  UseMethod("as.Multiset", object)
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.default <- function(object) {
+  Multiset$new(elements = object)
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.numeric <- function(object) {
+  Multiset$new(elements = object, class = "numeric")
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.list <- function(object) {
+  return(lapply(object, function(x) Multiset$new(elements = x)))
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.matrix <- function(object) {
+  return(apply(object, 2, function(x) Multiset$new(elements = x)))
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.data.frame <- as.Multiset.matrix
+#' @rdname as.Set
+#' @export
+as.Multiset.FuzzySet <- function(object) {
+  return(Multiset$new(elements = object$support()))
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.Set <- function(object) {
+  return(Multiset$new(elements = object$elements))
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.Interval <- function(object) {
+  if (any(is.na(object$elements))) {
+    stop("Interval cannot be coerced to Multiset.")
+  } else {
+    return(Multiset$new(elements = object$elements))
+  }
+}
+#' @rdname as.Set
+#' @export
+as.Multiset.ConditionalSet <- function(object) {
+  stop("ConditionalSet cannot be coerced to Multiset.")
 }

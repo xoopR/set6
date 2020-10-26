@@ -102,13 +102,25 @@ Interval$new(1,5)$remove(4)$print()
 # setcomplement vs. remove
 Set$new(1,2,3)$remove(Interval$new(5,7))$print()
 Set$new(1,2,3) - Interval$new(5,7)
+
+## ------------------------------------------------
+## Method `Set$multiplicity`
+## ------------------------------------------------
+
+Set$new(1, 1, 2)$multiplicity()
+Set$new(1, 1, 2)$multiplicity(1)
+Set$new(1, 1, 2)$multiplicity(list(1, 2))
+Tuple$new(1, 1, 2)$multiplicity(1)
+Tuple$new(1, 1, 2)$multiplicity(2)
 }
 \seealso{
 Other sets: 
 \code{\link{ConditionalSet}},
+\code{\link{FuzzyMultiset}},
 \code{\link{FuzzySet}},
 \code{\link{FuzzyTuple}},
 \code{\link{Interval}},
+\code{\link{Multiset}},
 \code{\link{Tuple}}
 }
 \concept{sets}
@@ -170,6 +182,7 @@ the cardinality property for the type of infinity.}
 \item \href{#method-isSubset}{\code{Set$isSubset()}}
 \item \href{#method-add}{\code{Set$add()}}
 \item \href{#method-remove}{\code{Set$remove()}}
+\item \href{#method-multiplicity}{\code{Set$multiplicity()}}
 \item \href{#method-clone}{\code{Set$clone()}}
 }
 }
@@ -185,24 +198,21 @@ Create a new \code{Set} object.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{any. Elements in the set.}
+\item{\code{...}}{\code{ANY} Elements can be of any class except \code{list}, as long as there is a unique
+\code{as.character} coercion method available.}
 
-\item{\code{universe}}{Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the \link{Universal}.}
+\item{\code{universe}}{Set. Universe that the Set lives in, i.e. elements that could be added to
+the Set. Default is \link{Universal}.}
 
-\item{\code{elements}}{list. Alternative constructor that may be more efficient if passing objects of multiple classes.}
+\item{\code{elements}}{list. Alternative constructor that may be more efficient if passing objects
+of multiple classes.}
 
-\item{\code{class}}{character. Optional string naming a class that if supplied gives the set the \code{typed} property.}
+\item{\code{class}}{character. Optional string naming a class that if supplied gives the set the
+\code{typed} property. All elements will be coerced to this class and therefore there must be
+a coercion method to this class available.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-Sets are constructed by elements of any types (including R6 classes), excluding lists.
-\code{Set}s should be used within \code{Set}s instead of lists. The \code{universe} argument is useful for taking the absolute complement
-of the \code{Set}. If a universe isn't given then \link{Universal} is assumed. If the \code{class} argument is non-NULL, then all elements
-will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
-or coerced.
-}
-
 \subsection{Returns}{
 A new \code{Set} object.
 }
@@ -516,6 +526,38 @@ Interval$new(1,5)$remove(4)$print()
 # setcomplement vs. remove
 Set$new(1,2,3)$remove(Interval$new(5,7))$print()
 Set$new(1,2,3) - Interval$new(5,7)
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-multiplicity"></a>}}
+\if{latex}{\out{\hypertarget{method-multiplicity}{}}}
+\subsection{Method \code{multiplicity()}}{
+Returns the number of times an element appears in a set,
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Set$multiplicity(element = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{element}}{element or list of elements in the \code{set}, if \code{NULL} returns multiplicity of all elements}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Value, or list of values, in R+.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{Set$new(1, 1, 2)$multiplicity()
+Set$new(1, 1, 2)$multiplicity(1)
+Set$new(1, 1, 2)$multiplicity(list(1, 2))
+Tuple$new(1, 1, 2)$multiplicity(1)
+Tuple$new(1, 1, 2)$multiplicity(2)
 }
 \if{html}{\out{</div>}}
 

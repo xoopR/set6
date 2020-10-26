@@ -19,6 +19,15 @@
 \alias{as.FuzzyTuple.FuzzySet}
 \alias{as.FuzzyTuple.Interval}
 \alias{as.FuzzyTuple.ConditionalSet}
+\alias{as.FuzzyMultiset}
+\alias{as.FuzzyMultiset.numeric}
+\alias{as.FuzzyMultiset.list}
+\alias{as.FuzzyMultiset.matrix}
+\alias{as.FuzzyMultiset.data.frame}
+\alias{as.FuzzyMultiset.Set}
+\alias{as.FuzzyMultiset.FuzzySet}
+\alias{as.FuzzyMultiset.Interval}
+\alias{as.FuzzyMultiset.ConditionalSet}
 \title{Coercion to R6 \code{FuzzySet}/\code{FuzzyTuple}}
 \usage{
 as.FuzzySet(object)
@@ -56,6 +65,24 @@ as.FuzzyTuple(object)
 \method{as.FuzzyTuple}{Interval}(object)
 
 \method{as.FuzzyTuple}{ConditionalSet}(object)
+
+as.FuzzyMultiset(object)
+
+\method{as.FuzzyMultiset}{numeric}(object)
+
+\method{as.FuzzyMultiset}{list}(object)
+
+\method{as.FuzzyMultiset}{matrix}(object)
+
+\method{as.FuzzyMultiset}{data.frame}(object)
+
+\method{as.FuzzyMultiset}{Set}(object)
+
+\method{as.FuzzyMultiset}{FuzzySet}(object)
+
+\method{as.FuzzyMultiset}{Interval}(object)
+
+\method{as.FuzzyMultiset}{ConditionalSet}(object)
 }
 \arguments{
 \item{object}{object to coerce}

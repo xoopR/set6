@@ -1,7 +1,3 @@
-library(testthat)
-
-context("setsymdiff")
-
 test_that("subsets", {
   expect_equal(Set$new(1) %-% Reals$new(), Reals$new() - Set$new(1))
   expect_equal(Reals$new() %-% Set$new(1, 2, 3), Reals$new() - Set$new(1, 2, 3))

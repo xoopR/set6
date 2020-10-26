@@ -1,7 +1,3 @@
-library(testthat)
-
-context("ComplementSet")
-
 test_that("SpecialSets", {
   useUnicode(FALSE)
   x <- Reals$new() - Naturals$new()
@@ -29,14 +25,12 @@ test_that("constructor", {
 test_that("fields", {
   d <- ComplementSet$new(Set$new(elements = 1:10), Set$new(5, 10))
   expect_equal(d$length, 8)
-  # expect_equal(d$lower, 1)
-  # expect_equal(d$upper, 9)
   expect_equal(d$elements, as.list(c(1:4, 6:9)))
   expect_equal(ComplementSet$new(Set$new(elements = 1:10), Interval$new(5, 10))$elements, NA)
   expect_equal(d$type, "{}")
 })
 
 test_that("strprint", {
-  d <- ComplementSet$new(Set$new(1, 2, 3, 4, 5) + Interval$new(5, 7), Set$new(5, 10) + Interval$new(10, 15))
+  d <- ComplementSet$new(Set$new(1, 2, 3, 4, 5, class = "numeric") + Interval$new(5, 7), Set$new(5, 10, class = "numeric") + Interval$new(10, 15))
   expect_equal(d$strprint(n = 1), "({1,...,5} ∪ [5,7]) \\ ({5, 10} ∪ [10,15])")
 })

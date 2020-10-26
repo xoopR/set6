@@ -1,7 +1,3 @@
-library(testthat)
-
-context("helpers")
-
 test_that("assertThat", {
   expect_silent(assertThat(Set$new()$length, Set$new()$length == "0", "Not True"))
   expect_error(assertThat(Set$new()$length, Set$new()$length == "2", "Not True"))

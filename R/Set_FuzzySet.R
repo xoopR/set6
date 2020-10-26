@@ -60,16 +60,26 @@ FuzzySet <- R6Class("FuzzySet",
         membership <- as.numeric(dots[seq.int(2, length(dots), 2)])
       }
 
-      if (any(duplicated(elements)) & !testFuzzyTuple(self)) {
+      if (any(duplicated(elements)) & !testFuzzyTuple(self) & !testFuzzyMultiset(self)) {
         message("Duplicated elements dedicated, only the first element-membership pair is included.")
         membership <- membership[!duplicated(elements)]
         elements <- elements[!duplicated(elements)]
       }
 
       checkmate::assertNumeric(membership, lower = 0, upper = 1, any.missing = FALSE)
-      private$.membership <- membership
 
       super$initialize(elements = elements, class = class)
+
+      if (self$length) {
+        private$.membership <- as.list(membership)
+
+        if (!testFuzzyTuple(self)) {
+          private$.membership <- private$.membership[match(lapply(elements, as.character),
+                                                           private$.str_elements)]
+        }
+
+        names(private$.membership) <- private$.str_elements
+      }
 
       invisible(self)
     },
@@ -86,25 +96,17 @@ FuzzySet <- R6Class("FuzzySet",
           return("{}")
         }
       } else {
-        elements <- sapply(self$elements, function(x) {
-          y <- try(x$strprint(), silent = T)
-          if (inherits(y, "try-error")) {
-            return(x)
-          } else {
-            return(y)
-          }
-        })
-        members <- self$membership()
+        elements <- self$membership()
 
         if (self$length <= n * 2) {
           return(paste0(
-            substr(self$type, 1, 1), paste0(elements, "(", members, ")", collapse = ", "),
+            substr(self$type, 1, 1), paste0(names(elements), "(", elements, ")", collapse = ", "),
             substr(self$type, 2, 2)
           ))
         } else {
-          return(paste0(substr(self$type, 1, 1), paste0(elements[1:n], "(", members[1:n], ")", collapse = ", "), ",...,",
-            paste0(elements[(self$length - n + 1):self$length], "(",
-              members[(self$length - n + 1):self$length], ")",
+          return(paste0(substr(self$type, 1, 1), paste0(names(elements)[1:n], "(", elements[1:n], ")", collapse = ", "), ",...,",
+            paste0(names(elements)[(self$length - n + 1):self$length], "(",
+                   elements[(self$length - n + 1):self$length], ")",
               collapse = ", "
             ),
             substr(self$type, 2, 2),
@@ -118,29 +120,29 @@ FuzzySet <- R6Class("FuzzySet",
     #' or all elements in the fuzzy set.
     #' @param element element or list of element in the `set`, if `NULL` returns membership of all elements
     #' @details For `FuzzySet`s this is straightforward and returns the membership of the given element(s),
-    #' however in `FuzzyTuple`s when an element may be duplicated, the function returns the membership of
+    #' however in `FuzzyTuple`s and `FuzzyMultiset`s when an element may be duplicated, the function returns the membership of
     #' all instances of the element.
-    #' @return Value, or vector of values, in \[0, 1\]
+    #' @return Value, or list of values, in \[0, 1\].
     #' @examples
     #' f = FuzzySet$new(1, 0.1, 2, 0.5, 3, 1)
     #' f$membership()
     #' f$membership(2)
+    #' f$membership(list(1, 2))
     membership = function(element = NULL) {
+
       if (is.null(element)) {
         return(private$.membership)
       }
 
-      element <- listify(element)
-
-      ind <- match(
-        lapply(element, function(x) ifelse(testSet(x), x$strprint(), x)),
-        lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x))
-      )
-
+      element <- lapply(listify(element), as.character)
       ret <- numeric(length(element))
-      ret[!is.na(ind)] <- private$.membership[ind[!is.na(ind)]]
+      mem <- private$.membership
+      mtc <- match(element, names(mem))
+      ret[!is.na(mtc)] <- mem[mtc][!is.na(mtc)]
+      names(ret) <- element
 
-      ret
+      if (length(ret) == 1) ret <- ret[[1]]
+      return(ret)
     },
 
     #' @description The alpha-cut of a fuzzy set is defined as the set
@@ -161,11 +163,18 @@ FuzzySet <- R6Class("FuzzySet",
     #' # Create a set from the alpha-cut
     #' f$alphaCut(0.5, create = TRUE)
     alphaCut = function(alpha, strong = FALSE, create = FALSE) {
+
+      els <- self$elements
+      mem <- self$membership()
+
       if (strong) {
-        els <- self$elements[self$membership() > alpha]
+        mtc <- match(names(mem[mem > alpha]), private$.str_elements)
       } else {
-        els <- self$elements[self$membership() >= alpha]
+        mtc <- match(names(mem[mem >= alpha]), private$.str_elements)
       }
+
+      els <- els[mtc][!is.na(mtc)]
+
 
       if (create) {
         if (length(els) == 0) {
@@ -218,7 +227,7 @@ FuzzySet <- R6Class("FuzzySet",
     #' @param element element or list of elements in fuzzy set for which to get the inclusion level
     #' @return One of: "Included", "Partially Included", "Not Included"
     #' @details For [FuzzySet]s this is straightforward and returns the inclusion level of the given element(s),
-    #' however in [FuzzyTuple]s when an element may be duplicated, the function returns the inclusion level of
+    #' however in [FuzzyTuple]s and [FuzzyMultiset]s when an element may be duplicated, the function returns the inclusion level of
     #' all instances of the element.
     #' @examples
     #' f = FuzzySet$new(0.1, 0, 1, 0.1, 2, 0.5, 3, 1)
@@ -228,12 +237,14 @@ FuzzySet <- R6Class("FuzzySet",
     inclusion = function(element) {
 
       member <- self$membership(element)
+      ret <- as.list(rep("Partially Included", length(member)))
 
-      member[member == 0] <- "Not Included"
-      member[member == 1] <- "Fully Included"
-      member[member > 0 & member < 1] <- "Partially Included"
+      ret[member %in% 0] <- "Not Included"
+      ret[member %in% 1] <- "Fully Included"
 
-      member
+      names(ret) <- names(member)
+      if (length(ret) == 1) ret <- ret[[1]]
+      return(ret)
     },
 
     #' @description Tests if two sets are equal.
@@ -267,15 +278,7 @@ FuzzySet <- R6Class("FuzzySet",
         el_mat <- matrix(c(elel, el$membership()), ncol = 2)[order(elel), ]
         self_mat <- matrix(c(selel, self$membership()), ncol = 2)[order(selel), ]
 
-        if (any(dim(el_mat) != dim(self_mat))) {
-          return(FALSE)
-        }
-
-        if (all(el_mat == self_mat)) {
-          return(TRUE)
-        } else {
-          return(FALSE)
-        }
+        ifelse(all(all.equal(el_mat, self_mat) == TRUE), TRUE, FALSE)
       })
 
       returner(ret, all)
