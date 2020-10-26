@@ -340,7 +340,7 @@
 <div id="wrappers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wrappers" class="anchor"></a>Wrappers</h2>
-<p>Finally we look briefly at wrappers, and the <code>simplify</code> argument. Each operation has an associated wrapper that will be created if <code>simplify == FALSE</code> or if the resulting set is too complicated to return as a single <code>Set</code> object. The operations concerned with products, i.e. <code>setproduct</code>, <code>setpower</code>, <code>powerset</code>, all have <code>simplify == FALSE</code> as the default; whereas the others concerned with unions and differences, have <code>simplify == TRUE</code> as the default.</p>
+<p>Finally we look briefly at wrappers, and the <code>simplify</code> argument. Each operation has an associated wrapper that will be created if <code>simplify == FALSE</code> or if the resulting set is too complicated to return as a single <code>Set</code> object. Wrappers faciliate lazy evaluation and symbolic representation by providing unique character representations of all sets after operations and do not evaluate the set elements unless specifically requested. In general wrappers should not be directly constructed but instead only used as the result of operations. The operations concerned with products, i.e. <code>setproduct</code>, <code>setpower</code>, <code>powerset</code>, all have <code>simplify == FALSE</code> as the default; whereas the others concerned with unions and differences, have <code>simplify == TRUE</code> as the default.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="co"># default: simplify = TRUE</span>
 <span class="fu"><a href="../reference/setunion.html">setunion</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span>
@@ -372,7 +372,8 @@
 <div id="going-forward" class="section level2">
 <h2 class="hasAnchor">
 <a href="#going-forward" class="anchor"></a>Going Forward</h2>
-<p><code>set6</code> is still in its early stages and the API is considered to be maturing, this means that whilst no big changes are expected to the design, minor ones can be expected. <code>set6</code> will be considered to be in its version 1 once all methods and fields are finalised (some are missing from wrappers), and when the code has been refactored to be more efficient. See <a href="https://xoopR.github.io/set6/">the website</a> for more tutorials and follow/star on <a href="https://github.com/xoopR/set6">GitHub</a> for updates.</p>
+<p><code>set6</code> is still relatively slow compared to other sets packages and most short-term updates will focus on improving bottlenecks.</p>
+<p>See <a href="https://xoopR.github.io/set6/">the website</a> for more tutorials and follow/star on <a href="https://github.com/xoopR/set6">GitHub</a> for updates.</p>
 </div>
   </div>
 

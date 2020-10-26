@@ -127,6 +127,14 @@
 
 
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Wrappers in set6 are utilised to facilitate lazy evaluation and symbolic representation.
+Each operation has an associated wrapper that will be returned if <code>simplify = FALSE</code> or if the
+result would be too complex to return as a simple <a href='Set.html'>Set</a>. Wrappers have an identical interface
+to <a href='Set.html'>Set</a>. Their primary advantage lies in a neat representation of any set composition (the
+result of an operation) and the ability to query the set contents without ever directly
+evaluating the set elements.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Set.html'>set6::Set</a></code> -&gt; <code>SetWrapper</code></p>
