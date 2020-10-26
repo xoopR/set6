@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mathematical Fuzzy Tuple — FuzzyTuple • set6</title>
+<title>Mathematical Fuzzy Multiset — FuzzyMultiset • set6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Mathematical Fuzzy Tuple — FuzzyTuple" />
-<meta property="og:description" content="A general FuzzyTuple object for mathematical fuzzy tuples, inheriting from FuzzySet." />
+<meta property="og:title" content="Mathematical Fuzzy Multiset — FuzzyMultiset" />
+<meta property="og:description" content="A general FuzzyMultiset object for mathematical fuzzy multisets, inheriting from FuzzySet." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -116,49 +116,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mathematical Fuzzy Tuple</h1>
-    <small class="dont-index">Source: <a href='https://github.com/xoopR/set6/blob/master/R/Set_FuzzySet_FuzzyTuple.R'><code>R/Set_FuzzySet_FuzzyTuple.R</code></a></small>
-    <div class="hidden name"><code>FuzzyTuple.Rd</code></div>
+    <h1>Mathematical Fuzzy Multiset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/xoopR/set6/blob/master/R/Set_FuzzySet_FuzzyMultiset.R'><code>R/Set_FuzzySet_FuzzyMultiset.R</code></a></small>
+    <div class="hidden name"><code>FuzzyMultiset.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A general FuzzyTuple object for mathematical fuzzy tuples, inheriting from <code>FuzzySet</code>.</p>
+    <p>A general FuzzyMultiset object for mathematical fuzzy multisets, inheriting from <code>FuzzySet</code>.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Fuzzy tuples generalise standard mathematical tuples to allow for fuzzy relationships. Whereas a
-standard, or crisp, tuple assumes that an element is either in a tuple or not, a fuzzy tuple allows
-an element to be in a tuple to a particular degree, known as the membership function, which
-quantifies the inclusion of an element by a number in [0, 1]. Thus a (crisp) tuple is a
-fuzzy tuple where all elements have a membership equal to \(1\). Similarly to <a href='Tuple.html'>Tuple</a>s, elements
-do not need to be unique and the ordering does matter, <a href='FuzzySet.html'>FuzzySet</a>s are special cases where the ordering
-does not matter and elements must be unique.</p>
+    <p>Fuzzy multisets generalise standard mathematical multisets to allow for fuzzy relationships. Whereas a
+standard, or crisp, multiset assumes that an element is either in a multiset or not, a fuzzy multiset allows
+an element to be in a multiset to a particular degree, known as the membership function, which
+quantifies the inclusion of an element by a number in [0, 1]. Thus a (crisp) multiset is a
+fuzzy multiset where all elements have a membership equal to \(1\). Similarly to <a href='Multiset.html'>Multiset</a>s, elements
+do not need to be unique.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other sets: 
 <code><a href='ConditionalSet.html'>ConditionalSet</a></code>,
-<code><a href='FuzzyMultiset.html'>FuzzyMultiset</a></code>,
 <code><a href='FuzzySet.html'>FuzzySet</a></code>,
+<code><a href='FuzzyTuple.html'>FuzzyTuple</a></code>,
 <code><a href='Interval.html'>Interval</a></code>,
 <code><a href='Multiset.html'>Multiset</a></code>,
 <code><a href='Set.html'>Set</a></code>,
 <code><a href='Tuple.html'>Tuple</a></code></p></div>
     <h2 class="hasAnchor" id="super-classes"><a class="anchor" href="#super-classes"></a>Super classes</h2>
 
-    <p><code><a href='Set.html'>set6::Set</a></code> -&gt; <code><a href='FuzzySet.html'>set6::FuzzySet</a></code> -&gt; <code>FuzzyTuple</code></p>
+    <p><code><a href='Set.html'>set6::Set</a></code> -&gt; <code><a href='FuzzySet.html'>set6::FuzzySet</a></code> -&gt; <code>FuzzyMultiset</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-equals'><code>FuzzyTuple$equals()</code></a></p></li>
-<li><p><a href='#method-isSubset'><code>FuzzyTuple$isSubset()</code></a></p></li>
-<li><p><a href='#method-alphaCut'><code>FuzzyTuple$alphaCut()</code></a></p></li>
-<li><p><a href='#method-clone'><code>FuzzyTuple$clone()</code></a></p></li>
+<li><p><a href='#method-equals'><code>FuzzyMultiset$equals()</code></a></p></li>
+<li><p><a href='#method-isSubset'><code>FuzzyMultiset$isSubset()</code></a></p></li>
+<li><p><a href='#method-alphaCut'><code>FuzzyMultiset$alphaCut()</code></a></p></li>
+<li><p><a href='#method-clone'><code>FuzzyMultiset$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
 <ul>
@@ -180,7 +179,7 @@ does not matter and elements must be unique.</p>
 <hr>
 <a id="method-equals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='equals.html'>equals()</a></code></h3>
 <p>Tests if two sets are equal.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>equals</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>equals</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -205,7 +204,7 @@ element of <code>x</code>.</p>
 <p><hr>
 <a id="method-isSubset"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
 <p>Test if one set is a (proper) subset of another</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'>x</span>, proper <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'>x</span>, proper <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -239,7 +238,7 @@ element of <code>x</code>.</p>
 <p>The alpha-cut of a fuzzy set is defined as the set
 $$A_\alpha = \{x \epsilon F | m \ge \alpha\}$$
 where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the corresponding membership.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='va'>alpha</span>, strong <span class='op'>=</span> <span class='cn'>FALSE</span>, create <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='va'>alpha</span>, strong <span class='op'>=</span> <span class='cn'>FALSE</span>, create <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -251,11 +250,11 @@ where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the correspondin
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>Elements in FuzzyTuple or a <a href='Set.html'>Set</a> of the elements.</p>
+<p>Elements in FuzzyMultiset or a <a href='Set.html'>Set</a> of the elements.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -267,14 +266,14 @@ where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the correspondin
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Different constructors</span>
-<span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (1(0.5), 2(1), 3(0)) </div><div class='input'><span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, membership <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; (1(0.5), 2(1), 3(0)) </div><div class='input'><span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, membership <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; (1(0.5), 2(1), 3(0)) </div><div class='input'>
-<span class='co'># Crisp sets are a special case FuzzyTuple</span>
+<span class='co'># Crisp sets are a special case FuzzyMultiset</span>
 <span class='co'># Note membership defaults to full membership</span>
-<span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'><a href='Multiset.html'>Multiset</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span>
 <span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $`1`
 #&gt; [1] 0.2
@@ -296,11 +295,10 @@ where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the correspondin
 </div><div class='output co'>#&gt; [1] 0.2</div><div class='input'>
 <span class='co'># Elements can be duplicated, and with different memberships,</span>
 <span class='co'>#  although this is not necessarily sensible.</span>
-<span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (1(0.1), 1(1)) </div><div class='input'>
-<span class='co'># More important is ordering.</span>
-<span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>FuzzyTuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span><span class='op'>)</span>
+<span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; (1(0.1), 1(0.1)) </div><div class='input'>
+<span class='co'># Like FuzzySets, ordering does not matter.</span>
+<span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'>FuzzyMultiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

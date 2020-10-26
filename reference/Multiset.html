@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mathematical Tuple — Tuple • set6</title>
+<title>Mathematical Multiset — Multiset • set6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Mathematical Tuple — Tuple" />
-<meta property="og:description" content="A general Tuple object for mathematical tuples, inheriting from Set." />
+<meta property="og:title" content="Mathematical Multiset — Multiset" />
+<meta property="og:description" content="A general Multiset object for mathematical Multisets, inheriting from Set." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -116,22 +116,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mathematical Tuple</h1>
-    <small class="dont-index">Source: <a href='https://github.com/xoopR/set6/blob/master/R/Set_Tuple.R'><code>R/Set_Tuple.R</code></a></small>
-    <div class="hidden name"><code>Tuple.Rd</code></div>
+    <h1>Mathematical Multiset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/xoopR/set6/blob/master/R/Set_Multiset.R'><code>R/Set_Multiset.R</code></a></small>
+    <div class="hidden name"><code>Multiset.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A general Tuple object for mathematical tuples, inheriting from <code>Set</code>.</p>
+    <p>A general Multiset object for mathematical Multisets, inheriting from <code>Set</code>.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Tuples are similar to sets, except that they drop the constraint for elements to be unique, and
-ordering in a tuple does matter. Tuples are useful for methods including <code>$contains</code> that may
-require non-unique elements. They are also the return type of the product of sets. See examples.</p>
+    <p>Multisets are generalisations of sets that allow an element to be repeated. They can be thought
+of as <a href='Tuple.html'>Tuple</a>s without ordering.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other sets: 
@@ -140,20 +139,20 @@ require non-unique elements. They are also the return type of the product of set
 <code><a href='FuzzySet.html'>FuzzySet</a></code>,
 <code><a href='FuzzyTuple.html'>FuzzyTuple</a></code>,
 <code><a href='Interval.html'>Interval</a></code>,
-<code><a href='Multiset.html'>Multiset</a></code>,
-<code><a href='Set.html'>Set</a></code></p></div>
+<code><a href='Set.html'>Set</a></code>,
+<code><a href='Tuple.html'>Tuple</a></code></p></div>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='Set.html'>set6::Set</a></code> -&gt; <code>Tuple</code></p>
+    <p><code><a href='Set.html'>set6::Set</a></code> -&gt; <code>Multiset</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-equals'><code>Tuple$equals()</code></a></p></li>
-<li><p><a href='#method-isSubset'><code>Tuple$isSubset()</code></a></p></li>
-<li><p><a href='#method-clone'><code>Tuple$clone()</code></a></p></li>
+<li><p><a href='#method-equals'><code>Multiset$equals()</code></a></p></li>
+<li><p><a href='#method-isSubset'><code>Multiset$isSubset()</code></a></p></li>
+<li><p><a href='#method-clone'><code>Multiset$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
 <ul>
@@ -171,7 +170,7 @@ require non-unique elements. They are also the return type of the product of set
 <hr>
 <a id="method-equals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='equals.html'>equals()</a></code></h3>
 <p>Tests if two sets are equal.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>equals</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>equals</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -181,7 +180,7 @@ require non-unique elements. They are also the return type of the product of set
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
-<p>An object is equal to a Tuple if it contains all the same elements, and in the same order.
+<p>An object is equal to a Multiset if it contains all the same elements, and in the same order.
 Infix operators can be used for:</p><table class='table'>
 <tr><td>Equal</td><td><code><a href='https://rdrr.io/r/base/Comparison.html'>==</a></code></td></tr>
 <tr><td>Not equal</td><td><code><a href='https://rdrr.io/r/base/Comparison.html'>!=</a></code></td></tr>
@@ -194,15 +193,15 @@ Infix operators can be used for:</p><table class='table'>
 <code>FALSE</code>. If <code>all</code> is <code>FALSE</code> then returns a vector of logicals corresponding to each individual
 element of <code>x</code>.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>==</span>  <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>
+<p><div class="r example copy"></p><pre><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>==</span>  <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-isSubset"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='isSubset.html'>isSubset()</a></code></h3>
 <p>Test if one set is a (proper) subset of another</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'>x</span>, proper <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>isSubset</span><span class='op'>(</span><span class='va'>x</span>, proper <span class='op'>=</span> <span class='cn'>FALSE</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -229,7 +228,7 @@ is a subinterval of another.</p>
 </table>
 
 
-<p>An object is a (proper) subset of a Tuple if it contains all (some) of the same elements,
+<p>An object is a (proper) subset of a Multiset if it contains all (some) of the same elements,
 and in the same order.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
@@ -237,14 +236,15 @@ and in the same order.</p>
 <code>FALSE</code>. If <code>all</code> is <code>FALSE</code> then returns a vector of logicals corresponding to each individual
 element of <code>x</code>.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
+<p><div class="r example copy"></p><pre><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span> <span class='op'>&lt;=</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -255,14 +255,14 @@ element of <code>x</code>.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Tuple of integers</span>
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (1, 2,...,4, 5) </div><div class='input'>
-<span class='co'># Tuple of multiple types</span>
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>5</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (a, 5, {1}, (2)) </div><div class='input'>
-<span class='co'># Each Tuple has properties and traits</span>
-<span class='va'>t</span> <span class='op'>&lt;-</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># Multiset of integers</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {1, 2,...,4, 5} </div><div class='input'>
+<span class='co'># Multiset of multiple types</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>5</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {{1}, {2}, 5, a} </div><div class='input'>
+<span class='co'># Each Multiset has properties and traits</span>
+<span class='va'>t</span> <span class='op'>&lt;-</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>
 <span class='va'>t</span><span class='op'>$</span><span class='va'>traits</span>
 </div><div class='output co'>#&gt; $crisp
 #&gt; [1] TRUE
@@ -283,26 +283,27 @@ element of <code>x</code>.</p>
 #&gt; [1] "closed"
 #&gt; </div><div class='input'>
 <span class='co'># Elements can be duplicated</span>
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># Ordering does matter</span>
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='co'># Ordering does not matter</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Tuple$equals`</span>
+<span class='co'>## Method `Multiset$equals`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>==</span>  <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>==</span>  <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Tuple$isSubset`</span>
+<span class='co'>## Method `Multiset$isSubset`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Tuple</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE</div></pre>
+<span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span> <span class='op'>&lt;=</span> <span class='va'>Multiset</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -134,7 +134,7 @@
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; {a, b,...,d, e}</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2i</span>, <span class="st">"a"</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; {1, 0+2i, a, {1}}</span></pre></div>
+<span class="co">#&gt; {{1}, 0+2i, 1, a}</span></pre></div>
 </div>
 <div id="the-different-kind-of-sets" class="section level2">
 <h2 class="hasAnchor">
@@ -316,13 +316,13 @@
 
 <span class="co"># nest = FALSE default - we will return to the `simplify` argument below</span>
 <span class="fu"><a href="../reference/setproduct.html">setproduct</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>, nest <span class="op">=</span> <span class="cn">TRUE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; {((1, 3), 5), ((2, 3), 5),...,((1, 4), 6), ((2, 4), 6)}</span>
+<span class="co">#&gt; {((1, 3), 5), ((1, 3), 6),...,((2, 4), 5), ((2, 4), 6)}</span>
 <span class="fu"><a href="../reference/setproduct.html">setproduct</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>, nest <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; {(1, 3, 5), (2, 3, 5),...,(1, 4, 6), (2, 4, 6)}</span>
+<span class="co">#&gt; {(1, 3, 5), (1, 3, 6),...,(2, 4, 5), (2, 4, 6)}</span>
 
 <span class="co"># n-ary cartesian product on the same set</span>
 <span class="fu"><a href="../reference/setpower.html">setpower</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="fl">3</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; {(1, 1, 1), (2, 1, 1),...,(1, 2, 2), (2, 2, 2)}</span></pre></div>
+<span class="co">#&gt; {(1, 1, 1), (1, 1, 2),...,(2, 2, 1), (2, 2, 2)}</span></pre></div>
 </div>
 <div id="intersection" class="section level3">
 <h3 class="hasAnchor">
@@ -352,13 +352,13 @@
 <span class="fu"><a href="../reference/setproduct.html">setproduct</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; {1, 2} × {4, 5}</span>
 <span class="fu"><a href="../reference/setproduct.html">setproduct</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; {(1, 4), (2, 4), (1, 5), (2, 5)}</span>
+<span class="co">#&gt; {(1, 4), (1, 5), (2, 4), (2, 5)}</span>
 
 <span class="co"># default: simplify = FALSE</span>
 <span class="fu"><a href="../reference/powerset.html">powerset</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; ℘({1, 2, 3})</span>
 <span class="fu"><a href="../reference/powerset.html">powerset</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; {∅, {1},...,{2, 3}, {1, 2, 3}}</span></pre></div>
+<span class="co">#&gt; {{1, 2, 3}, {1, 2},...,{3}, ∅}</span></pre></div>
 <p>All wrappers inherit from <code>Set</code> and therefore share the same methods and fields.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">u</span> <span class="op">=</span> <span class="fu"><a href="../reference/setunion.html">setunion</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>

@@ -140,8 +140,10 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 
     <div class='dont-index'><p>Other sets: 
 <code><a href='ConditionalSet.html'>ConditionalSet</a></code>,
+<code><a href='FuzzyMultiset.html'>FuzzyMultiset</a></code>,
 <code><a href='FuzzyTuple.html'>FuzzyTuple</a></code>,
 <code><a href='Interval.html'>Interval</a></code>,
+<code><a href='Multiset.html'>Multiset</a></code>,
 <code><a href='Set.html'>Set</a></code>,
 <code><a href='Tuple.html'>Tuple</a></code></p></div>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
@@ -164,10 +166,11 @@ must be unique and the ordering does not matter, to establish order and non-uniq
 <li><p><a href='#method-isSubset'><code>FuzzySet$isSubset()</code></a></p></li>
 <li><p><a href='#method-clone'><code>FuzzySet$clone()</code></a></p></li>
 </ul>
-<p><details open ><summary>Inherited methods</summary>
+<p><details ><summary>Inherited methods</summary>
 <ul>
 <li><p><span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="add"><a href='../../set6/html/Set.html#method-add'><code>set6::Set$add()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="contains"><a href='../../set6/html/Set.html#method-contains'><code>set6::Set$contains()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="multiplicity"><a href='../../set6/html/Set.html#method-multiplicity'><code>set6::Set$multiplicity()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="print"><a href='../../set6/html/Set.html#method-print'><code>set6::Set$print()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="remove"><a href='../../set6/html/Set.html#method-remove'><code>set6::Set$remove()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="set6" data-topic="Set" data-id="summary"><a href='../../set6/html/Set.html#method-summary'><code>set6::Set$summary()</code></a></span></p></li>
@@ -229,15 +232,16 @@ or all elements in the fuzzy set.</p><h4 class='hasAnchor' id='arguments'><a cla
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>For <code>FuzzySet</code>s this is straightforward and returns the membership of the given element(s),
-however in <code>FuzzyTuple</code>s when an element may be duplicated, the function returns the membership of
+however in <code>FuzzyTuple</code>s and <code>FuzzyMultiset</code>s when an element may be duplicated, the function returns the membership of
 all instances of the element.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>Value, or vector of values, in [0, 1]</p>
+<p>Value, or list of values, in [0, 1].</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
 <p><div class="r example copy"></p><pre><span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
@@ -330,7 +334,7 @@ where \(x\) is an element in the fuzzy set, \(F\), and \(m\) is the correspondin
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>For FuzzySets this is straightforward and returns the inclusion level of the given element(s),
-however in <a href='FuzzyTuple.html'>FuzzyTuple</a>s when an element may be duplicated, the function returns the inclusion level of
+however in <a href='FuzzyTuple.html'>FuzzyTuple</a>s and <a href='FuzzyMultiset.html'>FuzzyMultiset</a>s when an element may be duplicated, the function returns the inclusion level of
 all instances of the element.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
@@ -423,7 +427,15 @@ element of <code>x</code>.</p>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='va'>f</span> <span class='op'>&lt;-</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span>
 <span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.2 1.0 0.0</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`1`
+#&gt; [1] 0.2
+#&gt; 
+#&gt; $`2`
+#&gt; [1] 1
+#&gt; 
+#&gt; $`3`
+#&gt; [1] 0
+#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 2
 #&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>core</span><span class='op'>(</span><span class='op'>)</span>
@@ -439,8 +451,22 @@ element of <code>x</code>.</p>
 
 <span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.1 0.5 1.0</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'>
+</div><div class='output co'>#&gt; $`1`
+#&gt; [1] 0.1
+#&gt; 
+#&gt; $`2`
+#&gt; [1] 0.5
+#&gt; 
+#&gt; $`3`
+#&gt; [1] 1
+#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`1`
+#&gt; [1] 0.1
+#&gt; 
+#&gt; $`2`
+#&gt; [1] 0.5
+#&gt; </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `FuzzySet$alphaCut`</span>
 <span class='co'>## ------------------------------------------------</span>

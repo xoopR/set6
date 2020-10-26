@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate a Set's Powerset — powerset • set6</title>
+<title>assert/check/test/Multiset — testMultiset • set6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Calculate a Set's Powerset — powerset" />
-<meta property="og:description" content="Calculates and returns the powerset of a Set." />
+<meta property="og:title" content="assert/check/test/Multiset — testMultiset" />
+<meta property="og:description" content="Validation checks to test if a given object is an R6 Multiset." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -116,60 +116,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate a Set's Powerset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/xoopR/set6/blob/master/R/operation_powerset.R'><code>R/operation_powerset.R</code></a></small>
-    <div class="hidden name"><code>powerSet.Rd</code></div>
+    <h1>assert/check/test/Multiset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/xoopR/set6/blob/master/R/assertions.R'><code>R/assertions.R</code></a></small>
+    <div class="hidden name"><code>testMultiset.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculates and returns the powerset of a Set.</p>
+    <p>Validation checks to test if a given object is an R6 <code>Multiset</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>powerset</span><span class='op'>(</span><span class='va'>x</span>, simplify <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>testMultiset</span><span class='op'>(</span><span class='va'>object</span>, errormsg <span class='op'>=</span> <span class='st'>"This is not an R6 Multiset object"</span><span class='op'>)</span>
+
+<span class='fu'>checkMultiset</span><span class='op'>(</span><span class='va'>object</span>, errormsg <span class='op'>=</span> <span class='st'>"This is not an R6 Multiset object"</span><span class='op'>)</span>
+
+<span class='fu'>assertMultiset</span><span class='op'>(</span><span class='va'>object</span>, errormsg <span class='op'>=</span> <span class='st'>"This is not an R6 Multiset object"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p><a href='Set.html'>Set</a></p></td>
+      <th>object</th>
+      <td><p>object to test</p></td>
     </tr>
     <tr>
-      <th>simplify</th>
-      <td><p>logical, if <code>TRUE</code> then tries to simplify the result to a <code>Set</code> otherwise
-creates an object of class <a href='PowersetSet.html'>PowersetSet</a>.</p></td>
+      <th>errormsg</th>
+      <td><p>error message to overwrite default if check fails</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='Set.html'>Set</a></p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>A powerset of a set, S, is defined as the set of all subsets of S, including S itself
-and the empty set.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other operators: 
-<code><a href='setcomplement.html'>setcomplement</a>()</code>,
-<code><a href='setintersect.html'>setintersect</a>()</code>,
-<code><a href='setpower.html'>setpower</a>()</code>,
-<code><a href='setproduct.html'>setproduct</a>()</code>,
-<code><a href='setsymdiff.html'>setsymdiff</a>()</code>,
-<code><a href='setunion.html'>setunion</a>()</code></p></div>
+    <p>If check passes then <code>assert</code> returns <code>object</code> invisibly and <code>test</code>/<code>check</code>
+return <code>TRUE</code>. If check fails, <code>assert</code> stops code with error, <code>check</code> returns
+an error message as string, and <code>test</code> returns <code>FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># simplify = FALSE is default</span>
-<span class='fu'>powerset</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℘({1, 2}) </div><div class='input'><span class='fu'>powerset</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {{1, 2}, {1}, {2}, ∅} </div><div class='input'>
-<span class='co'># powerset of intervals</span>
-<span class='fu'>powerset</span><span class='op'>(</span><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℘([-∞,+∞]) </div><div class='input'>
-<span class='co'># powerset of powersets</span>
-<span class='fu'>powerset</span><span class='op'>(</span><span class='fu'>powerset</span><span class='op'>(</span><span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℘(℘(ℝ)) </div><div class='input'><span class='fu'>powerset</span><span class='op'>(</span><span class='fu'>powerset</span><span class='op'>(</span><span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>properties</span><span class='op'>$</span><span class='va'>cardinality</span>
-</div><div class='output co'>#&gt; [1] "Beth3"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>testMultiset</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testMultiset</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testMultiset</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testMultiset</span><span class='op'>(</span><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testMultiset</span><span class='op'>(</span><span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testMultiset</span><span class='op'>(</span><span class='va'><a href='FuzzyTuple.html'>FuzzyTuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>testMultiset</span><span class='op'>(</span><span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

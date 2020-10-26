@@ -139,9 +139,11 @@ of elements does not matter, <a href='Tuple.html'>Tuple</a>s can be used if dupl
 
     <div class='dont-index'><p>Other sets: 
 <code><a href='ConditionalSet.html'>ConditionalSet</a></code>,
+<code><a href='FuzzyMultiset.html'>FuzzyMultiset</a></code>,
 <code><a href='FuzzySet.html'>FuzzySet</a></code>,
 <code><a href='FuzzyTuple.html'>FuzzyTuple</a></code>,
 <code><a href='Interval.html'>Interval</a></code>,
+<code><a href='Multiset.html'>Multiset</a></code>,
 <code><a href='Tuple.html'>Tuple</a></code></p></div>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
@@ -203,6 +205,7 @@ the cardinality property for the type of infinity.</p></dd>
 <li><p><a href='#method-isSubset'><code>Set$isSubset()</code></a></p></li>
 <li><p><a href='#method-add'><code>Set$add()</code></a></p></li>
 <li><p><a href='#method-remove'><code>Set$remove()</code></a></p></li>
+<li><p><a href='#method-multiplicity'><code>Set$multiplicity()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Set$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -212,22 +215,20 @@ the cardinality property for the type of infinity.</p></dd>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>...</code></dt><dd><p>any. Elements in the set.</p></dd>
+<dt><code>...</code></dt><dd><p><code>ANY</code> Elements can be of any class except <code>list</code>, as long as there is a unique
+<code>as.character</code> coercion method available.</p></dd>
 
-<dt><code>universe</code></dt><dd><p>Set. Universe that the Set lives in, i.e. elements that could be added to the Set. Default is the <a href='Universal.html'>Universal</a>.</p></dd>
+<dt><code>universe</code></dt><dd><p>Set. Universe that the Set lives in, i.e. elements that could be added to
+the Set. Default is <a href='Universal.html'>Universal</a>.</p></dd>
 
-<dt><code>elements</code></dt><dd><p>list. Alternative constructor that may be more efficient if passing objects of multiple classes.</p></dd>
+<dt><code>elements</code></dt><dd><p>list. Alternative constructor that may be more efficient if passing objects
+of multiple classes.</p></dd>
 
-<dt><code>class</code></dt><dd><p>character. Optional string naming a class that if supplied gives the set the <code>typed</code> property.</p></dd>
+<dt><code>class</code></dt><dd><p>character. Optional string naming a class that if supplied gives the set the
+<code>typed</code> property. All elements will be coerced to this class and therefore there must be
+a coercion method to this class available.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
-<p>Sets are constructed by elements of any types (including R6 classes), excluding lists.
-<code>Set</code>s should be used within <code>Set</code>s instead of lists. The <code>universe</code> argument is useful for taking the absolute complement
-of the <code>Set</code>. If a universe isn't given then <a href='Universal.html'>Universal</a> is assumed. If the <code>class</code> argument is non-NULL, then all elements
-will be coerced to the given class in construction, and if elements of a different class are added these will either be rejected
-or coerced.</p>
-
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>Set</code> object.</p>
 <p><hr>
@@ -455,6 +456,26 @@ otherwise an object inheriting from Set is returned.</p>
 </pre><p></div></p>
 
 <p><hr>
+<a id="method-multiplicity"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>multiplicity()</code></h3>
+<p>Returns the number of times an element appears in a set,</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span>element <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>element</code></dt><dd><p>element or list of elements in the <code>set</code>, if <code>NULL</code> returns multiplicity of all elements</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>Value, or list of values, in R+.</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -473,7 +494,7 @@ otherwise an object inheriting from Set is returned.</p>
 </div><div class='output co'>#&gt; {1, 2,...,4, 5} </div><div class='input'>
 <span class='co'># Set of multiple types</span>
 <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>5</span>, <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {a, 5, {1}} </div><div class='input'>
+</div><div class='output co'>#&gt; {{1}, 5, a} </div><div class='input'>
 <span class='co'># Each Set has properties and traits</span>
 <span class='va'>s</span> <span class='op'>&lt;-</span> <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>
 <span class='va'>s</span><span class='op'>$</span><span class='va'>traits</span>
@@ -558,7 +579,7 @@ otherwise an object inheriting from Set is returned.</p>
 </div><div class='output co'>#&gt; {0+1i, 0+2i, 4+0i} </div><div class='input'>
 <span class='co'># setunion vs. add</span>
 <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>add</span><span class='op'>(</span><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 2, [5,6]} </div><div class='input'><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {[5,6], 1, 2} </div><div class='input'><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>6</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {1,...,2} ∪ [5,6] </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Set$remove`</span>
@@ -572,7 +593,27 @@ otherwise an object inheriting from Set is returned.</p>
 <span class='co'># setcomplement vs. remove</span>
 <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>remove</span><span class='op'>(</span><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {1, 2, 3} </div><div class='input'><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>7</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 2, 3} </div></pre>
+</div><div class='output co'>#&gt; {1, 2, 3} </div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Set$multiplicity`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`1`
+#&gt; [1] 1
+#&gt; 
+#&gt; $`2`
+#&gt; [1] 1
+#&gt; </div><div class='input'><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`1`
+#&gt; [1] 1
+#&gt; 
+#&gt; $`2`
+#&gt; [1] 1
+#&gt; </div><div class='input'><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>multiplicity</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

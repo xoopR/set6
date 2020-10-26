@@ -138,9 +138,6 @@ setcomplement(x, y, simplify = TRUE)
 # S3 method for FuzzySet
 setcomplement(x, y, simplify = TRUE)
 
-# S3 method for FuzzyTuple
-setcomplement(x, y, simplify = TRUE)
-
 # S3 method for ConditionalSet
 setcomplement(x, y, simplify = TRUE)
 
@@ -202,7 +199,7 @@ $$X-Y = \{z : z \epsilon X \quad and \quad \neg(z \epsilon Y)\}$$</p>
 <span class='co'># complement of two sets</span>
 
 <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {-2, -1, 0, 1} </div><div class='input'><span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {-1, -2, 0, 1} </div><div class='input'><span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {1, 4} </div><div class='input'>
 <span class='co'># complement of two intervals</span>
 
