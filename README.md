@@ -205,8 +205,8 @@ These mainly include
     classes inheriting from `SetWrapper` to simpler sets. This allows
     users to perform operations with `simplify = FALSE` and then to
     change their mind.
-  - There are some inefficient loops implemented that will need
-    refactoring for more efficient code.
+  - There are known bottlenecks that need to be fixed to massively
+    improve speed and efficiency.
   - Adding more tutorials to make the interface easier for beginners,
     especially people new to R6
 
