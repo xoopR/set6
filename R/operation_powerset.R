@@ -30,58 +30,32 @@ powerset <- function(x, simplify = FALSE) {
     return(Set$new(Set$new()))
   }
 
-  if (simplify & testFuzzyTuple(x)) {
-    return(.powerset_fuzzytuple(x))
-  } else if (simplify & testFuzzy(x)) {
-    return(.powerset_fuzzyset(x))
-  } # else if(simplify & testTuple(x))
-  #   return(.powerset_tuple(x))
-  else if (simplify & (getR6Class(x) == "Set" | testTuple(x))) {
-    return(.powerset_set(x))
+  if (simplify & testFuzzy(x)) {
+    return(.powerset_fuzzy(x))
+  } else if (simplify & testCrisp(x)) {
+    return(.powerset_crisp(x))
   } else {
     return(PowersetSet$new(x))
   }
 }
 
-.powerset_fuzzytuple <- function(x) {
+.powerset_fuzzy <- function(x) {
   y <- Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),
                  vectorize.args = c("m"))(1:(x$length - 1))
-  # if(class(y[1,1]) == "list")
-  y <- lapply(unlist(y), function(el) FuzzyTuple$new(elements = el, membership = x$membership(el)))
-  # else
-  #   y = apply(y, 1, function(el){
-  #     FuzzyTuple$new(elements = el, membership = x$membership(el))
-  #   })
+  y <- lapply(unlist(y), function(el) getR6Class(x, FALSE)$new(elements = el,
+                                                               membership = x$membership(el)))
   return(Set$new(elements = c(Set$new(), y, x)))
 }
-.powerset_fuzzyset <- function(x) {
-  y <- Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),
-                 vectorize.args = c("m"))(1:(x$length - 1))
-  # if(class(y[1,1]) == "list")
-  y <- sapply(unlist(y), function(el) FuzzySet$new(elements = el, membership = x$membership(el)))
-  # else
-  #   y = apply(y, 1, function(el){
-  #     FuzzySet$new(elements = el, membership = x$membership(el))
-  #   })
-  return(Set$new(elements = c(Set$new(), y, x)))
-}
-# .powerset_tuple <- function(x){
-#   elements <- x$elements
-#   y = Vectorize(function(m) utils::combn(elements, m, simplify = FALSE),
-#   vectorize.args = c("m"))(1:(x$length-1))
-#   return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, as.Tuple)), x)))
-# }
-.powerset_set <- function(x) {
+
+.powerset_crisp <- function(x) {
   elements <- x$elements
   y <- Vectorize(function(m) utils::combn(elements, m, simplify = FALSE), vectorize.args = c("m"),
                  SIMPLIFY = FALSE)(1:(x$length - 1))
 
   try(
-    {
-      return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, as.Set)), as.Set(x))))
-    },
+    {return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, as, class = getR6Class(x))), x)))},
     silent = TRUE
   )
 
-  return(Set$new(elements = c(Set$new(), unlist(lapply(y, as.Set)), as.Set(x))))
+  return(Set$new(elements = c(Set$new(), unlist(lapply(y, get(paste0("as.", getR6Class(x))))), x)))
 }

@@ -87,12 +87,12 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
   } else if (any(sapply(sets, function(x) inherits(x, "SetWrapper"))) |
     any(grepl("ConditionalSet|Interval", classes)) | !simplify) {
     return(ProductSet$new(sets))
-  } else if (any(grepl("FuzzySet|FuzzyTuple", unique(classes)))) {
+  } else if (any(grepl("FuzzySet|FuzzyTuple|FuzzyMultiset", unique(classes)))) {
     return(.product_fuzzyset(sets))
   } else {
-    (any(grepl("Set|Tuple", unique(classes))))
+    return(.product_set(sets, nest))
   }
-  return(.product_set(sets, nest))
+
 }
 
 .product_set <- function(sets, nest) {

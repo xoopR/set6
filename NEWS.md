@@ -3,6 +3,9 @@
 * UniversalSet renamed Universal, old class will be removed in v0.4.0.
 * LogicalSet renamed Logicals, old class will be removed in v0.4.0.
 * `Complex` now inherits from `Set`, incorrect methods for `isSubset, equals` have been removed.
+* Add `Multiset` for sets with non-unique elements but no ordering
+* Small speed improvements in `Tuple` and `FuzzyTuple`
+* For consistency most methods now return a `list` unless single elements requested
 
 # set6 0.1.8
 

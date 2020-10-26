@@ -5,7 +5,6 @@
 \alias{setcomplement.Set}
 \alias{setcomplement.Interval}
 \alias{setcomplement.FuzzySet}
-\alias{setcomplement.FuzzyTuple}
 \alias{setcomplement.ConditionalSet}
 \alias{setcomplement.Reals}
 \alias{setcomplement.Rationals}
@@ -21,8 +20,6 @@ setcomplement(x, y, simplify = TRUE)
 \method{setcomplement}{Interval}(x, y, simplify = TRUE)
 
 \method{setcomplement}{FuzzySet}(x, y, simplify = TRUE)
-
-\method{setcomplement}{FuzzyTuple}(x, y, simplify = TRUE)
 
 \method{setcomplement}{ConditionalSet}(x, y, simplify = TRUE)
 

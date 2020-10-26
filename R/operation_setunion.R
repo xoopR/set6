@@ -70,7 +70,7 @@ setunion <- function(..., simplify = TRUE) {
 
   classes <- sapply(sets, getR6Class)
 
-  if (all(classes %in% c("Set", "Tuple")) & simplify) {
+  if (all(classes %in% c("Set", "Tuple", "Multiset")) & simplify) {
     return(.union_set(sets))
   }
 
@@ -153,8 +153,8 @@ setunion <- function(..., simplify = TRUE) {
   if (any(grepl("Interval", classes))) {
     intervals <- .union_interval(sets[grepl("Interval", classes)])
   }
-  if (any(classes %in% c("Set", "Tuple"))) {
-    crisps <- .union_set(sets[classes %in% c("Set", "Tuple")])
+  if (any(classes %in% c("Set", "Tuple", "Multiset"))) {
+    crisps <- .union_set(sets[classes %in% c("Set", "Tuple", "Multiset")])
   }
 
 
@@ -185,6 +185,8 @@ setunion <- function(..., simplify = TRUE) {
 
   if (any(grepl("Set", sapply(sets, getR6Class)))) {
     return(Set$new(elements = elements, class = class))
+  } else if (any(grepl("Multiset", sapply(sets, getR6Class)))) {
+    return(Multiset$new(elements = elements, class = class))
   } else {
     return(Tuple$new(elements = elements, class = class))
   }
@@ -222,6 +224,11 @@ setunion <- function(..., simplify = TRUE) {
 
   if (any(grepl("FuzzySet", sapply(sets, getR6Class)))) {
     return(FuzzySet$new(
+      elements = rsapply(sets, "elements", active = TRUE),
+      membership = rsapply(sets, "membership")
+    ))
+  } else if (any(grepl("FuzzyMultiset", sapply(sets, getR6Class)))) {
+    return(FuzzyMultiset$new(
       elements = rsapply(sets, "elements", active = TRUE),
       membership = rsapply(sets, "membership")
     ))

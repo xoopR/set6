@@ -27,6 +27,8 @@ test_that("set", {
   useUnicode(FALSE)
   expect_equal((Set$new(1, 2) + ConditionalSet$new(function(x) TRUE))$strprint(), "{1, 2} U {x in V : TRUE}")
   expect_true(setunion(Set$new(1, 2, 3), Tuple$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
+  expect_true(setunion(Set$new(1, 2, 3), Multiset$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
+  expect_true(setunion(Tuple$new(1, 2, 3), Multiset$new("a", 1i))$equals(Set$new(1, 2, 3, 1i, "a")))
   expect_equal(Set$new(1, 2) + Set$new(5, 7) + Set$new(1, 10), Set$new(1, 2, 5, 7, 10))
   expect_equal(setunion(Set$new()), Set$new())
   expect_equal(setunion(), Set$new())
@@ -46,8 +48,11 @@ test_that("fuzzy", {
   expect_equal(FuzzySet$new(1, 0.1) + FuzzySet$new(2, 0.3), FuzzySet$new(1, 0.1, 2, 0.3))
   expect_equal(FuzzySet$new(1, 0.1) + Set$new(2), Set$new(1, 2))
   expect_equal(FuzzyTuple$new(1, 0.1) + FuzzyTuple$new(2, 0.3), FuzzyTuple$new(1, 0.1, 2, 0.3))
+  expect_equal(FuzzyMultiset$new(1, 0.1) + FuzzyMultiset$new(2, 0.3), FuzzyMultiset$new(1, 0.1, 2, 0.3))
   expect_equal(FuzzyTuple$new(1, 0.1) + Set$new(2), Set$new(1, 2))
+  expect_equal(FuzzyMultiset$new(1, 0.1) + Set$new(2), Set$new(1, 2))
   expect_equal(FuzzyTuple$new(1, 0.1) + Tuple$new(2), Tuple$new(1, 2))
+  expect_equal(FuzzyMultiset$new(1, 0.1) + Multiset$new(2), Multiset$new(1, 2))
 })
 
 test_that("conditional", {

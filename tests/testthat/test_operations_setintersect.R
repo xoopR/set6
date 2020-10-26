@@ -4,6 +4,7 @@ test_that("SetXSet", {
   expect_equal(Set$new(1, 2, 3) & Set$new(1), Set$new(1))
   expect_equal(Set$new(1) & Set$new(1, 2, 3), Set$new(1))
   expect_equal(Tuple$new(1, "a", 2L) & Set$new(elements = letters), Set$new("a"))
+  expect_equal(Multiset$new(1, "a", 2L) & Set$new(elements = letters), Set$new("a"))
   expect_equal(Set$new(1) & Set$new(1, 2), Set$new(1))
   expect_equal(Set$new() & Set$new(), Set$new())
 })
