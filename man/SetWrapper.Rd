@@ -6,6 +6,14 @@
 \description{
 This class should not be constructed directly. Parent class to \code{SetWrapper}s.
 }
+\details{
+Wrappers in set6 are utilised to facilitate lazy evaluation and symbolic representation.
+Each operation has an associated wrapper that will be returned if \code{simplify = FALSE} or if the
+result would be too complex to return as a simple \link{Set}. Wrappers have an identical interface
+to \link{Set}. Their primary advantage lies in a neat representation of any set composition (the
+result of an operation) and the ability to query the set contents without ever directly
+evaluating the set elements.
+}
 \section{Super class}{
 \code{\link[set6:Set]{set6::Set}} -> \code{SetWrapper}
 }

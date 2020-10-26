@@ -194,7 +194,10 @@ Set$new(1) & Set$new(2)
 
 Finally we look briefly at wrappers, and the `simplify` argument. 
 Each operation has an associated wrapper that will be created if `simplify == FALSE` or if the
-resulting set is too complicated to return as a single `Set` object. The operations concerned with
+resulting set is too complicated to return as a single `Set` object. Wrappers faciliate lazy evaluation
+and symbolic representation by providing unique character representations of all sets after operations
+and do not evaluate the set elements unless specifically requested. In general wrappers should not
+be directly constructed but instead only used as the result of operations. The operations concerned with
 products, i.e. `setproduct`, `setpower`, `powerset`, all have `simplify == FALSE` as the default; whereas the others concerned with unions and differences, have `simplify == TRUE` as the default.
 
 ```{r}
@@ -223,6 +226,9 @@ p$contains(Tuple$new(2, 4))
 
 ## Going Forward
 
-`set6` is still in its early stages and the API is considered to be maturing, this means that whilst no big changes are expected to the design, minor ones can be expected. `set6` will be considered to be in its version 1 once all methods and fields are finalised (some are missing from wrappers), and when the code has been refactored to be more efficient. See [the website](https://xoopR.github.io/set6/) for more tutorials and
+`set6` is still relatively slow compared to other sets packages and most short-term updates
+will focus on improving bottlenecks.
+
+See [the website](https://xoopR.github.io/set6/) for more tutorials and 
 follow/star on [GitHub](https://github.com/xoopR/set6) for updates.
  

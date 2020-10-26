@@ -2,6 +2,12 @@
 #' @rdname SetWrapper
 #' @title Abstract SetWrapper Class
 #' @description This class should not be constructed directly. Parent class to `SetWrapper`s.
+#' @details Wrappers in set6 are utilised to facilitate lazy evaluation and symbolic representation.
+#' Each operation has an associated wrapper that will be returned if `simplify = FALSE` or if the
+#' result would be too complex to return as a simple [Set]. Wrappers have an identical interface
+#' to [Set]. Their primary advantage lies in a neat representation of any set composition (the
+#' result of an operation) and the ability to query the set contents without ever directly
+#' evaluating the set elements.
 SetWrapper <- R6Class("SetWrapper",
   inherit = Set,
   public = list(
