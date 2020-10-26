@@ -9,7 +9,7 @@ test_that("special sets", {
   expect_equal(Reals$new() - NegReals$new(), PosReals$new())
   expect_equal(Rationals$new() - PosRationals$new(), NegRationals$new())
   expect_equal(Rationals$new() - NegRationals$new(), PosRationals$new())
-  expect_equal(Rationals$new() - Interval$new(5, 10), Interval$new(-Inf, 5, type = "()") +
+  expect_equal(Reals$new() - Interval$new(5, 10), Interval$new(-Inf, 5, type = "()") +
     Interval$new(10, Inf, type = "()"))
   expect_equal(Integers$new() - PosIntegers$new(), NegIntegers$new())
   expect_equal(Integers$new() - NegIntegers$new(), PosIntegers$new())

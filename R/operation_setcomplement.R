@@ -99,6 +99,10 @@ setcomplement <- function(x, y, simplify = TRUE) {
     y <- as.Set(y)
   }
 
+  if (inherits(x, "Rationals")) {
+    UseMethod("setcomplement")
+  }
+
   if (x == y) {
     return(Set$new())
   }
@@ -273,7 +277,7 @@ setcomplement.Rationals <- function(x, y, simplify = TRUE) {
   } else if (getR6Class(y) == "NegRationals") {
     return(PosRationals$new())
   } else {
-    return(setcomplement.Interval(x, y))
+    return(ComplementSet$new(x, y))
   }
 }
 #' @rdname setcomplement

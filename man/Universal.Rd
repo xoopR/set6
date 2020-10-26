@@ -301,7 +301,7 @@ c(Tuple$new(2,1), Tuple$new(1,7), 2) \%inset\% s2
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Universal$strprint(n = 2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Universal$strprint(n = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
