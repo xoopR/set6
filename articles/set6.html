@@ -77,7 +77,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to set6</h1>
             
-            <h4 class="date">2020-11-04</h4>
+            <h4 class="date">2020-11-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/xoopR/set6/blob/master/vignettes/set6.rmd"><code>vignettes/set6.rmd</code></a></small>
       <div class="hidden name"><code>set6.rmd</code></div>
@@ -88,16 +88,16 @@
     
 <p>set6 is an object-oriented interface for constructing and manipulating mathematical sets using R6. set6 allows a variety of mathematical sets, including Sets, Tuple, Intervals and Fuzzy variants; there are also Conditional sets for creating sets out of complex logical instructions. A full set of tutorials can be found <a href="https://xoopR.github.io/set6/">here</a>. In this introductory vignette we briefly demonstrate how to construct a set, access its properties and traits, and some basic algebra of sets.</p>
 <p>Before we get started note that by default <code>set6</code> uses unicode for printing representations of sets. Whilst this is preferred for neater printing, some machines, operating systems, or R versions may not behave as expected when printing unicode and therefore we allow the option to turn this off.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="../reference/useUnicode.html">useUnicode</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/useUnicode.html">useUnicode</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>This vignette does use the unicode representations.</p>
 <div id="constructing-a-set" class="section level2">
 <h2 class="hasAnchor">
 <a href="#constructing-a-set" class="anchor"></a>Constructing a Set</h2>
 <p>Classes in <code>set6</code> can be split into two groups: set objects, and wrappers. When we refer to sets (lower-case ‘s’) we refer to objects inheriting from the base class <code>Set</code>. All sets in <code>set6</code> inherit from <code>Set</code>, meaning that, at a very minimum, they share the same methods and fields as <code>Set</code>.</p>
 <p>The simplest set of all is the empty set, we can see how even this has methods for printing and summarising, as well as a list of properties and traits.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">empty</span> <span class="op">=</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">empty</span> <span class="op">=</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va">empty</span>
 <span class="co">#&gt; ∅</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">empty</span><span class="op">)</span>
@@ -126,22 +126,22 @@
 <span class="co">#&gt; [1] "closed"</span>
 <span class="va">empty</span><span class="op">$</span><span class="va">traits</span>
 <span class="co">#&gt; $crisp</span>
-<span class="co">#&gt; [1] TRUE</span></pre></div>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Sets can contain any object in R that has a valid <code>as.character</code> dispatch method that ensures uniqueness in objects. This is a requirement as internally string representations are used to compare sets.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; {1, 2, 3}</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; {a, b,...,d, e}</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2i</span>, <span class="st">"a"</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; {{1}, 0+2i, 1, a}</span></pre></div>
+<span class="co">#&gt; {{1}, 0+2i, 1, a}</span></code></pre></div>
 </div>
 <div id="the-different-kind-of-sets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-different-kind-of-sets" class="anchor"></a>The different kind of sets</h2>
 <p>Each set class has its own unique mathematical properties, we will not cover these extensively here but summarise each with a short example.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># A Set cannot have duplicated elements, and ordering does not matter</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># A Set cannot have duplicated elements, and ordering does not matter</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span> <span class="op">==</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
 
@@ -177,7 +177,7 @@
 <span class="co"># and membership alternatively, or by passing these separately to the given arguments.</span>
 <span class="va"><a href="../reference/FuzzySet.html">FuzzySet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.1</span>, <span class="fl">2</span>, <span class="fl">0.2</span>, <span class="st">"a"</span>, <span class="fl">0.3</span><span class="op">)</span> <span class="op">==</span>
   <span class="va"><a href="../reference/FuzzySet.html">FuzzySet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>elements <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="st">"a"</span><span class="op">)</span>, membership <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></pre></div>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 </div>
 <div id="comparisons-and-containedness" class="section level2">
 <h2 class="hasAnchor">
@@ -207,8 +207,8 @@
 </li>
 </ul>
 <p>All methods are vectorized for multiple testing.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">s</span> <span class="op">=</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">s</span> <span class="op">=</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>
 <span class="va">s</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
 <span class="va">s</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>
@@ -246,7 +246,7 @@
 <span class="va">i</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, bound <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE</span>
 <span class="va">i</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, bound <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; [1] FALSE</span></pre></div>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
 </div>
 <div id="algebra-of-sets" class="section level2">
 <h2 class="hasAnchor">
@@ -273,8 +273,8 @@
 <h3 class="hasAnchor">
 <a href="#union-of-sets" class="anchor"></a>Union of Sets</h3>
 <p>The union of sets is defined the as the set of elements in all the sets of interest.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; {1, 2, 3}</span>
 <span class="va"><a href="../reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># no effect</span>
 <span class="co">#&gt; [1,10]</span>
@@ -282,14 +282,14 @@
 <span class="co">#&gt; {1,...,2} ∪ [3,10] ∪ {16,...,16}</span>
 
 <span class="va"><a href="../reference/PosReals.html">PosReals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="../reference/NegReals.html">NegReals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; ℝ</span></pre></div>
+<span class="co">#&gt; ℝ</span></code></pre></div>
 </div>
 <div id="relative-complement" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-complement" class="anchor"></a>Relative Complement</h3>
 <p>The relative complement of two sets, <span class="math inline">\(A-B\)</span>, is defined as the set of elements in <span class="math inline">\(A\)</span> but not in <span class="math inline">\(B\)</span>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>elements <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>elements <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>elements <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>elements <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; {1, 2, 3}</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span> <span class="op">-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; {1, 3, 4}</span>
@@ -302,14 +302,14 @@
 <span class="va"><a href="../reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">-</span> <span class="va"><a href="../reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>
 <span class="co">#&gt; [5,7)</span>
 <span class="va"><a href="../reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">-</span> <span class="va"><a href="../reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span> <span class="co"># no effect</span>
-<span class="co">#&gt; [5,10]</span></pre></div>
+<span class="co">#&gt; [5,10]</span></code></pre></div>
 </div>
 <div id="cartesian-product" class="section level3">
 <h3 class="hasAnchor">
 <a href="#cartesian-product" class="anchor"></a>Cartesian Product</h3>
 <p>The cartesian product of multiple sets is often confused with the n-ary cartesian product, read the help page at <code><a href="../reference/setproduct.html">?setproduct</a></code> for a full description of the problem. Both forms are allowed in <code>set6</code> with the <code>nest</code> argument.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt; {1, 2} × {3, 4}</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">*</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span> <span class="co"># n-ary</span>
 <span class="co">#&gt; {1, 2} × {3, 4} × {5, 6}</span>
@@ -322,27 +322,27 @@
 
 <span class="co"># n-ary cartesian product on the same set</span>
 <span class="fu"><a href="../reference/setpower.html">setpower</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="fl">3</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; {(1, 1, 1), (1, 1, 2),...,(2, 2, 1), (2, 2, 2)}</span></pre></div>
+<span class="co">#&gt; {(1, 1, 1), (1, 1, 2),...,(2, 2, 1), (2, 2, 2)}</span></code></pre></div>
 </div>
 <div id="intersection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#intersection" class="anchor"></a>Intersection</h3>
 <p>The intersection of two sets is defined as the set of elements that lie in both sets.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span>
 <span class="co">#&gt; {3}</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va"><a href="../reference/Reals.html">Reals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; {5, 6}</span>
 <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; ∅</span></pre></div>
+<span class="co">#&gt; ∅</span></code></pre></div>
 </div>
 </div>
 <div id="wrappers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wrappers" class="anchor"></a>Wrappers</h2>
 <p>Finally we look briefly at wrappers, and the <code>simplify</code> argument. Each operation has an associated wrapper that will be created if <code>simplify == FALSE</code> or if the resulting set is too complicated to return as a single <code>Set</code> object. Wrappers faciliate lazy evaluation and symbolic representation by providing unique character representations of all sets after operations and do not evaluate the set elements unless specifically requested. In general wrappers should not be directly constructed but instead only used as the result of operations. The operations concerned with products, i.e. <code>setproduct</code>, <code>setpower</code>, <code>powerset</code>, all have <code>simplify == FALSE</code> as the default; whereas the others concerned with unions and differences, have <code>simplify == TRUE</code> as the default.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="co"># default: simplify = TRUE</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># default: simplify = TRUE</span>
 <span class="fu"><a href="../reference/setunion.html">setunion</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; {1, 2,...,4, 5}</span>
 <span class="fu"><a href="../reference/setunion.html">setunion</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -358,16 +358,16 @@
 <span class="fu"><a href="../reference/powerset.html">powerset</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; ℘({1, 2, 3})</span>
 <span class="fu"><a href="../reference/powerset.html">powerset</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; {{1, 2, 3}, {1, 2},...,{3}, ∅}</span></pre></div>
+<span class="co">#&gt; {{1, 2, 3}, {1, 2},...,{3}, ∅}</span></code></pre></div>
 <p>All wrappers inherit from <code>Set</code> and therefore share the same methods and fields.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">u</span> <span class="op">=</span> <span class="fu"><a href="../reference/setunion.html">setunion</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">u</span> <span class="op">=</span> <span class="fu"><a href="../reference/setunion.html">setunion</a></span><span class="op">(</span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">8</span><span class="op">)</span> <span class="op">%inset%</span> <span class="va">u</span>
 <span class="co">#&gt; [1]  TRUE  TRUE FALSE</span>
 
 <span class="va">p</span> <span class="op">=</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span>
 <span class="va">p</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="va"><a href="../reference/Tuple.html">Tuple</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></pre></div>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 </div>
 <div id="going-forward" class="section level2">
 <h2 class="hasAnchor">

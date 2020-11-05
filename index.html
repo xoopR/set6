@@ -96,11 +96,11 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The current CRAN release can be installed with</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"set6"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"set6"</span><span class="op">)</span></code></pre></div>
 <p>Or for the latest stable build</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"xoopR/set6"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"xoopR/set6"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="main-features" class="section level2">
 <h2 class="hasAnchor">
@@ -108,8 +108,8 @@
 <div id="a-clear-inheritance-structure" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-clear-inheritance-structure" class="anchor"></a>A Clear Inheritance Structure</h3>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="co"># Sets require elements to be unique and order doesn't matter</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Sets require elements to be unique and order doesn't matter</span>
 <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">==</span> <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
 <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">==</span> <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>
@@ -143,13 +143,13 @@
 <span class="va"><a href="reference/Reals.html">Reals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ℝ</span>
 <span class="va"><a href="reference/PosRationals.html">PosRationals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; ℚ+</span></pre></div>
+<span class="co">#&gt; ℚ+</span></code></pre></div>
 </div>
 <div id="set-operations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#set-operations" class="anchor"></a>Set operations</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># Union</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Union</span>
 <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; {1, 4,...,a, b}</span>
 <span class="va"><a href="reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="va"><a href="reference/FuzzyTuple.html">FuzzyTuple</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.6</span><span class="op">)</span>
@@ -182,13 +182,13 @@
 <span class="va"><a href="reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">-</span> <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; [1,5) ∪ (5,10]</span>
 <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">-</span> <span class="va"><a href="reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt; {1, 4, 5}</span></pre></div>
+<span class="co">#&gt; {1, 4, 5}</span></code></pre></div>
 </div>
 <div id="containedness-and-comparators" class="section level3">
 <h3 class="hasAnchor">
 <a href="#containedness-and-comparators" class="anchor"></a>Containedness and Comparators</h3>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va"><a href="reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va"><a href="reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
 <span class="co"># check multiple elements</span>
 <span class="va"><a href="reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="fl">8</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span>
@@ -225,7 +225,7 @@
 <span class="co"># multi-dimensional checks</span>
 <span class="va">x</span> <span class="op">=</span> <span class="va"><a href="reference/PosReals.html">PosReals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>
 <span class="va">x</span><span class="op">$</span><span class="fu">contains</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va"><a href="reference/Tuple.html">Tuple</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="va"><a href="reference/Tuple.html">Tuple</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1]  TRUE FALSE</span></pre></div>
+<span class="co">#&gt; [1]  TRUE FALSE</span></code></pre></div>
 </div>
 </div>
 <div id="usage" class="section level2">
