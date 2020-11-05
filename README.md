@@ -98,7 +98,7 @@ PosRationals$new()
 ``` r
 # Union
 Set$new(1, 4, "a", "b") + Set$new(5)
-#> {1, 4,...,a, b}
+#> {1, 4,...,b, 5}
 Interval$new(1, 5) + FuzzyTuple$new(1, 0.6)
 #> [1,5]
 
@@ -222,11 +222,11 @@ of sets and intervals, but this is very low priority.
     does not allow for clear inspection of set/interval elements, and
     there is no support for multi-dimensional sets.
 
-  - [BaseSet](https://github.com/llrs/BaseSet) - The **BaseSet** package
-    focuses on storing and analysing sets in a ‘tidy’ way, with more
-    options for data storage in long and wide formats. The primary usage
-    is neat and efficient inspection of finite sets, there is no support
-    for infinite sets or symbolic representation.
+  - [BaseSet](https://github.com/ropensci/BaseSet) - The **BaseSet**
+    package focuses on storing and analysing sets in a ‘tidy’ way, with
+    more options for data storage in long and wide formats. The primary
+    usage is neat and efficient inspection of finite sets, there is no
+    support for infinite sets or symbolic representation.
 
 ## Contributing
 
