@@ -98,7 +98,7 @@ PosRationals$new()
 ``` r
 # Union
 Set$new(1, 4, "a", "b") + Set$new(5)
-#> {1, 4,...,b, 5}
+#> {1, 4,...,a, b}
 Interval$new(1, 5) + FuzzyTuple$new(1, 0.6)
 #> [1,5]
 
