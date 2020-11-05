@@ -1,4 +1,4 @@
-# set6 0.1.9
+# set6 0.2.0
 
 * UniversalSet renamed Universal, old class will be removed in v0.4.0.
 * LogicalSet renamed Logicals, old class will be removed in v0.4.0.
