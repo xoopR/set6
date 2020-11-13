@@ -23,7 +23,7 @@ set.seed(42)
 [![CRAN Checks](https://cranchecks.info/badges/summary/set6)](https://cran.r-project.org/web/checks/check_results_set6.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/set6)](https://cran.r-project.org/package=set6)
 
-[![DOI](https://zenodo.org/badge/197164551.svg)](https://zenodo.org/badge/latestdoi/197164551)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02598/status.svg)](https://doi.org/10.21105/joss.02598)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Gitter chat](https://badges.gitter.im/xoopR/set6.png)](https://gitter.im/xoopR/set6)
 
