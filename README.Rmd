@@ -169,3 +169,10 @@ representation.
 ## Contributing
 
 As `set6` is in its early stages, contributions are very welcome. If you have any ideas for good features please open an issue or create a pull request. Otherwise bug reports are very appreciated if you stumble across any broken code, these can be posted to the [issue tracker](https://github.com/xoopR/set6/issues). For updates on `set6` follow/star this repo.
+
+## Citing set6
+
+If you use set6, please cite our [JOSS article](https://doi.org/10.21105/joss.02598):
+```{r echo = FALSE, comment = ""}
+toBibtex(citation("set6"))
+```
