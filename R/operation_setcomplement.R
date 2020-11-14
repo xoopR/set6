@@ -157,22 +157,30 @@ setcomplement.Interval <- function(x, y, simplify = TRUE) {
       return(ComplementSet$new(x, y))
     }
 
+    # Case 1: no overlap in intervals, return x
     if (y$lower > x$upper | y$upper < x$lower) {
       return(x)
+    # Case 2: y ends after x and starts within x
     } else if (y$upper >= x$upper & y$lower > x$lower & y$lower <= x$upper) {
       return(Interval$new(
         lower = x$lower, upper = y$lower, type = paste0(substr(x$type, 1, 1), ")"),
         class = x$class
       ))
-    } else if (y$upper < x$upper & y$lower <= x$lower & y$upper >= x$lower) {
+    # Case 3: y starts before x and ends within x
+    } else if (y$upper < x$upper & y$lower < x$lower & y$upper >= x$lower) {
+      lbound = ifelse(substr(y$type, 2, 2) == ")", "[", "(")
       return(Interval$new(
-        lower = y$upper, upper = x$upper, type = paste0("(", substr(x$type, 2, 2)),
+        lower = y$upper, upper = x$upper,
+        type = paste0(lbound, substr(x$type, 2, 2)),
         class = x$class
       ))
+    # Case 4: y starts and ends within x
     } else if (y$upper <= x$upper & y$lower >= x$lower) {
+      lbound = ifelse(substr(y$type, 1, 1) == "(", "]", ")")
+      ubound = ifelse(substr(y$type, 2, 2) == ")", "[", "(")
       return(setunion(
-        Interval$new(x$lower, y$lower, type = paste0(substr(x$type, 1, 1), ")"), class = x$class),
-        Interval$new(y$upper, x$upper, type = paste0("(", substr(x$type, 2, 2)), class = x$class)
+        Interval$new(x$lower, y$lower, type = paste0(substr(x$type, 1, 1), lbound), class = x$class),
+        Interval$new(y$upper, x$upper, type = paste0(ubound, substr(x$type, 2, 2)), class = x$class)
       ))
     }
   } else if (getR6Class(y) == "Set") {

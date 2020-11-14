@@ -53,15 +53,16 @@ Interval <- R6Class("Interval",
         private$.universe <- universe
       }
 
-
       if (lower == upper) {
-        private$.class <- "integer"
-        private$.type <- "[]"
-      } else {
-        private$.class <- class
-        private$.type <- type
+        class <- "integer"
+
+        if (type != "[]") {
+          type <- "()"
+        }
       }
 
+      private$.class <- class
+      private$.type <- type
       private$.lower <- lower
       private$.upper <- upper
 
@@ -71,7 +72,11 @@ Interval <- R6Class("Interval",
         if (lower == -Inf | upper == Inf) {
           cardinality <- "a0"
         } else {
-          cardinality <- length(seq.int(lower, upper, 1))
+          if (lower == upper && private$.type == "()") {
+            cardinality <- 0
+          } else {
+            cardinality <- length(seq.int(lower, upper, 1))
+          }
         }
       }
 
@@ -96,7 +101,11 @@ Interval <- R6Class("Interval",
       sup <- ifelse(self$upper == Inf & useUnicode(), "+\u221E", self$upper)
 
       if (self$class == "integer") {
-        return(paste0("{", inf, ",...,", sup, "}"))
+        if (self$length == 0) {
+          super$strprint()
+        } else {
+          return(paste0("{", inf, ",...,", sup, "}"))
+        }
       } else {
         return(paste0(substr(self$type, 1, 1), inf, ",", sup, substr(self$type, 2, 2)))
       }
@@ -184,7 +193,8 @@ Interval <- R6Class("Interval",
 
       x <- sapply(listify(x), function(y) ifelse(inherits(y, c("numeric", "integer")), y, NaN))
 
-      if (all & any(is.nan(x))) {
+      # catch an impossible interval
+      if (all & (any(is.nan(x)) || (self$length == 1 && !testClosed(self)))) {
         return(FALSE)
       } else if (all(is.nan(x))) {
         return(rep(FALSE, length(x)))
@@ -336,8 +346,8 @@ Interval <- R6Class("Interval",
     #' If the `Interval` is countably finite then returns the number of elements in the `Interval`,
     #' otherwise `Inf`. See the cardinality property for the type of infinity.
     length = function() {
-      if (self$properties$countability == "countably finite") {
-        return(length(self$elements))
+      if (testCountablyFinite(self)) {
+        return(self$properties$cardinality)
       } else {
         return(Inf)
       }
@@ -346,8 +356,12 @@ Interval <- R6Class("Interval",
     #' @field elements
     #' If the `Interval` is finite then returns all elements in the `Interval`, otherwise `NA`.
     elements = function() {
-      if (self$properties$countability == "countably finite") {
-        return(seq.int(self$min, self$max, 1))
+      if (testCountablyFinite(self)) {
+        if (self$length) {
+          return(seq.int(self$min, self$max, 1))
+        } else {
+          return(NULL)
+        }
       } else {
         return(NA)
       }

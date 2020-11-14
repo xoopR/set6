@@ -1,3 +1,8 @@
+# set6 0.2.0.9000
+
+* Bugfix in setcomplement (#65)
+* Impossible intervals containing only one elements with type not equal to `[]` are now equal to the empty set
+
 # set6 0.2.0
 
 * UniversalSet renamed Universal, old class will be removed in v0.4.0.
