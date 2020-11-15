@@ -21,7 +21,7 @@ Checks](https://cranchecks.info/badges/summary/set6)](https://cran.r-project.org
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/set6)](https://cran.r-project.org/package=set6)
 
-[![DOI](https://zenodo.org/badge/197164551.svg)](https://zenodo.org/badge/latestdoi/197164551)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02598/status.svg)](https://doi.org/10.21105/joss.02598)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Gitter
@@ -240,3 +240,16 @@ request. Otherwise bug reports are very appreciated if you stumble
 across any broken code, these can be posted to the [issue
 tracker](https://github.com/xoopR/set6/issues). For updates on `set6`
 follow/star this repo.
+
+## Citing set6
+
+If you use set6, please cite our [JOSS
+article](https://doi.org/10.21105/joss.02598):
+
+    Warning in citation("set6"): no date field in DESCRIPTION file of package 'set6'
+    @Manual{,
+      title = {set6: R6 Mathematical Sets Interface},
+      author = {Raphael Sonabend and Franz Kiraly},
+      year = {2020},
+      note = {https://xoopR.github.io/set6/, https://github.com/xoopR/set6},
+    }
