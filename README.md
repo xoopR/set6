@@ -246,10 +246,8 @@ follow/star this repo.
 If you use set6, please cite our [JOSS
 article](https://doi.org/10.21105/joss.02598):
 
-    Warning in citation("set6"): no date field in DESCRIPTION file of package 'set6'
-    @Manual{,
-      title = {set6: R6 Mathematical Sets Interface},
-      author = {Raphael Sonabend and Franz Kiraly},
-      year = {2020},
-      note = {https://xoopR.github.io/set6/, https://github.com/xoopR/set6},
-    }
+@Article{set6, title = {set6: R6 Mathematical Sets Interface}, author =
+{Raphael Sonabend and Franz J. Kiraly}, journal = {Journal of Open
+Source Software}, year = {2020}, month = {nov}, doi =
+{10.21105/joss.02598}, url =
+{<https://joss.theoj.org/papers/10.21105/joss.02598>}, }
