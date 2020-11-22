@@ -46,9 +46,9 @@ test_that("equals", {
 
 test_that("strprint", {
   useUnicode(TRUE)
-  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), "{x \u2208 \U1D54D : TRUE}")
+  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), "{x \u2208 \U1D54D}")
   useUnicode(FALSE)
-  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), "{x in V : TRUE}")
+  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), "{x in V}")
   useUnicode(TRUE)
 })
 

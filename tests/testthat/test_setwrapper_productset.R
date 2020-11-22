@@ -2,7 +2,7 @@ test_that("Interval", {
   useUnicode(FALSE)
   expect_equal(
     (Interval$new(1, 2) * ConditionalSet$new(function(x) TRUE))$strprint(),
-    "[1,2] X {x in V : TRUE}"
+    "[1,2] X {x in V}"
   )
   expect_equal(Interval$new(1, 2) * Set$new(), Interval$new(1, 2))
 
@@ -35,7 +35,7 @@ test_that("fuzzy", {
   useUnicode(FALSE)
   expect_equal(
     (FuzzySet$new(1, 0.5) * ConditionalSet$new(function(x) TRUE))$strprint(),
-    "{1(0.5)} X {x in V : TRUE}"
+    "{1(0.5)} X {x in V}"
   )
   expect_true(setproduct(FuzzySet$new(1, 0.1), FuzzySet$new(2, 0.2), simplify = TRUE)$equals(Set$new(FuzzyTuple$new(1, 0.1, 2, 0.2))))
   expect_equal(

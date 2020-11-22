@@ -2,6 +2,8 @@
 
 * Bugfix in setcomplement (#65)
 * Impossible intervals containing only one elements with type not equal to `[]` are now equal to the empty set
+* Default `ConditionalSet` `condition` argument now `function(x) TRUE`
+* Print method for `ConditionalSet` now omits RHS if only `"TRUE"` 
 
 # set6 0.2.0
 

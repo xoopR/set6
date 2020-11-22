@@ -21,8 +21,8 @@ ConditionalSet <- R6Class("ConditionalSet",
     #' @details The `condition` should be given as a function that when evaluated returns
     #' either `TRUE` or `FALSE`. Further constraints can be given by providing the universe of the
     #' function arguments as [Set]s, if these are not given then [Universal] is assumed.
-    #' See examples.
-    initialize = function(condition, argclass = NULL) {
+    #' See examples. Defaults construct the Universal set.
+    initialize = function(condition = function(x) TRUE, argclass = NULL) {
       if (!is.function(condition)) {
         stop("'condition' must be a function.")
       } else {
@@ -178,10 +178,17 @@ ConditionalSet <- R6Class("ConditionalSet",
         sep <- " in "
       }
 
-      paste0("{", paste0(
-        paste(names(self$class), sapply(self$class, function(x) x$strprint()),
-              sep = sep, collapse = ", "), " : ",
-        paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), "}"))
+      if (body(self$condition) == TRUE) {
+        paste0("{",
+          paste(names(self$class), sapply(self$class, function(x) x$strprint()),
+                sep = sep, collapse = ", "), "}")
+      } else {
+        paste0("{", paste0(
+          paste(names(self$class), sapply(self$class, function(x) x$strprint()),
+                sep = sep, collapse = ", "), " : ",
+          paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), "}"))
+      }
+
     },
 
     #' @description See `strprint`.

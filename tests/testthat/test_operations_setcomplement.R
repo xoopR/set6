@@ -91,7 +91,7 @@ test_that("conditional", {
 
   expect_equal(
     (ConditionalSet$new(function(x) TRUE) - Set$new(1))$strprint(),
-    "{x in V : TRUE} \\ {1}"
+    "{x in V} \\ {1}"
   )
   useUnicode(TRUE)
 })
