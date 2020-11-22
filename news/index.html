@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -126,6 +126,10 @@
 <ul>
 <li>Bugfix in setcomplement (<a href='https://github.com/xoopR/set6/issues/65'>#65</a>)</li>
 <li>Impossible intervals containing only one elements with type not equal to <code>[]</code> are now equal to the empty set</li>
+<li>Default <code>ConditionalSet</code> <code>condition</code> argument now <code>function(x) TRUE</code>
+</li>
+<li>Print method for <code>ConditionalSet</code> now omits RHS if only <code>"TRUE"</code>
+</li>
 </ul>
 </div>
     <div id="set6-020" class="section level1">
