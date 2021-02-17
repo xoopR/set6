@@ -89,7 +89,7 @@ Other sets:
 \subsection{Method \code{new()}}{
 Create a new \code{ConditionalSet} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$new(condition, argclass = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConditionalSet$new(condition = function(x) TRUE, argclass = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -105,7 +105,7 @@ Create a new \code{ConditionalSet} object.
 The \code{condition} should be given as a function that when evaluated returns
 either \code{TRUE} or \code{FALSE}. Further constraints can be given by providing the universe of the
 function arguments as \link{Set}s, if these are not given then \link{Universal} is assumed.
-See examples.
+See examples. Defaults construct the Universal set.
 }
 
 \subsection{Returns}{
