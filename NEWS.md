@@ -1,4 +1,4 @@
-# set6 0.2.0.9000
+# set6 0.2.1
 
 * Bugfix in setcomplement (#65)
 * Impossible intervals containing only one elements with type not equal to `[]` are now equal to the empty set
