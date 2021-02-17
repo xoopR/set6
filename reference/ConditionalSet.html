@@ -180,7 +180,7 @@ using standard 'and', <code>&amp;</code>, and 'or', <code><a href='https://rdrr.
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Create a new <code>ConditionalSet</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>condition</span>, argclass <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ConditionalSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>condition <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='cn'>TRUE</span>, argclass <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -193,7 +193,7 @@ using standard 'and', <code>&amp;</code>, and 'or', <code><a href='https://rdrr.
 <p>The <code>condition</code> should be given as a function that when evaluated returns
 either <code>TRUE</code> or <code>FALSE</code>. Further constraints can be given by providing the universe of the
 function arguments as <a href='Set.html'>Set</a>s, if these are not given then <a href='Universal.html'>Universal</a> is assumed.
-See examples.</p>
+See examples. Defaults construct the Universal set.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>ConditionalSet</code> object.</p>
