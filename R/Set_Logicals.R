@@ -22,7 +22,7 @@ Logicals <- R6::R6Class("Logicals",
       private$.properties <- Properties$new(closure = "closed", cardinality = 2)
       private$.lower <- TRUE
       private$.upper <- FALSE
-      private$.universe <- self
+      private$.universe <- Set$new(TRUE, FALSE)
       invisible(self)
     }
   )
