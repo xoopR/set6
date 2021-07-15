@@ -83,7 +83,7 @@ jobs:
           devtools::install()
           rmarkdown::render('README.Rmd')
         shell: Rscript {0}
-        
+
       - name: Commit changes
         if: ${{ github.event_name == 'pull_request' && runner.os == 'macOS' }}
         uses: EndBug/add-and-commit@v7
@@ -92,4 +92,3 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: 'Update README.md'
           add: 'README.md'
-          
