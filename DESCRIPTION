@@ -1,7 +1,7 @@
 Package: set6
 Title: R6 Mathematical Sets Interface
-Version: 0.2.1
-Authors@R: 
+Version: 0.2.2
+Authors@R:
       c(person(given = "Raphael",
              family = "Sonabend",
              role = c("aut","cre"),
@@ -19,13 +19,13 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://xoopR.github.io/set6/, https://github.com/xoopR/set6
 BugReports: https://github.com/xoopR/set6/issues
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE, r6 = TRUE)
 SystemRequirements: C++11
-Collate: 
+Collate:
     'Properties.R'
     'RcppExports.R'
     'Set.R'
