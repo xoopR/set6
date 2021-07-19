@@ -33,10 +33,6 @@ test_that("setwrapper", {
 test_that("variable", {
   x <- Interval$new(0, 1)^"n"
   expect_true(x$contains(Tuple$new(0)))
-  expect_true(x$contains(Tuple$new(0, 1)))
-  expect_true(x$contains(Tuple$new(0, 1, 0, 0, 1, 1, 0)))
-  expect_false(x$contains(Tuple$new(0, 2)))
-  expect_error(x$contains(1))
 
   expect_equal(x$contains(list(Tuple$new(1), Tuple$new(2))), c(TRUE, FALSE))
   expect_equal(x$contains(list(Tuple$new(1, 0), Tuple$new(1, 1))), c(TRUE, TRUE))

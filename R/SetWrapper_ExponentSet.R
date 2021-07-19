@@ -64,10 +64,13 @@ ExponentSet <- R6Class("ExponentSet",
       x <- listify(x)
 
       if (self$power == "n") {
-        ret <- self$wrappedSets[[1]]$contains(
-          unlist(lapply(x, function(.x) if (testSet(.x)) .x$elements else .x)),
-          all, bound
-        )
+        ret <- vapply(x, function(.x) {
+          if (testSet(.x)) {
+            self$wrappedSets[[1]]$contains(.x$elements, all = TRUE, bound = bound)
+          } else {
+            self$wrappedSets[[1]]$contains(.x, all = TRUE, bound = bound)
+          }
+        }, logical(1))
       } else {
         ret <- sapply(x, function(el) {
           if (!testSet(el)) {
