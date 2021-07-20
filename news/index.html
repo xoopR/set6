@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2.9000</span>
       </span>
     </div>
 
@@ -119,20 +119,33 @@
       <small>Source: <a href='https://github.com/xoopR/set6/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="set6-022" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.2">
-<a href="#set6-022" class="anchor"></a>set6 0.2.2<small> Unreleased </small>
+    <div id="set6-0229000" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.2.9000">
+<a href="#set6-0229000" class="anchor"></a>set6 0.2.2.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li>
-<p>Fixed bug preventing <code>Logicals</code> from being deep cloned</p>
-<h1 id="set6-021" class="page-header" data-toc-text="0.2.2">set6 0.2.1<small> Unreleased </small>
+<li>Containedness checks for ‘n’ dimensional sets no longer require same length vectors if power is “n”</li>
+</ul>
+</div>
+    <div id="set6-022" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.2">
+<a href="#set6-022" class="anchor"></a>set6 0.2.2<small> 2021-07-16 </small>
 </h1>
+<ul>
+<li>Fixed bug preventing <code>Logicals</code> from being deep cloned</li>
+</ul>
+</div>
+    <div id="set6-021" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.1">
+<a href="#set6-021" class="anchor"></a>set6 0.2.1<small> 2021-02-17 </small>
+</h1>
+<ul>
+<li>Bugfix in setcomplement (<a href='https://github.com/xoopR/set6/issues/65'>#65</a>)</li>
+<li>Impossible intervals containing only one elements with type not equal to <code>[]</code> are now equal to the empty set</li>
+<li>Default <code>ConditionalSet</code> <code>condition</code> argument now <code>function(x) TRUE</code>
 </li>
-<li><p>Bugfix in setcomplement (<a href='https://github.com/xoopR/set6/issues/65'>#65</a>)</p></li>
-<li><p>Impossible intervals containing only one elements with type not equal to <code>[]</code> are now equal to the empty set</p></li>
-<li><p>Default <code>ConditionalSet</code> <code>condition</code> argument now <code>function(x) TRUE</code></p></li>
-<li><p>Print method for <code>ConditionalSet</code> now omits RHS if only <code>"TRUE"</code></p></li>
+<li>Print method for <code>ConditionalSet</code> now omits RHS if only <code>"TRUE"</code>
+</li>
 </ul>
 </div>
     <div id="set6-020" class="section level1">
