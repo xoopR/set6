@@ -1,4 +1,4 @@
-# set6 0.2.2.9000
+# set6 0.2.3
 
 * Containedness checks for 'n' dimensional sets no longer require same length vectors if power is
 "n"
