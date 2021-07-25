@@ -1,16 +1,16 @@
 ## Comments
 
-Early submission due to errors in R-devel.
+Early submission due to bug in downstream dependency.
 
 ## Test Environments
 
 On GitHub actions:
 
 * windows-latest (R release)
-* windows-latest (R devel)
-* windows-latest (R 3.6)
 * macOS-latest (R release)
 * ubuntu-latest (R release)
+* ubuntu-latest (R oldrel)
+* ubuntu-latest (R devel)
 
 ## R CMD check results
 

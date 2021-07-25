@@ -17,7 +17,7 @@ Badge](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://i
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/set6)](https://cran.r-project.org/package=set6)
 [![CRAN
-Checks](https://cranchecks.info/badges/summary/set6)](https://cran.r-project.org/web/checks/check_results_set6.html)
+Checks](https://cranchecks.info/badges/worst/set6)](https://cran.r-project.org/web/checks/check_results_set6.html)
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/set6)](https://cran.r-project.org/package=set6)
 
@@ -31,15 +31,15 @@ chat](https://badges.gitter.im/xoopR/set6.png)](https://gitter.im/xoopR/set6)
 
 `set6` is an R6 upgrade to the `sets` package in R that includes:
 
-  - Multi-dimensional sets
-  - Tuples
-  - Finite and infinite intervals
-  - Fuzzy sets and tuples
-  - Set operations including union, intersect, (asymmetric and
+-   Multi-dimensional sets
+-   Tuples
+-   Finite and infinite intervals
+-   Fuzzy sets and tuples
+-   Set operations including union, intersect, (asymmetric and
     symmetric) difference, and product
-  - Symbolic representation of infinite sets including common special
+-   Symbolic representation of infinite sets including common special
     sets such as the Reals and Integers
-  - ConditionalSets for defining sets according to logical conditions
+-   ConditionalSets for defining sets according to logical conditions
 
 ## Installation
 
@@ -202,16 +202,16 @@ occur. There are a few features and refactoring we plan on implementing
 before we consider the package to be in its first complete version.
 These mainly include
 
-  - Finalising all methods and fields - some are missing or possibly
+-   Finalising all methods and fields - some are missing or possibly
     inaccurate for some wrappers. For example the cardinality of
     `ComplementSet`s is imprecise at the moment.
-  - We are considering adding a `simplify` method to wrappers to reduce
+-   We are considering adding a `simplify` method to wrappers to reduce
     classes inheriting from `SetWrapper` to simpler sets. This allows
     users to perform operations with `simplify = FALSE` and then to
     change their mind.
-  - There are known bottlenecks that need to be fixed to massively
+-   There are known bottlenecks that need to be fixed to massively
     improve speed and efficiency.
-  - Adding more tutorials to make the interface easier for beginners,
+-   Adding more tutorials to make the interface easier for beginners,
     especially people new to R6
 
 At a later stage we may consider adding Venn diagrams for visualisation
@@ -219,14 +219,14 @@ of sets and intervals, but this is very low priority.
 
 ## Similar Packages
 
-  - [sets](https://CRAN.R-project.org/package=sets) - The **sets**
+-   [sets](https://CRAN.R-project.org/package=sets) - The **sets**
     package uses S3 to define some symbolic representaton of
     mathematical sets, tuple, intervals, and fuzzy variants. However the
     symbolic representation is not consistent throughout the package,
     does not allow for clear inspection of set/interval elements, and
     there is no support for multi-dimensional sets.
 
-  - [BaseSet](https://github.com/ropensci/BaseSet) - The **BaseSet**
+-   [BaseSet](https://github.com/ropensci/BaseSet) - The **BaseSet**
     package focuses on storing and analysing sets in a ‘tidy’ way, with
     more options for data storage in long and wide formats. The primary
     usage is neat and efficient inspection of finite sets, there is no
