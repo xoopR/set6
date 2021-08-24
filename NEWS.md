@@ -1,3 +1,9 @@
+# set6 0.3.0
+
+* Removed `LogicalSet`
+* Removed `UniversalSet`
+* Internal speed improvements and code clean-up
+
 # set6 0.2.3
 
 * Containedness checks for 'n' dimensional sets no longer require same length vectors if power is

@@ -115,7 +115,7 @@ Complex <- R6Class("Complex",
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      setSymbol(getR6Class(self))
+      setSymbol(getR6Class(self), FALSE)
     }
   )
 )

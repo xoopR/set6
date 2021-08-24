@@ -40,7 +40,7 @@ UnionSet <- R6Class("UnionSet",
       } else if (any(grepl(Inf, cardinality))) {
         cardinality <- Inf
       } else {
-        if (any(unlist(sapply(cardinality, is.null)))) {
+        if (any(unlist(vapply(cardinality, is.null, logical(1))))) {
           cardinality <- NULL
         } else {
           el <- setlist[[1]]$elements
@@ -101,7 +101,7 @@ UnionSet <- R6Class("UnionSet",
     #' Returns the elements in the object.
     elements = function() {
       els <- unlist(unique(as.vector(rsapply(self$wrappedSets, "elements", active = TRUE))))
-      if (any(is.na(els))) {
+      if (anyNA(els)) {
         return(NA)
       } else {
         return(els)

@@ -75,8 +75,7 @@ test_that("fuzzify", {
 
 test_that("setSymbol", {
   useUnicode(FALSE)
-  expect_equal(setSymbol("Reals"), "R")
-  expect_equal(setSymbol(Reals), "R")
+  expect_equal(setSymbol("Reals", FALSE), "R")
   useUnicode(TRUE)
 })
 

@@ -1,7 +1,9 @@
 operation_cleaner <- function(sets, operation_class, nest, simplify = TRUE) {
   assertSetList(sets)
 
-  sets <- sets[sapply(sets, function(x) try(testEmpty(x), silent = TRUE)) != "TRUE"]
+  sets <- sets[vapply(sets,
+                      function(x) testConditionalSet(x) || !testEmpty(x),
+                      logical(1))]
 
   if (!nest) {
     sets <- unlist(lapply(sets, function(x) {
@@ -22,13 +24,15 @@ operation_cleaner <- function(sets, operation_class, nest, simplify = TRUE) {
   }
 
   if (simplify) {
-    classes <- sapply(sets, getR6Class)
+    classes <- vapply(sets, getR6Class, character(1))
     set <- grepl("Set", classes)
     interval <- grepl("Interval", classes)
 
     if (all(classes %in% c("Set", "Interval"))) {
       # try converting all intervals to sets
-      if (any(sapply(sets[interval], function(x) x$properties$countability == "uncountable"))) {
+      if (any(vapply(sets[interval],
+                     function(x) x$properties$countability == "uncountable",
+                     logical(1)))) {
         sets[set] <- lapply(sets[set], function(el) {
           suppressWarnings(return(ifnerror(as.Interval(el), error = el)))
         })
@@ -36,7 +40,7 @@ operation_cleaner <- function(sets, operation_class, nest, simplify = TRUE) {
       }
     }
 
-    classes <- sapply(sets, getR6Class)
+    classes <- vapply(sets, getR6Class, character(1))
     interval <- grepl("Interval", classes)
     fuzzy <- grepl("Fuzzy", classes)
 

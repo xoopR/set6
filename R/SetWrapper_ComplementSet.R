@@ -95,12 +95,12 @@ ComplementSet <- R6Class("ComplementSet",
     #' Returns the elements in the object.
     elements = function() {
       add_els <- self$addedSet$elements
-      if (any(is.na(add_els))) {
+      if (anyNA(add_els)) {
         return(NA)
       }
 
       sub_els <- self$subtractedSet$elements
-      if (any(is.na(sub_els))) {
+      if (anyNA(sub_els)) {
         return(NA)
       }
 

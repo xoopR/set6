@@ -30,7 +30,7 @@ assertSetList <- function() {}
 
 makeChecks(
   assertionName = "SetList",
-  cond = all(sapply(object, inherits, "Set")),
+  cond = all(vapply(object, inherits, logical(1), "Set")),
   errormsg = "One or more items in the list are not Sets",
   pos = environment()
 )

@@ -60,7 +60,7 @@ FuzzySet <- R6Class("FuzzySet",
         membership <- as.numeric(dots[seq.int(2, length(dots), 2)])
       }
 
-      if (any(duplicated(elements)) & !testFuzzyTuple(self) & !testFuzzyMultiset(self)) {
+      if (anyDuplicated(elements) && !testFuzzyTuple(self) && !testFuzzyMultiset(self)) {
         message("Duplicated elements dedicated, only the first element-membership pair is included.")
         membership <- membership[!duplicated(elements)]
         elements <- elements[!duplicated(elements)]
@@ -104,7 +104,10 @@ FuzzySet <- R6Class("FuzzySet",
             substr(self$type, 2, 2)
           ))
         } else {
-          return(paste0(substr(self$type, 1, 1), paste0(names(elements)[1:n], "(", elements[1:n], ")", collapse = ", "), ",...,",
+          return(
+            paste0(substr(self$type, 1, 1),
+                   paste0(names(elements)[seq(n)], "(", elements[seq(n)], ")",
+                          collapse = ", "), ",...,",
             paste0(names(elements)[(self$length - n + 1):self$length], "(",
                    elements[(self$length - n + 1):self$length], ")",
               collapse = ", "

@@ -26,7 +26,7 @@ ConditionalSet <- R6Class("ConditionalSet",
       if (!is.function(condition)) {
         stop("'condition' must be a function.")
       } else {
-        lst <- as.list(1:length(formals(condition)))
+        lst <- as.list(seq_along(formals(condition)))
         names(lst) <- names(formals(condition))
         if (!checkmate::testLogical(do.call(condition, lst))) {
           stop("'condition' should result in a logical.")
@@ -144,15 +144,15 @@ ConditionalSet <- R6Class("ConditionalSet",
           sclass <- self$class
           elclass <- el$class
           if (length(sclass) < length(elclass)) {
-            sclass <- rep(sclass, length(elclass))[1:length(elclass)]
+            sclass <- rep(sclass, length(elclass))[seq_along(elclass)]
           }
           if (length(elclass) < length(sclass)) {
-            elclass <- rep(elclass, length(sclass))[1:length(sclass)]
+            elclass <- rep(elclass, length(sclass))[seq_along(sclass)]
           }
 
           elcond <- body(el$condition)
           if (!all(names(sclass) == names(elclass))) {
-            for (i in 1:length(names(elclass))) {
+            for (i in seq_along(names(elclass))) {
               elcond <- gsub(names(elclass)[[i]], names(sclass)[[i]], elcond, fixed = TRUE)
             }
           }

@@ -74,7 +74,7 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
     return(Set$new())
   }
 
-  classes <- sapply(sets, getR6Class)
+  classes <- vapply(sets, getR6Class, character(1))
   if ("ExponentSet" %in% classes) {
     varexp <- sapply(sets[classes == "ExponentSet"], function(x) x$power == "n")
     if (any(varexp)) {
@@ -113,7 +113,7 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
   )
   return(Set$new(elements = apply(mat, 1, function(x) {
     FuzzyTuple$new(
-      elements = x[1:(ncol(mat) / 2)],
+      elements = x[seq(ncol(mat) / 2)],
       membership = x[((ncol(mat) / 2) + 1):(ncol(mat))]
     )
   })))

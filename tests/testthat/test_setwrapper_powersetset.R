@@ -3,6 +3,7 @@ library(testthat)
 context("PowersetSet")
 
 test_that("Set", {
+  useUnicode(TRUE)
   expect_equal(getR6Class(powerset(Set$new(1, 2), FALSE)), "PowersetSet")
   expect_equal(powerset(Set$new(1, 2), FALSE)$strprint(), paste0("\U2118(", "{1, 2}", ")"))
   useUnicode(FALSE)

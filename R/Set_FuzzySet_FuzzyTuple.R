@@ -123,7 +123,7 @@ FuzzyTuple <- R6Class("FuzzyTuple",
             return(FALSE)
           }
 
-          if (all(order(mtc) == (1:length(el$elements)))) {
+          if (all(order(mtc) == (seq_along(el$elements)))) {
             return(TRUE)
           } else {
             return(FALSE)

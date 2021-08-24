@@ -56,19 +56,7 @@ setunion <- function(..., simplify = TRUE) {
 
   sets <- list(...)
 
-  # if(all(sapply(sets, testCountablyFinite))){
-  #   class = unique(rsapply(sets, class, active = TRUE))
-  #   if(length(class) != 1 | any(class == "ANY"))
-  #     class = NULL
-  #
-  #   el = sets[[1]]$elements
-  #   for(i in 2:length(sets)){
-  #     el = union(el, sets[[i]]$elements)
-  #   }
-  #   return(Set$new(elements = el, class = class))
-  # }
-
-  classes <- sapply(sets, getR6Class)
+  classes <- vapply(sets, getR6Class, character(1))
 
   if (all(classes %in% c("Set", "Tuple", "Multiset")) & simplify) {
     return(.union_set(sets))
@@ -87,7 +75,7 @@ setunion <- function(..., simplify = TRUE) {
   sets <- operation_cleaner(sets, "UnionSet", nest = FALSE)
 
   # deal with special cases first
-  classes <- sapply(sets, getR6Class)
+  classes <- vapply(sets, getR6Class, character(1))
   if ("PosReals" %in% classes & "NegReals" %in% classes) {
     sets <- c(sets, Reals$new())
     sets <- sets[-match(c("PosReals", "NegReals"), classes)]
@@ -99,7 +87,7 @@ setunion <- function(..., simplify = TRUE) {
     sets <- sets[-match(c("PosIntegers", "NegIntegers"), classes)]
   }
 
-  classes <- sapply(sets, getR6Class)
+  classes <- vapply(sets, getR6Class, character(1))
 
   if ("Reals" %in% classes & "{-Inf, Inf}" %in% rsapply(sets, "strprint")) {
     sets <- c(sets, ExtendedReals$new())
@@ -137,7 +125,7 @@ setunion <- function(..., simplify = TRUE) {
     return(UnionSet$new(sets))
   }
 
-  classes <- sapply(sets, getR6Class)
+  classes <- vapply(sets, getR6Class, character(1))
   # hacky fix for SpecialSets
   classes[sapply(sets, function(x) inherits(x, "Interval"))] <- "Interval"
 
@@ -183,9 +171,9 @@ setunion <- function(..., simplify = TRUE) {
     elements <- as.list(elements)
   }
 
-  if (any(grepl("Set", sapply(sets, getR6Class)))) {
+  if (any(grepl("Set", vapply(sets, getR6Class, character(1))))) {
     return(Set$new(elements = elements, class = class))
-  } else if (any(grepl("Multiset", sapply(sets, getR6Class)))) {
+  } else if (any(grepl("Multiset", vapply(sets, getR6Class, character(1))))) {
     return(Multiset$new(elements = elements, class = class))
   } else {
     return(Tuple$new(elements = elements, class = class))
@@ -222,12 +210,12 @@ setunion <- function(..., simplify = TRUE) {
   # if(length(sets) == 1)
   #   return(sets[[1]])
 
-  if (any(grepl("FuzzySet", sapply(sets, getR6Class)))) {
+  if (any(grepl("FuzzySet", vapply(sets, getR6Class, character(1))))) {
     return(FuzzySet$new(
       elements = rsapply(sets, "elements", active = TRUE),
       membership = rsapply(sets, "membership")
     ))
-  } else if (any(grepl("FuzzyMultiset", sapply(sets, getR6Class)))) {
+  } else if (any(grepl("FuzzyMultiset", vapply(sets, getR6Class, character(1))))) {
     return(FuzzyMultiset$new(
       elements = rsapply(sets, "elements", active = TRUE),
       membership = rsapply(sets, "membership")

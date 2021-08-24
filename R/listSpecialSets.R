@@ -19,7 +19,7 @@ listSpecialSets <- function(simplify = FALSE) {
   } else {
     return(data.frame(
       ClassName = y,
-      Symbol = unname(sapply(y, setSymbol)),
+      Symbol = unname(vapply(y, setSymbol, character(1), FALSE)),
       Infimum = c("NA", "FALSE", "0", "0/1", "-Inf", "0/1", "-Inf", "-Inf", "0/1", "-Inf", "-Inf", "0/1",
                   rep("-Inf", 2), "NA"),
       Supremum = c("NA", "TRUE", rep("Inf", 4), "-1/0", "Inf", "Inf", "-1/0", "Inf", "Inf", "-1/0", "Inf", "NA")

@@ -85,7 +85,7 @@ ProductSet <- R6Class("ProductSet",
         }
 
         ret <- TRUE
-        for (i in 1:el$length) {
+        for (i in seq(el$length)) {
           if (!self$wrappedSets[[i]]$contains(el$elements[i], bound = bound)) {
             ret <- FALSE
             break()

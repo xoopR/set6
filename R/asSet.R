@@ -48,7 +48,7 @@ as.Set.FuzzySet <- function(object) {
 #' @rdname as.Set
 #' @export
 as.Set.Interval <- function(object) {
-  if (any(is.na(object$elements))) {
+  if (anyNA(object$elements)) {
     stop("Interval cannot be coerced to Set.")
   } else {
     return(Set$new(elements = object$elements, class = object$class))
@@ -104,7 +104,7 @@ as.Tuple.Set <- function(object) {
 #' @rdname as.Set
 #' @export
 as.Tuple.Interval <- function(object) {
-  if (any(is.na(object$elements))) {
+  if (anyNA(object$elements)) {
     stop("Interval cannot be coerced to Tuple.")
   } else {
     return(Tuple$new(elements = object$elements))
@@ -160,7 +160,7 @@ as.Multiset.Set <- function(object) {
 #' @rdname as.Set
 #' @export
 as.Multiset.Interval <- function(object) {
-  if (any(is.na(object$elements))) {
+  if (anyNA(object$elements)) {
     stop("Interval cannot be coerced to Multiset.")
   } else {
     return(Multiset$new(elements = object$elements))

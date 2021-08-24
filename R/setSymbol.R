@@ -1,44 +1,83 @@
-setSymbol <- function(set, zero = FALSE) {
-  if (!inherits(set, "character")) {
-    set <- paste0(substitute(set))
-  }
+setSymbol <- function(set, zero) {
   set <- tolower(set)
   zero_str <- ifelse(zero, "0", "")
-  if (useUnicode()) {
-    return(switch(set,
-      naturals = "\u21150",
-      posnaturals = "\u2115+",
-      integers = "\u2124",
-      posintegers = paste0("\u2124", zero_str, "+"),
-      negintegers = paste0("\u2124", zero_str, "-"),
-      rationals = "\u211A",
-      posrationals = paste0("\u211A", zero_str, "+"),
-      negrationals = paste0("\u211A", zero_str, "-"),
-      reals = "\u211D",
-      posreals = paste0("\u211D", zero_str, "+"),
-      negreals = paste0("\u211D", zero_str, "-"),
-      extendedreals = "\u211D \u222A {-\u221E, +\u221E}",
-      complex = "\u2102",
-      logicals = "{TRUE, FALSE}",
-      universal = "\U1D54D"
-    ))
-  } else {
-    return(switch(set,
-      naturals = "N0",
-      posnaturals = "N+",
-      integers = "Z",
-      posintegers = paste0("Z", zero_str, "+"),
-      negintegers = paste0("Z", zero_str, "-"),
-      rationals = "Q",
-      posrationals = paste0("Q", zero_str, "+"),
-      negrationals = paste0("Q", zero_str, "-"),
-      reals = "R",
-      posreals = paste0("R", zero_str, "+"),
-      negreals = paste0("R", zero_str, "-"),
-      extendedreals = "R U {-Inf, +Inf}",
-      complex = "C",
-      logicals = "{TRUE, FALSE}",
-      universal = "V"
-    ))
-  }
+  uni <- ifelse(useUnicode(), "unicode", "ascii")
+  zer <- ifelse(zero, "zero", "non_zero")
+  lst <- symbol_env[[uni]][[zer]]
+  as.character(lst[names(lst) %in% set])
 }
+
+symbol_env <- new.env()
+local({
+  symbol_env$unicode$zero <- list(
+    naturals = "\u21150",
+    posnaturals = "\u2115+",
+    integers = "\u2124",
+    posintegers = "\u21240+",
+    negintegers = "\u21240-",
+    rationals = "\u211A",
+    posrationals = "\u211A0+",
+    negrationals = "\u211A0-",
+    reals = "\u211D",
+    posreals = "\u211D0+",
+    negreals = "\u211D0-",
+    extendedreals = "\u211D \u222A {-\u221E, +\u221E}",
+    complex = "\u2102",
+    logicals = "{TRUE, FALSE}",
+    universal = "\U1D54D"
+  )
+
+  symbol_env$unicode$non_zero <- list(
+    naturals = "\u21150",
+    posnaturals = "\u2115+",
+    integers = "\u2124",
+    posintegers = "\u2124+",
+    negintegers = "\u2124-",
+    rationals = "\u211A",
+    posrationals = "\u211A+",
+    negrationals = "\u211A-",
+    reals = "\u211D",
+    posreals = "\u211D+",
+    negreals = "\u211D-",
+    extendedreals = "\u211D \u222A {-\u221E, +\u221E}",
+    complex = "\u2102",
+    logicals = "{TRUE, FALSE}",
+    universal = "\U1D54D"
+  )
+
+  symbol_env$ascii$zero <- list(
+    naturals = "N0",
+    posnaturals = "N+",
+    integers = "Z",
+    posintegers = "Z0+",
+    negintegers = "Z0-",
+    rationals = "Q",
+    posrationals = "Q0+",
+    negrationals = "Q0-",
+    reals = "R",
+    posreals = "R0+",
+    negreals = "R0-",
+    extendedreals = "R U {-Inf, +Inf}",
+    complex = "C",
+    logicals = "{TRUE, FALSE}",
+    universal = "V"
+  )
+
+  symbol_env$ascii$non_zero <- list(
+    naturals = "N0",
+    posnaturals = "N+",
+    integers = "Z",
+    posintegers = "Z+",
+    negintegers = "Z-",
+    rationals = "Q",
+    posrationals = "Q+",
+    negrationals = "Q-",
+    reals = "R",
+    posreals = "R+",
+    negreals = "R-",
+    extendedreals = "R U {-Inf, +Inf}",
+    complex = "C",
+    logicals = "{TRUE, FALSE}",
+    universal = "V"
+  )
+})

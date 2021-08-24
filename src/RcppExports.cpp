@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // IntervalContains
 std::vector<bool> IntervalContains(NumericVector x, long double inf, long double sup, long double min, long double max, bool bound, const char* class_str);
 RcppExport SEXP _set6_IntervalContains(SEXP xSEXP, SEXP infSEXP, SEXP supSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP boundSEXP, SEXP class_strSEXP) {

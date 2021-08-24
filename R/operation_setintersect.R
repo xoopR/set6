@@ -116,7 +116,7 @@ setintersect.Interval <- function(x, y) {
 #' @export
 setintersect.ConditionalSet <- function(x, y) {
   if (!inherits(y, "ConditionalSet")) {
-    return(Set$new(y$elements[x$contains(sapply(y$elements, as.Set))]))
+    return(Set$new(y$elements[x$contains(lapply(y$elements, as.Set))]))
   } else {
     if (x$equals(y)) {
       return(x)
@@ -147,8 +147,8 @@ setintersect.UnionSet <- function(x, y) {
     return(Set$new(elements = unlist(y$elements[x$contains(y$elements)])))
   } else {
     int <- Set$new()
-    sets <- sapply(x$wrappedSets, function(set) setintersect(set, y))
-    for (i in 1:length(sets)) {
+    sets <- lapply(x$wrappedSets, function(set) setintersect(set, y))
+    for (i in seq_along(sets)) {
       int <- int + sets[[i]]
     }
 

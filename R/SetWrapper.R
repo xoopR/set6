@@ -59,7 +59,7 @@ SetWrapper <- R6Class("SetWrapper",
         }
 
         ret <- TRUE
-        for (i in 1:length(self$wrappedSets)) {
+        for (i in seq_along(self$wrappedSets)) {
           if (self$wrappedSets[[i]] != el$wrappedSets[[i]]) {
             ret <- FALSE
             break()
