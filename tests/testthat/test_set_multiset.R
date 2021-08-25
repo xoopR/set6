@@ -16,7 +16,7 @@ test_that("inherited_methods", {
   expect_equal(Multiset$new(1, 2, 3)$length, 3)
   expect_true(Multiset$new(1, 3, 0.9)$contains(1))
   expect_false(Multiset$new(1, 0.1, 2, 0.3, 3, 0.9)$contains(5))
-  expect_equal(Multiset$new(1, 2)$strprint(), "{1, 2}")
+  expect_equal(as.character(Multiset$new(1, 2)), "{1, 2}")
 })
 
 test_that("equals", {

@@ -3,11 +3,11 @@ test_that("construction", {
   expect_error(Universal$new(12))
 })
 
-test_that("strprint", {
+test_that("as.character", {
   useUnicode(FALSE)
-  expect_equal(Universal$new()$strprint(), "V")
+  expect_equal(as.character(Universal$new()), "V")
   useUnicode(TRUE)
-  expect_equal(Universal$new()$strprint(), "\U1D54D")
+  expect_equal(as.character(Universal$new()), "\U1D54D")
 })
 
 v <- Universal$new()

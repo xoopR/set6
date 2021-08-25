@@ -56,7 +56,7 @@ setunion <- function(..., simplify = TRUE) {
 
   sets <- list(...)
 
-  classes <- vapply(sets, getR6Class, character(1))
+  classes <- object_classes(sets)
 
   if (all(classes %in% c("Set", "Tuple", "Multiset")) & simplify) {
     return(.union_set(sets))
@@ -75,7 +75,7 @@ setunion <- function(..., simplify = TRUE) {
   sets <- operation_cleaner(sets, "UnionSet", nest = FALSE)
 
   # deal with special cases first
-  classes <- vapply(sets, getR6Class, character(1))
+  classes <- object_classes(sets)
   if ("PosReals" %in% classes & "NegReals" %in% classes) {
     sets <- c(sets, Reals$new())
     sets <- sets[-match(c("PosReals", "NegReals"), classes)]
@@ -87,15 +87,15 @@ setunion <- function(..., simplify = TRUE) {
     sets <- sets[-match(c("PosIntegers", "NegIntegers"), classes)]
   }
 
-  classes <- vapply(sets, getR6Class, character(1))
+  classes <- object_classes(sets)
 
-  if ("Reals" %in% classes & "{-Inf, Inf}" %in% rsapply(sets, "strprint")) {
+  if ("Reals" %in% classes & "{-Inf, Inf}" %in% vapply(sets, as.character, character(1))) {
     sets <- c(sets, ExtendedReals$new())
-    sets <- sets[-c(match("Reals", classes), match("{-Inf, Inf}", rsapply(sets, "strprint")))]
+    sets <- sets[-c(match("Reals", classes), match("{-Inf, Inf}", vapply(sets, as.character, character(1))))]
   }
 
   # if no sets are left after cleaning return Empty, otherwise if all are the same return the set
-  if (length(sets) == 1 | length(unique(rsapply(sets, "strprint"))) == 1) {
+  if (length(sets) == 1 | length(unique(vapply(sets, as.character, character(1)))) == 1) {
     return(sets[[1]])
   }
 
@@ -125,7 +125,7 @@ setunion <- function(..., simplify = TRUE) {
     return(UnionSet$new(sets))
   }
 
-  classes <- vapply(sets, getR6Class, character(1))
+  classes <- object_classes(sets)
   # hacky fix for SpecialSets
   classes[sapply(sets, function(x) inherits(x, "Interval"))] <- "Interval"
 
@@ -161,19 +161,21 @@ setunion <- function(..., simplify = TRUE) {
     return(sets[[1]])
   }
 
-  class <- unique(rsapply(sets, class, active = TRUE))
-  if (length(class) != 1 | any(class == "ANY")) {
+  class <- loapply(sets, "class")
+  if (length(class) != 1 || any(class == "ANY")) {
     class <- NULL
+  } else {
+    class <- class[[1]]
   }
 
-  elements <- unlist(rsapply(sets, "elements", active = TRUE), recursive = FALSE)
+  elements <- unlist(loapply(sets, "elements"), FALSE)
   if (!inherits(elements, "list")) {
     elements <- as.list(elements)
   }
 
-  if (any(grepl("Set", vapply(sets, getR6Class, character(1))))) {
+  if (any(grepl("Set", object_classes(sets)))) {
     return(Set$new(elements = elements, class = class))
-  } else if (any(grepl("Multiset", vapply(sets, getR6Class, character(1))))) {
+  } else if (any(grepl("Multiset", object_classes(sets)))) {
     return(Multiset$new(elements = elements, class = class))
   } else {
     return(Tuple$new(elements = elements, class = class))
@@ -185,7 +187,7 @@ setunion <- function(..., simplify = TRUE) {
   }
 
   rm <- c()
-  sets <- sets[order(rsapply(sets, "lower", active = TRUE))]
+  sets <- sets[order(vnapply(sets, "lower"))]
 
   for (i in 2:length(sets)) {
     if (sets[[i]]$lower > sets[[i - 1]]$lower & sets[[i]]$lower <= sets[[i - 1]]$upper &
@@ -210,20 +212,20 @@ setunion <- function(..., simplify = TRUE) {
   # if(length(sets) == 1)
   #   return(sets[[1]])
 
-  if (any(grepl("FuzzySet", vapply(sets, getR6Class, character(1))))) {
+  if (any(grepl("FuzzySet", object_classes(sets)))) {
     return(FuzzySet$new(
-      elements = rsapply(sets, "elements", active = TRUE),
-      membership = rsapply(sets, "membership")
+      elements = unlist(loapply(sets, "elements"), FALSE),
+      membership = unlist(loapply(sets, "membership", NULL), FALSE)
     ))
-  } else if (any(grepl("FuzzyMultiset", vapply(sets, getR6Class, character(1))))) {
+  } else if (any(grepl("FuzzyMultiset", object_classes(sets)))) {
     return(FuzzyMultiset$new(
-      elements = rsapply(sets, "elements", active = TRUE),
-      membership = rsapply(sets, "membership")
+      elements = unlist(loapply(sets, "elements"), FALSE),
+      membership = unlist(loapply(sets, "membership", NULL), FALSE)
     ))
   } else {
     return(FuzzyTuple$new(
-      elements = rsapply(sets, "elements", active = TRUE),
-      membership = rsapply(sets, "membership")
+      elements = unlist(loapply(sets, "elements"), FALSE),
+      membership = unlist(loapply(sets, "membership", NULL), FALSE)
     ))
   }
 }
@@ -252,7 +254,8 @@ setunion <- function(..., simplify = TRUE) {
 
   # in future updates we can change this so the union of the argument classes is kept
   # not just the argclass of x
-  class <- unlist(rlapply(sets, "class", active = TRUE))[!duplicated(names(unlist(rlapply(sets, "class", active = TRUE))))]
+  classes <- unlist(loapply(sets, "class"), FALSE)
+  class <- classes[!duplicated(names(classes))]
   return(ConditionalSet$new(condition = condition, argclass = class))
 }
 

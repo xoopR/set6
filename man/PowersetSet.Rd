@@ -72,7 +72,7 @@ A new \code{PowersetSet} object.
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PowersetSet$strprint(n = 2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PowersetSet$strprint(n = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

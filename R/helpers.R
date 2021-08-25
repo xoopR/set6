@@ -53,17 +53,7 @@ makeChecks <- function(assertionName, cond, errormsg, args,
   )
 }
 
-getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1) {
-  if (!inherits(object, "R6")) {
-    return(class(object))
-  }
 
-  if (classname) {
-    return(get(class(object)[[n.par + 1]], pos = pos)$classname)
-  } else {
-    return(get(class(object)[[n.par + 1]], pos = pos))
-  }
-}
 ifnerror <- function(expr, noerror = NULL, error = NULL, silent = T, stopwarn = "warn",
                      errormsg = "Error not Nerror!") {
   x <- try(expr, silent)
@@ -114,22 +104,6 @@ toproper <- function(str) {
   }))
 }
 
-rlapply <- function(X, FUN, ..., active = FALSE) {
-  FUN <- as.character(substitute(FUN))
-  if (active) {
-    return(lapply(X, function(x) x[[FUN]]))
-  } else {
-    return(lapply(X, function(x) x[[FUN]](...)))
-  }
-}
-rsapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FALSE) {
-  FUN <- as.character(substitute(FUN))
-  if (active) {
-    return(sapply(X, function(x) x[[FUN]], simplify = simplify, USE.NAMES = USE.NAMES))
-  } else {
-    return(sapply(X, function(x) x[[FUN]](...), simplify = simplify, USE.NAMES = USE.NAMES))
-  }
-}
 
 crispify <- function(x) {
   if (testCrisp(x)) {
@@ -145,10 +119,10 @@ fuzzify <- function(x) {
     return(x)
   } else if (testTuple(x)) {
     return(as.FuzzyTuple(x))
-  } else if (getR6Class(x) == "Set") {
+  } else if (object_class(x) == "Set") {
     return(as.FuzzySet(x))
   } else {
-    stop(x$strprint(), " cannot be fuzzified.")
+    stop(as.character(x), " cannot be fuzzified.")
   }
 }
 

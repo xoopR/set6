@@ -1,4 +1,6 @@
+#' @import ooplah
 #' @importFrom R6 R6Class
+NULL
 
 # nocov start
 .onLoad <- function(libname, pkgname) {

@@ -4,10 +4,10 @@ context("PowersetSet")
 
 test_that("Set", {
   useUnicode(TRUE)
-  expect_equal(getR6Class(powerset(Set$new(1, 2), FALSE)), "PowersetSet")
-  expect_equal(powerset(Set$new(1, 2), FALSE)$strprint(), paste0("\U2118(", "{1, 2}", ")"))
+  expect_equal(object_class(powerset(Set$new(1, 2), FALSE)), "PowersetSet")
+  expect_equal(as.character(powerset(Set$new(1, 2), FALSE)), paste0("\U2118(", "{1, 2}", ")"))
   useUnicode(FALSE)
-  expect_equal(powerset(Set$new(1, 2), FALSE)$strprint(), "2^{1, 2}")
+  expect_equal(as.character(powerset(Set$new(1, 2), FALSE)), "2^{1, 2}")
   useUnicode(TRUE)
 })
 

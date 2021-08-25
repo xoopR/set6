@@ -44,11 +44,11 @@ test_that("equals", {
   expect_true(ConditionalSet$new(function(z) z == 0) == ConditionalSet$new(function(x, y) x == 0))
 })
 
-test_that("strprint", {
+test_that("as.character", {
   useUnicode(TRUE)
-  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), "{x \u2208 \U1D54D}")
+  expect_equal(as.character(ConditionalSet$new(function(x) TRUE)), "{x \u2208 \U1D54D}")
   useUnicode(FALSE)
-  expect_equal(ConditionalSet$new(function(x) TRUE)$strprint(), "{x in V}")
+  expect_equal(as.character(ConditionalSet$new(function(x) TRUE)), "{x in V}")
   useUnicode(TRUE)
 })
 

@@ -52,43 +52,15 @@ Properties <- R6Class("Properties",
     #' Prints the `Properties` list.
     #' @return Prints `Properties` list to console.
     print = function() {
-      print(self$strprint())
+      print(as.character(self))
     },
 
     #' @description
     #' Creates a printable representation of the `Properties`.
     #' @return A `list` of properties.
     strprint = function() {
-      if (useUnicode() & length(self$cardinality) != 0) {
-        if (self$cardinality == "Aleph0") {
-          cardinality <- "\u2135\u2080"
-        } else if (class(self$cardinality) != "character") {
-          cardinality <- self$cardinality
-        } else {
-          .beths <- data.frame(X = 0:9, U = c(
-            "\u2080", "\u2081", "\u2082", "\u2083", "\u2084", "\u2085",
-            "\u2086", "\u2087", "\u2088", "\u2089"
-          ))
-
-          cardinality <- paste0("\u2136", paste0(.beths$U[match(
-            unlist(strsplit(substr(
-              self$cardinality,
-              5, 100
-            ), split = "")),
-            .beths$X
-          )], collapse = ""))
-        }
-      } else {
-        cardinality <- self$cardinality
-      }
-
-      list(
-        empty = self$empty,
-        singleton = self$singleton,
-        cardinality = cardinality,
-        countability = self$countability,
-        closure = self$closure
-      )
+      warning("Deprecated, use as.character in the future")
+      as.character(self)
     }
   ),
 
@@ -132,3 +104,37 @@ Properties <- R6Class("Properties",
     .singleton = logical(0)
   )
 )
+
+#' @export
+as.character.Properties <- function(x, n = 2, ...) {
+  if (useUnicode() & length(x$cardinality) != 0) {
+    if (x$cardinality == "Aleph0") {
+      cardinality <- "\u2135\u2080"
+    } else if (class(x$cardinality) != "character") {
+      cardinality <- x$cardinality
+    } else {
+      .beths <- data.frame(X = 0:9, U = c(
+        "\u2080", "\u2081", "\u2082", "\u2083", "\u2084", "\u2085",
+        "\u2086", "\u2087", "\u2088", "\u2089"
+      ))
+
+      cardinality <- paste0("\u2136", paste0(.beths$U[match(
+        unlist(strsplit(substr(
+          x$cardinality,
+          5, 100
+        ), split = "")),
+        .beths$X
+      )], collapse = ""))
+    }
+  } else {
+    cardinality <- x$cardinality
+  }
+
+  list(
+    empty = x$empty,
+    singleton = x$singleton,
+    cardinality = cardinality,
+    countability = x$countability,
+    closure = x$closure
+  )
+}

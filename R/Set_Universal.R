@@ -57,7 +57,7 @@ Universal <- R6::R6Class("Universal",
     #' !Set$new(1,2)$equals(Set$new(1,2))
     #' Set$new(1,2) != Set$new(1,5)
     equals = function(x, all = FALSE) {
-      ret <- sapply(listify(x), getR6Class) %in% "Universal"
+      ret <- object_classes(listify(x)) %in% "Universal"
       returner(ret, all)
     },
 
@@ -97,8 +97,8 @@ Universal <- R6::R6Class("Universal",
     isSubset = function(x, proper = FALSE, all = FALSE) {
       x <- listify(x)
       returner(
-        x = sapply(x, inherits, what = "Set") & sapply(x, getR6Class) != "Universal" |
-          sapply(x, getR6Class) == "Universal" & !proper,
+        x = vlapply(x, inherits, what = "Set") & object_classes(x) != "Universal" |
+          object_classes(x) == "Universal" & !proper,
         all = all
       )
     },
@@ -150,10 +150,11 @@ Universal <- R6::R6Class("Universal",
     },
 
     #' @description Creates a printable representation of the object.
-    #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
+    #' @param n numeric. Unused, kept for consistency.
     #' @return A character string representing the object.
     strprint = function(n = NULL) {
-      setSymbol("universal", FALSE)
+      warning("Deprecated, use as.character in the future")
+      as.character(self)
     }
   ),
 
@@ -161,3 +162,9 @@ Universal <- R6::R6Class("Universal",
     .elements = NA
   )
 )
+
+
+#' @export
+as.character.Universal <- function(x, n = 2, ...) {
+  setSymbol("universal", FALSE)
+}

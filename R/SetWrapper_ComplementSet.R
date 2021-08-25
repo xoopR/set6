@@ -59,19 +59,8 @@ ComplementSet <- R6Class("ComplementSet",
     #' @description Creates a printable representation of the object.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      if (inherits(self$addedSet, "SetWrapper")) {
-        add <- paste0("(", self$addedSet$strprint(n), ")")
-      } else {
-        add <- self$addedSet$strprint(n)
-      }
-
-      if (inherits(self$subtractedSet, "SetWrapper")) {
-        sub <- paste0("(", self$subtractedSet$strprint(n), ")")
-      } else {
-        sub <- self$subtractedSet$strprint(n)
-      }
-
-      paste0(add, " \\ ", sub)
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Tests if elements `x` are contained in `self`.
@@ -135,3 +124,20 @@ ComplementSet <- R6Class("ComplementSet",
     .subtractedSet = NULL
   )
 )
+
+#' @export
+as.character.ComplementSet <- function(x, n = 2, ...) {
+  if (inherits(x$addedSet, "SetWrapper")) {
+    add <- paste0("(", as.character(x$addedSet, n = n), ")")
+  } else {
+    add <- as.character(x$addedSet, n = n)
+  }
+
+  if (inherits(x$subtractedSet, "SetWrapper")) {
+    sub <- paste0("(", as.character(x$subtractedSet, n = n), ")")
+  } else {
+    sub <- as.character(x$subtractedSet, n = n)
+  }
+
+  paste0(add, " \\ ", sub)
+}

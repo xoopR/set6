@@ -44,11 +44,8 @@ ExponentSet <- R6Class("ExponentSet",
     #' @description Creates a printable representation of the object.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      if (inherits(self$wrappedSets[[1]], "SetWrapper")) {
-        paste0("(", self$wrappedSets[[1]]$strprint(n = n), ")^", self$power)
-      } else {
-        paste(self$wrappedSets[[1]]$strprint(n = n), self$power, sep = "^")
-      }
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Tests if elements `x` are contained in `self`.
@@ -101,3 +98,13 @@ ExponentSet <- R6Class("ExponentSet",
     .power = 1L
   )
 )
+
+
+#' @export
+as.character.ExponentSet <- function(x, n = 2, ...) {
+  if (inherits(x$wrappedSets[[1]], "SetWrapper")) {
+    paste0("(", as.character(x$wrappedSets[[1]], n = n), ")^", x$power)
+  } else {
+    paste(as.character(x$wrappedSets[[1]], n = n), x$power, sep = "^")
+  }
+}

@@ -15,8 +15,3 @@ as.double.Tuple <- function(x, ...) {
     return(unlist(x$elements))
   }
 }
-
-#' @export
-as.character.Set <- function(x, n = 1e10, ...) {
-  x$strprint(n = n)
-}

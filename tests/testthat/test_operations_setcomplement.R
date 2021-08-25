@@ -39,9 +39,9 @@ test_that("interval", {
       Interval$new(5, 10, type = "(]")
   )
   expect_equal(
-    setcomplement(Interval$new(1, 10), Set$new(1, 3, 5),
+    as.character(setcomplement(Interval$new(1, 10), Set$new(1, 3, 5),
       simplify = FALSE
-    )$strprint(),
+    )),
     "[1,10] \\ {1, 3, 5}"
   )
   expect_equal(
@@ -55,9 +55,9 @@ test_that("interval", {
       Interval$new(3, 4, type = "()") + Interval$new(4, 10, type = "(]")
   )
   expect_equal(
-    setcomplement(Interval$new(1, 10), Interval$new(2, 4, class = "integer"),
+    as.character(setcomplement(Interval$new(1, 10), Interval$new(2, 4, class = "integer"),
       simplify = FALSE
-    )$strprint(),
+    )),
     "[1,10] \\ {2,...,4}"
   )
   expect_equal(Interval$new(1, 5) - Set$new(3, 5), Interval$new(1, 3, type = "[)") + Interval$new(3, 5, type = "()"))
@@ -85,12 +85,12 @@ test_that("fuzzy", {
 test_that("conditional", {
   useUnicode(FALSE)
   expect_equal(
-    (ConditionalSet$new(function(x) x == 0) - ConditionalSet$new(function(y) y > 0))$strprint(),
+    as.character(ConditionalSet$new(function(x) x == 0) - ConditionalSet$new(function(y) y > 0)),
     "{x in V, y in V : x == 0 & !(y > 0)}"
   )
 
   expect_equal(
-    (ConditionalSet$new(function(x) TRUE) - Set$new(1))$strprint(),
+    as.character(ConditionalSet$new(function(x) TRUE) - Set$new(1)),
     "{x in V} \\ {1}"
   )
   useUnicode(TRUE)
@@ -100,7 +100,7 @@ test_that("wrappers", {
   expect_equal((Reals$new() - Integers$new()) - Set$new(1, 2), Reals$new() - Integers$new())
   useUnicode(FALSE)
   expect_equal(
-    ((Reals$new() * Integers$new()) - Set$new(1, 2))$strprint(),
+    as.character(((Reals$new() * Integers$new()) - Set$new(1, 2))),
     "(R X Z) \\ {1, 2}"
   )
   useUnicode(TRUE)

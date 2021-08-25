@@ -75,7 +75,7 @@ Set <- R6Class("Set",
           }
         }
 
-        if (getR6Class(universe) != "Universal") {
+        if (object_class(universe) != "Universal") {
           assertContains(universe, elements,
                          errormsg = "elements are not contained in the given universe.")
         }
@@ -129,10 +129,10 @@ Set <- R6Class("Set",
     #' @description Prints a symbolic representation of the `Set`.
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @details The function [useUnicode()] can be used to determine if unicode should be used when
-    #' printing the `Set`. Internally `print` first calls `strprint` to create a printable representation
+    #' printing the `Set`. Internally `print` first calls `as.character` to create a printable representation
     #' of the Set.
     print = function(n = 2) {
-      cat(self$strprint(n), "\n")
+      cat(as.character(self, n = n), "\n")
       invisible(self)
     },
 
@@ -141,25 +141,8 @@ Set <- R6Class("Set",
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      if (self$properties$empty) {
-        if (useUnicode()) {
-          return("\u2205")
-        } else {
-          return("{}")
-        }
-      } else {
-        type <- private$.type
-        elements <- sapply(private$.elements, as.character, n = n)
-        if (self$length <= n * 2) {
-          return(paste0(substr(type, 1, 1), paste0(elements, collapse = ", "), substr(type, 2, 2)))
-        } else {
-          return(paste0(substr(type, 1, 1), paste0(elements[1:n], collapse = ", "), ",...,",
-            paste0(elements[(self$length - n + 1):self$length], collapse = ", "),
-            substr(type, 2, 2),
-            collapse = ", "
-          ))
-        }
-      }
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Summarises the `Set`.
@@ -168,7 +151,7 @@ Set <- R6Class("Set",
     #' printing the `Set`. Summarised details include the `Set` class, properties, and traits.
     summary = function(n = 2) {
       prop <- self$properties
-      cat(getR6Class(self), "\n\t", self$strprint(n), "\n", sep = "")
+      cat(object_class(self), "\n\t", as.character(self, n = n), "\n", sep = "")
       cat("Traits:\n\t")
       cat(ifelse(testCrisp(self), "Crisp", "Fuzzy"), "\n")
       cat("Properties:\n")
@@ -311,7 +294,7 @@ Set <- R6Class("Set",
           }
         }
 
-        if (getR6Class(y) %in% c("ConditionalSet", "Universal")) {
+        if (object_class(y) %in% c("ConditionalSet", "Universal")) {
           return(FALSE)
         } else if (testInterval(y)) {
           if (testFinite(y)) {
@@ -363,7 +346,7 @@ Set <- R6Class("Set",
       assertContains(self$universe, list(...),
         errormsg = sprintf(
           "some added elements are not contained in the set universe: %s",
-          self$universe$strprint()
+          as.character(self$universe)
         )
       )
 
@@ -584,3 +567,26 @@ Set <- R6Class("Set",
 
 #' @export
 summary.Set <- function(object, n, ...) object$summary(n = 2)
+
+#' @export
+as.character.Set <- function(x, n = 2, ...) {
+  if (x$properties$empty) {
+    if (useUnicode()) {
+      return("\u2205")
+    } else {
+      return("{}")
+    }
+  } else {
+    type <- private(x)$.type
+    elements <- vapply(private(x)$.elements, as.character, character(1), n = n)
+    if (x$length <= n * 2) {
+      return(paste0(substr(type, 1, 1), paste0(elements, collapse = ", "), substr(type, 2, 2)))
+    } else {
+      return(paste0(substr(type, 1, 1), paste0(elements[1:n], collapse = ", "), ",...,",
+        paste0(elements[(x$length - n + 1):x$length], collapse = ", "),
+        substr(type, 2, 2),
+        collapse = ", "
+      ))
+    }
+  }
+}

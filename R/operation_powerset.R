@@ -22,7 +22,7 @@
 #' powerset(powerset(Reals$new()))$properties$cardinality
 #' @export
 powerset <- function(x, simplify = FALSE) {
-  if (getR6Class(x) == "Universal") {
+  if (object_class(x) == "Universal") {
     return(x)
   }
 
@@ -42,7 +42,7 @@ powerset <- function(x, simplify = FALSE) {
 .powerset_fuzzy <- function(x) {
   y <- Vectorize(function(m) utils::combn(x$elements, m, simplify = FALSE),
                  vectorize.args = c("m"))(1:(x$length - 1))
-  y <- lapply(unlist(y), function(el) getR6Class(x, FALSE)$new(elements = el,
+  y <- lapply(unlist(y), function(el) get_object_class(x)$new(elements = el,
                                                                membership = x$membership(el)))
   return(Set$new(elements = c(Set$new(), y, x)))
 }
@@ -53,9 +53,9 @@ powerset <- function(x, simplify = FALSE) {
                  SIMPLIFY = FALSE)(1:(x$length - 1))
 
   try(
-    {return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, get(paste0("as.", getR6Class(x))))), x)))},
+    {return(Set$new(elements = c(Set$new(), unlist(apply(y, 2, get(paste0("as.", object_class(x))))), x)))},
     silent = TRUE
   )
 
-  return(Set$new(elements = c(Set$new(), unlist(lapply(y, get(paste0("as.", getR6Class(x))))), x)))
+  return(Set$new(elements = c(Set$new(), unlist(lapply(y, get(paste0("as.", object_class(x))))), x)))
 }

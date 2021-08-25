@@ -13,8 +13,9 @@ Authors@R:
              email = "f.kiraly@ucl.ac.uk"))
 Description: An object-oriented package for mathematical sets, upgrading the current gold-standard {sets}. Many forms of mathematical sets are implemented, including (countably finite) sets, tuples, intervals (countably infinite or uncountable), and fuzzy variants. Wrappers extend functionality by allowing symbolic representations of complex operations on sets, including unions, (cartesian) products, exponentiation, and differences (asymmetric and symmetric).
 LinkingTo: Rcpp
-Imports: checkmate, Rcpp, R6, utils
+Imports: checkmate, ooplah, Rcpp, R6, utils
 Suggests: knitr, testthat, devtools, rmarkdown
+Remotes: xoopR/ooplah
 License: MIT + file LICENSE
 LazyData: true
 URL: https://xoopR.github.io/set6/, https://github.com/xoopR/set6

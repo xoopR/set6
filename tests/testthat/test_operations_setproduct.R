@@ -71,7 +71,7 @@ test_that("productSet", {
   expect_equal(i$strprint(), "[5,6] X [1,2] X [3,4]")
   i <- setproduct(Interval$new(1, 2) * Interval$new(3, 4), Interval$new(5, 6), nest = TRUE)
   expect_equal(i$strprint(), "([1,2] X [3,4]) X [5,6]")
-  expect_equal(getR6Class(Interval$new(1, 2) * Interval$new(1, 2)), "ExponentSet")
+  expect_equal(object_class(Interval$new(1, 2) * Interval$new(1, 2)), "ExponentSet")
   expect_true(i$contains(Tuple$new(Tuple$new(1, 3), 5)))
   expect_false(i$contains(Tuple$new(1, 3, 5)))
   expect_true(i$contains(c(Tuple$new(Tuple$new(1, 3), 5), Tuple$new(Tuple$new(2, 3), 6)), all = TRUE))

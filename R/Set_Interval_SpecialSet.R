@@ -16,8 +16,8 @@ SpecialSet <- R6Class("SpecialSet",
     #' @param type defines the interval closure type.
     #' @param class defines the interval class.
     initialize = function(lower = -Inf, upper = Inf, type = "()", class = "numeric") {
-      if (getR6Class(self, pos = environment()) == "SpecialSet") {
-        stop(paste(getR6Class(self, pos = environment()), "is an abstract class that can't be initialized."))
+      if (object_class(self) == "SpecialSet") {
+        stop(paste(object_class(self), "is an abstract class that can't be initialized."))
       }
 
       super$initialize(lower = lower, upper = upper, type = type, class = class, universe = Universal$new())
@@ -29,7 +29,8 @@ SpecialSet <- R6Class("SpecialSet",
     #' @param n ignored, added for consistency.
     #' @return A character string representing the object.
     strprint = function(n = NULL) {
-      setSymbol(getR6Class(self), private$.zero)
+      warning("Deprecated, use as.character in the future")
+      as.character(self)
     }
   ),
 
@@ -306,3 +307,9 @@ ExtendedReals <- R6Class("ExtendedReals",
     }
   )
 )
+
+
+#' @export
+as.character.SpecialSet <- function(x, n = 2, ...) {
+  setSymbol(object_class(x), private(x)$.zero)
+}

@@ -89,34 +89,8 @@ FuzzySet <- R6Class("FuzzySet",
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      if (self$properties$empty) {
-        if (useUnicode()) {
-          return("\u2205")
-        } else {
-          return("{}")
-        }
-      } else {
-        elements <- self$membership()
-
-        if (self$length <= n * 2) {
-          return(paste0(
-            substr(self$type, 1, 1), paste0(names(elements), "(", elements, ")", collapse = ", "),
-            substr(self$type, 2, 2)
-          ))
-        } else {
-          return(
-            paste0(substr(self$type, 1, 1),
-                   paste0(names(elements)[seq(n)], "(", elements[seq(n)], ")",
-                          collapse = ", "), ",...,",
-            paste0(names(elements)[(self$length - n + 1):self$length], "(",
-                   elements[(self$length - n + 1):self$length], ")",
-              collapse = ", "
-            ),
-            substr(self$type, 2, 2),
-            collapse = ", "
-          ))
-        }
-      }
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Returns the membership, i.e. value in \[0, 1\], of either the given element(s)
@@ -275,8 +249,8 @@ FuzzySet <- R6Class("FuzzySet",
           return(FALSE)
         }
 
-        elel <- unlist(lapply(el$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
-        selel <- unlist(lapply(self$elements, function(x) ifelse(testSet(x), x$strprint(), x)))
+        elel <- unlist(lapply(el$elements, function(x) ifelse(testSet(x), as.character(x), x)))
+        selel <- unlist(lapply(self$elements, function(x) ifelse(testSet(x), as.character(x), x)))
 
         el_mat <- matrix(c(elel, el$membership()), ncol = 2)[order(elel), ]
         self_mat <- matrix(c(selel, self$membership()), ncol = 2)[order(selel), ]
@@ -346,3 +320,35 @@ FuzzySet <- R6Class("FuzzySet",
     .traits = list(crisp = FALSE)
   )
 )
+
+#' @export
+as.character.FuzzySet <- function(x, n = 2, ...) {
+  if (x$properties$empty) {
+    if (useUnicode()) {
+      return("\u2205")
+    } else {
+      return("{}")
+    }
+  } else {
+    elements <- x$membership()
+
+    if (x$length <= n * 2) {
+      return(paste0(
+        substr(x$type, 1, 1), paste0(names(elements), "(", elements, ")", collapse = ", "),
+        substr(x$type, 2, 2)
+      ))
+    } else {
+      return(
+        paste0(substr(x$type, 1, 1),
+                paste0(names(elements)[seq(n)], "(", elements[seq(n)], ")",
+                      collapse = ", "), ",...,",
+        paste0(names(elements)[(x$length - n + 1):x$length], "(",
+                elements[(x$length - n + 1):x$length], ")",
+          collapse = ", "
+        ),
+        substr(x$type, 2, 2),
+        collapse = ", "
+      ))
+    }
+  }
+}

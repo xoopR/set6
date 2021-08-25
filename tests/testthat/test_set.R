@@ -63,10 +63,10 @@ test_that("equals", {
   expect_false(Set$new(Tuple$new(1), Tuple$new(2, 3), Tuple$new(1, 4)) == Set$new(Tuple$new(1, 4)))
 })
 
-test_that("strprint", {
-  expect_equal(Set$new(1)$strprint(), "{1}")
-  expect_equal(Set$new(1, "a")$strprint(), "{1, a}")
-  expect_equal(Set$new(1, 2, 3)$strprint(n = 1), "{1,...,3}")
+test_that("as.character", {
+  expect_equal(as.character(Set$new(1)), "{1}")
+  expect_equal(as.character(Set$new(1, "a")), "{1, a}")
+  expect_equal(as.character(Set$new(1, 2, 3), n = 1), "{1,...,3}")
 })
 
 test_that("summary", {

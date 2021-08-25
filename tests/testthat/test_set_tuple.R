@@ -16,24 +16,11 @@ test_that("construction", {
 
 test_that("inherited_methods", {
   expect_equal(Tuple$new(1, 2)$type, "()")
-  # expect_equal(Tuple$new(1,2)$max,2)
-  # expect_equal(Tuple$new(1,2)$min,1)
-  # expect_equal(Tuple$new(1,2)$upper,2)
-  # expect_equal(Tuple$new(1,2)$lower,1)
-  # expect_equal(Tuple$new("a",2)$max,NaN)
-  # expect_equal(Tuple$new("a",1)$min,NaN)
-  # expect_equal(Tuple$new("a",1)$upper, 1)
-  # expect_equal(Tuple$new("a",1)$lower, "a")
-  # expect_equal(Tuple$new(1,0.3)$class, "numeric")
-  # expect_equal(Tuple$new(Set$new(1),Set$new())$class, "Set")
-  # expect_equal(Tuple$new(1,"a")$class, "multiple")
-  # expect_equal(Tuple$new(1,2,3)$range,2)
-  # expect_equal(Tuple$new(1,"a",0.3)$range,numeric(0))
   expect_equal(Tuple$new(1, 2, 3)$elements, list(1, 2, 3))
   expect_equal(Tuple$new(1, 2, 3)$length, 3)
   expect_true(Tuple$new(1, 3, 0.9)$contains(1))
   expect_false(Tuple$new(1, 0.1, 2, 0.3, 3, 0.9)$contains(5))
-  expect_equal(Tuple$new(1, 2)$strprint(), "(1, 2)")
+  expect_equal(as.character(Tuple$new(1, 2)), "(1, 2)")
 })
 
 test_that("equals", {

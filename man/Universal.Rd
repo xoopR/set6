@@ -308,7 +308,7 @@ Creates a printable representation of the object.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{n}}{numeric. Number of elements to display on either side of ellipsis when printing.}
+\item{\code{n}}{numeric. Unused, kept for consistency.}
 }
 \if{html}{\out{</div>}}
 }

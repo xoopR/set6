@@ -235,7 +235,7 @@ Prints a symbolic representation of the \code{Set}.
 }
 \subsection{Details}{
 The function \code{\link[=useUnicode]{useUnicode()}} can be used to determine if unicode should be used when
-printing the \code{Set}. Internally \code{print} first calls \code{strprint} to create a printable representation
+printing the \code{Set}. Internally \code{print} first calls \code{as.character} to create a printable representation
 of the Set.
 }
 

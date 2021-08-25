@@ -1,7 +1,7 @@
 test_that("SpecialSets", {
   useUnicode(FALSE)
   x <- Reals$new() - Naturals$new()
-  expect_equal(x$strprint(), "R \\ N0")
+  expect_equal(as.character(x), "R \\ N0")
   expect_true(x$contains(1.1))
   expect_false(x$contains(1))
   expect_equal(x$elements, NA)
@@ -30,7 +30,7 @@ test_that("fields", {
   expect_equal(d$type, "{}")
 })
 
-test_that("strprint", {
+test_that("as.character", {
   d <- ComplementSet$new(Set$new(1, 2, 3, 4, 5, class = "numeric") + Interval$new(5, 7), Set$new(5, 10, class = "numeric") + Interval$new(10, 15))
-  expect_equal(d$strprint(n = 1), "({1,...,5} ∪ [5,7]) \\ ({5, 10} ∪ [10,15])")
+  expect_equal(as.character(d, n = 1), "({1,...,5} ∪ [5,7]) \\ ({5, 10} ∪ [10,15])")
 })

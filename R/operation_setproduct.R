@@ -74,7 +74,7 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
     return(Set$new())
   }
 
-  classes <- vapply(sets, getR6Class, character(1))
+  classes <- vapply(sets, object_class, character(1))
   if ("ExponentSet" %in% classes) {
     varexp <- sapply(sets[classes == "ExponentSet"], function(x) x$power == "n")
     if (any(varexp)) {
@@ -82,7 +82,7 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
     }
   }
 
-  if (length(unique(rsapply(sets, "strprint"))) == 1 & !simplify) {
+  if (length(unique(vapply(sets, as.character, character(1)))) == 1 && !simplify) {
     return(ExponentSet$new(sets[[1]], length(sets)))
   } else if (any(sapply(sets, function(x) inherits(x, "SetWrapper"))) |
     any(grepl("ConditionalSet|Interval", classes)) | !simplify) {
@@ -97,7 +97,7 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
 
 .product_set <- function(sets, nest) {
   if (!nest | length(sets) < 3) {
-    return(Set$new(elements = apply(expand.grid(rlapply(sets, "elements", active = T)), 1, function(z) Tuple$new(elements = z))))
+    return(Set$new(elements = apply(expand.grid(loapply(sets, "elements")), 1, function(z) Tuple$new(elements = z))))
   } else {
     s <- Set$new(elements = apply(expand.grid(sets[[1]]$elements, sets[[2]]$elements), 1, function(z) Tuple$new(elements = z)))
     for (i in 3:length(sets)) {
@@ -108,15 +108,16 @@ setproduct <- function(..., simplify = FALSE, nest = FALSE) {
 }
 .product_fuzzyset <- function(sets) {
   mat <- cbind(
-    expand.grid(rlapply(sets, "elements", active = T)),
-    expand.grid(rlapply(sets, "membership"))
+    expand.grid(unlist(loapply(sets, "elements"), FALSE)),
+    expand.grid(unlist(loapply(sets, "membership", NULL), FALSE))
   )
-  return(Set$new(elements = apply(mat, 1, function(x) {
+
+  Set$new(elements = apply(mat, 1, function(x) {
     FuzzyTuple$new(
       elements = x[seq(ncol(mat) / 2)],
       membership = x[((ncol(mat) / 2) + 1):(ncol(mat))]
     )
-  })))
+  }))
 }
 
 #' @rdname setproduct

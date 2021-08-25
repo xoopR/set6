@@ -170,13 +170,13 @@ A new \code{Interval} object.
 \subsection{Method \code{strprint()}}{
 Creates a printable representation of the object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Interval$strprint(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Interval$strprint(n = 2)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{ignored, added for consistency.}
+\item{\code{n}}{ignored, added for consistency.}
 }
 \if{html}{\out{</div>}}
 }

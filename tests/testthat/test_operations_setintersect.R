@@ -12,7 +12,7 @@ test_that("SetXSet", {
 test_that("conditionalset", {
   useUnicode(FALSE)
   expect_equal(
-    (ConditionalSet$new(function(x) x == 1) & ConditionalSet$new(function(y) y > 1))$strprint(),
+    as.character(ConditionalSet$new(function(x) x == 1) & ConditionalSet$new(function(y) y > 1)),
     "{x in V, y in V : x == 1 & y > 1}"
   )
   expect_equal(

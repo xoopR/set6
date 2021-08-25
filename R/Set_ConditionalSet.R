@@ -131,14 +131,15 @@ ConditionalSet <- R6Class("ConditionalSet",
           return(FALSE)
         }
 
-        if (all(names(formals(el$condition)) == names(formals(self$condition))) &
-          all(body(el$condition) == body(self$condition)) &
-          all(unlist(lapply(el$class, getR6Class)) == unlist(lapply(self$class, getR6Class)))) {
+        if (all(names(formals(el$condition)) == names(formals(self$condition))) &&
+          all(body(el$condition) == body(self$condition)) &&
+          all(object_classes(el$class) == object_classes(self$class))) {
           return(TRUE)
         }
 
 
-        if (!all(rsapply(self$class, "strprint") == rsapply(el$class, "strprint"))) {
+        if (!all(vapply(self$class, as.character, character(1)) ==
+            vapply(el$class, as.character, character(1)))) {
           return(FALSE)
         } else {
           sclass <- self$class
@@ -167,28 +168,15 @@ ConditionalSet <- R6Class("ConditionalSet",
       returner(ret, all)
     },
 
+
+
     #' @description
     #' Creates a printable representation of the object.
     #' @param n ignored, added for consistency.
     #' @return A character string representing the object.
     strprint = function(n = NULL) {
-      if (useUnicode()) {
-        sep <- " \u2208 "
-      } else {
-        sep <- " in "
-      }
-
-      if (body(self$condition) == TRUE) {
-        paste0("{",
-          paste(names(self$class), sapply(self$class, function(x) x$strprint()),
-                sep = sep, collapse = ", "), "}")
-      } else {
-        paste0("{", paste0(
-          paste(names(self$class), sapply(self$class, function(x) x$strprint()),
-                sep = sep, collapse = ", "), " : ",
-          paste0(deparse(body(self$condition), width.cutoff = 500L), collapse = ""), "}"))
-      }
-
+      warning("Deprecated, use as.character in the future")
+      as.character(self)
     },
 
     #' @description See `strprint`.
@@ -234,3 +222,23 @@ ConditionalSet <- R6Class("ConditionalSet",
     .upper = NA
   )
 )
+
+#' @export
+as.character.ConditionalSet <- function(x, n = 2, ...) {
+  if (useUnicode()) {
+    sep <- " \u2208 "
+  } else {
+    sep <- " in "
+  }
+
+  if (body(x$condition) == TRUE) {
+    paste0("{",
+      paste(names(x$class), lapply(x$class, as.character),
+            sep = sep, collapse = ", "), "}")
+  } else {
+    paste0("{", paste0(
+      paste(names(x$class), lapply(x$class, as.character),
+            sep = sep, collapse = ", "), " : ",
+      paste0(deparse(body(x$condition), width.cutoff = 500L), collapse = ""), "}"))
+  }
+}

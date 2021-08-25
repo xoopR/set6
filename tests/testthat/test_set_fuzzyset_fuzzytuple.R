@@ -30,15 +30,15 @@ test_that("membership", {
   expect_equal(f$membership(1), 0.1)
   expect_equal(f$membership(c(1, 5)), list("1" = 0.1, "5" = 0))
 })
-test_that("strprint", {
-  expect_equal(f$strprint(), "(1(0.1), 2(0.2), 3(0.3))")
+test_that("as.character", {
+  expect_equal(as.character(f), "(1(0.1), 2(0.2), 3(0.3))")
 })
 test_that("alphaCut", {
   expect_equal(f$alphaCut(0.15), as.list(2:3))
   expect_equal(f$alphaCut(0.2, strong = FALSE), as.list(2:3))
   expect_equal(f$alphaCut(0.2, strong = TRUE), list(3))
   expect_true(f$alphaCut(0.2, strong = TRUE, create = TRUE)$equals(Tuple$new(3)))
-  expect_equal(getR6Class(f$alphaCut(0.2, strong = TRUE, create = TRUE)), "Tuple")
+  expect_equal(object_class(f$alphaCut(0.2, strong = TRUE, create = TRUE)), "Tuple")
 })
 test_that("support", {
   expect_equal(f$support(), list(1, 2, 3))

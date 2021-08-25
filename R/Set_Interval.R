@@ -48,7 +48,7 @@ Interval <- R6Class("Interval",
       checkmate::assert(lower <= upper)
       checkmate::assertChoice(class, c("numeric", "integer"))
 
-      if (getR6Class(self) != "SpecialSet") {
+      if (object_class(self) != "SpecialSet") {
         assertSet(universe)
         private$.universe <- universe
       }
@@ -93,22 +93,11 @@ Interval <- R6Class("Interval",
     },
 
     #' @description Creates a printable representation of the object.
-    #' @param ... ignored, added for consistency.
+    #' @param n ignored, added for consistency.
     #' @return A character string representing the object.
-    strprint = function(...) {
-
-      inf <- ifelse(self$lower == -Inf & useUnicode(), "-\u221E", self$lower)
-      sup <- ifelse(self$upper == Inf & useUnicode(), "+\u221E", self$upper)
-
-      if (self$class == "integer") {
-        if (self$length == 0) {
-          super$strprint()
-        } else {
-          return(paste0("{", inf, ",...,", sup, "}"))
-        }
-      } else {
-        return(paste0(substr(self$type, 1, 1), inf, ",", sup, substr(self$type, 2, 2)))
-      }
+    strprint = function(n = 2) {
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Tests if two sets are equal.
@@ -372,3 +361,20 @@ Interval <- R6Class("Interval",
     .elements = NA
   )
 )
+
+#' @export
+as.character.Interval <- function(x, n = 2, ...) {
+
+  inf <- ifelse(x$lower == -Inf & useUnicode(), "-\u221E", x$lower)
+  sup <- ifelse(x$upper == Inf & useUnicode(), "+\u221E", x$upper)
+
+  if (x$class == "integer") {
+    if (x$length == 0) {
+      as.character(super)
+    } else {
+      paste0("{", inf, ",...,", sup, "}")
+    }
+  } else {
+    paste0(substr(x$type, 1, 1), inf, ",", sup, substr(x$type, 2, 2))
+  }
+}

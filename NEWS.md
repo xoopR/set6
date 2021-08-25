@@ -3,6 +3,7 @@
 * Removed `LogicalSet`
 * Removed `UniversalSet`
 * Internal speed improvements and code clean-up
+* `$strprint` is deprecated in favour of `as.character`
 
 # set6 0.2.3
 

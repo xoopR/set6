@@ -30,12 +30,9 @@ PowersetSet <- R6Class("PowersetSet",
     #' @template param_strprint
     #' @description Creates a printable representation of the object.
     #' @return A character string representing the object.
-    strprint = function(n = 2) {
-      if (useUnicode()) {
-        paste0("\U2118(", self$wrappedSets[[1]]$strprint(n), ")")
-      } else {
-        paste0("2^", self$wrappedSets[[1]]$strprint(n))
-      }
+    strprint = function(n = NULL) {
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Tests if elements `x` are contained in `self`.
@@ -72,11 +69,11 @@ PowersetSet <- R6Class("PowersetSet",
           }
         }
 
-        if (getR6Class(el) == "PowersetSet") {
+        if (object_class(el) == "PowersetSet") {
           return(self$wrappedSets[[1]]$isSubset(el$wrappedSets[[1]], proper = proper))
         }
 
-        if (!(getR6Class(el) %in% c("Tuple", "Set", "Multiset"))) {
+        if (!(object_class(el) %in% c("Tuple", "Set", "Multiset"))) {
           return(FALSE)
         }
 
@@ -91,3 +88,13 @@ PowersetSet <- R6Class("PowersetSet",
     }
   )
 )
+
+
+#' @export
+as.character.PowersetSet <- function(x, n = 2, ...) {
+  if (useUnicode()) {
+    paste0("\U2118(", as.character(x$wrappedSets[[1]], n = n), ")")
+  } else {
+    paste0("2^", as.character(x$wrappedSets[[1]], n = n))
+  }
+}

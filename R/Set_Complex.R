@@ -70,7 +70,7 @@ Complex <- R6Class("Complex",
     #' !Set$new(1,2)$equals(Set$new(1,2))
     #' Set$new(1,2) != Set$new(1,5)
     equals = function(x, all = FALSE) {
-      ret <- sapply(listify(x), getR6Class) %in% "Complex"
+      ret <- object_classes(listify(x)) %in% "Complex"
       returner(ret, all)
     },
 
@@ -115,7 +115,13 @@ Complex <- R6Class("Complex",
     #' @param n numeric. Number of elements to display on either side of ellipsis when printing.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      setSymbol(getR6Class(self), FALSE)
+      warning("Deprecated, use as.character in the future")
+      as.character(self)
     }
   )
 )
+
+#' @export
+as.character.Complex <- function(x,  ...) {
+  setSymbol(object_class(x), FALSE)
+}

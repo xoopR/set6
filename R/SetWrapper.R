@@ -21,8 +21,8 @@ SetWrapper <- R6Class("SetWrapper",
     #' @return A new `SetWrapper` object.
     initialize = function(setlist, lower = NULL, upper = NULL, type = NULL,
                           class = NULL, cardinality) {
-      if (getR6Class(self) == "SetWrapper") {
-        stop(paste(getR6Class(self), "is an abstract class that can't be initialized."))
+      if (object_class(self) == "SetWrapper") {
+        stop(paste(object_class(self), "is an abstract class that can't be initialized."))
       }
 
       private$.wrappedSets <- assertSetList(setlist)
@@ -31,7 +31,7 @@ SetWrapper <- R6Class("SetWrapper",
       if (!is.null(upper)) private$.upper <- upper
       if (!is.null(type)) private$.type <- type
 
-      class <- rsapply(setlist, class, active = TRUE)
+      class <- loapply(setlist, "class")
       if (length(unique(class)) == 1) {
         private$.class <- unique(class)
       }
@@ -50,7 +50,7 @@ SetWrapper <- R6Class("SetWrapper",
       x <- listify(x)
 
       ret <- sapply(x, function(el) {
-        if (getR6Class(el) != getR6Class(self)) {
+        if (object_class(el) != object_class(self)) {
           return(FALSE)
         }
 

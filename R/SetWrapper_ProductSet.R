@@ -12,8 +12,8 @@ ProductSet <- R6Class("ProductSet",
     #' @return A new `ProductSet` object.
     initialize = function(setlist, lower = NULL, upper = NULL, type = NULL,
                           cardinality = NULL) {
-      if (is.null(lower)) lower <- Tuple$new(elements = rsapply(setlist, "lower", active = TRUE))
-      if (is.null(upper)) upper <- Tuple$new(elements = rsapply(setlist, "upper", active = TRUE))
+      if (is.null(lower)) lower <- Tuple$new(elements = loapply(setlist, "lower"))
+      if (is.null(upper)) upper <- Tuple$new(elements = loapply(setlist, "upper"))
       if (is.null(type)) type <- "{}"
 
       if (is.null(cardinality)) {
@@ -43,25 +43,14 @@ ProductSet <- R6Class("ProductSet",
       )
     },
 
+
+
     #' @template param_strprint
     #' @description Creates a printable representation of the object.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      str <- lapply(self$wrappedSets, function(x) {
-        if (inherits(x, "SetWrapper")) {
-          paste0("(", x$strprint(n), ")")
-        } else {
-          x$strprint(n)
-        }
-      })
-
-      if (useUnicode()) {
-        collapse <- " \u00D7 "
-      } else {
-        collapse <- " X "
-      }
-
-      paste(str, collapse = collapse)
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Tests if elements `x` are contained in `self`.
@@ -102,7 +91,27 @@ ProductSet <- R6Class("ProductSet",
     #' @field length
     #' Returns the number of elements in the object.
     length = function() {
-      return(Tuple$new(elements = rsapply(self$wrappedSets, "length", active = TRUE)))
+      Tuple$new(elements = loapply(self$wrappedSets, "length"))
     }
   )
 )
+
+
+#' @export
+as.character.ProductSet <- function(x, n = 2, ...) {
+  str <- lapply(x$wrappedSets, function(.x) {
+    if (inherits(.x, "SetWrapper")) {
+      paste0("(", as.character(.x, n = n), ")")
+    } else {
+      as.character(.x, n = n)
+    }
+  })
+
+  if (useUnicode()) {
+    collapse <- " \u00D7 "
+  } else {
+    collapse <- " X "
+  }
+
+  paste(str, collapse = collapse)
+}

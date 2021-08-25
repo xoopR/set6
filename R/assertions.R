@@ -30,7 +30,7 @@ assertSetList <- function() {}
 
 makeChecks(
   assertionName = "SetList",
-  cond = all(vapply(object, inherits, logical(1), "Set")),
+  cond = all(vlapply(object, inherits, "Set")),
   errormsg = "One or more items in the list are not Sets",
   pos = environment()
 )
@@ -244,7 +244,7 @@ checkFuzzy <- function() {}
 assertFuzzy <- function() {}
 makeChecks(
   assertionName = "Fuzzy",
-  cond = grepl("Fuzzy", getR6Class(object)),
+  cond = grepl("Fuzzy", object_class(object)),
   errormsg = "This is not fuzzy.",
   pos = environment()
 )

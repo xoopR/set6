@@ -57,25 +57,14 @@ UnionSet <- R6Class("UnionSet",
       )
     },
 
+
+
     #' @template param_strprint
     #' @description Creates a printable representation of the object.
     #' @return A character string representing the object.
     strprint = function(n = 2) {
-      if (useUnicode()) {
-        collapse <- " \u222A "
-      } else {
-        collapse <- " U "
-      }
-
-      str <- lapply(self$wrappedSets, function(x) {
-        if (inherits(x, "SetWrapper")) {
-          paste0("(", x$strprint(n), ")")
-        } else {
-          x$strprint(n)
-        }
-      })
-
-      paste0(str, collapse = collapse)
+      warning("Deprecated, use as.character in the future")
+      as.character(self, n = n)
     },
 
     #' @description Tests if elements `x` are contained in `self`.
@@ -100,7 +89,7 @@ UnionSet <- R6Class("UnionSet",
     #' @field elements
     #' Returns the elements in the object.
     elements = function() {
-      els <- unlist(unique(as.vector(rsapply(self$wrappedSets, "elements", active = TRUE))))
+      els <- unlist(unique(as.vector(loapply(self$wrappedSets, "elements"))))
       if (anyNA(els)) {
         return(NA)
       } else {
@@ -111,9 +100,26 @@ UnionSet <- R6Class("UnionSet",
     #' @field length
     #' Returns the number of elements in the object.
     length = function() {
-      len <- rsapply(self$wrappedSets, "length", active = TRUE)
-
-      sum(unlist(len))
+      sum(unlist(loapply(self$wrappedSets, "length")))
     }
   )
 )
+
+#' @export
+as.character.UnionSet <- function(x, n = 2, ...) {
+  if (useUnicode()) {
+    collapse <- " \u222A "
+  } else {
+    collapse <- " U "
+  }
+
+  str <- lapply(x$wrappedSets, function(x) {
+    if (inherits(x, "SetWrapper")) {
+      paste0("(", as.character(x, n = n), ")")
+    } else {
+      as.character(x, n = n)
+    }
+  })
+
+  paste0(str, collapse = collapse)
+}

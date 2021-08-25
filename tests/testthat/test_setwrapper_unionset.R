@@ -8,17 +8,17 @@ test_that("constructor", {
   expect_error(UnionSet$new(Set$new(1, 2, 3), Interval$new(4, 9)), "Assertion on")
 })
 
-test_that("strprint", {
+test_that("as.character", {
   u <- UnionSet$new(list(Set$new(1, 2, 3), Set$new(elements = letters[1:5])))
   useUnicode(TRUE)
-  expect_equal(u$strprint(), "{1, 2, 3} \u222A {a, b,...,d, e}")
+  expect_equal(as.character(u), "{1, 2, 3} \u222A {a, b,...,d, e}")
   useUnicode(FALSE)
-  expect_equal(u$strprint(), "{1, 2, 3} U {a, b,...,d, e}")
+  expect_equal(as.character(u), "{1, 2, 3} U {a, b,...,d, e}")
   expect_equal(
-    UnionSet$new(list(
+    as.character(UnionSet$new(list(
       Set$new(1) * Interval$new(1, 2),
       Set$new(elements = letters[1:2])
-    ))$strprint(),
+    ))),
     "({1} X [1,2]) U {a, b}"
   )
 })

@@ -45,7 +45,7 @@
 #'
 #' @export
 setpower <- function(x, power, simplify = FALSE, nest = FALSE) {
-  classx <- getR6Class(x)
+  classx <- object_class(x)
   if (classx == "Universal") {
     return(x)
   }
@@ -56,7 +56,7 @@ setpower <- function(x, power, simplify = FALSE, nest = FALSE) {
     return(x)
   } else if (power == "n") {
     return(ExponentSet$new(x, power))
-  } else if (classx %in% c("Set", "FuzzySet", "Tuple", "FuzzyTuple", "Multiset", "FuzzyMultiset") & simplify) {
+  } else if (classx %in% c("Set", "FuzzySet", "Tuple", "FuzzyTuple", "Multiset", "FuzzyMultiset") && simplify) {
     x <- rep(list(x), power)
     return(do.call(setproduct, c(x, list(nest = nest, simplify = TRUE))))
   } else if (classx == "ExponentSet") {
