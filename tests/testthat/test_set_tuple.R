@@ -70,3 +70,8 @@ test_that("as.Tuple", {
   expect_error(expect_equal(as.Tuple(Interval$new()), Interval$new()), "Interval cannot")
   expect_error(expect_equal(as.Tuple(ConditionalSet$new(function(x) TRUE)), ConditionalSet$new(function(x) TRUE)), "ConditionalSet cannot be")
 })
+
+test_that("as.double", {
+  expect_equal(as.numeric(Tuple$new(elements = 1:10, class = "numeric")), 1:10)
+  expect_equal(as.numeric(FuzzyTuple$new(1, 0, 2, 0.1, 3, 1)), 2:3)
+})
