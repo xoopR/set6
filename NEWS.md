@@ -1,3 +1,7 @@
+# set6 0.2.4
+
+* Patch for R devel
+
 # set6 0.2.3
 
 * Containedness checks for 'n' dimensional sets no longer require same length vectors if power is
