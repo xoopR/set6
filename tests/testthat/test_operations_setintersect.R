@@ -72,6 +72,7 @@ test_that("ComplementSet", {
 })
 
 test_that("ProductSet", {
+  useUnicode(FALSE)
   obj <- setproduct(Set$new(1, 2), Set$new(3, 4), simplify = TRUE) &
     Set$new(Tuple$new(1, 4))
   expect_equal(as.character(obj), "{(1, 4)}")
@@ -83,4 +84,5 @@ test_that("ProductSet", {
   expect_message(
     (Set$new(1, 2) * Set$new(3, 4)) & (Set$new(1, 2) * Set$new(3, 4)),
     "currently not implemented")
+  useUnicode(TRUE)
 })
