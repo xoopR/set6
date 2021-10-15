@@ -1,6 +1,7 @@
 # set6 0.2.4
 
 * Patch for R devel
+* Imported ooplah
 
 # set6 0.2.3
 
