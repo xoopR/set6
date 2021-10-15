@@ -53,7 +53,10 @@
 setintersect <- function(x, y) {
   if (testCountablyFinite(x) & testCountablyFinite(y) & !inherits(x, "SetWrapper") &
     !inherits(y, "SetWrapper")) {
-    return(Set$new(elements = intersect(x$elements, y$elements)))
+    return(Set$new(elements = intersect(
+      vcapply(x$elements, as.character),
+      vcapply(y$elements, as.character)
+    )))
   }
 
   if (getR6Class(y) == "Universal") {
