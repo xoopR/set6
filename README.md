@@ -5,7 +5,7 @@ set6
 
 [![R CMD Check via
 {tic}](https://github.com/xoopR/set6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)](https://github.com/xoopR/set6/actions)
-[![codecov](https://codecov.io/gh/xoopR/set6/branch/master/graph/badge.svg)](https://codecov.io/gh/xoopR/set6)
+[![codecov](https://app.codecov.io/gh/xoopR/set6/branch/master/graph/badge.svg)](https://app.codecov.io/gh/xoopR/set6)
 [![CodeFactor](https://www.codefactor.io/repository/github/xoopr/set6/badge)](https://www.codefactor.io/repository/github/xoopr/set6)
 [![dependencies](https://tinyverse.netlify.com/badge/set6)](https://CRAN.R-project.org/package=set6)
 
