@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4.9000</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@ otherwise a <code>UnionSet</code>.</p></td>
 in one or more sets,
 $$U = \{x : x \epsilon X1 \quad or \quad x \epsilon X2 \quad or \quad...\quad or \quad x \epsilon XN\}$$</p>
 <p>The union of multiple <a href='ConditionalSet.html'>ConditionalSet</a>s is given by combining their defining functions by an
-'or', <code><a href='https://rdrr.io/r/base/Logic.html'>|</a></code>, operator. See examples.</p>
+'or', <code>|</code>, operator. See examples.</p>
 <p>The union of fuzzy and crisp sets first coerces fuzzy sets to crisp sets by finding their support.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -173,38 +173,405 @@ $$U = \{x : x \epsilon X1 \quad or \quad x \epsilon X2 \quad or \quad...\quad or
 <code><a href='setsymdiff.html'>setsymdiff</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># union of Sets</span>
-
-<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {-1, -2,...,4, 5} </div><div class='input'><span class='fu'>setunion</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 4, 6, a} </div><div class='input'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>1i</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>9</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {0+1i, 1,...,9, a} </div><div class='input'>
-<span class='co'># union of intervals</span>
-
-<span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>30</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1,15] ∪ [20,30] </div><div class='input'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, type <span class='op'>=</span> <span class='st'>"()"</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span>, type <span class='op'>=</span> <span class='st'>"(]"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (1,2) ∪ (2,3] </div><div class='input'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>7</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 2,...,6, 7} </div><div class='input'>
-<span class='co'># union of mixed types</span>
-
-<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 10,...,8, 9} ∪ [5,15] </div><div class='input'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 10,...,8, 9} </div><div class='input'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span><span class='op'>)</span> <span class='op'>|</span> <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>7</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {5, 6, 7, 8} </div><div class='input'>
-<span class='co'># union of FuzzySet</span>
-<span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 2,...,4, 5} </div><div class='input'>
-<span class='co'># union of conditional sets</span>
-
-<span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;=</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {x ∈ 𝕍, y ∈ 𝕍 : x &gt;= y | x == y | x == 2} </div><div class='input'>
-<span class='co'># union of special sets</span>
-<span class='va'><a href='PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='NegReals.html'>NegReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℝ </div><div class='input'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='cn'>Inf</span>, <span class='cn'>Inf</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℝ ∪ {-∞, +∞} </div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># union of Sets</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {-1, -2,...,4, 5} </span>
+<span class='r-in'><span class='fu'>setunion</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 4, 6, a} </span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>1i</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>9</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {0+1i, 1,...,9, a} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># union of intervals</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>30</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,15] ∪ [20,30] </span>
+<span class='r-in'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, type <span class='op'>=</span> <span class='st'>"()"</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span>, type <span class='op'>=</span> <span class='st'>"(]"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (1,2) ∪ (2,3] </span>
+<span class='r-in'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>7</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 2,...,6, 7} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># union of mixed types</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 10,...,8, 9} ∪ [5,15] </span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span>, class <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 10,...,8, 9} </span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span><span class='op'>)</span> <span class='op'>|</span> <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>7</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {5, 6, 7, 8} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># union of FuzzySet</span></span>
+<span class='r-in'><span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 2,...,4, 5} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># union of conditional sets</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;=</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>  <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {x ∈ 𝕍, y ∈ 𝕍 : x &gt;= y | x == y | x == 2} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># union of special sets</span></span>
+<span class='r-in'><span class='va'><a href='PosReals.html'>PosReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='NegReals.html'>NegReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ℝ </span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='cn'>Inf</span>, <span class='cn'>Inf</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ℝ ∪ {-∞, +∞} </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4.9000</span>
       </span>
     </div>
 
@@ -143,27 +143,29 @@ otherwise set names as characters.</p></td>
 and their traits.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>listSpecialSets</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        ClassName        Symbol Infimum Supremum
-#&gt; 1      Universal             𝕍      NA       NA
-#&gt; 2       Logicals {TRUE, FALSE}   FALSE     TRUE
-#&gt; 3       Naturals            ℕ0       0      Inf
-#&gt; 4    PosNaturals            ℕ+     0/1      Inf
-#&gt; 5       Integers             ℤ    -Inf      Inf
-#&gt; 6    PosIntegers            ℤ+     0/1      Inf
-#&gt; 7    NegIntegers            ℤ-    -Inf     -1/0
-#&gt; 8      Rationals             ℚ    -Inf      Inf
-#&gt; 9   PosRationals            ℚ+     0/1      Inf
-#&gt; 10  NegRationals            ℚ-    -Inf     -1/0
-#&gt; 11         Reals             ℝ    -Inf      Inf
-#&gt; 12      PosReals            ℝ+     0/1      Inf
-#&gt; 13      NegReals            ℝ-    -Inf     -1/0
-#&gt; 14 ExtendedReals  ℝ ∪ {-∞, +∞}    -Inf      Inf
-#&gt; 15       Complex             ℂ      NA       NA</div><div class='input'><span class='fu'>listSpecialSets</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "Universal"     "Logicals"      "Naturals"      "PosNaturals"  
-#&gt;  [5] "Integers"      "PosIntegers"   "NegIntegers"   "Rationals"    
-#&gt;  [9] "PosRationals"  "NegRationals"  "Reals"         "PosReals"     
-#&gt; [13] "NegReals"      "ExtendedReals" "Complex"      </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>listSpecialSets</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        ClassName        Symbol Infimum Supremum</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      Universal             𝕍      NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       Logicals {TRUE, FALSE}   FALSE     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       Naturals            ℕ0       0      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4    PosNaturals            ℕ+     0/1      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       Integers             ℤ    -Inf      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6    PosIntegers            ℤ+     0/1      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7    NegIntegers            ℤ-    -Inf     -1/0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8      Rationals             ℚ    -Inf      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   PosRationals            ℚ+     0/1      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  NegRationals            ℚ-    -Inf     -1/0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11         Reals             ℝ    -Inf      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12      PosReals            ℝ+     0/1      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13      NegReals            ℝ-    -Inf     -1/0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 ExtendedReals  ℝ ∪ {-∞, +∞}    -Inf      Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15       Complex             ℂ      NA       NA</span>
+<span class='r-in'><span class='fu'>listSpecialSets</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "Universal"     "Logicals"      "Naturals"      "PosNaturals"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] "Integers"      "PosIntegers"   "NegIntegers"   "Rationals"    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] "PosRationals"  "NegRationals"  "Reals"         "PosReals"     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "NegReals"      "ExtendedReals" "Complex"      </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

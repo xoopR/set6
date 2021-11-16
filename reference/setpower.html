@@ -81,7 +81,7 @@ possibly multiple times." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4.9000</span>
       </span>
     </div>
 
@@ -176,32 +176,44 @@ products.</p>
 <code><a href='setunion.html'>setunion</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Power of a Set</span>
-<span class='fu'>setpower</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, simplify <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 2}^3 </div><div class='input'><span class='fu'>setpower</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {(1, 1, 1), (1, 1, 2),...,(2, 2, 1), (2, 2, 2)} </div><div class='input'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span>
-</div><div class='output co'>#&gt; {1, 2}^3 </div><div class='input'>
-<span class='co'># Power of an interval</span>
-<span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>5</span>
-</div><div class='output co'>#&gt; [2,5]^5 </div><div class='input'><span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span>
-</div><div class='output co'>#&gt; ℝ^3 </div><div class='input'>
-<span class='co'># Use tuples for contains</span>
-<span class='op'>(</span><span class='va'><a href='PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># Power of ConditionalSet is meaningless</span>
-<span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
-</div><div class='output co'>#&gt; {x ∈ 𝕍}^2 </div><div class='input'>
-<span class='co'># Power of FuzzySet</span>
-<span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
-</div><div class='output co'>#&gt; {1(0.1), 2(0.5)}^2 </div><div class='input'>
-<span class='co'># Variable length</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>^</span><span class='st'>"n"</span>
-<span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE  TRUE</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Power of a Set</span></span>
+<span class='r-in'><span class='fu'>setpower</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, simplify <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 2}^3 </span>
+<span class='r-in'><span class='fu'>setpower</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>3</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {(1, 1, 1), (1, 1, 2),...,(2, 2, 1), (2, 2, 2)} </span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 2}^3 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Power of an interval</span></span>
+<span class='r-in'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,5]^5 </span>
+<span class='r-in'><span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ℝ^3 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use tuples for contains</span></span>
+<span class='r-in'><span class='op'>(</span><span class='va'><a href='PosNaturals.html'>PosNaturals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Power of ConditionalSet is meaningless</span></span>
+<span class='r-in'><span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {x ∈ 𝕍}^2 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Power of FuzzySet</span></span>
+<span class='r-in'><span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1(0.1), 2(0.5)}^2 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Variable length</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>^</span><span class='st'>"n"</span></span>
+<span class='r-in'><span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='va'>x</span><span class='op'>$</span><span class='fu'>contains</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE  TRUE</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4.9000</span>
       </span>
     </div>
 
@@ -119,9 +119,18 @@
       <small>Source: <a href='https://github.com/xoopR/set6/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="set6-0249000" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.4.9000">
+<a href="#set6-0249000" class="anchor"></a>set6 0.2.4.9000<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fixes bug that set all comparisons to empty sets as <code>TRUE</code> when using <code>$equals</code>
+</li>
+</ul>
+</div>
     <div id="set6-024" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.4">
-<a href="#set6-024" class="anchor"></a>set6 0.2.4<small> Unreleased </small>
+<a href="#set6-024" class="anchor"></a>set6 0.2.4<small> 2021-10-18 </small>
 </h1>
 <ul>
 <li>Patch for R devel</li>
@@ -280,7 +289,7 @@
 <ul>
 <li>
 <code>absComplement</code> method is now deprecated, instead use <code>setcomplement</code> and omit the <code>y</code> argument</li>
-<li>Fixed error in <code>contains</code> default caused by <code><a href="../reference/contains.html">%inset%</a></code>
+<li>Fixed error in <code>contains</code> default caused by <code>%inset%</code>
 </li>
 <li>Improved printing of <code>SpecialSet</code>s when <code>zero == TRUE</code>
 </li>

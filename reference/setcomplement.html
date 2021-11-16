@@ -81,7 +81,7 @@ then the complement of x from its universe is returned." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4.9000</span>
       </span>
     </div>
 
@@ -192,41 +192,104 @@ $$X-Y = \{z : z \epsilon X \quad and \quad \neg(z \epsilon Y)\}$$</p>
 <code><a href='setunion.html'>setunion</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># absolute complement</span>
-<span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, universe <span class='op'>=</span> <span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (-∞,1) ∪ (1,2) ∪ (2,3) ∪ (3,+∞) </div><div class='input'><span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, universe <span class='op'>=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {3, 4, 5} </div><div class='input'>
-<span class='co'># complement of two sets</span>
-
-<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {-1, -2, 0, 1} </div><div class='input'><span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 4} </div><div class='input'>
-<span class='co'># complement of two intervals</span>
-
-<span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1,5) </div><div class='input'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>15</span>, <span class='fl'>15</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ∅ </div><div class='input'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (2,10] </div><div class='input'>
-<span class='co'># complement of mixed set types</span>
-
-<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 2, 3, 4} </div><div class='input'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>7</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {5} </div><div class='input'>
-<span class='co'># FuzzySet-Set returns a FuzzySet</span>
-<span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1(0.1)} </div><div class='input'><span class='co'># Set-FuzzySet returns a Set</span>
-<span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {3, 4, 5} </div><div class='input'>
-<span class='co'># complement of conditional sets</span>
-
-<span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>simplify</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;=</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span>
-  <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>simplify</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='va'>y</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {x ∈ 𝕍, y ∈ 𝕍, simplify ∈ 𝕍 : x &gt;= y &amp; !(x == y)} </div><div class='input'>
-<span class='co'># complement of special sets</span>
-<span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='NegReals.html'>NegReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℝ+ </div><div class='input'><span class='va'><a href='Rationals.html'>Rationals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='PosRationals.html'>PosRationals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℚ- </div><div class='input'><span class='va'><a href='Integers.html'>Integers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='PosIntegers.html'>PosIntegers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ℤ- </div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># absolute complement</span></span>
+<span class='r-in'><span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, universe <span class='op'>=</span> <span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (-∞,1) ∪ (1,2) ∪ (2,3) ∪ (3,+∞) </span>
+<span class='r-in'><span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, universe <span class='op'>=</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {3, 4, 5} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># complement of two sets</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {-1, -2, 0, 1} </span>
+<span class='r-in'><span class='fu'>setcomplement</span><span class='op'>(</span><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='st'>"a"</span><span class='op'>)</span>, <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 4} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># complement of two intervals</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,5) </span>
+<span class='r-in'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>15</span>, <span class='fl'>15</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ∅ </span>
+<span class='r-in'><span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (2,10] </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># complement of mixed set types</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Interval.html'>Interval</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>15</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 2, 3, 4} </span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Tuple.html'>Tuple</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>7</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {5} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># FuzzySet-Set returns a FuzzySet</span></span>
+<span class='r-in'><span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1(0.1)} </span>
+<span class='r-in'><span class='co'># Set-FuzzySet returns a Set</span></span>
+<span class='r-in'><span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='FuzzySet.html'>FuzzySet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {3, 4, 5} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># complement of conditional sets</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>simplify</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;=</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span></span>
+<span class='r-in'>  <span class='va'><a href='ConditionalSet.html'>ConditionalSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>simplify</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>==</span> <span class='va'>y</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {x ∈ 𝕍, y ∈ 𝕍, simplify ∈ 𝕍 : x &gt;= y &amp; !(x == y)} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># complement of special sets</span></span>
+<span class='r-in'><span class='va'><a href='Reals.html'>Reals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='NegReals.html'>NegReals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ℝ+ </span>
+<span class='r-in'><span class='va'><a href='Rationals.html'>Rationals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='PosRationals.html'>PosRationals</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ℚ- </span>
+<span class='r-in'><span class='va'><a href='Integers.html'>Integers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'><a href='PosIntegers.html'>PosIntegers</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ℤ- </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

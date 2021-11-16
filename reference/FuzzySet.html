@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">set6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4.9000</span>
       </span>
     </div>
 
@@ -361,8 +361,8 @@ all instances of the element.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>Two fuzzy sets are equal if they contain the same elements with the same memberships.
 Infix operators can be used for:</p><table class='table'>
-<tr><td>Equal</td><td><code><a href='https://rdrr.io/r/base/Comparison.html'>==</a></code></td></tr>
-<tr><td>Not equal</td><td><code><a href='https://rdrr.io/r/base/Comparison.html'>!=</a></code></td></tr>
+<tr><td>Equal</td><td><code>==</code></td></tr>
+<tr><td>Not equal</td><td><code>!=</code></td></tr>
 </table>
 
 
@@ -417,112 +417,185 @@ element of <code>x</code>.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Different constructors</span>
-<span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1(0.5), 2(1), 3(0)} </div><div class='input'><span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, membership <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1(0.5), 2(1), 3(0)} </div><div class='input'>
-<span class='co'># Crisp sets are a special case FuzzySet</span>
-<span class='co'># Note membership defaults to full membership</span>
-<span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $`1`
-#&gt; [1] 0.2
-#&gt; 
-#&gt; $`2`
-#&gt; [1] 1
-#&gt; 
-#&gt; $`3`
-#&gt; [1] 0
-#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 2
-#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>core</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 2
-#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Not Included"</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.2</div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `FuzzySet$membership`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $`1`
-#&gt; [1] 0.1
-#&gt; 
-#&gt; $`2`
-#&gt; [1] 0.5
-#&gt; 
-#&gt; $`3`
-#&gt; [1] 1
-#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.5</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $`1`
-#&gt; [1] 0.1
-#&gt; 
-#&gt; $`2`
-#&gt; [1] 0.5
-#&gt; </div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `FuzzySet$alphaCut`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='co'># Alpha-cut</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 2
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] 3
-#&gt; </div><div class='input'>
-<span class='co'># Strong alpha-cut</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.5</span>, strong <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 3
-#&gt; </div><div class='input'>
-<span class='co'># Create a set from the alpha-cut</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.5</span>, create <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {2, 3} </div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `FuzzySet$support`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 1
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] 2
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] 3
-#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {1, 2, 3} </div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `FuzzySet$core`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>core</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 3
-#&gt; </div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>core</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {3} </div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `FuzzySet$inclusion`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>0.1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Not Included"</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Partially Included"</div><div class='input'><span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Fully Included"</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Different constructors</span></span>
+<span class='r-in'><span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1(0.5), 2(1), 3(0)} </span>
+<span class='r-in'><span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, membership <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1(0.5), 2(1), 3(0)} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Crisp sets are a special case FuzzySet</span></span>
+<span class='r-in'><span class='co'># Note membership defaults to full membership</span></span>
+<span class='r-in'><span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>elements <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Called from: FUN(X[[i]], ...)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (!testSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testFuzzy(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (!all(y$membership() == 1)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testConditionalSet(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (testInterval(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     if (testCountablyFinite(y)) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(all(suppressWarnings(y$elements %in% self$elements &amp; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             self$elements %in% y$elements)))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: if (sum(testEmpty(self), testEmpty(y)) == 1) {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(FALSE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } else {</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> }</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: comp &lt;- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     private$.str_elements &amp; private$.str_elements %in% y$.__enclos_env__$private$.str_elements)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> debug: return(all(comp))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>&lt;-</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`1`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`2`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`3`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>core</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Not Included"</span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0</span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `FuzzySet$membership`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`1`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`2`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`3`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.5</span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>membership</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`1`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`2`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `FuzzySet$alphaCut`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Alpha-cut</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Strong alpha-cut</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.5</span>, strong <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create a set from the alpha-cut</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>alphaCut</span><span class='op'>(</span><span class='fl'>0.5</span>, create <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {2, 3} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `FuzzySet$support`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {1, 2, 3} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `FuzzySet$core`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>core</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>core</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {3} </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `FuzzySet$inclusion`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>=</span> <span class='va'>FuzzySet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.5</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>0.1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Not Included"</span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Partially Included"</span>
+<span class='r-in'><span class='va'>f</span><span class='op'>$</span><span class='fu'>inclusion</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Fully Included"</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
