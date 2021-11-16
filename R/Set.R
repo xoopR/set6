@@ -244,6 +244,7 @@ Set <- R6Class("Set",
     equals = function(x, all = FALSE) {
       x <- listify(x)
       ret <- sapply(x, function(y) {
+        browser()
         if (!testSet(y)) {
           return(FALSE)
         }
@@ -263,9 +264,12 @@ Set <- R6Class("Set",
           } else {
             return(FALSE)
           }
+        } else if (sum(testEmpty(self), testEmpty(y)) == 1) {
+          return(FALSE)
         } else {
-          return(all(suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements &
-            private$.str_elements %in% y$.__enclos_env__$private$.str_elements)))
+          comp <- suppressWarnings(y$.__enclos_env__$private$.str_elements %in% private$.str_elements &
+            private$.str_elements %in% y$.__enclos_env__$private$.str_elements)
+          return(all(comp))
         }
       })
 

@@ -63,6 +63,14 @@ test_that("equals", {
   expect_false(Set$new(Tuple$new(1), Tuple$new(2, 3), Tuple$new(1, 4)) == Set$new(Tuple$new(1, 4)))
 })
 
+test_that("equals empty set", {
+  a <- Set$new()
+  b <- Set$new("a")
+  a$equals(a)
+  a$equals(b)
+  b$equals(a)
+})
+
 test_that("strprint", {
   expect_equal(Set$new(1)$strprint(), "{1}")
   expect_equal(Set$new(1, "a")$strprint(), "{1, a}")

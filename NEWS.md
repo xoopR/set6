@@ -1,3 +1,7 @@
+# set6 0.2.4.9000
+
+* Fixes bug that set all comparisons to empty sets as `TRUE` when using `$equals`
+
 # set6 0.2.4
 
 * Patch for R devel
