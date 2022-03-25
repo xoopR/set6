@@ -3,6 +3,7 @@ set6
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
+[![dictionar6 status badge](https://raphaels1.r-universe.dev/badges/dictionar6)](https://raphaels1.r-universe.dev)
 [![R CMD Check via
 {tic}](https://github.com/xoopR/set6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)](https://github.com/xoopR/set6/actions)
 [![codecov](https://app.codecov.io/gh/xoopR/set6/branch/master/graph/badge.svg)](https://app.codecov.io/gh/xoopR/set6)
@@ -14,10 +15,6 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 [![Lifecycle
 Badge](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://img.shields.io/badge/lifecycle-stable-brightgreen)
 
-[![CRAN Status
-Badge](https://www.r-pkg.org/badges/version-ago/set6)](https://cran.r-project.org/package=set6)
-[![CRAN
-Checks](https://cranchecks.info/badges/worst/set6)](https://cran.r-project.org/web/checks/check_results_set6.html)
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/set6)](https://cran.r-project.org/package=set6)
 
