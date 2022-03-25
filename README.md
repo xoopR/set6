@@ -3,7 +3,7 @@ set6
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-[![dictionar6 status badge](https://raphaels1.r-universe.dev/badges/dictionar6)](https://raphaels1.r-universe.dev)
+[![set6 status badge](https://raphaels1.r-universe.dev/badges/set6)](https://raphaels1.r-universe.dev)
 [![R CMD Check via
 {tic}](https://github.com/xoopR/set6/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)](https://github.com/xoopR/set6/actions)
 [![codecov](https://app.codecov.io/gh/xoopR/set6/branch/master/graph/badge.svg)](https://app.codecov.io/gh/xoopR/set6)
