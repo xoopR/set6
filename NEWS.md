@@ -1,4 +1,4 @@
-# set6 0.2.4.9000
+# set6 0.2.5
 
 * Fixes bug that set all comparisons to empty sets as `TRUE` when using `$equals`
 
