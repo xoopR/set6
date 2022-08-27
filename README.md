@@ -15,9 +15,6 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 [![Lifecycle
 Badge](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://img.shields.io/badge/lifecycle-stable-brightgreen)
 
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/set6)](https://cran.r-project.org/package=set6)
-
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02598/status.svg)](https://doi.org/10.21105/joss.02598)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -40,17 +37,27 @@ chat](https://badges.gitter.im/xoopR/set6.png)](https://gitter.im/xoopR/set6)
 
 ## Installation
 
-The current CRAN release can be installed with
+set6 can be installed from
+[R-Universe](https://raphaels1.r-universe.dev/ui#package:set6)
 
 ``` r
-install.packages("set6")
+# Enable repository from raphaels1
+options(repos = c(
+  raphaels1 = 'https://raphaels1.r-universe.dev',
+  CRAN = 'https://cloud.r-project.org'))
+# Download and install set6 in R
+install.packages('set6')
 ```
 
-Or for the latest stable build
+And GitHub
 
 ``` r
 remotes::install_github("xoopR/set6")
 ```
+
+set6 [will not be on
+CRAN](https://twitter.com/RaphaelS101/status/1506321623250571265) for
+the forseeable future.
 
 ## Main Features
 
