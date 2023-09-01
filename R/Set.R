@@ -244,7 +244,6 @@ Set <- R6Class("Set",
     equals = function(x, all = FALSE) {
       x <- listify(x)
       ret <- sapply(x, function(y) {
-        browser()
         if (!testSet(y)) {
           return(FALSE)
         }
